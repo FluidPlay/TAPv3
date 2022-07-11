@@ -93,7 +93,7 @@ local Panel
 -- Chili instances
 local screen0
 
-local font = "LuaUI/Fonts/komtxt__.ttf"
+local font = "LuaUI/Fonts/GeogrotesqueCompMedium.otf" --komtxt__.ttf"
 
 ------------------------
 ------------------------
@@ -109,23 +109,23 @@ local function UpdateCustomParamResourceData()
 
 	local teamID = Spring.GetLocalTeamID()
 	cp.allies               = spGetTeamRulesParam(teamID, "OD_allies") or 1
-	
+
 	if cp.allies < 1 then
 		cp.allies = 1
 	end
-	
+
 	cp.team_metalBase       = spGetTeamRulesParam(teamID, "OD_team_metalBase") or 0
 	cp.team_metalOverdrive  = spGetTeamRulesParam(teamID, "OD_team_metalOverdrive") or 0
 	cp.team_metalMisc       = spGetTeamRulesParam(teamID, "OD_team_metalMisc") or 0
-	
+
 	cp.team_energyIncome    = spGetTeamRulesParam(teamID, "OD_team_energyIncome") or 0
 	cp.team_energyOverdrive = spGetTeamRulesParam(teamID, "OD_team_energyOverdrive") or 0
 	cp.team_energyWaste     = spGetTeamRulesParam(teamID, "OD_team_energyWaste") or 0
-	
+
 	cp.metalBase       = spGetTeamRulesParam(teamID, "OD_metalBase") or 0
 	cp.metalOverdrive  = spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0
 	cp.metalMisc       = spGetTeamRulesParam(teamID, "OD_metalMisc") or 0
-    
+
 	cp.energyIncome    = spGetTeamRulesParam(teamID, "OD_energyIncome") or 0
 	cp.energyOverdrive = spGetTeamRulesParam(teamID, "OD_energyOverdrive") or 0
 	cp.energyChange    = spGetTeamRulesParam(teamID, "OD_energyChange") or 0
@@ -133,7 +133,7 @@ end
 
 local function DisposeTip(unitID)
 	if not unitID then return end
-	
+
 	if activeTips[unitID] and activeTips[unitID].img then
 		activeTips[unitID].img:Dispose()
 	end
@@ -155,7 +155,7 @@ local function GetTipDimensions(unitID, str, height, invert)
 	if not invert then
 		y = screen0.height - y
 	end
-	
+
 	return textWidth, textHeight, x, y, height
 end
 
@@ -171,10 +171,10 @@ local function MakeTip(unitID, tip)
 
 	local strings = tips[tip].str
 	local str = strings[math.random(#strings)]
-	
+
 	local height = Spring.GetUnitHeight(unitID)
 	if not height then return end
-	
+
 	local textWidth, textHeight, x, y = GetTipDimensions(unitID, str, height)
 
 	local img = nil
@@ -217,7 +217,7 @@ local function MakeTip(unitID, tip)
 		align   = "left";
 		font    = fontDef,
 	}
-	
+
 	activeTips[unitID] = {str = str, expire = gameframe + tips[tip].life*30, height = height, img = img, textBox = textBox}
 	tips[tip].lastUsed = gameframe
 end
@@ -275,43 +275,43 @@ local function ProcessCommand(unitID, command)
 			return
 		end
 	end
-	
+
 	if energy[-command] == nil then
 		if (tips.energy_deficit.lastUsed > gameframe - tips.energy_deficit.cooldown*30) or (tips.metal_excess.lastUsed > gameframe - tips.metal_excess.cooldown*30) then
 			return
 		end
 	end
-	
+
 	-- resource tips
 	local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = spGetTeamResources(myTeam, "energy")
 	local mCurr, mStor, mPull, mInco, mExpe, mShar, mSent, mReci = spGetTeamResources(myTeam, "metal")
 	UpdateCustomParamResourceData()
-	
+
 	local eReclaim = eInco
 	eInco = eInco + cp.energyIncome - math.max(0, cp.energyChange)
-	
+
 	local extraMetalPull = Spring.GetTeamRulesParam(myTeam, "extraMetalPull") or 0
 	local extraEnergyPull = Spring.GetTeamRulesParam(myTeam, "extraEnergyPull") or 0
 	mPull = mPull + extraMetalPull
-	
+
 	local extraChange = math.min(0, cp.energyChange) - math.min(0, cp.energyOverdrive)
 	eExpe = eExpe + extraChange
 	ePull = ePull + extraEnergyPull + extraChange - cp.team_energyWaste/cp.allies
-	
+
 	eStor = eStor - HIDDEN_STORAGE
 	mStor = mStor - HIDDEN_STORAGE
-	
+
 	if energy[-command] then
 		if tips.energy_excess.lastUsed > gameframe - tips.energy_excess.cooldown*30 then
 			return
 		end
-		
+
 		if (eInco/mInco > ENERGY_TO_METAL_RATIO) and eStor > 0 and (eCurr/eStor > 0.9) then
 			MakeTip(unitID, "energy_excess")
 			return
 		end
 	end
-	
+
 	if ((eInco/mInco < 1) or (eInco - ePull < 0)) and (eCurr < ENERGY_LOW_THRESHOLD) and not energy[-command] then
 		MakeTip(unitID, "energy_deficit")
 	elseif mStor > 0 and mCurr/mStor > 0.95 and mInco - mExpe > 0 then
@@ -333,7 +333,7 @@ function widget:Update(dt)
 			Spring.Echo("<Clippy Comments> Spectator mode or replay. Widget removed.")
 			widgetHandler:RemoveWidget()
 		end
-		
+
 		myTeam = spGetMyTeamID()	-- just refresh for fun
 		timer = 0
 		local command = select(2, Spring.GetActiveCommand())
@@ -342,18 +342,18 @@ function widget:Update(dt)
 			activeCommand = command
 		end
 	end
-	
+
 	-- chili code
 	for unitID, tipData in pairs(activeTips) do
 		if Spring.IsUnitInView(unitID) then
 			local textWidth, textHeight, x, y = GetTipDimensions(unitID, tipData.str, tipData.height)
-			
+
 			local img = tipData.img
 			if img.hidden then
 				screen0:AddChild(img)
 				img.hidden = false
 			end
-			
+
 			--img.x = x - (textWidth+8)/2
 			--img.y = y - textHeight - 4 - fontSize
 			--img:Invalidate()
@@ -451,14 +451,14 @@ function widget:Initialize()
 	end
 	local selection = Spring.GetSelectedUnits()
 	widget:SelectionChanged(selection)
-	
+
 	Chili = WG.Chili
 	TextBox = Chili.TextBox
 	Image = Chili.Image
 	Font = Chili.Font
 	Panel = Chili.Panel
 	screen0 = Chili.Screen0
-	
+
 	-- reload compatibility
 	local units = Spring.GetTeamUnits(myTeam)
 	for i=1,#units do
@@ -481,7 +481,7 @@ function widget:DrawScreen()
 	gl.DepthTest(true)
 	gl.AlphaTest(GL.GREATER, 0.001)
 	gl.Texture("LuaUI/Images/speechbubble.png")
-	
+
 	for unitID, tipData in pairs(activeTips) do
 		if Spring.IsUnitInView(unitID) then
 			gl.PushMatrix()

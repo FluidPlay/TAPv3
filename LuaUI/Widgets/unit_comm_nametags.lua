@@ -9,7 +9,7 @@ function widget:GetInfo()
     date      = "18 April 2008",
     license   = "GNU GPL, v2 or later",
     layer     = -9,
-    enabled   = false  --  loaded by default?
+    enabled   = true  --  loaded by default?
   }
 end
 
@@ -86,9 +86,11 @@ local glUnitMultMatrix = gl.UnitMultMatrix
 local glUnitPieceMultMatrix = gl.UnitPieceMultMatrix
 local glScale          = gl.Scale
 
+--VFS.Include("gamedata/configs/fontsettings.lua")
+--VFS.Include("gamedata/taptools.lua")
 
-local overheadFont	= "LuaUI/Fonts/FreeSansBold_16"
-local stickyFont	= "LuaUI/Fonts/Skrawl_40"
+local overheadFont	= "fonts/GeogrotesqueCompMedium.otf" --DefaultFontPath --"LuaUI/Fonts/FreeSansBold_16"
+local stickyFont	= "fonts/GeogrotesqueCompMedium.otf" --DefaultFontPath -- "LuaUI/Fonts/Skrawl_40"
 --local stickyFont	= "LuaUI/Fonts/KOMTXT___5"
 local fhDraw		= fontHandler.Draw
 --------------------------------------------------------------------------------
@@ -123,7 +125,7 @@ end
 local function DrawCommName(unitID, attributes)
   glTranslate(0, attributes[3], 0 )
   glBillboard()
-  
+
   glColor(attributes[2])
   --glText(attributes[1], xOffset, yOffset, fontSize, "cn")
   fontHandler.UseFont(overheadFont)
@@ -134,7 +136,7 @@ end
 local function DrawNameTag(rotation)
   glRotate(rotation,0,1,0)
   glTranslate(8, 35, 7)
-  
+
   glColor(1,1,1,1)
   glTexRect(-iconhsize, 0, iconhsize, iconsize)
 end
@@ -200,14 +202,14 @@ local function DrawWorldFunc()
 					glRotate(0,0,1,0)
 					glTranslate(8, 0, 7)
 					glColor(attributes[2])
-					
+
 					glPushMatrix()
 					glScale(0.03, 0.03, 0.03)
 					glTranslate (0,120,5)
 					fontHandler.UseFont(stickyFont)
 					fontHandler.DrawCentered(attributes[1], 0,0)
 					glPopMatrix()
-					
+
 					glPopMatrix()
 				end
 			end
@@ -224,7 +226,7 @@ local function DrawWorldFunc()
 			glDrawFuncAtUnit(unitID, false, DrawCommName2, unitID, attributes, rot)
 		end
 	end
-	
+
 
 	glAlphaTest(false)
 	glColor(1,1,1,1)

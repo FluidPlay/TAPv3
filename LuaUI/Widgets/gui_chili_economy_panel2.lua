@@ -191,7 +191,7 @@ local function Format(input, override)
 	end
 	leadingString = override or leadingString
 	input = math.abs(input)
-	
+
 	if input < 0.05 then
 		if override then
 			return override .. "0.0"
@@ -316,12 +316,12 @@ local function option_recreateWindow()
 			return false
 		end
 	end
-	
+
 	if externalForceHide then
 		UpdateExtraPanelHide(true)
 		return false
 	end
-	
+
 	CreateWindow(x,y,w,h)
 	UpdateExtraPanelHide(false)
 	return true
@@ -330,12 +330,12 @@ end
 local function ApplySkin(skinWindow, className)
 	local currentSkin = Chili.theme.skin.general.skinName
 	local skin = Chili.SkinHandler.GetSkin(currentSkin)
-	
+
 	local newClass = skin.panel
 	if className and skin[className] then
 		newClass = skin[className]
 	end
-	
+
 	skinWindow.tiles = newClass.tiles
 	skinWindow.TileImageFG = newClass.TileImageFG
 	--skinWindow.backgroundColor = newClass.backgroundColor
@@ -535,7 +535,7 @@ options = {
 				fancySkinLeft = self.value
 				fancySkinRight = self.value
 			end
-			
+
 			ApplySkin(window_metal, fancySkinLeft)
 			ApplySkin(window_energy, fancySkinRight)
 		end,
@@ -554,24 +554,24 @@ function UpdateCustomParamResourceData()
 
 	local teamID = Spring.GetLocalTeamID()
 	cp.allies               = spGetTeamRulesParam(teamID, "OD_allies") or 1
-	
+
 	if cp.allies < 1 then
 		cp.allies = 1
 	end
-	
+
 	cp.team_metalBase       = spGetTeamRulesParam(teamID, "OD_team_metalBase") or 0
 	cp.team_metalOverdrive  = spGetTeamRulesParam(teamID, "OD_team_metalOverdrive") or 0
 	cp.team_metalMisc       = spGetTeamRulesParam(teamID, "OD_team_metalMisc") or 0
-	
+
 	cp.team_energyIncome    = spGetTeamRulesParam(teamID, "OD_team_energyIncome") or 0
 	cp.team_energyMisc      = spGetTeamRulesParam(teamID, "OD_team_energyMisc") or 0
 	cp.team_energyOverdrive = spGetTeamRulesParam(teamID, "OD_team_energyOverdrive") or 0
 	cp.team_energyWaste     = spGetTeamRulesParam(teamID, "OD_team_energyWaste") or 0
-	
+
 	cp.metalBase       = spGetTeamRulesParam(teamID, "OD_metalBase") or 0
 	cp.metalOverdrive  = spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0
 	cp.metalMisc       = spGetTeamRulesParam(teamID, "OD_metalMisc") or 0
-    
+
 	cp.metalReclaimTotal = spGetTeamRulesParam(teamID, "stats_history_metal_reclaim_current") or 0
 	cp.metalValue        = spGetTeamRulesParam(teamID, "stats_history_unit_value_current") or 0
 	cp.nanoframeValue    = spGetTeamRulesParam(teamID, "stats_history_nano_partial_current") or 0
@@ -593,12 +593,12 @@ function UpdateCustomParamResourceData()
 			cp.team_nanoframeTotal    = cp.team_nanoframeTotal    + (spGetTeamRulesParam(allyID, "stats_history_nano_total_current")    or 0)
 		end
 	end
-	
+
 	cp.energyIncome    = spGetTeamRulesParam(teamID, "OD_energyIncome") or 0
 	cp.energyMisc      = spGetTeamRulesParam(teamID, "OD_energyMisc") or 0
 	cp.energyOverdrive = spGetTeamRulesParam(teamID, "OD_energyOverdrive") or 0
 	cp.energyChange    = spGetTeamRulesParam(teamID, "OD_energyChange") or 0
-	
+
 	-- Spectators read the reserve state of the player they are spectating.
 	-- Players have the resource bar keep track of reserve locally.
 	if (not reserveSentTimer) or Spring.GetSpectatingState() then
@@ -612,7 +612,7 @@ function UpdateCustomParamResourceData()
 			bar_reserve_metal.bars[1].percent = cp.metalStorageReserve/mStor
 			bar_reserve_metal:Invalidate()
 		end
-		
+
 		local eStor = select(2, spGetTeamResources(teamID, "energy")) - HIDDEN_STORAGE
 		cp.energyStorageReserve = Spring.GetTeamRulesParam(teamID, "energyReserve") or 0
 		if eStor <= 0 and bar_reserve_energy.bars[1].percent ~= 0 then
@@ -633,9 +633,9 @@ local function UpdateReserveBars(metal, energy, value, overrideOption, localOnly
 		if value > 1 then
 			value = 1
 		end
-		
+
 		reserveSentTimer = RESERVE_SEND_TIME
-		
+
 		if metal then
 			local _, mStor = spGetTeamResources(spGetMyTeamID(), "metal")
 			if not localOnly then
@@ -695,15 +695,15 @@ local function UpdateBlink(dt)
 	end
 	timer = timer - BLINK_UPDATE_RATE
 	blinkIndex = (blinkIndex + 1)%24
-	
+
 	if blinkM_status then
 		bar_metal:SetColor(Mix({col_metal[1], col_metal[2], col_metal[3], 0.6}, col_highlight, BlinkStatusFunc[blinkM_status](blinkIndex)))
 	end
-	
+
 	if blinkE_status then
 		bar_overlay_energy:SetColor(col_expense[1], col_expense[2], col_expense[3], BlinkStatusFunc[blinkE_status](blinkIndex))
 	end
-	
+
 	metalNoStorage.UpdateFlash(blinkIndex)
 	energyNoStorage.UpdateFlash(blinkIndex)
 end
@@ -758,35 +758,35 @@ function widget:GameFrame(n)
 	if (n%TEAM_SLOWUPDATE_RATE ~= 0) then
 		return
 	end
-	
+
 	if not window then
 		if not option_recreateWindow() then
 			return
 		end
 	end
-	
+
 	if n > 5 and not initialReserveSet then
 		UpdateReserveBars(true, false, options.defaultMetalReserve.value, true)
 		UpdateReserveBars(false, true, options.defaultEnergyReserve.value, true)
 		initialReserveSet = true
 	end
-	
+
 	UpdateCustomParamResourceData()
 
 	local myTeamID = Spring.GetLocalTeamID()
 	local myAllyTeamID = Spring.GetMyAllyTeamID()
 	local teams = Spring.GetTeamList(myAllyTeamID)
-	
+
 	local totalPull = 0
 	local teamEnergyExp = 0
-	
+
 	local teamMInco = 0
 	local teamMSpent = 0
 	local teamMPull = 0
 	local teamFreeStorage = 0
-	
+
 	local teamEnergyReclaim = 0
-	
+
 	local teamTotalMetalStored = 0
 	local teamTotalMetalCapacity = 0
 	local teamTotalEnergyStored = 0
@@ -799,50 +799,50 @@ function widget:GameFrame(n)
 		teamFreeStorage = teamFreeStorage + mStor - mCurr
 		teamTotalMetalStored = teamTotalMetalStored + mCurr
 		teamTotalMetalCapacity = teamTotalMetalCapacity + mStor
-		
+
 		local extraMetalPull = spGetTeamRulesParam(teams[i], "extraMetalPull") or 0
 		teamMPull = teamMPull + mPull + extraMetalPull
-		
+
 		local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = spGetTeamResources(teams[i], "energy")
 		eStor = math.max(eStor - HIDDEN_STORAGE, MIN_STORAGE)
 		local extraEnergyPull = spGetTeamRulesParam(teams[i], "extraEnergyPull") or 0
-		
+
 		local energyOverdrive = spGetTeamRulesParam(teams[i], "OD_energyOverdrive") or 0
 		local energyChange    = spGetTeamRulesParam(teams[i], "OD_energyChange") or 0
 		local extraChange     = math.min(0, energyChange) - math.min(0, energyOverdrive)
-		
+
 		totalPull = totalPull + ePull + extraEnergyPull + extraChange
 		teamEnergyExp = teamEnergyExp + eExpe + extraChange
 		teamEnergyReclaim = teamEnergyReclaim + eInco - math.max(0, energyChange)
-		
+
 		teamTotalEnergyStored = teamTotalEnergyStored + eCurr
 		teamTotalEnergyCapacity = teamTotalEnergyCapacity + eStor
 	end
 
 	local teamEnergyIncome = teamEnergyReclaim + cp.team_energyIncome
-	
+
 	local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = spGetTeamResources(myTeamID, "energy")
 	local mCurr, mStor, mPull, mInco, mExpe, mShar, mSent, mReci = spGetTeamResources(myTeamID, "metal")
-	
+
 	local eReclaim = eInco - math.max(0, cp.energyChange)
 	eInco = eReclaim + cp.energyIncome
-	
+
 	totalPull = totalPull - cp.team_energyWaste
 	teamEnergyExp = teamEnergyExp - cp.team_energyWaste
-	
+
 	local extraMetalPull = spGetTeamRulesParam(myTeamID, "extraMetalPull") or 0
 	local extraEnergyPull = spGetTeamRulesParam(myTeamID, "extraEnergyPull") or 0
 	mPull = mPull + extraMetalPull
-	
+
 	local extraChange = math.min(0, cp.energyChange) - math.min(0, cp.energyOverdrive)
 	eExpe = eExpe + extraChange
 	ePull = ePull + extraEnergyPull + extraChange - cp.team_energyWaste/cp.allies
 	-- Waste energy is reported as the equal fault of all players.
-	
+
 	-- reduce by hidden storage
 	mStor = math.max(mStor - HIDDEN_STORAGE, MIN_STORAGE)
 	eStor = math.max(eStor - HIDDEN_STORAGE, MIN_STORAGE)
-	
+
 	-- Waste
 	local teamMetalWaste = math.min(0, teamTotalMetalCapacity - teamTotalMetalStored)
 	if teamTotalMetalStored > teamTotalMetalCapacity then
@@ -853,7 +853,7 @@ function widget:GameFrame(n)
 	local realEnergyPull = ePull
 	local netMetal = mInco - mPull + mReci
 	local netEnergy = eInco - realEnergyPull
-	
+
 	-- Metal Blink
 	local metalFlashOptValue = options.metalFlash.value
 	if flashModeEnabled and ((netMetal > 0 and mCurr >= mStor) or teamMetalWaste > 0) and metalFlashOptValue < 1 then
@@ -873,7 +873,7 @@ function widget:GameFrame(n)
 	if mCurr > mStor then
 		mCurr = mStor
 	end
-	
+
 	local ODEFlashThreshold = 0.1
 
 	-- Energy Blink
@@ -903,7 +903,7 @@ function widget:GameFrame(n)
 	local energyWarning = (eStor > 1 and eCurr < eStor * energyWarnLevel) or (eStor <= 1 and eInco < mInco and energyWarnLevel > 0 and not metalWarning)
 	metalWarningPanel.ShowWarning(flashModeEnabled and (metalWarning and not energyWarning))
 	energyWarningPanel.ShowWarning(flashModeEnabled and energyWarning)
-	
+
 	local mPercent, ePercent
 	if mStor > 1 then
 		mPercent = 100 * mCurr / mStor
@@ -912,7 +912,7 @@ function widget:GameFrame(n)
 		mCurr = 0
 		metalNoStorage.SetFlash(metalWarning)
 	end
-	
+
 	if eStor > 1 then
 		ePercent = 100 * eCurr / eStor
 	else
@@ -920,23 +920,23 @@ function widget:GameFrame(n)
 		eCurr = 0
 		energyNoStorage.SetFlash((cp.team_energyWaste > 0) or NoStorageEnergyStall(mInco+mReci, mPull, eInco, realEnergyPull))
 	end
-	
+
 	metalNoStorage.Show(mStor <= 1)
 	energyNoStorage.Show(eStor <= 1)
-	
+
 	mPercent = math.min(math.max(mPercent, 0), 100)
 	ePercent = math.min(math.max(ePercent, 0), 100)
 
 	bar_metal:SetValue( mPercent )
 	bar_energy:SetValue( ePercent )
-	
+
 	local metalBase = Format(cp.metalBase)
 	local metalOverdrive = Format(cp.metalOverdrive)
 	local metalReclaim = Format(math.max(0, mInco - cp.metalOverdrive - cp.metalBase - cp.metalMisc - mReci))
 	local metalConstructor = Format(cp.metalMisc)
 	local metalShare = Format(mReci - mSent)
 	local metalConstruction = Format(-mExpe)
-	
+
 	local team_metalTotalIncome = Format(teamMInco)
 	local team_metalPull = Format(-teamMPull)
 	local team_metalBase = Format(cp.team_metalBase)
@@ -945,13 +945,13 @@ function widget:GameFrame(n)
 	local team_metalConstructor = Format(cp.team_metalMisc)
 	local team_metalConstruction = Format(-teamMSpent)
 	local team_metalWaste = Format(teamMetalWaste)
-	
+
 	local energyGenerators = Format(cp.energyIncome - cp.energyMisc)
 	local energyReclaim = Format(eReclaim)
 	local energyMisc = Format(cp.energyMisc)
 	local energyOverdrive = Format(cp.energyOverdrive)
 	local energyOther = Format(-eExpe + mExpe - math.min(0, cp.energyOverdrive))
-	
+
 	local team_energyIncome = Format(teamEnergyIncome)
 	local team_energyGenerators = Format(cp.team_energyIncome - cp.team_energyMisc)
 	local team_energyReclaim = Format(teamEnergyReclaim)
@@ -1010,7 +1010,7 @@ function widget:GameFrame(n)
 	"\n      " .. strings["resbar_nano_value"] .. ": " .. math.ceil(cp.team_nanoframeValue or 0) .. " / " .. math.ceil(cp.team_nanoframeTotal or 0) ..
 	"\n      " .. strings["resbar_reclaim_total"] .. ": " .. math.ceil(cp.team_metalReclaimTotal or 0) ..
 	"\n      " .. strings["resbar_waste_total"] .. ": " .. math.ceil(cp.team_metalExcess or 0)
-	
+
 	image_energy.tooltip = strings["local_energy_economy"] ..
 	"\n   " .. strings["resbar_income"] ..
 	"\n      " .. strings["resbar_generators"] .. ": " .. energyGenerators ..
@@ -1091,7 +1091,7 @@ local function GetWarningPanel(parentControl, x, y, right, bottom, text)
 		padding = {0, 0, 0, 0},
 		parent = parentControl
 	}
-	
+
 	local image = Chili.Image:New{
 		name   = "warningImage",
 		x      = "1%",
@@ -1102,7 +1102,7 @@ local function GetWarningPanel(parentControl, x, y, right, bottom, text)
 		file   = WARNING_IMAGE,
 		parent = holder,
 	}
-	
+
 	local label = Chili.Label:New{
 		name   = "warningLabel",
 		x      = "21%",
@@ -1113,17 +1113,17 @@ local function GetWarningPanel(parentControl, x, y, right, bottom, text)
 		valign = "center",
 		align  = "left",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.warningFontSize.value, "res_outline", {
-			outline = true, outlineWidth = 2, outlineWeight = 2,
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.warningFontSize.value, "res_outline", {
+		--	outline = true, outlineWidth = 2, outlineWeight = 2,
+		--}),
 		parent = holder,
 	}
-	
+
 	image:SetVisibility(false)
 	label:SetVisibility(false)
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.ShowWarning(newShow)
 		image:SetVisibility(newShow)
 		label:SetVisibility(newShow)
@@ -1131,7 +1131,7 @@ local function GetWarningPanel(parentControl, x, y, right, bottom, text)
 	function externalFunctions.SetText(newText)
 		label:SetCaption(newText)
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1148,7 +1148,7 @@ local function GetNoStorageWarning(parentControl, x, y, right, height, barHolder
 		padding = {0, 0, 0, 0},
 		parent = parentControl
 	}
-	
+
 	local line = Chili.Line:New{
 		x = 0,
 		y = "25%",
@@ -1157,7 +1157,7 @@ local function GetNoStorageWarning(parentControl, x, y, right, height, barHolder
 		borderColor = col_line,
 		parent = holder,
 	}
-	
+
 	local label = Chili.Label:New{
 		name   = "warningLabel",
 		x      = "5%",
@@ -1168,22 +1168,22 @@ local function GetNoStorageWarning(parentControl, x, y, right, height, barHolder
 		valign = "center",
 		align  = "center",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.warningFontSize.value, "res_outline", {
-			outline = true, outlineWidth = 2, outlineWeight = 2,
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.warningFontSize.value, "res_outline", {
+		--	outline = true, outlineWidth = 2, outlineWeight = 2,
+		--}),
 		parent = holder,
 	}
-	
+
 	label:BringToFront()
 	holder:SetVisibility(false)
-	
+
 	local show = false
 	local flash = false
 	local text = strings.resbar_no_storage
 	local blinkValue = 0
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.SetText(newText)
 		if newText then
 			text = newText
@@ -1194,7 +1194,7 @@ local function GetNoStorageWarning(parentControl, x, y, right, height, barHolder
 			label:SetCaption(text)
 		end
 	end
-	
+
 	function externalFunctions.Show(newShow)
 		if show == newShow then
 			return
@@ -1205,20 +1205,20 @@ local function GetNoStorageWarning(parentControl, x, y, right, height, barHolder
 			barHolder:SetVisibility(not show)
 		end
 	end
-	
+
 	function externalFunctions.SetFlash(newFlash)
 		if flash == newFlash then
 			return
 		end
 		flash = newFlash
 		externalFunctions.SetText()
-		
+
 		if not flash then
 			line.borderColor = col_line
 			line:Invalidate()
 		end
 	end
-	
+
 	function externalFunctions.UpdateFlash(blinkIndex)
 		if not flash then
 			return
@@ -1229,11 +1229,11 @@ local function GetNoStorageWarning(parentControl, x, y, right, height, barHolder
 		else
 			blink_alpha = (11 - blinkIndex%12)*0.20
 		end
-		
+
 		line.borderColor = Mix(col_line, col_expense, blink_alpha)
 		line:Invalidate()
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1245,7 +1245,7 @@ local function GetExtraPanel(name, extraData)
 	local show = true
 	extraData.labelCount = extraData.labelCount or 1
 	extraData.minWidth = extraData.minWidth or 100
-	
+
 	local extraWindow = Chili.Window:New{
 		backgroundColor = {0, 0, 0, 0},
 		color = {0, 0, 0, 0},
@@ -1279,7 +1279,7 @@ local function GetExtraPanel(name, extraData)
 		draggable = false,
 		resizable = false,
 	}
-	
+
 	local title = Chili.Label:New{
 		x      = "5%",
 		y      = 10,
@@ -1291,7 +1291,7 @@ local function GetExtraPanel(name, extraData)
 		autosize = false,
 		parent = holderPanel
 	}
-	
+
 	local labels = {}
 	for i = 1, extraData.labelCount do
 		labels[i] = Chili.Label:New{
@@ -1304,21 +1304,21 @@ local function GetExtraPanel(name, extraData)
 			align  = "center",
 			autosize = false,
 			parent = holderPanel,
-			objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
-				outline = true, outlineWidth = 2, outlineWeight = 2,
-			}),
+			--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
+			--	outline = true, outlineWidth = 2, outlineWeight = 2,
+			--}),
 		}
 	end
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.SetText(newText, labelIndex)
 		if show then
 			labelIndex = labelIndex or 1
 			labels[labelIndex]:SetCaption(newText)
 		end
 	end
-	
+
 	function externalFunctions.Show(newShow)
 		if show == newShow then
 			return
@@ -1329,7 +1329,7 @@ local function GetExtraPanel(name, extraData)
 			extraData.onShow()
 		end
 	end
-	
+
 	function externalFunctions.SetTempHide(shouldHide)
 		if shouldHide then
 			holderPanel:SetVisibility(false)
@@ -1337,7 +1337,7 @@ local function GetExtraPanel(name, extraData)
 		end
 		holderPanel:SetVisibility(show)
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1404,7 +1404,7 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget()
 		return
 	end
-	
+
 	WG.EconomyPanel = externalFunctions
 
 	WG.InitializeTranslation (languageChanged, GetInfo().name)
@@ -1425,9 +1425,9 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		if not c then
 			return
 		end
-		
+
 		local width = (self.width - self.padding[1] - self.padding[3])
-		
+
 		if width > 0 then
 			local reserve = x/width
 			if mouse ~= 1 then
@@ -1439,10 +1439,10 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			end
 		end
 	end
-	
+
 	local screenWidth,screenHeight = Spring.GetViewGeometry()
 	local mouseDownOnReserve = false
-	
+
 	--// Some (only some) Configuration for shared values
 	local subWindowWidth = '50%'
 	local screenHorizCentre = screenWidth / 2
@@ -1468,7 +1468,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		tweakDraggable = true,
 		tweakResizable = true,
 		minimizable = false,
-		
+
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()
 			if not meta then return false end
@@ -1477,10 +1477,10 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			return true
 		end },
 	}
-	
+
 	metalWarningPanel = GetWarningPanel(window, "3%", "52%", "53%", "15%", strings.metal_excess_warning)
 	energyWarningPanel = GetWarningPanel(window, "53%", "52%", "3%", "15%", strings.energy_stall_warning)
-	
+
 	window_main_display = Chili.Panel:New{
 		backgroundColor = {0, 0, 0, 0},
 		parent = window,
@@ -1493,7 +1493,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
-		
+
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()
 			if not meta then return false end
@@ -1502,27 +1502,27 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			return true
 		end },
 	}
-	
+
 	--// Panel configuration
 	local imageX      = "1%"
 	local imageY      = "10%"
 	local imageWidth  = "17%"
 	local imageHeight = "80%"
-	
+
 	local storageX    = "18%"
 	local incomeX     = "44%"
 	local pullX       = "70%"
 	local textY       = "47%"
 	local textWidth   = "45%"
 	local textHeight  = "26%"
-	
+
 	local barX      = "17%"
 	local barY      = "10%"
 	local barRight  = "4%"
 	local barHeight = "38%"
-	
+
 	--// METAL
-	
+
 	window_metal = Chili.Panel:New{
 		classname = fancySkinLeft,
 		parent = window_main_display,
@@ -1535,7 +1535,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
-		
+
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()
 			if not meta then return false end
@@ -1554,7 +1554,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		keepAspect = true,
 		file   = 'LuaUI/Images/ibeam.png',
 	}
-	
+
 	lbl_storage_metal = Chili.Label:New{
 		parent = window_metal,
 		x      = storageX,
@@ -1565,11 +1565,11 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		align  = "left",
 		caption = "0",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_grey", {
-			outline = true, color = {.8,.8,.8,.9}, outlineWidth = 2, outlineWeight = 2.
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_grey", {
+		--	outline = true, color = {.8,.8,.8,.9}, outlineWidth = 2, outlineWeight = 2.
+		--}),
 	}
-	
+
 	lbl_income_metal = Chili.Label:New{
 		parent = window_metal,
 		x      = incomeX,
@@ -1580,11 +1580,11 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		valign = "center",
 		align  = "left",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
-			outline = true, outlineWidth = 2, outlineWeight = 2,
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
+		--	outline = true, outlineWidth = 2, outlineWeight = 2,
+		--}),
 	}
-	
+
 	lbl_expense_metal = Chili.Label:New{
 		parent = window_metal,
 		x      = pullX,
@@ -1595,11 +1595,11 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		valign = "center",
 		align  = "left",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
-			outline = true, outlineWidth = 2, outlineWeight = 2,
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
+		--	outline = true, outlineWidth = 2, outlineWeight = 2,
+		--}),
 	}
-	
+
 	local metalBarHolder = Chili.Control:New{
 		x      = barX,
 		y      = barY,
@@ -1608,7 +1608,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		padding = {0,0,0,0},
 		parent = window_metal,
 	}
-	
+
 	bar_reserve_metal = Chili.Multiprogressbar:New{
 		parent = metalBarHolder,
 		orientation = "horizontal",
@@ -1633,7 +1633,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			},
 		}
 	}
-	
+
 	bar_metal = Chili.Progressbar:New{
 		parent = metalBarHolder,
 		color  = col_metal,
@@ -1673,9 +1673,9 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			SetReserveByMouse(self, x, y, mouseDownOnReserve, true)
 		end},
 	}
-	
+
 	metalNoStorage = GetNoStorageWarning(window_metal, barX, barY, barRight, barHeight, metalBarHolder)
-	
+
 	--// ENERGY
 
 	window_energy = Chili.Panel:New{
@@ -1690,7 +1690,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
-		
+
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()
 			if not meta then return false end
@@ -1699,7 +1699,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			return true
 		end },
 	}
-	
+
 	image_energy = Chili.Image:New{
 		parent = window_energy,
 		x      = imageX,
@@ -1709,7 +1709,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		keepAspect = true,
 		file   = 'LuaUI/Images/energy.png',
 	}
-	
+
 	lbl_storage_energy = Chili.Label:New{
 		parent = window_energy,
 		x      = storageX,
@@ -1720,11 +1720,11 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		align  = "left",
 		caption = "0",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_grey", {
-			outline = true, color = {.8,.8,.8,.9}, outlineWidth = 2, outlineWeight = 2.
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_grey", {
+		--	outline = true, color = {.8,.8,.8,.9}, outlineWidth = 2, outlineWeight = 2.
+		--}),
 	}
-	
+
 	lbl_income_energy = Chili.Label:New{
 		parent = window_energy,
 		x      = incomeX,
@@ -1735,11 +1735,11 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		valign = "center",
 		align  = "left",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
-			outline = true, outlineWidth = 2, outlineWeight = 2,
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
+		--	outline = true, outlineWidth = 2, outlineWeight = 2,
+		--}),
 	}
-	
+
 	lbl_expense_energy = Chili.Label:New{
 		parent = window_energy,
 		x      = pullX,
@@ -1750,11 +1750,11 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		valign = "center",
 		align  = "left",
 		autosize = false,
-		objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
-			outline = true, outlineWidth = 2, outlineWeight = 2,
-		}),
+		--objectOverrideFont = WG.GetSpecialFont(options.fontSize.value, "res_outline", {
+		--	outline = true, outlineWidth = 2, outlineWeight = 2,
+		--}),
 	}
-	
+
 	local energyBarHolder = Chili.Control:New{
 		x      = barX,
 		y      = barY,
@@ -1763,7 +1763,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		padding = {0,0,0,0},
 		parent = window_energy,
 	}
-	
+
 	bar_reserve_energy = Chili.Multiprogressbar:New{
 		parent = energyBarHolder,
 		orientation = "horizontal",
@@ -1788,7 +1788,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			},
 		}
 	}
-	
+
 	bar_overlay_energy = Chili.Progressbar:New{
 		parent = energyBarHolder,
 		orientation = "horizontal",
@@ -1809,7 +1809,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 			outlineWeight = 2
 		},
 	}
-    
+
 	bar_energy = Chili.Progressbar:New{
 		parent = energyBarHolder,
 		color  = col_energy,
@@ -1843,7 +1843,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 	}
 
 	energyNoStorage = GetNoStorageWarning(window_energy, barX, barY, barRight, barHeight, energyBarHolder)
-	
+
 	-- Activate tooltips for lables and bars, they do not have them in default chili
 	function image_metal:HitTest(x,y) return self end
 	function bar_metal:HitTest(x,y) return self	end

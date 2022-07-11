@@ -171,11 +171,11 @@ local filter_path = options_path .. '/Filtering'
 local color_path = options_path .. '/Color Setup'
 
 options_order = {
-	
+
 	'lblGeneral',
-	
+
 	'enableConsole',
-	
+
 	--'mousewheel',
 	'defaultAllyChat',
 	'defaultBacklogEnabled',
@@ -194,22 +194,22 @@ options_order = {
 	'autohide_text_time',
 	'max_lines',
 	'clickable_points',
-	
+
 	'lblMisc',
-	
+
 	'color_chat_background','color_console_background',
 	'color_chat', 'color_ally', 'color_other', 'color_spec',
-	
+
 	'hideSpec', 'hideAlly', 'hidePoint', 'hideLabel', 'hideLog',
 	'error_opengl_source',
-	
+
 	--'pointButtonOpacity',
-	
+
 	'highlight_all_private', 'highlight_filter_allies', 'highlight_filter_enemies', 'highlight_filter_specs', 'highlight_filter_other',
 	'highlight_surround', 'highlight_sound', 'color_highlight',
-	
+
 	--'highlighted_text_height',
-	
+
 	'dedupe_messages', 'dedupe_points','color_dup',
 }
 
@@ -252,7 +252,7 @@ local function SetHidden(hidden)
 		return
 	end
 	wantHidden = hidden
-	
+
 	if wantHidden then
 		if showingBackchat then
 			window_chat:RemoveChild(scrollpanel_backchat)
@@ -267,7 +267,7 @@ local function SetHidden(hidden)
 end
 
 options = {
-	
+
 	--lblFilter = {name='Filtering', type='label', advanced = false},
 	--lblPointButtons = {name='Point Buttons', type='label', advanced = true},
 	lblAutohide = {name='Auto Hiding', type='label'},
@@ -275,7 +275,7 @@ options = {
 	--lblDedupe = {name='De-Duplication', type='label'},
 	lblGeneral = {name='General Settings', type='label'},
 	lblMisc = {name='Misc. Settings', type='label'},
-	
+
 	error_opengl_source = {
 		name = "Filter out \'Error: OpenGL: source\' error",
 		type = 'bool',
@@ -285,7 +285,7 @@ options = {
 		path = filter_path ,
 		advanced = true,
 	},
-	
+
 	enableConsole = {
 		name = "Enable the debug console",
 		type = 'bool',
@@ -301,7 +301,7 @@ options = {
 			end
 		end
 	},
-	
+
 	text_height_chat = {
 		name = 'Chat Text Size',
 		type = 'number',
@@ -316,7 +316,7 @@ options = {
 		min = 8, max = 30, step = 1,
 		OnChange = onOptionsChanged,
 	},
-	
+
 	highlighted_text_height = {
 		name = 'Highlighted Text Size',
 		type = 'number',
@@ -414,7 +414,7 @@ options = {
 		advanced = true,
 	},
 --]]
-	
+
 	highlight_surround = {
 		name = "Surround highlighted messages",
 		type = 'bool',
@@ -480,7 +480,7 @@ options = {
 		min = 20, max = 100, step = 1,
 		OnChange = onOptionsChanged,
 	},
-	
+
 	color_chat = {
 		name = 'Everyone chat text',
 		type = 'colors',
@@ -611,7 +611,7 @@ options = {
 					right = ((not options.backlogArrowOnRight.value) and 0) or inputsize,
 					bottom = 0,
 					height = inputsize,
-					noFont = true,
+					--noFont = true,
 					backgroundColor = {1,1,1,1},
 					borderColor = {0,0,0,1},
 					--backgroundColor = {1,1,1,1},
@@ -629,7 +629,7 @@ options = {
 					bottom = 0,
 					right = 0,
 					height = inputsize,
-					noFont = true,
+					--noFont = true,
 					backgroundColor = {1,1,1,1},
 					borderColor = {0,0,0,1},
 					--backgroundColor = {1,1,1,1},
@@ -675,7 +675,7 @@ options = {
 				backlogButton._relativeBounds.left = ((not self.value) and 0) or nil
 				backlogButton._relativeBounds.right = (self.value and 0) or nil
 				backlogButton:UpdateClientArea()
-				
+
 				window_chat:Invalidate()
 			end
 		end,
@@ -730,7 +730,7 @@ options = {
 		min = 10, max = 60, step = 5,
 		--OnChange = onOptionsChanged,
 	},
-	
+
 }
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -739,7 +739,7 @@ options = {
 local function SetInputFontSize(size)
 	if options.changeFont.value then
 		Spring.SetConfigInt("FontSize", size, true) --3rd param true is "this game only"
-		Spring.SendCommands('font ' .. WG.Chili.EditBox.font.font)
+		---Test_MaDD Spring.SendCommands('font ' .. WG.Chili.EditBox.font.font)
 	end
 end
 
@@ -781,7 +781,7 @@ for msgtype,rule in pairs(MESSAGE_RULES) do
 			items = {},
 			advanced = true,
 		}
-		
+
 		for i, output in ipairs(rule.output) do
 			o.items[i] = { key = i, name = output.name }
 			if output.default then
@@ -834,7 +834,7 @@ local function escape_lua_pattern(s)
 		["\0"] = "%z";
 	}
 
-  
+
 	return (s:gsub(".", matches))
 end
 
@@ -859,9 +859,9 @@ local function detectHighlight(msg)
 		msg.highlight = true
 		return
 	end
-	
+
 --	Spring.Echo("msg.source = " .. (msg.source or 'NiL'))
-	
+
 	if msg.source == 'ally' and not options.highlight_filter_allies.value
 	or msg.source == 'enemy' and not options.highlight_filter_enemies.value
 	or msg.source == 'spec' and not options.highlight_filter_specs.value
@@ -876,7 +876,7 @@ end
 
 local function formatMessage(msg)
 	local format = getOutputFormat(msg.msgtype) or getOutputFormat("other")
-	
+
 	-- insert/sandwich colour string into text
 	local formatted, _ = format:gsub('([#%$]%w+)', function(parameter) -- FIXME pattern too broad for 1-char color specifiers
 			if parameter:sub(1,1) == '$' then
@@ -933,7 +933,7 @@ local function AddMessage(msg, target, remake)
 	if hideMessage(msg) or (not WG.Chili) then
 		return
 	end
-	
+
 	local stack
 	local fade
 	local size
@@ -955,14 +955,14 @@ local function AddMessage(msg, target, remake)
 		stack = stack_backchat
 		lastMsg = lastMsgBackChat
 	end
-	
+
 	if not stack then
 		-- stack_console may not yet be created.
 		return
 	end
-	
+
 	--if msg.highlight and options.highlighted_text_height.value
-	
+
 	-- TODO betterify this / make configurable
 	local highlight_sequence1 = (msg.highlight and options.highlight_surround.value and (incolor_highlight .. HIGHLIGHT_SURROUND_SEQUENCE_1) or '')
 	local highlight_sequence2 = (msg.highlight and options.highlight_surround.value and (incolor_highlight .. HIGHLIGHT_SURROUND_SEQUENCE_2) or '')
@@ -970,7 +970,7 @@ local function AddMessage(msg, target, remake)
 
 	if msg.dup > 1 and not remake then
 		--local last = stack.children[#(stack.children)]
-		
+
 		if lastMsg then
 			if lastMsg.SetText then
 				lastMsg:SetText(text)
@@ -980,7 +980,7 @@ local function AddMessage(msg, target, remake)
 		end
 		return
 	end
-	
+
 	local textbox = WG.Chili.TextBox:New{
 		width = '100%',
 		align = "left",
@@ -988,18 +988,19 @@ local function AddMessage(msg, target, remake)
 		lineSpacing = 0,
 		padding = { 0, 0, 0, 0 },
 		text = text,
-		
+
 		--[[
 		autoHeight=true,
 		autoObeyLineHeight=true,
 		--]]
-		objectOverrideFont = WG.GetSpecialFont(size, "proconsole", {
-			outlineWidth = 3,
-			outlineWeight = 10,
-			outline = true,
-		})
+		---TEST: MaDD
+		--objectOverrideFont = WG.GetSpecialFont(size, "proconsole", {
+		--	outlineWidth = 3,
+		--	outlineWeight = 10,
+		--	outline = true,
+		--})
 	}
-	
+
 	if options.clickable_points.value then
 		local control = textbox
 		if msg.point then --message is a marker, make obvious looking button
@@ -1023,7 +1024,7 @@ local function AddMessage(msg, target, remake)
 				caption = '',
 				children = {
 					WG.Chili.Button:New{
-						noFont = true,
+						--noFont = true,
 						x=0;y=0;
 						width = 30,
 						height = 20,
@@ -1047,7 +1048,7 @@ local function AddMessage(msg, target, remake)
 					},
 					textbox,
 				},
-				
+
 			}
 		elseif target == 'chat' then
 			-- Make a panel for each chat line because this removes the message jitter upon fade.
@@ -1096,7 +1097,7 @@ local function AddMessage(msg, target, remake)
 			control_id = control_id + 1
 		end
 	end
-	
+
 	if target == 'chat' then
 		lastMsgChat = textbox
 	elseif target == 'backchat' then
@@ -1106,7 +1107,7 @@ local function AddMessage(msg, target, remake)
 	end
 
 	stack:UpdateClientArea()
-		
+
 end
 
 
@@ -1191,11 +1192,11 @@ function RemakeConsole()
 			stack_console.children[1]:Dispose() --dispose/disconnect all children (safer)
 		end
 	end
-	
+
 	for i=1, #stack_backchat.children do
 		stack_backchat.children[1]:Dispose() --dispose/disconnect all children (safer)
 	end
-	
+
 	-- FIXME : messages collection changing while iterating (if max_lines option has been shrinked)
 	for i = 1, #chatMessages do
 		local msg = chatMessages[i]
@@ -1207,7 +1208,7 @@ function RemakeConsole()
 		AddMessage(msg, 'console', true )
 	end
 	removeToMaxLines()
-	
+
 end
 
 local function ShowInputSpace()
@@ -1215,7 +1216,7 @@ local function ShowInputSpace()
 	inputspace.backgroundColor = {1,1,1,1}
 	inputspace.borderColor = {0,0,0,1}
 	inputspace:Invalidate()
-	
+
 	if options.backlogHideNotChat.value and backlogButton and backlogButton.parent then
 		backlogButton:SetVisibility(true)
 	end
@@ -1225,7 +1226,7 @@ local function HideInputSpace()
 	inputspace.backgroundColor = {0,0,0,0}
 	inputspace.borderColor = {0,0,0,0}
 	inputspace:Invalidate()
-	
+
 	if options.backlogHideNotChat.value and backlogButton and backlogButton.parent then
 		backlogButton:SetVisibility(false)
 	end
@@ -1272,16 +1273,16 @@ local function MakeMessageWindow(name, enabled, ParentFunc)
 			y = 50 -- resource bar height
 		end
 	end
-	
+
 	if enabled and ParentFunc then
 		ParentFunc()
 	end
-	
+
 	return WG.Chili.Window:New{
 		parent = (enabled and screen0) or nil,
 		margin = { 0, 0, 0, 0 },
 		padding = { 0, 0, 0, 0 },
-		noFont = true,
+		--noFont = true,
 		dockable = true,
 		name = name,
 		x = x,
@@ -1359,7 +1360,7 @@ function widget:KeyPress(key, modifier, isRepeat)
 			end
 			firstEnter = false
 		end
-		
+
 		if options.backlogShowWithChatEntry.value then
 			SetBacklogShow(true)
 		end
@@ -1423,36 +1424,36 @@ function widget:AddConsoleMessage(msg)
 		if options.error_opengl_source.value and (msg.argument):find('Error: OpenGL: source') then
 			return
 		end
-		
+
 		if (msg.argument):find('added point') then
 			return
 		end
-		
+
 		if (msg.argument):find("LuaMenuServerMessage") then
 			return
 		end
-		
+
 		if (msg.argument):find("GroundDetail set to") then
 			return
 		end
 	end
-	
+
 	local isChat = isChat(msg)
 	local isPoint = msg.msgtype == "point" or msg.msgtype == "label"
 	local messages = isChat and chatMessages or consoleMessages
-	
+
 	if #messages > 0
 		and messages[#messages].text == msg.text
 		and (isPoint and options.dedupe_points.value or options.dedupe_messages.value)
 		then
-		
+
 		if isPoint then
 			-- update MapPoint position with most recent, as it is probably more relevant
 			messages[#messages].point = msg.point
 		end
-		
+
 		messages[#messages].dup = messages[#messages].dup + 1
-		
+
 		if isChat then
 			AddMessage(messages[#messages], 'chat')
 			AddMessage(messages[#messages], 'backchat')
@@ -1461,21 +1462,21 @@ function widget:AddConsoleMessage(msg)
 		end
 		return
 	end
-	
+
 	msg.dup = 1
-	
+
 	detectHighlight(msg)
 	formatMessage(msg) -- does not handle dedupe or highlight
-	
+
 	messages[#messages + 1] = msg
-	
+
 	if isChat then
 		AddMessage(msg, 'chat')
 		AddMessage(msg, 'backchat')
 	else
 		AddMessage(msg, 'console')
 	end
-	
+
 	if msg.highlight and options.highlight_sound.value then
 		PlaySound("highlight")
 	elseif (msg.msgtype == "player_to_allies") then -- FIXME not for sent messages
@@ -1487,7 +1488,7 @@ function widget:AddConsoleMessage(msg)
 	if #messages > MAX_STORED_MESSAGES then
 		table.remove(messages, 1)
 	end
-	
+
 	removeToMaxLines()
 end
 
@@ -1510,12 +1511,12 @@ function widget:Update(s)
 	if timer > 2 then
 		timer = 0
 		local sub = 2 / options.autohide_text_time.value
-		
+
 		local inputWidthAdd = 0
 		if not options.backlogArrowOnRight.value then
 			inputWidthAdd = inputsize
 		end
-		
+
 		Spring.SendCommands(
 			{
 				string.format("inputtextgeo %f %f 0.02 %f",
@@ -1525,10 +1526,10 @@ function widget:Update(s)
 				)
 			}
 		)
-		
+
 		for k,control in pairs(fadeTracker) do
 			fadeTracker[k].fade = math.max( control.fade - sub, 0 ) --removes old lines
-			
+
 			if control.fade == 0 then
 				--control.parent:RemoveChild(control)
 				control:Dispose()
@@ -1536,7 +1537,7 @@ function widget:Update(s)
 			end
 		end
 	end
-	
+
 	if firstUpdate then
 		if options.defaultBacklogEnabled.value then
 			SwapBacklog()
@@ -1547,7 +1548,7 @@ function widget:Update(s)
 			SetHidden(true)
 		end
 	end
-	
+
 	-- Workaround bugged display on first open of the backlog
 	if initialSwapTime then
 		initialSwapTime = initialSwapTime - s
@@ -1611,18 +1612,18 @@ function widget:Initialize()
 
 	screen0 = WG.Chili.Screen0
 	color2incolor = WG.Chili.color2incolor
-	
+
 	Spring.SendCommands("bind Any+enter  chat")
-	
+
 	stack_chat = MakeMessageStack(0)
-	
+
 	stack_backchat = MakeMessageStack(1)
-	
+
 	inputspace = WG.Chili.ScrollPanel:New{
 		x = (options.backlogArrowOnRight.value and 0) or inputsize,
 		right = ((not options.backlogArrowOnRight.value) and 0) or inputsize,
 		bottom = 0,
-		noFont = true,
+		--noFont = true,
 		height = inputsize,
 		backgroundColor = {1,1,1,1},
 		borderColor = {0,0,0,1},
@@ -1649,14 +1650,14 @@ function widget:Initialize()
 		OnClick = {SwapBacklog},
 		children={ backlogButtonImage },
 	}
-	
+
 	scrollpanel_chat = WG.Chili.ScrollPanel:New{
 		--margin = {5,5,5,5},
 		padding = { 1,1,1,4 },
 		x = 0,
 		y = 0,
 		width = '100%',
-		noFont = true,
+		--noFont = true,
 		bottom = inputsize + 2, -- This line is temporary until chili is fixed so that ReshapeConsole() works both times! -- TODO is it still required??
 		verticalSmartScroll = true,
 -- DISABLED FOR CLICKABLE TextBox		disableChildrenHitTest = true,
@@ -1669,7 +1670,7 @@ function widget:Initialize()
 		verticalScrollbar = false,
 		horizontalScrollbar = false,
 	}
-	
+
 	--spacer that forces chat to be scrolled to bottom of chat window
 	WG.Chili.Panel:New{
 		width = '100%',
@@ -1677,13 +1678,13 @@ function widget:Initialize()
 		backgroundColor = {0,0,0,0},
 		parent = stack_chat,
 	}
-	
+
 	scrollpanel_backchat = WG.Chili.ScrollPanel:New{
 		--margin = {5,5,5,5},
 		padding = { 3,3,3,3 },
 		x = 0,
 		y = 0,
-		noFont = true,
+		--noFont = true,
 		width = '100%',
 		bottom = inputsize + 2, -- This line is temporary until chili is fixed so that ReshapeConsole() works both times! -- TODO is it still required??
 		verticalSmartScroll = true,
@@ -1695,7 +1696,7 @@ function widget:Initialize()
 			stack_backchat,
 		},
 	}
-	
+
 	scrollpanel_console = WG.Chili.ScrollPanel:New{
 		--margin = {5,5,5,5},
 		padding = { 5, 5, 5, 5 },
@@ -1703,36 +1704,36 @@ function widget:Initialize()
 		y = 5,
 		right = 5,
 		bottom = 5,
-		noFont = true,
+		--noFont = true,
 		verticalSmartScroll = true,
 		backgroundColor = {0,0,0,0},
 		borderColor = {0,0,0,0},
-		
+
 		--ignoreMouseWheel = not options.mousewheel.value,
 		children = {
 		},
 	}
-	
+
 	window_chat = MakeMessageWindow("ProChat", true)
 	window_chat:AddChild(scrollpanel_chat)
 	window_chat:AddChild(backlogButton)
 	if options.enableChatBackground.value then
 		window_chat:AddChild(inputspace)
 	end
-	
+
 	window_console = MakeMessageWindow("ProConsole", options.enableConsole.value, InitializeConsole)
 	window_console:AddChild(scrollpanel_console)
-	
+
 	RemakeConsole()
 	local buffer = widget:ProcessConsoleBuffer(nil, options.max_lines.value)
 	for i=1,#buffer do
 	  widget:AddConsoleMessage(buffer[i])
 	end
-	
+
 	Spring.SendCommands({"console 0"})
-	
+
 	HideInputSpace()
- 	
+
 	self:LocalColorRegister()
 end
 
@@ -1749,6 +1750,6 @@ function widget:Shutdown()
 	SetInputFontSize(20)
 	Spring.SendCommands({"console 1", "inputtextgeo default"}) -- not saved to spring's config file on exit
 	Spring.SetConfigString("InputTextGeo", "0.26 0.73 0.02 0.028") -- spring default values
-	
+
 	self:LocalColorUnregister()
 end

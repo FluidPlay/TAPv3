@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="07ab494b-bd0c-449a-9433-ae897a0e2b23" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/LuaUI/Widgets/chili/Skins/Evolved/fonts/GeogrotesqueCompMedium.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LuaUI/Widgets/chili_old/Skins/Evolved/fonts/GeogrotesqueCompMedium.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LuaUI/Widgets/gui_set_engine_font.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fonts/GeogrotesqueCompMedium.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/configs/damagemultipliers.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/configs/damagetypes.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/configs/fontsettings.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/configs/unitdefs_data.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/configs/weapondamagetypes.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/configs/weapondefs_data.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamedata/taptools.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/chili/Skins/Evolved/skin.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/chili/Skins/Evolved/skin.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/chili_old/Skins/Evolved/skin.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/chili_old/Skins/Evolved/skin.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_economy_panel2.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_economy_panel2.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_proconsole_test.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_proconsole_test.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_selections_and_cursortip.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_selections_and_cursortip.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/gui_pauseScreen.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/gui_pauseScreen.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/unit_clippy.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/unit_clippy.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/Widgets/unit_comm_nametags.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/Widgets/unit_comm_nametags.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LuaUI/modfonts.lua" beforeDir="false" afterPath="$PROJECT_DIR$/LuaUI/modfonts.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modinfo.lua" beforeDir="false" afterPath="$PROJECT_DIR$/modinfo.lua" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="skin.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/chili_old/Skins/Evolved/skin.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gui_chili_economy_panel2.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_chili_economy_panel2.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="1740" column="5" selection-start-line="1740" selection-start-column="5" selection-end-line="1740" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gui_pauseScreen.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_pauseScreen.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="54" column="75" selection-start-line="54" selection-start-column="75" selection-end-line="54" selection-end-column="75" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit_comm_nametags.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/unit_comm_nametags.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modfonts.lua" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/LuaUI/modfonts.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="103">
+              <caret line="371" selection-start-line="371" selection-end-line="372" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="luaui.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/luaui.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="233">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="taptools.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gamedata/taptools.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" column="20" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fontsettings.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gamedata/configs/fontsettings.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unit_clippy.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/unit_clippy.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="189" column="29" selection-start-line="189" selection-start-column="29" selection-end-line="189" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gui_chili_selections_and_cursortip.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_chili_selections_and_cursortip.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="291">
+              <caret line="1082" column="8" selection-start-line="1082" selection-start-column="8" selection-end-line="1082" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>SKINDIR =</find>
+      <find>ont</find>
+      <find>fontPath</find>
+      <find>objectOverrideFont</find>
+      <find>font</find>
+      <find>VFS</find>
+      <find>usefont</find>
+      <find>UseFont</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/chili/Skins/Evolved/skin.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/unit_clippy.lua" />
+        <option value="$PROJECT_DIR$/modinfo.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_proconsole_test.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_selections_and_cursortip.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/chili_old/Skins/Evolved/skin.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/gui_chili_economy_panel2.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/gui_pauseScreen.lua" />
+        <option value="$PROJECT_DIR$/gamedata/configs/fontsettings.lua" />
+        <option value="$PROJECT_DIR$/gamedata/taptools.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/Widgets/unit_comm_nametags.lua" />
+        <option value="$PROJECT_DIR$/LuaUI/modfonts.lua" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="288" />
+    <option name="y" value="353" />
+    <option name="width" value="2193" />
+    <option name="height" value="1153" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="TAPv3.SDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TAPv3.SDD" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TAPv3.SDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TAPv3.SDD" type="462c0819:PsiDirectoryNode" />
+              <item name="gamedata" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TAPv3.SDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TAPv3.SDD" type="462c0819:PsiDirectoryNode" />
+              <item name="gamedata" type="462c0819:PsiDirectoryNode" />
+              <item name="configs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TAPv3.SDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TAPv3.SDD" type="462c0819:PsiDirectoryNode" />
+              <item name="LuaUI" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TAPv3.SDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TAPv3.SDD" type="462c0819:PsiDirectoryNode" />
+              <item name="LuaUI" type="462c0819:PsiDirectoryNode" />
+              <item name="Fonts" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Breno\Documents\My Games\Spring\games\TAPv3.SDD\gamedata" />
+      <recent name="C:\Users\Breno\Documents\My Games\Spring\games\TAPv3.SDD\gamedata\configs" />
+      <recent name="C:\Users\Breno\Documents\My Games\Spring\games\TAPv3.SDD\LuaUI\Widgets" />
+      <recent name="C:\Users\Breno\Documents\My Games\Spring\games\TAPv3.SDD\fonts" />
+      <recent name="C:\Users\Breno\Documents\My Games\Spring\games\TAPv3.SDD\LuaUI\Widgets\chili\Skins\Evolved\fonts" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="07ab494b-bd0c-449a-9433-ae897a0e2b23" name="Default" comment="" />
+      <created>1657573489582</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1657573489582</updated>
+      <workItem from="1657573492215" duration="6711000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6711000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="231" y="283" width="1754" height="922" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info id="Image Layers" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="bottom" id="LuaCheck" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info id="Capture Tool" />
+      <window_info id="Designer" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1763658" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/chili/Handlers/skinhandler.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_chili_proconsole_test.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1297">
+          <caret line="1751" column="32" selection-start-line="1751" selection-start-column="32" selection-end-line="1751" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/chili/Skins/Evolved/skin.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modinfo.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Configs/epicmenu_conf.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_epicmenu.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/unit_clippy.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="189" column="29" selection-start-line="189" selection-start-column="29" selection-end-line="189" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_chili_selections_and_cursortip.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="1082" column="8" selection-start-line="1082" selection-start-column="8" selection-end-line="1082" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/chili_old/Skins/Evolved/skin.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_chili_economy_panel2.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="1740" column="5" selection-start-line="1740" selection-start-column="5" selection-end-line="1740" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/gui_pauseScreen.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="54" column="75" selection-start-line="54" selection-start-column="75" selection-end-line="54" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gamedata/configs/fontsettings.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/luaui.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gamedata/taptools.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/Widgets/unit_comm_nametags.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LuaUI/modfonts.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="371" selection-start-line="371" selection-end-line="372" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>Kahlua</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

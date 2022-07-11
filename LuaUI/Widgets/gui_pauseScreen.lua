@@ -52,13 +52,13 @@ local imgTexCoordY = 0.625	--image texture coordinate Y -- enter values other th
 local fontSizeHeadline = 36
 local fontSizeAddon = 24
 local windowIconPath = "LuaUI/Images/ZK_logo_pause.png"
-local fontPath = "LuaUI/Fonts/MicrogrammaDBold.ttf"
+local fontPath = "fonts/GeogrotesqueCompMedium.otf" --MicrogrammaDBold.ttf"
 local windowClosePath = "LuaUI/Images/quit.png"
 local imgCloseWidth = 32
 local minTransparency = 0 -- transparency after [X] is pressed
 local minTransparency_autoFade = 0.1
 --Color config in drawPause function
-	
+
 ----------------
 local screenx, screeny
 local myFont
@@ -158,7 +158,7 @@ function widget:DrawScreen()
 	local now = osClock()
 	local _, _, paused = spGetGameSpeed()
 	local diffPauseTime = ( now - pauseTimestamp)
-	
+
 	if ( ( not paused and lastPause ) or ( paused and not lastPause ) ) then
 		--pause switch
 		pauseTimestamp = osClock()
@@ -166,7 +166,7 @@ function widget:DrawScreen()
 			pauseTimestamp = pauseTimestamp - ( slideTime - diffPauseTime )
 		end
 	end
-	
+
 	if ( paused and not lastPause ) then
 		--new pause
 		if not (options.disablesound.value or (tempDisabled and not doNotDisableSound)) then
@@ -180,14 +180,14 @@ function widget:DrawScreen()
 	end
 
 	lastPause = paused
-		
+
 	if ( (paused or ( ( now - pauseTimestamp) <= slideTime )) and not (options.hideimage.value or tempDisabled)) then
 		if now - disablePauseSlideTimestamp > slideTime then
 			drawPause(paused, now)
 		end
 		ResetGl()
 	end
-	
+
 end
 
 function isOverWindow(x, y)
@@ -205,7 +205,7 @@ function widget:MousePress(x, y, button)
 		if ( not (options.hideimage.value or tempDisabled) ) then
 			clickTimestamp = osClock()
 		end
-		
+
 		--display setting for Pause Screen when pressing Spacebat+Click on the Pause Screen.
 		local alt, ctrl, meta, shift = Spring.GetModKeyState()
 		if not meta then  --//skip epicMenu when user didn't press the Spacebar
@@ -219,11 +219,11 @@ function widget:MousePress(x, y, button)
 			options.hideimage.value = true
 		end
 		--]]
-		
+
 		return true
 	end
   end
-  
+
   return false
 end
 
@@ -265,7 +265,7 @@ function drawPause(paused, now)
 	local iconColor = { 1.0, 1.0, 1.0, 1.0 }
 	local iconColor2 = { 1.0, 1.0, 1.0, 1.0 }
 	local mouseOverColor = { 1.0, 1.0, 0.0, 1.0 }
-	
+
 	if options.autofade.value then
 		local factor0 = ( 1.0 -  ( diffPauseTime ) / autoFadeTime)
 		local factor1 = max(factor0,minTransparency_autoFade)
@@ -285,11 +285,11 @@ function drawPause(paused, now)
 			factor = ( 1.0 - ( now - clickTimestamp ) / fadeTime )
 		end
 		factor = max( factor, minTransparency )
-    
+
 		if factor == 0 then
 			return
 		end
-    
+
 		colorWnd[4] = colorWnd[4] * factor
 		text[4] = text[4] * factor
 		text2[4] = text2[4] * factor
@@ -299,18 +299,18 @@ function drawPause(paused, now)
 		mouseOverColor[4] = mouseOverColor[4] * factor
 	end
 	local imgWidthHalf = imgWidth * 0.5
-	
+
 	if options.nopicture.value then
 		colorWnd[4] = colorWnd[4] * 0
 		iconColor[4] = iconColor[4] * 0
 		iconColor2[4] = iconColor2[4]* 0
 		mouseOverColor[4] = mouseOverColor[4] * 0
 	end
-	
-	
+
+
 	--draw window
 	glPushMatrix()
-	
+
 	if ( diffPauseTime <= slideTime ) then
 		local group1XOffset = 0
 		--we are sliding
@@ -323,42 +323,42 @@ function drawPause(paused, now)
 		end
 		glTranslate( group1XOffset, 0, 0)
 	end
-	
+
 	glColor( colorWnd )
 	glRect( wndX1, wndY1, wndX2, wndY2 )
 	glColor( colorWnd )
 	glRect( wndX1 - wndBorderSize, wndY1 + wndBorderSize, wndX2 + wndBorderSize, wndY2 - wndBorderSize)
-	
+
 	--draw close icon
 	glColor(  iconColor2 )
 	if ( mouseOverClose and clickTimestamp == nil and (options.hideimage.value == false and options.autofade.value==false and (not tempDisabled))) then
 		glColor( mouseOverColor )
 	end
-	
+
 	glTexture( ":n:" .. windowClosePath )
 	glTexRect( wndX2 - imgCloseWidth - wndBorderSize, wndY1 - imgCloseWidth - wndBorderSize, wndX2 - wndBorderSize, wndY1 - wndBorderSize, 0.0, 0.0, 1.0, 1.0 )
-	
+
 	--draw text
 	local textBegining = options.nopicture.value and (wndX1 + ( wndX2 - wndX1 ) * 0.2) or textX
-	
+
 	myFont:Begin()
 	myFont:SetOutlineColor( outline )
 
 	myFont:SetTextColor( text )
 	myFont:Print( "GAME PAUSED", textBegining, textY, fontSizeHeadline, "O" )
-		
+
 	myFont:SetTextColor( text2 )
 	myFont:Print( "Press 'Pause' to continue.", textBegining, textY - lineOffset, fontSizeAddon, "O" )
-	
+
 	myFont:End()
-	
+
 	glPopMatrix()
-	
+
 	--draw logo
 	glColor(  iconColor )
 	glTexture( ":n:" .. windowIconPath )
 	glPushMatrix()
-	
+
 	if ( diffPauseTime <= slideTime ) then
 		--we are sliding
 		if ( paused ) then
@@ -369,16 +369,16 @@ function drawPause(paused, now)
 			glTranslate( 0, ( yCenter + imgWidthHalf ) * ( diffPauseTime / slideTime ), 0)
 		end
 	end
-	
+
 	glTexRect( xCut - imgWidthHalf, yCenter + imgWidthHalf, xCut + imgWidthHalf, yCenter - imgWidthHalf, 0.0, 0.0, imgTexCoordX, imgTexCoordY )
 	glPopMatrix()
-	
+
 	glTexture(false)
 end
 
 function updateWindowCoords()
 	screenx, screeny = widgetHandler:GetViewSizes()
-	
+
 	screenCenterX = screenx / 2
 	screenCenterY = screeny / 2
 	wndX1 = screenCenterX - boxWidth
@@ -389,7 +389,7 @@ function updateWindowCoords()
 	textX = wndX1 + ( wndX2 - wndX1 ) * 0.36
 	textY = wndY2 + ( wndY1 - wndY2 ) * 0.53
 	lineOffset = ( wndY1 - wndY2 ) * 0.3
-	
+
 	yCenter = wndY2 + ( wndY1 - wndY2 ) * 0.5
 	xCut = wndX1 + ( wndX2 - wndX1 ) * 0.19
 end
@@ -422,4 +422,4 @@ function printDebug( value )
 		end
 	end
 end
-	
+

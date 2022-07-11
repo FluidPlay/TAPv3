@@ -15,7 +15,8 @@
 
 
 -- ":n:" sets it to nearest texture filtering
-local DefaultFontName = ":n:" .. LUAUI_DIRNAME .. "Fonts/FreeMonoBold_12"
+local DefaultFontName = ":n:" .. "fonts/GeogrotesqueCompMedium.otf"
+		-- .. LUAUI_DIRNAME .. "Fonts/FreeMonoBold_12"
 
 
 --------------------------------------------------------------------------------
@@ -119,7 +120,7 @@ local function LoadFontSpecs(fontName)
 		return nil
 	end
 	local fontSpecs = chunk()
-	
+
 	print('fontSpecs.srcFile  = ' .. fontSpecs.srcFile)
 	print('fontSpecs.family   = ' .. fontSpecs.family)
 	print('fontSpecs.style    = ' .. fontSpecs.style)
@@ -127,7 +128,7 @@ local function LoadFontSpecs(fontName)
 	print('fontSpecs.yStep    = ' .. fontSpecs.yStep)
 	print('fontSpecs.xTexSize = ' .. fontSpecs.xTexSize)
 	print('fontSpecs.yTexSize = ' .. fontSpecs.yTexSize)
-	
+
 	return fontSpecs
 end
 
@@ -154,7 +155,7 @@ local function MakeOutlineDisplayLists(fontSpecs)
 	local lists = {}
 	local tw = fontSpecs.xTexSize
 	local th = fontSpecs.yTexSize
-	
+
 	for _, gi in pairs(fontSpecs.glyphs) do
 		local texa = gi.txn / tw
 		local texb = 1.0 - (gi.tyn / th)
@@ -162,11 +163,11 @@ local function MakeOutlineDisplayLists(fontSpecs)
 		local texd = 1.0 - (gi.typ / th)
 		local width = gi.adv
 		local weight = fontSpecs.outlineWeight
-		
+
 		local list = glCreateList(function ()
 			local o = fontSpecs.outlineRadius
 			glTranslate((gi.initDist or 0), 0, 0)
-			
+
 			gl.Blending (GL.SRC_COLOR, GL.ONE_MINUS_SRC_ALPHA) --blending for color (for making black & pure color)
 			gl.PushAttrib(GL.CURRENT_BIT) --remember user defined color. Reference:http://opengl.czweb.org/ch14/462-465.html
 			glColor(0, 0, 0, weight/134) --set to BLACK. Note: 100/134 alpha == 0.75 alpha
@@ -174,10 +175,10 @@ local function MakeOutlineDisplayLists(fontSpecs)
 			gl.PopAttrib() --restore user defined color.
 			gl.Blending (GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA) --reset to default blending
 			glTexRect(gi.oxn, gi.oyn, gi.oxp, gi.oyp, texa,texb,texc,texd)
-			
+
 			glTranslate(width + (gi.whitespace or 0), 0, 0)
 		end)
-		
+
 		lists[gi.num] = list
 	end
 	return lists
@@ -217,6 +218,8 @@ end
 
 
 local function GetTextWidth(text)
+	if not activeFont then
+		return 0 end
 	-- return the cached value if available
 	local cacheTextData = activeFont.cache[text]
 	if (cacheTextData) then
@@ -264,8 +267,11 @@ end
 
 
 local function DrawNoCache(text, x, y)
+	if not activeFont then
+		return end
+
 	glTexture(activeFont.image)
-	
+
 	if (not x) then
 		RawDraw(text)
 	else
@@ -279,11 +285,11 @@ end
 
 
 local function Draw(text, x, y)
-	if (not caching) then
+	if (not caching or not activeFont) then
 		DrawNoCache(text, x, y)
 		return
 	end
-	
+
 	local cacheTextData = activeFont.cache[text]
 	if (not cacheTextData) then
 		glTexture(activeFont.image) --// else we would _recreate_ the texture each call to the displaylist!
@@ -297,7 +303,7 @@ local function Draw(text, x, y)
 	else
 		cacheTextData[2] = timeStamp  --//  refresh the timeStamp
 	end
-	
+
 	if (not x) then
 		glCallList(cacheTextData[1])
 	else
@@ -343,6 +349,8 @@ end
 
 
 local function DrawCentered(text, x, y)
+	if not text or type(x)~="number" or type(y)~="number" then
+		return nil end
 	local width = GetTextWidth(text)
 	local halfWidth
 	if (useFloor) then
@@ -361,12 +369,15 @@ end
 --------------------------------------------------------------------------------
 
 local function LoadFont(fontName)
+	--if not fontName then
+	--	return nil end
+
 	print('LoadFont:' .. fontName)
-	
+
 	if (fonts[fontName]) then
 		return nil  -- already loaded
 	end
-	
+
 	local baseName = fontName
 	local _, _, options, bn = fontName:find("(:.-:)(.*)")
 	if (options) then
@@ -374,20 +385,20 @@ local function LoadFont(fontName)
 	else
 		options = ""
 	end
-	
+
 	if (not HaveFontFiles(baseName)) then
 		CreateFontFiles(baseName)
 	end
-	
+
 	local fontSpecs = LoadFontSpecs(baseName)
 	if (not fontSpecs) then
 		return nil  -- bad specs
 	end
-	
-	if (not VFS.FileExists(baseName .. ".png")) then
-		return nil  -- missing texture
-	end
-	
+
+	--if (not VFS.FileExists(baseName .. ".png")) then
+	--	return nil  -- missing texture
+	--end
+
 	local fontLists
 	if (options:find("o")) then
 		fontLists = MakeOutlineDisplayLists(fontSpecs)
@@ -397,7 +408,7 @@ local function LoadFont(fontName)
 	if (not fontLists) then
 		return nil  -- bad display lists
 	end
-	
+
 	local font = {}
 	font.name  = fontName
 	font.base  = baseName
@@ -406,27 +417,29 @@ local function LoadFont(fontName)
 	font.lists = fontLists
 	font.cache = {}
 	font.image = options .. baseName .. ".png"
-	
+
 	fonts[fontName] = font
-	
+
 	return font
 end
 
 
 local function UseFont(fontName)
+	--if not fontName then
+	--	return false end
 	local font = fonts[fontName]
 	if (font) then
 		activeFont = font
 		return true
 	end
-	
+
 	font = LoadFont(fontName)
 	if (font) then
 		activeFont = font
 		print("Loaded font: " .. fontName)
 		return true
 	end
-	
+
 	return false
 end
 
@@ -464,7 +477,7 @@ local function FreeFont(fontName)
 	if (not font) then
 		return
 	end
-	
+
 	for _, list in pairs(font.lists) do
 		glDeleteList(list)
 	end
@@ -472,7 +485,7 @@ local function FreeFont(fontName)
 		glDeleteList(data[1])
 	end
 	glDeleteTexture(font.image)
-	
+
 	fonts[font.name] = nil
 end
 
@@ -489,7 +502,7 @@ local function Update()
 	if (timeStamp < (lastUpdate + 1.0)) then
 		return  -- only update every 1.0 seconds
 	end
-	
+
 	local killTime = (timeStamp - 3.0)
 	for fontName, font in pairs(fonts) do
 		local killList = {}
@@ -504,7 +517,7 @@ local function Update()
 			font.cache[text] = nil
 		end
 	end
-	
+
 	lastUpdate = timeStamp
 end
 

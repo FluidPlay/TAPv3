@@ -68,13 +68,13 @@ local selectionWindow
 
 local ICON_SIZE = 20
 local BAR_SIZE = 22
-local BAR_FONT = 13
+local BAR_FONTSIZE = 13
 local BAR_SPACING = 24
-local IMAGE_FONT = 12
-local DESC_FONT = 10
-local TOOLTIP_FONT = 13
-local STATS_FONT = 13
-local NAME_FONT = 14
+local IMAGE_FONTSIZE = 12
+local DESC_FONTSIZE = 10
+local TOOLTIP_FONTSIZE = 13
+local STATS_FONTSIZE = 13
+local NAME_FONTSIZE = 14
 local LEFT_SPACE = 24
 local LEFT_LABEL_HEIGHT = 16
 local SEL_BUTTON_SHORTENING = 2
@@ -272,7 +272,7 @@ options_order = {
 	'tooltip_delay', 'independant_world_tooltip_delay',
 	'show_for_units', 'show_for_wreckage', 'show_for_unreclaimable', 'showdrawtooltip','showterratooltip',
 	'showDrawTools', 'tooltip_opacity',
-	
+
 	--selected units
 	'selection_opacity', 'allowclickthrough', 'groupbehaviour', 'showgroupinfo', 'ctrlFilter',
 	'uniticon_size', 'manualWeaponReloadBar', 'jumpReloadBar',
@@ -564,7 +564,7 @@ local function SetPanelSkin(targetPanel, className)
 	if skin[className] then
 		newClass = skin[className]
 	end
-	
+
 	targetPanel.tiles = newClass.tiles
 	targetPanel.TileImageFG = newClass.TileImageFG
 	--targetPanel.backgroundColor = newClass.backgroundColor
@@ -653,11 +653,11 @@ end
 
 local function GetUnitResources(unitID)
 	local mm, mu, em, eu = Spring.GetUnitResources(unitID)
-	
+
 	mm = (mm or 0) + (spGetUnitRulesParam(unitID, "current_metalIncome") or 0)
 	em = (em or 0) + (spGetUnitRulesParam(unitID, "current_energyIncome") or 0)
 	eu = (eu or 0) + (spGetUnitRulesParam(unitID, "overdrive_energyDrain") or 0)
-	
+
 	if mm ~= 0 or mu ~= 0 or em ~= 0 or eu ~= 0 then
 		return mm, (mu or 0), em, eu
 	else
@@ -706,7 +706,7 @@ local function GetUnitShieldRegenString(unitID, ud)
 			return "  (" .. math.ceil(shieldRegen / 30) .. "s)"
 		end
 	end
-	
+
 	local mult = spGetUnitRulesParam(unitID,"totalReloadSpeedChange") or 1 * (1 - (spGetUnitRulesParam(unitID, "shieldChargeDisabled") or 0))
 	if mult == 0 then
 		return ""
@@ -737,7 +737,7 @@ local function GetManualFireReload(unitID, unitDefID)
 	if not (unitDefID and showManualFire) then
 		return false
 	end
-	
+
 	if unitID and commanderManualFireReload[unitID] then
 		local reload = commanderManualFireReload[unitID]
 		if reload[1] == 0 then
@@ -749,7 +749,7 @@ local function GetManualFireReload(unitID, unitDefID)
 	if not unitDefID then
 		return false
 	end
-	
+
 	if manualFireTimeDefs[unitDefID] then
 		return manualFireTimeDefs[unitDefID], 3
 	end
@@ -759,19 +759,19 @@ local function GetManualFireReload(unitID, unitDefID)
 	if not (unitID and isCommander[unitDefID]) then
 		return false
 	end
-	
+
 	local manualFire = spGetUnitRulesParam(unitID, "comm_weapon_manual_2")
 	if manualFire ~= 1 then
 		commanderManualFireReload[unitID] = {0}
 		return false
 	end
-	
+
 	local weaponNum = spGetUnitRulesParam(unitID, "comm_weapon_num_2")
 	if not weaponNum then
 		commanderManualFireReload[unitID] = {0}
 		return false
 	end
-	
+
 	local ud = UnitDefs[unitDefID]
 	local unitWeapon = ud and ud.weapons and ud.weapons[weaponNum]
 	if (unitWeapon ~= nil) and WeaponDefs[unitWeapon.weaponDef].manualFire then
@@ -779,7 +779,7 @@ local function GetManualFireReload(unitID, unitDefID)
 		commanderManualFireReload[unitID] = {reload, weaponNum}
 		return reload, weaponNum
 	end
-	
+
 	commanderManualFireReload[unitID] = {0}
 	return false
 end
@@ -807,7 +807,7 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 	if econMultEnabled then
 		mult = mult * (Spring.GetGameRulesParam("econ_mult_" .. (Spring.GetMyAllyTeamID() or "")) or 1)
 	end
-	
+
 	if econDef.mex then
 		if mousePlaceX and WG.mouseoverMexIncome then
 			local extraText = ", ".. WG.Translate("interface", "income") .. " +" .. math.round(WG.mouseoverMexIncome * mult, 2)
@@ -819,7 +819,7 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 		end
 		return
 	end
-	
+
 	local income = econDef.income * mult
 	local cost = econDef.cost
 	local extraText = ""
@@ -846,18 +846,18 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 	else
 		extraText = extraText .. " (+" .. math.round(income, ((mult == 1) and 0) or 1) .. ")"
 	end
-	
+
 	local teamID = Spring.GetLocalTeamID()
 	local metalOD = Spring.GetTeamRulesParam(teamID, "OD_team_metalOverdrive") or 0
 	local energyOD = Spring.GetTeamRulesParam(teamID, "OD_team_energyOverdrive") or 0
-	
+
 	if metalOD and metalOD > 0 and energyOD and energyOD > 0 then
 		-- Best case payback assumes that extra energy will make
 		-- metal at the current energy:metal ratio. Note that if
 		-- grids are linked better then better payback may be
 		-- achieved.
 		--local bestCasePayback = cost/(income*metalOD/energyOD)
-		
+
 		-- Uniform case payback assumes that all mexes are being
 		-- overdriven equally and figures out their multiplier
 		-- from the base mex income. It then figures out how many
@@ -876,14 +876,14 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 		--local extraMetalPerMex = totalMexIncome/mexCount*math.sqrt(energyPerMex+incomePerMex)/4 - overdrivePerMex
 		--local extraMetal = extraMetalPerMex*mexCount
 		--local unitformCasePayback = cost/extraMetal
-		
+
 		-- Worst case payback assumes that all your OD metal is from
 		-- a single mex and you are going to link your new energy to it.
 		-- It seems to be equal to Uniform case payback and quite accurate.
 		local singleMexMult = math.sqrt(energyOD) / 4
 		local mexIncome = metalOD / singleMexMult
 		local worstCasePayback = cost / (mexIncome*math.sqrt(energyOD + income)/4 - metalOD)
-		
+
 		--extraText = extraText
 		--.. "\n overdriveMult: " .. overdriveMult
 		--.. "\n energyPerMex: " .. energyPerMex
@@ -947,7 +947,7 @@ end
 
 local function SelectionsIconClick(button, unitID, unitList, unitDefID)
 	unitID = unitID or (unitList and unitList[1])
-	
+
 	if not unitID then
 		return
 	end
@@ -962,7 +962,7 @@ local function SelectionsIconClick(button, unitID, unitList, unitDefID)
 
 	-- selectedUnitsList is global and has the same ordering as unitList
 	local newSelectedUnits
-	
+
 	if (button == 3) then
 		if shift then
 			--// deselect a whole unitdef block
@@ -1025,7 +1025,7 @@ local function GetFeatureDisplayAttributes(featureDefID)
 		return cacheFeatureTooltip[featureDefID], cacheFeatureUnitDefID[featureDefID]
 	end
 	local fd = FeatureDefs[featureDefID]
-	
+
 	local featureName = fd and fd.name
 	local unitName
 	if fd and fd.customParams and fd.customParams.unit then
@@ -1033,18 +1033,18 @@ local function GetFeatureDisplayAttributes(featureDefID)
 	else
 		unitName = featureName:gsub('(.*)_.*', '%1') --filter out _dead or _dead2 or _anything
 	end
-	
+
 	local unitDefID
 	if unitName and UnitDefNames[unitName] then
 		unitDefID = UnitDefNames[unitName].id
 	end
-	
+
 	if featureName:find("dead2") or featureName:find("heap") then
 		addedName = " (" .. WG.Translate("interface", "debris") .. ")"
 	elseif featureName:find("dead") then
 		addedName = " (" .. WG.Translate("interface", "wreckage") .. ")"
 	end
-	
+
 	if unitDefID then
 		cacheFeatureUnitDefID[featureDefID] = unitDefID
 		return nil, cacheFeatureUnitDefID[featureDefID]
@@ -1067,7 +1067,7 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 		file = imageFile,
 		parent = parentControl,
 	}
-	
+
 	local bar = Chili.Progressbar:New {
 		name = name .. "_bar",
 		x = ICON_SIZE + 3,
@@ -1080,10 +1080,10 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 		itemPadding = {0,0,0,0},
 		padding     = {0,0,0,0},
 		caption = '',
-		objectOverrideFont = WG.GetFont(BAR_FONT),
+		--objectOverrideFont = WG.GetFont(BAR_FONT),
 		parent = parentControl
 	}
-	
+
 	local function UpdateBar(visible, yPos, currentValue, maxValue, extraCaption, newCaption)
 		image:SetVisibility(visible)
 		bar:SetVisibility(visible)
@@ -1107,15 +1107,15 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 		end
 		bar:SetValue(currentValue/maxValue)
 	end
-	
+
 	return UpdateBar
 end
 
 local function GetImageWithText(parentControl, name, initY, imageFile, caption, fontSize, iconSize, textOffset, xOffset)
-	fontSize = fontSize or IMAGE_FONT
+	fontSize = fontSize or IMAGE_FONTSIZE
 	iconSize = iconSize or ICON_SIZE
 	xOffset = xOffset or 0
-	
+
 	local image = Chili.Image:New{
 		name = name .. "_image",
 		x = xOffset,
@@ -1131,13 +1131,13 @@ local function GetImageWithText(parentControl, name, initY, imageFile, caption, 
 		y = initY + (textOffset or 0),
 		right = 0,
 		height = LEFT_LABEL_HEIGHT,
-		caption = IMAGE_FONT,
-		objectOverrideFont = WG.GetFont(fontSize),
+		caption = IMAGE_FONTSIZE,
+		--objectOverrideFont = WG.GetFont(fontSize),
 		parent = parentControl,
 	}
 	image:SetVisibility(false)
 	label:SetVisibility(false)
-	
+
 	local function Update(visible, newCaption, newImage, yPos)
 		image:SetVisibility(visible)
 		label:SetVisibility(visible)
@@ -1160,7 +1160,7 @@ local function GetImageWithText(parentControl, name, initY, imageFile, caption, 
 			image:Invalidate()
 		end
 	end
-	
+
 	return Update
 end
 
@@ -1173,14 +1173,14 @@ local function GetCostInfoPanel(parentControl, yPos)
 		padding = {0,0,0,0},
 		parent = parentControl,
 	}
-	
+
 	local nameLabel = Chili.Label:New{
 		x = 4,
 		y = 2,
 		height = ICON_SIZE,
 		width = 50,
 		caption = cyan .. 'Morph:',
-		objectOverrideFont = WG.GetFont(NAME_FONT),
+		--objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
 		parent = holder,
 	}
 	local costImage = Chili.Image:New{
@@ -1196,8 +1196,8 @@ local function GetCostInfoPanel(parentControl, yPos)
 		y = 2,
 		right = 0,
 		height = BAR_SIZE,
-		caption = BAR_FONT,
-		objectOverrideFont = WG.GetFont(NAME_FONT),
+		caption = BAR_FONTSIZE,
+		--objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
 		parent = holder,
 	}
 	local timeImage = Chili.Image:New{
@@ -1213,11 +1213,11 @@ local function GetCostInfoPanel(parentControl, yPos)
 		y = 2,
 		right = 0,
 		height = BAR_SIZE,
-		caption = BAR_FONT,
-		objectOverrideFont = WG.GetFont(NAME_FONT),
+		caption = BAR_FONTSIZE,
+		--objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
 		parent = holder,
 	}
-	
+
 	local function Update(visible, newTime, newCost, newName, yPos, textX)
 		holder:SetVisibility(visible)
 		if not visible then
@@ -1245,7 +1245,7 @@ local function GetCostInfoPanel(parentControl, yPos)
 			nameLabel:SetCaption(cyan .. newName)
 		end
 	end
-	
+
 	return Update
 end
 
@@ -1259,7 +1259,7 @@ local function UpdateManualFireReload(reloadBar, parentImage, unitID, weaponNum,
 			minWidth = 4,
 			max = 1,
 			caption = false,
-			noFont = true,
+			--noFont = true,
 			color = reloadBarColor,
 			skinName = 'default',
 			orientation = "vertical",
@@ -1273,7 +1273,7 @@ local function UpdateManualFireReload(reloadBar, parentImage, unitID, weaponNum,
 	elseif rulesParam then
 		reloadFraction = GetRulesParamReloadStatus(unitID, rulesParam, reloadTime)
 	end
-	
+
 	if reloadFraction and reloadFraction < 1 then
 		reloadBar:SetValue(reloadFraction)
 		reloadBar:SetVisibility(true)
@@ -1288,14 +1288,14 @@ end
 -- Group buttons window
 
 local function GetUnitGroupIconButton(parentControl)
-	
+
 	local unitDefID
 	local unitID
 	local unitList
 	local unitCount
-	
+
 	local size = options.uniticon_size.value
-	
+
 	local holder = Chili.Control:New{
 		x = 0,
 		y = 0,
@@ -1304,7 +1304,7 @@ local function GetUnitGroupIconButton(parentControl)
 		padding = {1,1,1,1},
 		parent = parentControl,
 	}
-	
+
 	local reloadBar, jumpBar
 	local healthBar = Chili.Progressbar:New {
 		x = 0,
@@ -1313,11 +1313,11 @@ local function GetUnitGroupIconButton(parentControl)
 		height = 0,
 		max = 1,
 		caption = false,
-		noFont = true,
+		--noFont = true,
 		color = fullHealthBarColor,
 		parent = holder
 	}
-	
+
 	local unitImage = Chili.Image:New{
 		keepAspect = false,
 		x = 0,
@@ -1332,7 +1332,7 @@ local function GetUnitGroupIconButton(parentControl)
 			end
 		}
 	}
-	
+
 	local groupLabel = Chili.Label:New{
 		x = 0,
 		right = 2,
@@ -1340,10 +1340,10 @@ local function GetUnitGroupIconButton(parentControl)
 		height = 25,
 		align  = "right",
 		valign = "top",
-		objectOverrideFont = WG.GetSpecialFont(20, "outline", {outline = true}),
+		---Test-MaDD objectOverrideFont = WG.GetSpecialFont(20, "outline", {outline = true}),
 		parent = unitImage
 	}
-	
+
 	local function UpdateUnitInfo()
 		if unitID then
 			local health, maxhealth = spGetUnitHealth(unitID)
@@ -1365,14 +1365,14 @@ local function GetUnitGroupIconButton(parentControl)
 			end
 			return
 		end
-		
+
 		if reloadBar then
 			reloadBar:SetVisibility(false)
 		end
 		if jumpBar then
 			jumpBar:SetVisibility(false)
 		end
-		
+
 		local totalHealth, totalMax = 0, 0
 		for i = 1, #unitList do
 			local health, maxhealth = spGetUnitHealth(unitList[i])
@@ -1381,30 +1381,30 @@ local function GetUnitGroupIconButton(parentControl)
 				totalMax = totalMax + maxhealth
 			end
 		end
-		
+
 		if totalMax > 0 then
 			healthBar.color = GetHealthColor(totalHealth/totalMax)
 			healthBar:SetValue(totalHealth/totalMax)
 		end
 	end
-	
+
 	local function UpdateUnitDefID(newUnitDefID)
 		if newUnitDefID == unitDefID then
 			return
 		end
 		unitDefID = newUnitDefID
-		
+
 		local ud = UnitDefs[unitDefID]
 		if not ud then
 			return
 		end
-		
+
 		unitImage.tooltip = GetUnitSelectionTooltip(ud, unitDefID, unitID)
 		unitImage.file = "#" .. unitDefID
 		unitImage.file2 = GetUnitBorder(unitDefID)
 		unitImage:Invalidate()
 	end
-	
+
 	local function UpdateUnits(newUnitID, newUnitList)
 		unitID = newUnitID
 		unitList = newUnitList
@@ -1416,29 +1416,29 @@ local function GetUnitGroupIconButton(parentControl)
 			return
 		end
 		unitCount = newCount
-		
+
 		groupLabel._relativeBounds.left = 0
 		groupLabel._relativeBounds.right = 2
 		groupLabel:SetCaption(unitCount or "")
 	end
-	
+
 	local externalStuff = {
 		visible = true
 	}
-	
+
 	function externalStuff.SetPosition(x,y,size)
 		holder:SetPos(x*size,y*size - SEL_BUTTON_SHORTENING*y,size,size)
 	end
-	
+
 	function externalStuff.SetHidden()
 		holder:SetVisibility(false)
 		externalStuff.visible = false
 	end
-	
+
 	function externalStuff.UpdateUnitButton()
 		UpdateUnitInfo()
 	end
-	
+
 	function externalStuff.SetGroupIconUnits(newUnitID, newUnitList, newUnitDefID)
 		holder:SetVisibility(true)
 		externalStuff.visible = true
@@ -1446,7 +1446,7 @@ local function GetUnitGroupIconButton(parentControl)
 		UpdateUnits(newUnitID, newUnitList)
 		UpdateUnitInfo()
 	end
-	
+
 	return externalStuff
 end
 
@@ -1465,21 +1465,21 @@ local function GetSelectionStatsDisplay(parentControl)
 		padding = {0,0,0,0},
 		parent = parentControl,
 	}
-	
+
 	local selectedUnits
 	local selectedUnitDefID = {}
 	local visible = true
-	
+
 	local statLabel = Chili.Label:New{
 		name = "statLabel",
 		x = 0,
 		y = 3,
 		right = 0,
 		valign  = 'top',
-		objectOverrideFont = WG.GetFont(STATS_FONT),
+		--objectOverrideFont = WG.GetFont(STATS_FONTSIZE),
 		parent = holder,
 	}
-	
+
 	local total_count = 0
 	local total_finishedcost = 0
 	local total_totalbp = 0
@@ -1488,7 +1488,7 @@ local function GetSelectionStatsDisplay(parentControl)
 	local total_totalburst = 0
 	local unreliableBurst = false
 	local burstClass = 0
-	
+
 	local function UpdateDynamicGroupInfo()
 		local total_cost = 0
 		local total_hp = 0
@@ -1498,7 +1498,7 @@ local function GetSelectionStatsDisplay(parentControl)
 		local total_energyincome = 0
 		local total_energydrain = 0
 		local total_usedbp = 0
-		
+
 		local unitID, unitDefID, ud --micro optimization, avoiding repeated localization.
 		local name, hp, paradam, cap, build, mm, mu, em, eu
 		local stunned_or_inbuild
@@ -1509,17 +1509,17 @@ local function GetSelectionStatsDisplay(parentControl)
 			if ud then
 				hp, _, paradam, cap, build = spGetUnitHealth(unitID)
 				mm, mu, em, eu = GetUnitResources(unitID)
-				
+
 				if hp then
 					total_cost = total_cost + GetUnitCost(unitID, unitDefID)*build
 					total_hp = total_hp + hp
 				end
-				
+
 				if maxShield[unitDefID] then
 					local _, power = spGetUnitShieldState(unitID)
 					total_shield = total_shield + (power or 0)
 				end
-				
+
 				stunned_or_inbuild = spGetUnitIsStunned(unitID)
 				if not stunned_or_inbuild then
 					if mm then
@@ -1528,7 +1528,7 @@ local function GetSelectionStatsDisplay(parentControl)
 						total_energyincome = total_energyincome + em
 						total_energydrain = total_energydrain + eu
 					end
-					
+
 					if ud.buildSpeed ~= 0 then
 						local _, unhandicappedSpeed = GetUnitBuildSpeed(unitID, unitDefID)
 						total_usedbp = total_usedbp + (GetCurrentBuildSpeed(unitID, unhandicappedSpeed) or 0)
@@ -1536,11 +1536,11 @@ local function GetSelectionStatsDisplay(parentControl)
 				end
 			end
 		end
-		
+
 		local unitInfoString = WG.Translate("interface", "selected_units") .. ": " .. Format(total_count) .. "\n" ..
 			WG.Translate("interface", "value") .. ": " .. Format(total_cost) .. " / " ..  Format(total_finishedcost) .. "\n" ..
 			WG.Translate("interface", "health") .. ": " .. Format(total_hp) .. " / " ..  Format(total_maxhp) .. "\n"
-		
+
 		if total_maxShield ~= 0 then
 			unitInfoString = unitInfoString .. WG.Translate("interface", "shields") .. ": " .. Format(total_shield) .. " / " ..  Format(total_maxShield) .. "\n"
 		end
@@ -1557,10 +1557,10 @@ local function GetSelectionStatsDisplay(parentControl)
 			unitInfoString = unitInfoString ..
 				WG.Translate("interface", "burst_damage") .. ": " .. ((unreliableBurst and "~") or "") .. Format(total_totalburst) .. "\n"
 		end
-		
+
 		statLabel:SetCaption(unitInfoString)
 	end
-	
+
 	--updates values that don't change over time for group info
 	local function UpdateStaticGroupInfo()
 		total_count = #selectedUnits
@@ -1571,7 +1571,7 @@ local function GetSelectionStatsDisplay(parentControl)
 		total_totalburst = 0
 		unreliableBurst = false
 		burstClass = 0
-		
+
 		local unitID, unitDefID
 		for i = 1, total_count do
 			unitID = selectedUnits[i]
@@ -1594,36 +1594,36 @@ local function GetSelectionStatsDisplay(parentControl)
 						burstClass = false
 					end
 				end
-				
+
 				global_totalBuildPower = total_totalbp
 			end
 		end
 
 		total_totalburst = math.floor(total_totalburst / 10) * 10 -- round numbers are easier to parse and compare
-		
+
 		UpdateDynamicGroupInfo()
 	end
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.ChangeSelection(newSelection)
 		selectedUnits = newSelection
 		if visible and selectedUnits then
 			UpdateStaticGroupInfo()
 		end
 	end
-	
+
 	function externalFunctions.UpdateStats()
 		if visible and selectedUnits then
 			UpdateDynamicGroupInfo()
 		end
 	end
-	
+
 	function externalFunctions.SetVisibile(newVisible)
 		visible = newVisible
 		holder:SetVisibility(newVisible)
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1632,7 +1632,7 @@ end
 -- Group window
 
 local function GetMultiUnitInfoPanel(parentControl)
-	
+
 	local holder = Chili.Control:New{
 		x = 0,
 		y = 0,
@@ -1641,20 +1641,20 @@ local function GetMultiUnitInfoPanel(parentControl)
 		padding = {-1,1,0,0},
 		parent = parentControl,
 	}
-	
+
 	local iconSize = options.uniticon_size.value
 	local displayColumns = 5
 	local displayRows = 3
-	
+
 	local displayUnits
 	local displayButtons = {}
-	
+
 	local function UpdateButtonPosition(index)
 		local col = (index - 1)%displayColumns
 		local row = (index - 1 - col)/displayColumns
 		displayButtons[index].SetPosition(col, row, iconSize)
 	end
-	
+
 	local function GetButton(index)
 		if not displayButtons[index] then
 			displayButtons[index] = GetUnitGroupIconButton(holder)
@@ -1662,17 +1662,17 @@ local function GetMultiUnitInfoPanel(parentControl)
 		end
 		return displayButtons[index]
 	end
-	
+
 	local function HideButtonsFromIndex(index)
 		while displayButtons[index] and displayButtons[index].visible do
 			displayButtons[index].SetHidden()
 			index = index + 1
 		end
 	end
-	
+
 	local function Resize(self)
 		local sizeX, sizeY = self.clientWidth, self.clientHeight
-		
+
 		local newIconSize = options.uniticon_size.value
 		local newCols = math.floor(sizeX/iconSize)
 		local newRows = math.floor(sizeY/(iconSize - SEL_BUTTON_SHORTENING))
@@ -1683,7 +1683,7 @@ local function GetMultiUnitInfoPanel(parentControl)
 		displayColumns = newCols
 		displayRows = newRows
 		local displaySpace = displayRows*displayColumns
-		
+
 		local index = 1
 		while displayButtons[index] and index <= displaySpace do
 			UpdateButtonPosition(index)
@@ -1692,10 +1692,10 @@ local function GetMultiUnitInfoPanel(parentControl)
 		HideButtonsFromIndex(displaySpace + 1)
 	end
 	holder.OnResize[#holder.OnResize + 1] = Resize
-	
+
 	local function StaticButtonUpdate(selectionSortOrder, displayUnitsByDefID)
 		local displaySpace = displayRows*displayColumns
-		
+
 		local groupRequired = IsGroupingRequired(displayUnits, selectionSortOrder, displaySpace)
 		local buttonIndex = 1
 		for i = 1, #selectionSortOrder do
@@ -1704,7 +1704,7 @@ local function GetMultiUnitInfoPanel(parentControl)
 			end
 			local unitDefID = selectionSortOrder[i]
 			local unitList = displayUnitsByDefID[unitDefID]
-			
+
 			if groupRequired then
 				local button = GetButton(buttonIndex)
 				button.SetGroupIconUnits(nil, unitList, unitDefID)
@@ -1722,7 +1722,7 @@ local function GetMultiUnitInfoPanel(parentControl)
 		end
 		return buttonIndex
 	end
-	
+
 	local function DynamicButtonUpdate()
 		for i = 1, #displayButtons do
 			local button = displayButtons[i]
@@ -1731,15 +1731,15 @@ local function GetMultiUnitInfoPanel(parentControl)
 			end
 		end
 	end
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.UpdateUnitDisplay()
 		if displayUnits then
 			DynamicButtonUpdate()
 		end
 	end
-	
+
 	function externalFunctions.SetUnitDisplay(newDisplayUnits)
 		if not newDisplayUnits then
 			displayUnits = false
@@ -1747,7 +1747,7 @@ local function GetMultiUnitInfoPanel(parentControl)
 			return
 		end
 		holder:SetVisibility(true)
-		
+
 		displayUnits = newDisplayUnits
 		local unitDefAdded = {}
 		local displayUnitsByDefID = {}
@@ -1763,26 +1763,26 @@ local function GetMultiUnitInfoPanel(parentControl)
 				unitDefAdded[unitDefID] = true
 			end
 		end
-		
+
 		table.sort(selectionSortOrder, UnitDefTableSort)
-		
+
 		local buttonIndex = StaticButtonUpdate(selectionSortOrder, displayUnitsByDefID)
 		if buttonIndex then
 			HideButtonsFromIndex(buttonIndex)
 		end
 	end
-	
+
 	function externalFunctions.SetRightPadding(newRightPadding)
 		holder._relativeBounds.left = 0
 		holder._relativeBounds.right = newRightPadding
 		holder:UpdateClientArea()
 	end
-	
+
 	function externalFunctions.SetIconSize(newIconSize)
 		iconSize = newIconSize
 		Resize(holder)
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1792,7 +1792,7 @@ end
 
 local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	local selectedUnitID
-	
+
 	local leftPanel = Chili.Control:New{
 		name = "leftPanel",
 		x = 0,
@@ -1813,7 +1813,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		padding = {2,2,0,2},
 		parent = parentControl,
 	}
-	
+
 	local reloadBar, jumpBar
 	local unitImage = Chili.Image:New{
 		name = "unitImage",
@@ -1843,29 +1843,29 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			return true
 		end
 	end
-	
-	local unitNameUpdate = GetImageWithText(rightPanel, "unitNameUpdate", 1, nil, nil, NAME_FONT, nil, 2, 1)
-	
+
+	local unitNameUpdate = GetImageWithText(rightPanel, "unitNameUpdate", 1, nil, nil, NAME_FONTSIZE, nil, 2, 1)
+
 	local unitDesc = Chili.TextBox:New{
 		name = "unitDesc",
 		x = 4,
 		y = 25,
 		right = 0,
 		height = BAR_SIZE,
-		objectOverrideFont = WG.GetFont(DESC_FONT),
+		--objectOverrideFont = WG.GetFont(DESC_FONTSIZE),
 		parent = rightPanel,
 	}
-	
+
 	local costInfoUpdate = GetImageWithText(leftPanel, "costInfoUpdate", PIC_HEIGHT + 4, IMAGE.COST, nil, nil, ICON_SIZE, 4)
 	local metalInfoUpdate = GetImageWithText(leftPanel, "metalInfoUpdate", PIC_HEIGHT + LEFT_SPACE + 4, IMAGE.METAL, nil, nil, ICON_SIZE, 4)
 	local energyInfoUpdate = GetImageWithText(leftPanel, "energyInfoUpdate", PIC_HEIGHT + 2*LEFT_SPACE + 4, IMAGE.ENERGY, nil, nil, ICON_SIZE, 4)
-	local maxHealthLabel = GetImageWithText(rightPanel, "maxHealthLabel", PIC_HEIGHT + 4, IMAGE.HEALTH, nil, NAME_FONT, ICON_SIZE, 2, 2)
-	
+	local maxHealthLabel = GetImageWithText(rightPanel, "maxHealthLabel", PIC_HEIGHT + 4, IMAGE.HEALTH, nil, NAME_FONTSIZE, ICON_SIZE, 2, 2)
+
 	local healthBarUpdate = GetBarWithImage(rightPanel, "healthBarUpdate", PIC_HEIGHT + 4, IMAGE.HEALTH, {0, 1, 0, 1}, GetHealthColor)
-	
+
 	local metalInfo
 	local energyInfo
-	
+
 	local spaceClickLabel, shieldBarUpdate, buildBarUpdate, costInfo, playerNameLabel
 	if isTooltipVersion then
 		playerNameLabel = Chili.Label:New{
@@ -1873,8 +1873,8 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			x = 4,
 			y = PIC_HEIGHT + 31,
 			right = 0,
-			height = BAR_FONT,
-			objectOverrideFont = WG.GetFont(IMAGE_FONT),
+			height = BAR_FONTSIZE,
+			--objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
 			parent = rightPanel,
 		}
 		spaceClickLabel = Chili.Label:New{
@@ -1883,7 +1883,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			y = PIC_HEIGHT + 55,
 			right = 0,
 			height = 18,
-			objectOverrideFont = WG.GetFont(IMAGE_FONT),
+			--objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
 			caption = green .. WG.Translate("interface", "space_click_show_stats"),
 			parent = rightPanel,
 		}
@@ -1895,7 +1895,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 
 	local prevUnitID, prevUnitDefID, prevFeatureID, prevFeatureDefID, prevVisible, prevMorphTime, prevMorphCost, prevMousePlace
 	local externalFunctions = {}
-		
+
 	local function UpdateReloadTime(unitID, unitDefID)
 		local reloadTime, weaponNum, rulesParam = GetManualFireReload(unitID, unitDefID)
 		if reloadTime then
@@ -1922,7 +1922,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			metalInfoUpdate(false)
 			energyInfoUpdate(false)
 		end
-		
+
 		local healthPos
 		if shieldBarUpdate then
 			if ud and (ud.shieldPower > 0 or ud.level) then
@@ -1937,16 +1937,16 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				healthPos = PIC_HEIGHT + 4
 			end
 		end
-		
+
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if health and maxHealth then
 			healthBarUpdate(true, healthPos, health, maxHealth, (health < maxHealth) and GetUnitRegenString(unitID, ud))
 		end
-		
+
 		if buildBarUpdate then
 			if ud and ud.buildSpeed > 0 then
 				local metalMake, metalUse, energyMake,energyUse = Spring.GetUnitResources(unitID)
-				
+
 				local buildSpeed, unhandicappedSpeed = GetUnitBuildSpeed(unitID, unitDefID)
 				local currentBuild = GetCurrentBuildSpeed(unitID, unhandicappedSpeed)
 				buildBarUpdate(true, (healthPos or (PIC_HEIGHT + 4)) + BAR_SPACING, currentBuild or 0, buildSpeed)
@@ -1954,16 +1954,16 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				buildBarUpdate(false)
 			end
 		end
-		
+
 		if dynamicTooltipDefs[unitDefID] then
 			unitDesc:SetText(GetDescription(ud, unitID))
 		end
-		
+
 		UpdateReloadTime(unitID, unitDefID)
-		
+
 		return showMetalInfo
 	end
-	
+
 	local function UpdateDynamicFeatureAttributes(featureID, unitDefID)
 		local metal, _, energy, _, _ = Spring.GetFeatureResources(featureID)
 		local leftOffset = -2
@@ -1973,7 +1973,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		metalInfoUpdate(true, Format(metal), IMAGE.METAL_RECLAIM, leftOffset + 4)
 		energyInfoUpdate(true, Format(energy), IMAGE.ENERGY_RECLAIM, leftOffset + LEFT_SPACE + 4)
 	end
-	
+
 	local function UpdateDynamicEconInfo(unitDefID, mousePlaceX, mousePlaceY)
 		local ud = UnitDefs[unitDefID]
 		local extraTooltip, healthOverride
@@ -1986,12 +1986,12 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			unitDesc:SetText(GetDescription(ud, unitID))
 		end
 		unitDesc:Invalidate()
-		
+
 		if econStructureDefs[unitDefID].isWind then
 			maxHealthLabel(true, healthOverride or ud.health, IMAGE.HEALTH)
 		end
 	end
-	
+
 	local function UpdateBuildTime(unitDefID, buildCost)
 		if not costInfoPanel then
 			return
@@ -2007,7 +2007,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		end
 		costInfoPanel(true, SecondsToMinutesSeconds(math.floor(buildCost/global_totalBuildPower)))
 	end
-	
+
 	function externalFunctions.SetDisplay(unitID, unitDefID, featureID, featureDefID, blueprint, morphTime, morphCost, mousePlaceX, mousePlaceY, requiredOnly)
 		local teamID
 		local ud
@@ -2015,10 +2015,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		local maxHealthShown = false
 		local morphShown = false
 		local visible = IsUnitInLos(unitID)
-		
+
 		if prevUnitID == unitID and prevUnitDefID == unitDefID and prevFeatureID == featureID and prevFeatureDefID == featureDefID and
 				prevVisible == visible and prevMorphTime == morphTime and prevMorphCost == morphCost and prevMousePlace == ((mousePlaceX and true) or false) then
-			
+
 			if not requiredOnly then
 				if unitID and unitDefID and visible then
 					UpdateDynamicUnitAttributes(unitID, unitDefID, UnitDefs[unitDefID])
@@ -2037,7 +2037,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			end
 			return
 		end
-		
+
 		if featureID then
 			teamID = Spring.GetFeatureTeam(featureID)
 			local featureTooltip, featureUnitDefID = GetFeatureDisplayAttributes(featureDefID)
@@ -2056,11 +2056,11 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 					spaceClickLabel:SetPos(nil, PIC_HEIGHT + 12, nil, nil, nil, true)
 				end
 			end
-			
+
 			UpdateDynamicFeatureAttributes(featureID, featureUnitDefID)
 			metalInfoShown = true
 		end
-		
+
 		if unitDefID then
 			ud = UnitDefs[unitDefID]
 
@@ -2078,7 +2078,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				smallCostDisplay = math.floor(smallCostDisplay / 1000) .. "k"
 			end
 			costInfoUpdate(true, cyan .. smallCostDisplay, IMAGE.COST, PIC_HEIGHT + 4)
-			
+
 			local extraTooltip, healthOverride
 			if not (unitID or featureID) then
 				extraTooltip, healthOverride = GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mousePlaceY)
@@ -2089,10 +2089,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				unitDesc:SetText(GetDescription(ud, unitID))
 			end
 			unitDesc:Invalidate()
-			
+
 			local unitName = GetHumanName(ud, unitID)
 			unitNameUpdate(true, unitName, GetUnitIcon(unitDefID))
-			
+
 			if unitID then
 				if playerNameLabel then
 					playerNameLabel:SetPos(nil, PIC_HEIGHT + 32, nil, nil, nil, true)
@@ -2123,7 +2123,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				maxHealthLabel(true, healthOverride or ud.health, IMAGE.HEALTH, maxHealthPos)
 			end
 		end
-		
+
 		if unitID then
 			teamID = Spring.GetUnitTeam(unitID)
 			if UpdateDynamicUnitAttributes(unitID, unitDefID, ud) then
@@ -2139,12 +2139,12 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				jumpBar:SetVisibility(false)
 			end
 		end
-		
+
 		if not metalInfoShown then
 			metalInfoUpdate(false)
 			energyInfoUpdate(false)
 		end
-		
+
 		if playerNameLabel then
 			local playerName = teamID and GetPlayerCaption(teamID)
 			if playerName then
@@ -2152,32 +2152,32 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			end
 			playerNameLabel:SetVisibility((playerName and true) or false)
 		end
-		
+
 		local visibleUnitDefID = (unitDefID and true) or false
 		unitImage:SetVisibility(visibleUnitDefID)
 		unitDesc:SetVisibility(visibleUnitDefID)
-		
+
 		if spaceClickLabel then
 			spaceClickLabel:SetVisibility(visibleUnitDefID)
 		end
-		
+
 		if maxHealthLabel and not maxHealthShown then
 			maxHealthLabel(false)
 		end
 		if costInfoPanel and not (morphShown or blueprint) then
 			costInfoPanel(false)
 		end
-		
+
 		prevUnitID, prevUnitDefID, prevFeatureID, prevFeatureDefID = unitID, unitDefID, featureID, featureDefID
 		prevVisible = visible
 		prevMorphTime, prevMorphCost, prevMousePlace = morphTime, morphCost, ((mousePlaceX and true) or false)
 	end
-	
+
 	function externalFunctions.SetVisible(newVisible)
 		leftPanel:SetVisibility(newVisible)
 		rightPanel:SetVisibility(newVisible)
 	end
-	
+
 	return externalFunctions
 end
 
@@ -2195,13 +2195,13 @@ local function GetTooltipWindow()
 		draggable = false,
 		autosize  = true,
 		minWidth = RIGHT_WIDTH,
-		noFont = true,
+		--noFont = true,
 		padding = {6,4,6,2},
 		color = {1, 1, 1, options.tooltip_opacity.value},
 		parent = screen0
 	}
 	window:Hide()
-	
+
 	local textTooltip = Chili.TextBox:New{
 		name = "textTooltip",
 		x = 0,
@@ -2210,15 +2210,15 @@ local function GetTooltipWindow()
 		height = 5,
 		valign = "ascender",
 		autoHeight = true,
-		objectOverrideFont = WG.GetFont(TOOLTIP_FONT),
+		--objectOverrideFont = WG.GetFont(TOOLTIP_FONTSIZE),
 		parent = window,
 	}
 	textTooltip:SetVisibility(false)
-	
+
 	local unitDisplay = GetSingleUnitInfoPanel(window, true)
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.SetVisible(newVisible)
 		window:SetVisibility(newVisible)
 	end
@@ -2227,17 +2227,17 @@ local function GetTooltipWindow()
 		window.color[4] = opacity
 		window:Invalidate()
 	end
-	
+
 	function externalFunctions.SetPosition(x, y)
 		y = screenHeight - y
-		
+
 		if x + window.width > screenWidth - 2 then
 			x = screenWidth - window.width - 2
 		end
 		if y + window.height > screenHeight - 2 then
 			y = screenHeight - window.height - 2
 		end
-		
+
 		local map = WG.MinimapPosition
 		if map then
 			-- Only move tooltip up and/or left if it overlaps the minimap. This is because the
@@ -2253,7 +2253,7 @@ local function GetTooltipWindow()
 					end
 				end
 			end
-			
+
 			if x + window.width > screenWidth - 2 then
 				x = screenWidth - window.width - 2
 			end
@@ -2261,11 +2261,11 @@ local function GetTooltipWindow()
 				y = screenHeight - window.height - 2
 			end
 		end
-		
+
 		window:SetPos(x, y, nil, nil, nil, true)
 		window:BringToFront()
 	end
-	
+
 	function externalFunctions.SetTextTooltip(text)
 		if text == "" then
 			return false
@@ -2276,7 +2276,7 @@ local function GetTooltipWindow()
 		unitDisplay.SetVisible(false)
 		return true
 	end
-	
+
 	function externalFunctions.SetUnitishTooltip(unitID, unitDefID, featureID, featureDefID, blueprint, morphTime, morphCost, mousePlaceX, mousePlaceY, requiredOnly)
 		if unitDefID or featureID or featureDefID then
 			unitDisplay.SetDisplay(unitID, unitDefID, featureID, featureDefID, blueprint, morphTime, morphCost, mousePlaceX, mousePlaceY, requiredOnly)
@@ -2286,7 +2286,7 @@ local function GetTooltipWindow()
 			externalFunctions.SetTextTooltip("Enemy unit")
 		end
 	end
-	
+
 	return externalFunctions
 end
 
@@ -2319,7 +2319,7 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 	local holdingDrawKey = GetIsHoldingDrawKey()
 	local holdingSpace = select(3, Spring.GetModKeyState()) and not Spring.IsUserWriting()
 	UpdateMouseCursor(holdingDrawKey)
-	
+
 	if not (holdingSpace or (options.tooltip_delay.value == 0)) then
 		local mouseMoved = (mx ~= oldMouseX or my ~= oldMouseY)
 		if not mouseMoved then
@@ -2334,13 +2334,13 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 			return false
 		end
 	end
-	
+
 	-- Mouseover build option tooltip (screen0.currentTooltip)
 	local chiliTooltip = screen0.currentTooltip
 	if chiliTooltip == NO_TOOLTIP then
 		return false
 	end
-	
+
 	if chiliTooltip and string.find(chiliTooltip, "BuildUnit") then
 		local name = string.sub(chiliTooltip, 10)
 		local ud = name and UnitDefNames[name]
@@ -2356,7 +2356,7 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 			return true
 		end
 	end
-	
+
 	-- Mouseover morph tooltip (screen0.currentTooltip)
 	if chiliTooltip and string.find(chiliTooltip, "Morph") then
 		local unitDefID, morphTime, morphCost = chiliTooltip:match('(%d+) (%d+) (%d+)')
@@ -2365,29 +2365,29 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 		end
 		return true
 	end
-	
+
 	-- Generic chili text tooltip
 	if chiliTooltip then
 		return tooltipWindow.SetTextTooltip(chiliTooltip)
 	end
-	
+
 	-- Map drawing tooltip
 	if holdingDrawKey and (holdingSpace or options.showdrawtooltip.value) then
 		return tooltipWindow.SetTextTooltip(DRAWING_TOOLTIP)
 	end
-	
+
 	-- Terraform tooltip (spring.GetActiveCommand)
 	local index, cmdID, cmdType, cmdName = Spring.GetActiveCommand()
 	if cmdID and terraCmdTip[cmdID] and (holdingSpace or options.showterratooltip.value) then
 		return tooltipWindow.SetTextTooltip(terraCmdTip[cmdID])
 	end
-	
+
 	-- Placing structure tooltip (spring.GetActiveCommand)
 	if cmdID and cmdID < 0 then
 		tooltipWindow.SetUnitishTooltip(nil, -cmdID, nil, nil, true, nil, nil, mx, my, requiredOnly)
 		return true
 	end
-	
+
 	-- Unit or feature tooltip
 	local thingType, thingID = spTraceScreenRay(mx,my)
 	local thingIsUnit = (thingType == "unit")
@@ -2416,7 +2416,7 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 			sameObjectIDTime = 0
 		end
 	end
-	
+
 	-- Ground position tooltip (spGetCurrentTooltip())
 	if holdingSpace then
 		local springTooltip = Spring.GetCurrentTooltip()
@@ -2424,15 +2424,15 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 			return tooltipWindow.SetTextTooltip(springTooltip)
 		end
 	end
-	
+
 	-- Start position tooltip (really bad widget interface)
 	-- Don't want to implement this as is (pairs over positions registered in WG).
-	
+
 	-- Geothermal tooltip (WG.mouseAboveGeo)
 	if WG.mouseAboveGeo then
 		return tooltipWindow.SetTextTooltip(WG.Translate("interface", "geospot"))
 	end
-	
+
 	return false
 end
 
@@ -2471,13 +2471,13 @@ local function GetSelectionWindow()
 		resizable = false,
 		tweakDraggable = true,
 		tweakResizable = true,
-		noFont = true,
+		--noFont = true,
 		padding = {0, 0, 0, -1},
 		color = {0, 0, 0, 0},
 		parent = screen0,
 	}
 	holderWindow:SendToBack()
-	
+
 	local mainPanel = Chili.Panel:New{
 		name = "mainPanel",
 		classname = options.fancySkinning.value,
@@ -2503,14 +2503,14 @@ local function GetSelectionWindow()
 	}
 	mainPanel.padding[1] = mainPanel.padding[1] + options.leftPadding.value
 	mainPanel:Hide()
-	
+
 	local singleUnitDisplay = GetSingleUnitInfoPanel(mainPanel, false)
 	local multiUnitDisplay = GetMultiUnitInfoPanel(mainPanel)
 	local selectionStatsDisplay = GetSelectionStatsDisplay(mainPanel)
 	local singleUnitID, singleUnitDefID
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.ShowSingleUnit(unitID)
 		singleUnitID, singleUnitDefID = unitID, spGetUnitDefID(unitID)
 		singleUnitDisplay.SetDisplay(unitID, spGetUnitDefID(unitID))
@@ -2518,14 +2518,14 @@ local function GetSelectionWindow()
 		multiUnitDisplay.SetUnitDisplay()
 		selectionStatsDisplay.ChangeSelection({unitID})
 	end
-	
+
 	function externalFunctions.ShowMultiUnit(newSelection)
 		singleUnitID = nil
 		multiUnitDisplay.SetUnitDisplay(newSelection)
 		singleUnitDisplay.SetVisible(false)
 		selectionStatsDisplay.ChangeSelection(newSelection)
 	end
-	
+
 	function externalFunctions.UpdateSelectionWindow()
 		if not visible then
 			return
@@ -2537,7 +2537,7 @@ local function GetSelectionWindow()
 		end
 		selectionStatsDisplay.UpdateStats()
 	end
-	
+
 	function externalFunctions.SetVisible(newVisible)
 		if not newVisible then
 			singleUnitID = nil
@@ -2547,38 +2547,38 @@ local function GetSelectionWindow()
 		singleUnitDisplay.SetVisible(false)
 		multiUnitDisplay.SetUnitDisplay(false)
 	end
-	
+
 	function externalFunctions.SetOpacity(opacity)
 		mainPanel.backgroundColor = {1,1,1,opacity}
 		mainPanel:Invalidate()
 	end
-	
+
 	function externalFunctions.SetSkin(className)
 		SetPanelSkin(mainPanel, className)
 	end
-	
+
 	function externalFunctions.SetLeftPadding(padding)
 		mainPanel.padding[1] = 8 + padding
 		mainPanel:UpdateClientArea()
 	end
-	
+
 	function externalFunctions.SetAllowClickThrough(allowClickThrough)
 		mainPanel.noClickThrough = not allowClickThrough
 	end
-	
+
 	function externalFunctions.SetGroupInfoVisible(newVisible)
 		local rightPadding = newVisible and GROUP_STATS_WIDTH or 0
 		multiUnitDisplay.SetRightPadding(rightPadding)
 		selectionStatsDisplay.SetVisibile(newVisible)
 	end
-	
+
 	function externalFunctions.SetSelectionIconSize(iconSize)
 		multiUnitDisplay.SetIconSize(iconSize)
 	end
-	
+
 	-- Initialization
 	externalFunctions.SetGroupInfoVisible(options.showgroupinfo.value)
-	
+
 	return externalFunctions
 end
 
@@ -2591,14 +2591,14 @@ local function UpdateSelection(newSelection)
 	-- Check if selection is 1, get unit tooltip
 	-- Check if selection is many, get unit list tooltip
 	-- Update group info.
-	
+
 	selectedUnitsList = newSelection
-	
+
 	if (not newSelection) or (#newSelection == 0) then
 		selectionWindow.SetVisible(false)
 		return
 	end
-	
+
 	selectionWindow.SetVisible(true)
 	if #newSelection == 1 then
 		selectionWindow.ShowSingleUnit(newSelection[1])
@@ -2626,7 +2626,7 @@ function widget:Update(dt)
 	updateTimer = updateTimer + dt
 	local slowUpdate = updateTimer > UPDATE_FREQUENCY
 	UpdateTooltip(dt, not slowUpdate)
-	
+
 	if slowUpdate then
 		selectionWindow.UpdateSelectionWindow()
 		updateTimer = 0
@@ -2651,20 +2651,20 @@ end
 function widget:Initialize()
 	Chili = WG.Chili
 	screen0 = Chili.Screen0
-	
+
 	Spring.AssignMouseCursor(CURSOR_ERASE_NAME, CURSOR_ERASE, true, false) -- Hotspot center.
 	Spring.AssignMouseCursor(CURSOR_POINT_NAME, CURSOR_POINT, true, true)
 	Spring.AssignMouseCursor(CURSOR_DRAW_NAME, CURSOR_DRAW, true, true)
-	
+
 	Spring.SendCommands({"tooltip 0"})
 	Spring.SetDrawSelectionInfo(false)
-	
+
 	local hotkeys = WG.crude.GetHotkeys("drawinmap")
 	for k,v in pairs(hotkeys) do
 		drawHotkeyBytesCount = drawHotkeyBytesCount + 1
 		drawHotkeyBytes[drawHotkeyBytesCount] = v:byte(-1)
 	end
-	
+
 	selectionWindow = GetSelectionWindow()
 	tooltipWindow = (WG.Modding_TooltipOverride and WG.Modding_TooltipOverride()) or GetTooltipWindow()
 	InitializeWindParameters()
