@@ -1,16 +1,10 @@
-Zero-K
-======
- 
-Open source RTS game with physical projectiles, smart units and powerful UI, running on the Spring engine.
+# TAP
+Total Atomic Power, a SpringRTS-engine futuristic real-time strategy game
 
-This repository contains only game module files, without any associated infrastructure code, tools, or artwork sources.
-	
-Seek those in other repositories.
+# Game information and install instructions
+Please visit our website:
+https://www.fluidplay.co/tap.html
 
-Usage
-=====
+# New UI
 
-These are the sources. To play the game, download the lobby from http://zero-k.info/Wiki/Download
-
-To learn how to import the content directly to the engine and what is what, consult the engine wiki: https://springrts.com/wiki/Gamedev:Structure .
-
+This version v3+ has a new UI system using Zero-K's as a basis
