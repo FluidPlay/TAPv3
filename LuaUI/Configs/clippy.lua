@@ -23,10 +23,10 @@ tips = {
 				"Sir, I don't think that\nunit is in our price\nrange right now."}, life = 9, cooldown = 20, verbosity = 2},
 	superweapon = {str = {"A superweapon now?\nThat may not be\nsuch a good idea."}, life = 7, cooldown = 60},
 	adv_factory = {str = {"Are you sure that's\na good starting\nfac, chief?"}, life = 7, cooldown = 60},
-	
+
 	retreat_repair = {str = {"Getting shot up!\nRequesting permission\nto pull out, sir!",
 				"Get me out of here!\nI need repairs!",}, life = 7, cooldown = 20},
-				
+
 	energy_excess  = {str = {"I think we've got\nenough energy for\nnow, boss.",
 				"Energy storage already\nat full capacity.",
 				"Sir, we've got plenty\nof energy as it is."}, life = 7, cooldown = 20},
@@ -35,13 +35,13 @@ tips = {
 	metal_excess  = {str = {"Sir, we have a metal glut.\nPut some more buildpower\ninto making units.",
 				"Boss, we have too much metal.\nGet more of us making stuff."}, life = 7, cooldown = 30},
 	metal_deficit = {str = {"Running low on metal, chief.\nWe should try reclaiming\nor getting more mexes."}, life = 7, cooldown = 60, verbosity = 3},
-	
+
 	facplop = {str = {"Remember to place your\nfirst free factory."}, life = 7, cooldown = 30},
 	factory_duplicate = {str = {"We already have one of\nthat factory. Remember you can\nassist it with constructors."}, life = 9, cooldown = 60},
 	factory_multiple = {str = {"Sir, we might not need another\nfactory so soon. You can assist your\nfirst factory with constructors."}, life = 10, cooldown = 60, verbosity = 2},
-	
-	defense_excess = {str = {"Boss, we have plenty of defence.\nMight want some mobile units instead.",
-				"Chief, we should build mobile\nunits instead. We already\nhave plenty of defence."}, life = 9, cooldown = 20}
+
+	defense_excess = {str = {"Commander, we have enough defenses.\nMight want some mobile units instead.",
+				"Chief, we should build mobile\nunits instead. We already\nhave plenty of defenses."}, life = 9, cooldown = 20}
 }
 
 for name,data in pairs(tips) do
@@ -62,19 +62,19 @@ local canRetreatDefs = {
 	"gunshipheavyskirm",
 	"gunshipassault",
 	"gunshipkrow",
-	
+
 	"tankassault",
 	"tankheavyassault",
 	--"tankheavyarty",
 	"jumpassault",
 	"jumpsumo",
-	
+
 	"striderdante",
 	--"striderarty",
 	"striderscorpion",
 	"striderbantha",
 	"striderdetriment",
-	
+
 	"shipheavyarty",
 	"reef",
 }
@@ -94,18 +94,18 @@ local defenseDefs = {
 	"turretimpulse",
 	"turretheavylaser",
 	"turretgauss",
-	
+
 	"turretaalaser",
 	"turretaaclose",
 	"turretaaflak",
 	"turretaafar",
 	"turretaaheavy",
-	
+
 	"turretheavy",
 	"turretantiheavy",
-	
+
 	"turrettorp",
-	
+
 	"staticjammer",
 	"staticshield"
 }

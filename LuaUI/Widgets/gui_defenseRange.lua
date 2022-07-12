@@ -215,7 +215,7 @@ local function OnOptChange(self)
 end
 
 options = {
-	label = { type = 'label', name = 'Defence Ranges' },
+	label = { type = 'label', name = 'Defense Ranges' },
 	allyground = {
 		name = 'Show Ally Ground Defence',
 		type = 'bool',

@@ -315,7 +315,7 @@ local function CommandClickFunction(isInstantCommand, isStateCommand)
 	if not meta then
 		return false
 	end
-	
+
 	if isStateCommand then
 		WG.crude.OpenPath("Hotkeys/Commands/State")
 	elseif isInstantCommand then
@@ -466,8 +466,8 @@ local commandPanels = {
 		buttonLayoutConfig = buttonLayoutConfig.build,
 	},
 	{
-		humanName = "Defence",
-		name = "defence",
+		humanName = "Defense",
+		name = "defense",
 		inclusionFunction = function(cmdID)
 			local position = buildCmdDefence[cmdID]
 			return position and true or false, position

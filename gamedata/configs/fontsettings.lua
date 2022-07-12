@@ -4,8 +4,18 @@
 --- DateTime: 11-Jul-22 7:48 PM
 ---
 
-DefaultFontPath = "LuaUI/Fonts/GeogrotesqueCompMedium.otf" --Kelson Sans Regular.otf" --Akrobat-SemiBold.otf"
+---How to use:
+-- at the top:
+-- VFS.Include("gamedata/configs/fontsettings.lua")
+-- then:
+-- getFont().default => returns fonts/...otf
 
-function getFontPath()
-	return FontPath
+FontName = "GeogrotesqueCompMedium.otf"
+FontPath = "fonts/"..FontName
+LuaUIFontPath = "LuaUI/Fonts/"..FontName
+SkinFontPath = "LuaUI/Widgets/Skins/Evolved/fonts/"..FontName
+
+function getFont()
+	return { name = FontName, default = FontPath, LuaUI = LuaUIFontPath, skin = SkinFontPath }
 end
+

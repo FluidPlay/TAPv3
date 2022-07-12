@@ -22,11 +22,15 @@ local DISABLE = false
 local font = {}
 local specialFont = {}
 
+VFS.Include("gamedata/configs/fontsettings.lua")
+
+local fontName = getFont().name
+
 function WG.GetFont(size)
 	size = size or 13
 	if (not font[size]) or DISABLE then
 		font[size] = WG.Chili.Font:New {
-			font          = "GeogrotesqueCompMedium.otf", --"FreeSansBold.otf",
+			font          = fontName, --"GeogrotesqueCompMedium.otf", --"FreeSansBold.otf",
 			size          = size,
 			shadow        = true,
 			outline       = false,
@@ -57,7 +61,7 @@ function WG.GetSpecialFont(size, name, data)
 			autoOutlineColor = data.autoOutlineColor
 		end
 		specialFont[size][name] = WG.Chili.Font:New {
-			font          = data.font or "FreeSansBold.otf",
+			font          = data.font or fontName, --"GeogrotesqueCompMedium.otf", --"FreeSansBold.otf",
 			size          = data.size or size,
 			shadow        = shadows,
 			outline       = outline,
