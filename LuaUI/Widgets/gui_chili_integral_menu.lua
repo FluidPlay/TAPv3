@@ -289,8 +289,8 @@ options = {
 		path = commandPanelPath,
 	},
 	tab_defence = {
-		name = "Defence Tab",
-		desc = "Switches to defence tab.",
+		name = "Defense Tab",
+		desc = "Switches to defense tab.",
 		type = 'button',
 		path = commandPanelPath,
 	},
@@ -322,7 +322,7 @@ options = {
 	tabFontSize = {
 		name = "Tab Font Size",
 		type = "number",
-		value = 14, min = 8, max = 30, step = 1,
+		value = 18, min = 8, max = 30, step = 1, --value=14
 	},
 	rightPadding = {
 		name = 'Right Padding',
@@ -350,7 +350,7 @@ options = {
 		name = 'Tab specific overrides',
 		path = customGridPath
 	},
-	
+
 	helpwindow = {
 		name = 'Command Visibility',
 		type = 'text',
@@ -573,7 +573,7 @@ local function SetGridHotkeysEnabled(newEnabled)
 		return
 	end
 	gridKeysEnabled = newEnabled
-	
+
 	if gridKeysEnabled then
 		for i = 1, #commandPanels do
 			local data = commandPanels[i]
@@ -596,7 +596,7 @@ local function UpdateReturnToOrders(cmdID)
 		commandPanelMap.orders.tabButton.DoClick()
 		returnToOrdersCommand = false
 	end
-	
+
 	if (not returnToOrdersCommand) and options.ctrlDisableGrid.value then
 		local alt, ctrl, meta, shift = spGetModKeyState()
 		SetGridHotkeysEnabled(not ctrl)
@@ -638,7 +638,7 @@ local function GenerateCustomKeyMap()
 			end
 		end
 	end
-	
+
 	local overrides = {}
 	if commandPanels then
 		for panel = 1, #commandPanels do
@@ -662,7 +662,7 @@ local function GenerateCustomKeyMap()
 			end
 		end
 	end
-	
+
 	return ret, gridMap, overrides
 end
 
@@ -671,7 +671,7 @@ local function GenerateGridKeyMap(name)
 		local ret, gridMap, overrides = GenerateCustomKeyMap()
 		return ret, gridMap, overrides
 	end
-	
+
 	local keyboardLayouts = include("Configs/keyboard_layout.lua")
 	local gridMap = (name and keyboardLayouts[name]) or {}
 	local ret = {}
@@ -758,7 +758,7 @@ local function GetButtonTooltip(displayConfig, command, state)
 	if displayConfig and displayConfig.stateNameOverride then
 		states = displayConfig.stateNameOverride
 	end
-	
+
 	if hotkeys_for_states and number_of_set_hotkeys > 0 then
 		tooltip = tooltip .. PARAGRAPH .. "State Hotkeys:"
 		for i = 1, #states do
@@ -791,9 +791,9 @@ local prevClass
 local function UpdateBackgroundSkin()
 	local currentSkin = Chili.theme.skin.general.skinName
 	local skin = Chili.SkinHandler.GetSkin(currentSkin)
-	
+
 	local newClass
-	
+
 	if options.fancySkinning.value then
 		local selectedCount = spGetSelectedUnitsCount()
 		if selectedCount and selectedCount > 0 then
@@ -810,19 +810,19 @@ local function UpdateBackgroundSkin()
 			end
 		end
 	end
-	
+
 	newClass = newClass or skin.panel
-	
+
 	if prevClass == newClass then
 		return
 	end
 	prevClass = newClass
-	
+
 	background.tiles = newClass.tiles
 	background.TileImageFG = newClass.TileImageFG
 	background.TileImageBK = newClass.TileImageBK
 	background:Invalidate()
-	
+
 	-- Update buttons holder padding, not background.
 	if newClass.padding then
 		buttonsHolder.padding = newClass.padding
@@ -835,7 +835,7 @@ local function GetCmdPosParameters(cmdID)
 	if (not def) and cmdID >= CMD_MORPH and cmdID < CMD_MORPH + 2000 then -- Includes CMD_MORPH and CMD_MORPH_STOP
 		def = cmdPosDef[CMD_MORPH]
 	end
-	
+
 	if def then
 		if simpleModeEnabled and def.posSimple then
 			return def.posSimple, def.priority
@@ -865,12 +865,12 @@ local function MoveOrRemoveCommands(cmdID, factoryUnitID, commands, queuePositio
 	if not commands then
 		return
 	end
-	
+
 	if (not lastRemovedTagResetFrame) or lastRemovedTagResetFrame + REMOVE_TAG_FRAMES < Spring.GetGameFrame() then
 		alreadyRemovedTag = {}
 		lastRemovedTagResetFrame = Spring.GetGameFrame()
 	end
-	
+
 	-- delete from back so that the order is not canceled while under construction
 	local i = queuePosition
 	local j = 0
@@ -882,7 +882,7 @@ local function MoveOrRemoveCommands(cmdID, factoryUnitID, commands, queuePositio
 			if thisCmdID ~= cmdID then
 				break
 			end
-	
+
 			alreadyRemovedTag[cmdTag] = true
 			spGiveOrderToUnit(factoryUnitID, CMD.REMOVE, {cmdTag}, CMD.OPT_CTRL)
 			if reinsertPosition then
@@ -901,15 +901,15 @@ local function MoveCommandBlock(factoryUnitID, queueCmdID, moveBlock, insertBloc
 	if not commands then
 		return
 	end
-	
+
 	-- Insert at the end of blocks which are after the move block
 	if insertBlock > moveBlock then
 		insertBlock = insertBlock + 1
 	end
-	
+
 	-- Delete moved commands from the end of the block so look for the start of the next block.
 	moveBlock = moveBlock + 1
-	
+
 	local movePos, insertPos
 	local lastBlockCmdID
 	local blockCount = 0
@@ -939,15 +939,15 @@ local function MoveCommandBlock(factoryUnitID, queueCmdID, moveBlock, insertBloc
 		end
 		i = i + 1
 	end
-	
+
 	if not insertPos then
 		insertPos = #commands
 	end
-	
+
 	if not (movePos and insertPos) then
 		return
 	end
-	
+
 	MoveOrRemoveCommands(queueCmdID, factoryUnitID, commands, movePos, nil, insertPos)
 end
 
@@ -956,10 +956,10 @@ local function QueueClickFunc(mouse, right, alt, ctrl, meta, shift, queueCmdID, 
 	if not commands then
 		return true
 	end
-	
+
 	-- Find the end of the block
 	queueBlock = queueBlock + 1
-	
+
 	local queuePosition
 	local lastBlockCmdID
 	local blockCount = 0
@@ -981,15 +981,15 @@ local function QueueClickFunc(mouse, right, alt, ctrl, meta, shift, queueCmdID, 
 			lastPosition = i
 		end
 	end
-	
+
 	if not queuePosition then
 		return true
 	end
-	
+
 	if WG.noises then
 		WG.noises.PlayResponse(factoryUnitID, cmdID)
 	end
-	
+
 	if alt then
 		MoveOrRemoveCommands(queueCmdID, factoryUnitID, commands, queuePosition, false, 0)
 		return true
@@ -1000,7 +1000,7 @@ local function QueueClickFunc(mouse, right, alt, ctrl, meta, shift, queueCmdID, 
 		MoveOrRemoveCommands(queueCmdID, factoryUnitID, commands, queuePosition, inputMult)
 		return true
 	end
-	
+
 	for i = 1, inputMult do
 		spGiveOrderToUnit(factoryUnitID, CMD.INSERT, {queuePosition, queueCmdID, 0 }, CMD.OPT_ALT + CMD.OPT_CTRL)
 	end
@@ -1010,12 +1010,12 @@ end
 local function ClickFunc(mouse, cmdID, isStructure, factoryUnitID, fakeFactory, isQueueButton, queueBlock)
 	local left, right = mouse == 1, mouse == 3
 	local alt, ctrl, meta, shift = spGetModKeyState()
-	
+
 	-- RMB beats Alt since Alt is opposed to the concept of removing orders.
 	if right then
 		alt = false
 	end
-	
+
 	if factoryUnitID and isQueueButton then
 		if meta and cmdID then
 			local bq = Spring.GetUnitCmdDescs(factoryUnitID)
@@ -1049,7 +1049,7 @@ local function ClickFunc(mouse, cmdID, isStructure, factoryUnitID, fakeFactory, 
 			return true
 		end
 	end
-	
+
 	local index = spGetCmdDescIndex(cmdID)
 	if index then
 		spSetActiveCommand(index, mouse or 1, left, right, alt, ctrl, meta, shift)
@@ -1079,7 +1079,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 	local isQueueButton = buttonLayout.queueButton
 	local hotkeyText
 	local keyToShowWhenVisible
-	
+
 	local function DoClick(_, _, _, mouse)
 		if buttonLayout.ClickFunction and buttonLayout.ClickFunction(cmdID and instantCommands[cmdID], isStateCommand) then
 			return false
@@ -1094,7 +1094,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		end
 		return success
 	end
-	
+
 	local button = Button:New {
 		name = name,
 		x = xStr,
@@ -1102,14 +1102,14 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		width = width,
 		height = height,
 		caption = buttonLayout.caption or false,
-		noFont = not buttonLayout.caption,
-		objectOverrideFont = WG.GetFont(14),
+		--noFont = not buttonLayout.caption,
+		--objectOverrideFont = WG.GetFont(14),
 		padding = {0, 0, 0, 0},
 		parent = parent,
 		preserveChildrenOrder = true,
 		OnClick = {DoClick},
 	}
-	
+
 	if buttonLayout.dragAndDrop then
 		button.OnMouseDown = button.OnMouseDown or {}
 		button.OnMouseDown[#button.OnMouseDown + 1] = function(obj,_,_,mouse) --for drag_drop feature
@@ -1138,7 +1138,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			end
 		end
 	end
-	
+
 	if not BUTTON_COLOR then
 		BUTTON_COLOR = button.backgroundColor
 	end
@@ -1148,11 +1148,11 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 	if not BUTTON_BORDER_COLOR then
 		BUTTON_BORDER_COLOR = button.borderColor
 	end
-	
+
 	local image
 	local buildProgress
 	local textBoxes = {}
-	
+
 	local function SetImage(texture1, texture2)
 		if not image then
 			image = Image:New {
@@ -1170,11 +1170,11 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			image:SendToBack()
 			return
 		end
-		
+
 		if image.file == texture1 and image.file2 == texture2 then
 			return
 		end
-		
+
 		if image.file == texture1 and image.file2 == texture2 then
 			return
 		end
@@ -1182,7 +1182,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		image.file2 = texture2
 		image:Invalidate()
 	end
-	
+
 	local function SetText(textPosition, text)
 		if isDisabled then
 			text = false
@@ -1201,39 +1201,39 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 				height = config.height,
 				align = config.align,
 				fontsize = config.fontsize,
-				objectOverrideFont = WG.GetFont(config.fontsize),
+				--objectOverrideFont = WG.GetFont(config.fontsize),
 				caption = text,
 				parent = button,
 			}
 			textBoxes[textPosition]:BringToFront()
 			return
 		end
-		
+
 		local newVisible = ((text and true) or false)
-		
+
 		if (not newVisible) and (not textBoxes[textPosition].visible) then
 			return
 		end
 		textBoxes[textPosition]:SetVisibility(newVisible)
-		
+
 		if (not newVisible) or (text == textBoxes[textPosition].caption) then
 			return
 		end
 		textBoxes[textPosition]:SetCaption(text)
 	end
-	
+
 	local externalFunctionsAndData = {
 		button = button,
 		DoClick = DoClick,
 		selectionIndex = selectionIndex,
 	}
-	
+
 	local function SetDisabled(newDisabled)
 		if newDisabled == isDisabled then
 			return
 		end
 		isDisabled = newDisabled
-		
+
 		if not image then
 			SetImage("")
 		end
@@ -1252,21 +1252,21 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 				SetText(textConfig.topLeft.name, hotkeyText)
 			end
 		end
-		
+
 		button:Invalidate()
 		image:Invalidate()
 	end
-	
+
 	function externalFunctionsAndData.SetProgressBar(proportion)
 		if buildProgress then
 			buildProgress:SetValue(proportion or 0)
 			return
 		end
-		
+
 		if not image then
 			SetImage("")
 		end
-		
+
 		buildProgress = Progressbar:New{
 			x = "5%",
 			y = "5%",
@@ -1275,7 +1275,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			value = proportion,
 			max = 1,
 			caption = false,
-			noFont = true,
+			--noFont = true,
 			color           = {0.7, 0.7, 0.4, 0.6},
 			backgroundColor = {1, 1, 1, 0.01},
 			parent = image,
@@ -1283,11 +1283,11 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			skinName = 'default',
 		}
 	end
-	
+
 	local function IsVisible()
 		return button.parent and button.parent.visible
 	end
-	
+
 	function externalFunctionsAndData.RemoveGridHotkey(onlyWhenVisible)
 		if onlyWhenVisible and not IsVisible() then
 			keyToShowWhenVisible = -1
@@ -1305,13 +1305,13 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			SetText(textConfig.topLeft.name, nil)
 		end
 	end
-	
+
 	local function SetGridKey(key)
 		usingGrid = true
 		hotkeyText = GetGreenStr(transkey[string.lower(key)] or key)
 		SetText(textConfig.topLeft.name, hotkeyText)
 	end
-	
+
 	function externalFunctionsAndData.UpdateGridHotkey(myGridMap, myOverride, onlyWhenVisible)
 		local key
 		if myOverride then
@@ -1331,7 +1331,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		end
 		SetGridKey(key)
 	end
-	
+
 	function externalFunctionsAndData.OnVisibleGridKeyUpdate()
 		if not keyToShowWhenVisible then
 			return
@@ -1344,11 +1344,11 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		SetGridKey(keyToShowWhenVisible)
 		keyToShowWhenVisible = false
 	end
-	
+
 	function externalFunctionsAndData.ClearGridHotkey()
 		SetText(textConfig.topLeft.name)
 	end
-	
+
 	local currentOverflow, onMouseOverFun
 	function externalFunctionsAndData.SetQueueCommandParameter(newFactoryUnitID, overflow, newFakeFactory)
 		factoryUnitID = newFactoryUnitID
@@ -1361,14 +1361,14 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 					textBox:SetCaption(NO_TEXT)
 				end
 				SetImage()
-				
+
 				if not onMouseOverFun then
 					onMouseOverFun = function ()
 						if not currentOverflow then
 							return
 						end
 						local buildQueue = spGetRealBuildQueue(factoryUnitID)
-						
+
 						local overflowString = ""
 						for i = x, #buildQueue do
 							for udid, count in pairs(buildQueue[i]) do
@@ -1383,13 +1383,13 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			end
 		end
 	end
-	
+
 	function externalFunctionsAndData.SetSelection(newIsSelected)
 		if isSelected == newIsSelected then
 			return
 		end
 		isSelected = newIsSelected
-	
+
 		if isSelected then
 			button.backgroundColor = SELECT_BUTTON_COLOR
 			button.focusColor = SELECT_BUTTON_FOCUS_COLOR
@@ -1399,11 +1399,11 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		end
 		button:Invalidate()
 	end
-	
+
 	function externalFunctionsAndData.GetCommandID()
 		return cmdID
 	end
-	
+
 	function externalFunctionsAndData.SetBuildQueueCount(count)
 		if not (count or queueCount) then
 			return
@@ -1411,19 +1411,19 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		queueCount = count
 		SetText(textConfig.queue.name, count)
 	end
-	
+
 	function externalFunctionsAndData.SetCommand(command, overrideCmdID, notGlobal)
 		-- If overrideCmdID is negative then command can be nil.
 		local newCmdID = overrideCmdID or command.id
-		
+
 		externalFunctionsAndData.SetSelection(false)
 		externalFunctionsAndData.SetBuildQueueCount(nil)
-		
+
 		-- Update stockpile progress
 		if command and DRAW_NAME_COMMANDS[command.id] and command.name then
 			SetText(textConfig.bottomRightLarge.name, command.name)
 		end
-		
+
 		isStateCommand = command and (command.type == CMDTYPE.ICON_MODE and #command.params > 1)
 		local state = isStateCommand and (((WG.GetOverriddenState and WG.GetOverriddenState(newCmdID)) or command.params[1]) + 1)
 		if cmdID == newCmdID then
@@ -1479,10 +1479,10 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			end
 			return
 		end
-		
+
 		local displayConfig = GetDisplayConfig(cmdID)
 		button.tooltip = GetButtonTooltip(displayConfig, command, state)
-		
+
 		if command.action then
 			local hotkey = GetHotkeyText(command.action)
 			if not (isStateCommand or usingGrid) then
@@ -1495,7 +1495,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 				SetText(textConfig.topLeft.name, hotkey)
 			end
 		end
-		
+
 		if isStateCommand then
 			if displayConfig then
 				local texture = displayConfig.texture[state]
@@ -1506,14 +1506,14 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		else
 			local texture = (displayConfig and displayConfig.texture) or command.texture
 			SetImage(texture)
-			
+
 			-- Remove stockpile progress
 			if not (command and DRAW_NAME_COMMANDS[command.id] and command.name) then
 				SetText(textConfig.bottomRightLarge.name, nil)
 			end
 		end
 	end
-	
+
 	function externalFunctionsAndData.GetScreenPosition()
 		if not button:IsVisibleOnScreen() then
 			return false
@@ -1526,7 +1526,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		y = y + button.height/2
 		return x, y, button.width, button.height
 	end
-	
+
 	function externalFunctionsAndData.Delete()
 		button:Dispose()
 	end
@@ -1537,20 +1537,20 @@ end
 local function GetButtonPanel(parent, name, rows, columns, vertical, generalButtonLayout, generalIsStructure, onClick, buttonLayoutOverride)
 	local buttons = {}
 	local buttonList = {}
-	
+
 	local cmdPosition = {}
 	local positionCmd = {}
-	
+
 	local width = tostring(100/columns) .. "%"
 	local height = tostring(100/rows) .. "%"
 	local buttonSpace = math.floor(rows)*math.floor(columns)
-	
+
 	local gridMap, override
 	local gridEnabled = true
 	local gridUpdatedSinceVisible = false
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.ClearOldButtons(selectionIndex)
 		for i = 1, #buttonList do
 			local button = buttonList[i]
@@ -1559,7 +1559,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 			end
 		end
 	end
-	
+
 	function externalFunctions.DeleteButtons()
 		for i = 1, #buttonList do
 			buttonList[i].Delete()
@@ -1567,7 +1567,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 		buttons = {}
 		buttonList = {}
 	end
-	
+
 	function externalFunctions.GetButton(x, y, selectionIndex)
 		if buttons[x] and buttons[x][y] then
 			if not buttons[x][y].button.parent then
@@ -1582,34 +1582,34 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 			end
 			return buttons[x][y]
 		end
-		
+
 		if not selectionIndex then
 			return false
 		end
-		
+
 		buttons[x] = buttons[x] or {}
-		
+
 		local xStr = tostring((x - 1)*100/columns) .. "%"
 		local yStr = tostring((y - 1)*100/rows) .. "%"
-		
+
 		local buttonLayout, isStructure = generalButtonLayout, generalIsStructure
 		if buttonLayoutOverride and buttonLayoutOverride[x] and buttonLayoutOverride[x][y] then
 			buttonLayout = buttonLayoutOverride[x][y].buttonLayoutConfig
 			isStructure = buttonLayoutOverride[x][y].isStructure
 		end
-		
+
 		newButton = GetButton(parent, name .. "_".. x .. "_" .. y, selectionIndex, x, y, xStr, yStr, width, height, buttonLayout, isStructure, onClick)
-		
+
 		buttonList[#buttonList + 1] = newButton
 		if gridMap and gridEnabled then
 			newButton.UpdateGridHotkey(gridMap, override and override.gridMap)
 		end
-		
+
 		buttons[x][y] = newButton
-		
+
 		return newButton
 	end
-	
+
 	function externalFunctions.IndexToPosition(index)
 		if vertical then
 			local y = (index - 1)%rows + 1
@@ -1621,18 +1621,18 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 			return x, y
 		end
 	end
-	
+
 	function externalFunctions.CommandToPosition(cmdID, count)
 		local index = cmdPosition[cmdID] or count or 1
 		local x, y = externalFunctions.IndexToPosition(index)
 		return x, y, index <= buttonSpace
 	end
-	
+
 	function externalFunctions.ResetCommandPositions(cmdID)
 		cmdPosition = {}
 		positionCmd = {}
 	end
-	
+
 	function externalFunctions.AddCommandPosition(cmdID)
 		local pos, priority = GetCmdPosParameters(cmdID)
 		while positionCmd[pos] do
@@ -1651,7 +1651,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 		positionCmd[pos] = cmdID
 		return
 	end
-	
+
 	function externalFunctions.ApplyGridHotkeys(newGridMap, newOverride, updateNonVisible)
 		gridMap = newGridMap or gridMap
 		override = newOverride or override
@@ -1663,7 +1663,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 			gridUpdatedSinceVisible = true
 		end
 	end
-	
+
 	function externalFunctions.RemoveGridHotkeys()
 		gridEnabled = false
 		for i = 1, #buttonList do
@@ -1673,7 +1673,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 			gridUpdatedSinceVisible = true
 		end
 	end
-	
+
 	function externalFunctions.OnSelect()
 		if not gridUpdatedSinceVisible then
 			return
@@ -1683,7 +1683,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 		end
 		gridUpdatedSinceVisible = false
 	end
-	
+
 	function externalFunctions.SetDimensions(newRows, newColumns, newVertical)
 		rows, columns, vertical = newRows, newColumns, newVertical
 		width = tostring(100/columns) .. "%"
@@ -1691,7 +1691,7 @@ local function GetButtonPanel(parent, name, rows, columns, vertical, generalButt
 		buttonSpace = math.floor(rows)*math.floor(columns)
 		externalFunctions.DeleteButtons()
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1701,10 +1701,10 @@ end
 
 local function GetQueuePanel(parent, columns)
 	local externalFunctions = {}
-	
+
 	local factoryUnitID
 	local factoryUnitDefID
-	
+
 	local buttonLayoutOverride = {
 		[columns] = {
 			[1] = {
@@ -1713,13 +1713,13 @@ local function GetQueuePanel(parent, columns)
 			}
 		}
 	}
-	
+
 	local buttons = GetButtonPanel(parent, "queuePanel", 1, columns, false, buttonLayoutConfig.queue, false, nil, buttonLayoutOverride)
 
 	function externalFunctions.ClearOldButtons(selectionIndex)
 		buttons.ClearOldButtons(selectionIndex)
 	end
-	
+
 	function externalFunctions.UpdateBuildProgress()
 		if not factoryUnitID then
 			return
@@ -1736,19 +1736,19 @@ local function GetQueuePanel(parent, columns)
 		local progress = select(5, spGetUnitHealth(unitBuildID))
 		button.SetProgressBar(progress)
 	end
-	
+
 	function externalFunctions.ClearFactory()
 		factoryUnitID = false
 		factoryUnitDefID = false
 	end
-	
+
 	function externalFunctions.UpdateFactory(newFactoryUnitID, newFactoryUnitDefID, selectionIndex)
 		local buttonCount = 0
 		factoryUnitID = newFactoryUnitID
 		factoryUnitDefID = newFactoryUnitDefID
-	
+
 		local buildQueue = spGetRealBuildQueue(factoryUnitID)
-	
+
 		local buildDefIDCounts = {}
 		if buildQueue then
 			for i = 1, #buildQueue do
@@ -1765,9 +1765,9 @@ local function GetQueuePanel(parent, columns)
 				end
 			end
 		end
-		
+
 		externalFunctions.UpdateBuildProgress()
-		
+
 		for udid, count in pairs(buildDefIDCounts) do
 			local button = buttonsByCommand[-udid]
 			if button then
@@ -1775,7 +1775,7 @@ local function GetQueuePanel(parent, columns)
 			end
 		end
 	end
-	
+
 	return externalFunctions
 end
 
@@ -1785,7 +1785,7 @@ end
 
 local function GetTabButton(panel, contentControl, name, humanName, hotkey, loiterable, OnSelect)
 	local disabled = disabledTabs[name]
-	
+
 	local function DoClick(mouse)
 		if disabled or TabClickFunction(mouse) then
 			return
@@ -1796,7 +1796,7 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 			OnSelect()
 		end
 	end
-	
+
 	local button = Button:New {
 		classname = "button_tab",
 		caption = humanName,
@@ -1809,33 +1809,35 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 			end
 		},
 	}
+	--button.font.size=18
 	button.backgroundColor[4] = 0.4
-	
+
 	if disabled then
-		button.font = WG.GetSpecialFont(14, "integral_grey", {outlineColor = {0, 0, 0, 1}, color = {0.6, 0.6, 0.6, 1}})
+		--button.font = WG.GetSpecialFont(14, "integral_grey", {outlineColor = {0, 0, 0, 1}, color = {0.6, 0.6, 0.6, 1}})
+		button.font.color = {0.6, 0.6, 0.6, 1} ---test:MaDD
 		button.supressButtonReaction = true
 	end
-	
+
 	local hideHotkey = loiterable
-	
+
 	if hotkey and (not hideHotkey) and (not disabled) then
 		button:SetCaption(humanName .. " (" .. GetGreenStr(hotkey) .. ")")
 	end
-	
+
 	local externalFunctionsAndData = {
 		button = button,
 		name = name,
 		DoClick = DoClick,
 	}
-		
+
 	function externalFunctionsAndData.IsTabSelected()
 		return contentControl.visible
 	end
-	
+
 	function externalFunctionsAndData.IsTabPresent()
 		return button.parent and true or false
 	end
-	
+
 	function externalFunctionsAndData.SetHotkeyActive(isActive)
 		if (not hotkey) or hideHotkey or disabled then
 			return
@@ -1843,14 +1845,14 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 		if loiterable then
 			isActive = isActive and (not contentControl.visible)
 		end
-		
+
 		if isActive then
 			button:SetCaption(humanName .. " (" .. GetGreenStr(hotkey) .. ")")
 		else
 			button:SetCaption(humanName .. " (" .. hotkey .. ")")
 		end
 	end
-	
+
 	function externalFunctionsAndData.SetHideHotkey(newHidden)
 		if (not loiterable) or disabled then
 			return
@@ -1860,7 +1862,7 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 			button:SetCaption(humanName)
 		end
 	end
-	
+
 	function externalFunctionsAndData.SetSelected(isSelected)
 		contentControl:SetVisibility(isSelected)
 		if loiterable and not hideHotkey then
@@ -1869,12 +1871,12 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 		button.backgroundColor[4] = isSelected and 0.8 or 0.4
 		button:Invalidate()
 	end
-	
+
 	function externalFunctionsAndData.SetFontSize(newSize)
 		button.font.size = newSize
 		button:Invalidate()
 	end
-	
+
 	function externalFunctionsAndData.GetScreenPosition()
 		if not button:IsVisibleOnScreen() then
 			return false
@@ -1887,7 +1889,7 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 		y = y + button.height/2
 		return x, y, button.width, button.height
 	end
-	
+
 	return externalFunctionsAndData
 end
 
@@ -1904,14 +1906,14 @@ local function GetTabPanel(parent, rows, columns)
 		resizeItems = true,
 		orientation = "horizontal",
 	}
-	
+
 	local currentSelectedIndex
 	local hotkeysActive = true
 	local currentTab
 	local tabList = false
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.SwitchToTab(name)
 		if not tabList then
 			return
@@ -1925,7 +1927,7 @@ local function GetTabPanel(parent, rows, columns)
 			end
 		end
 	end
-		
+
 	function externalFunctions.SetTabs(newTabList, showTabs, variableHide, tabToSelect)
 		if TabListsAreIdentical(newTabList, tabList) then
 			return
@@ -1946,7 +1948,7 @@ local function GetTabPanel(parent, rows, columns)
 			end
 		end
 	end
-	
+
 	function externalFunctions.ClearTabs()
 		if tabList then
 			externalFunctions.SwitchToTab()
@@ -1955,7 +1957,7 @@ local function GetTabPanel(parent, rows, columns)
 			tabHolder:ClearChildren()
 		end
 	end
-	
+
 	function externalFunctions.SetHotkeysActive(newActive)
 		hotkeysActive = newActive
 		if not tabList then
@@ -1966,11 +1968,11 @@ local function GetTabPanel(parent, rows, columns)
 			data.SetHotkeyActive(hotkeysActive)
 		end
 	end
-	
+
 	function externalFunctions.GetCurrentTab()
 		return currentTab
 	end
-	
+
 	return externalFunctions
 end
 
@@ -2004,7 +2006,7 @@ local function ProcessCommandPosition(command)
 		statePanel.buttons.AddCommandPosition(command.id)
 		return
 	end
-	
+
 	for i = 1, #commandPanels do
 		local data = commandPanels[i]
 		if not data.isBuild then
@@ -2024,7 +2026,7 @@ local function ProcessCommand(command, factoryUnitID, factoryUnitDefID, fakeFact
 	local isStateCommand = (command.type == CMDTYPE.ICON_MODE and #command.params > 1)
 	if isStateCommand then
 		statePanel.commandCount = statePanel.commandCount + 1
-		
+
 		local x, y, spaceAvailible = statePanel.buttons.CommandToPosition(command.id, statePanel.commandCount)
 		if not spaceAvailible then
 			statePanel.commandCount = statePanel.commandCount - 1
@@ -2034,22 +2036,22 @@ local function ProcessCommand(command, factoryUnitID, factoryUnitDefID, fakeFact
 		button.SetCommand(command)
 		return
 	end
-	
+
 	for i = 1, #commandPanels do
 		local data = commandPanels[i]
 		local found, position = data.inclusionFunction(command.id, factoryUnitDefID)
 		if found then
 			data.commandCount = data.commandCount + 1
-			
+
 			local x, y
 			if position then
 				x, y = position.col, position.row
 			else
 				x, y = data.buttons.CommandToPosition(command.id, data.commandCount)
 			end
-			
+
 			local button = data.buttons.GetButton(x, y, selectionIndex)
-			
+
 			button.SetCommand(command)
 			if data.factoryQueue then
 				button.SetQueueCommandParameter(factoryUnitID, nil, fakeFactory)
@@ -2062,7 +2064,7 @@ end
 local function SetIntegralVisibility(visible)
 	background:SetVisibility(visible)
 	UpdateBackgroundSkin()
-	
+
 	WG.IntegralVisible = visible
 	if WG.CoreSelector then
 		WG.CoreSelector.SetSpecSpaceVisible(visible)
@@ -2073,7 +2075,7 @@ local function ProcessAllCommands(commands, customCommands)
 	local factoryUnitID, factoryUnitDefID, fakeFactory, selectedUnitCount = GetSelectionValues()
 
 	selectionIndex = selectionIndex + 1
-	
+
 	for i = 1, #commandPanels do
 		local data = commandPanels[i]
 		data.commandCount = 0
@@ -2081,26 +2083,26 @@ local function ProcessAllCommands(commands, customCommands)
 			data.buttons.ResetCommandPositions()
 		end
 	end
-	
+
 	statePanel.commandCount = 0
 	statePanel.buttons.ResetCommandPositions()
-	
+
 	for i = 1, #commands do
 		ProcessCommandPosition(commands[i])
 	end
-	
+
 	for i = 1, #customCommands do
 		ProcessCommandPosition(customCommands[i])
 	end
-	
+
 	for i = 1, #commands do
 		ProcessCommand(commands[i], factoryUnitID, factoryUnitDefID, fakeFactory, selectionIndex)
 	end
-	
+
 	for i = 1, #customCommands do
 		ProcessCommand(customCommands[i], factoryUnitID, factoryUnitDefID, fakeFactory, selectionIndex)
 	end
-	
+
 	-- Call factory queue update here because the update will globally
 	-- set queue count for the top two rows of the factory tab. Therefore
 	-- the factory tab must have updated its commands.
@@ -2119,11 +2121,11 @@ local function ProcessAllCommands(commands, customCommands)
 			end
 		end
 	end
-	
+
 	local tabsToShow = {}
 	local lastTabSelected = tabPanel.GetCurrentTab()
 	local tabToSelect
-	
+
 	-- Switch to factory tab is a factory is newly selected.
 	if factoryUnitDefID then
 		local unitsFactoryTab = commandPanelMap.units_factory.tabButton
@@ -2131,7 +2133,7 @@ local function ProcessAllCommands(commands, customCommands)
 			tabToSelect = "units_factory"
 		end
 	end
-	
+
 	-- Determine which tabs to display and which to select
 	for i = 1, #commandPanels do
 		local data = commandPanels[i]
@@ -2146,16 +2148,16 @@ local function ProcessAllCommands(commands, customCommands)
 			end
 		end
 	end
-	
+
 	statePanel.holder:SetVisibility(statePanel.commandCount ~= 0)
 	if statePanel.commandCount ~= 0 then
 		statePanel.buttons.ClearOldButtons(selectionIndex)
 	end
-	
+
 	if not tabToSelect then
 		tabToSelect = "orders"
 	end
-	
+
 	if #tabsToShow == 0 then
 		tabPanel.ClearTabs()
 		lastTabSelected = false
@@ -2163,7 +2165,7 @@ local function ProcessAllCommands(commands, customCommands)
 		tabPanel.SetTabs(tabsToShow, #tabsToShow > 1, not factoryUnitDefID, tabToSelect)
 		lastTabSelected = tabToSelect
 	end
-	
+
 	-- Keeps main window for tweak mode.SetIntegralVisibility(visible)
 	SetIntegralVisibility(not (#tabsToShow == 0 and selectedUnitCount == 0))
 end
@@ -2181,7 +2183,7 @@ local function InitializeControls()
 	local height = math.min(screenHeight/4.5, 200*width/450)  + 8
 
 	gridKeyMap, gridMap, gridCustomOverrides = GenerateGridKeyMap(options.keyboardType2.value)
-	
+
 	local mainWindow = Window:New{
 		name      = 'integralwindow',
 		x         = 0,
@@ -2196,13 +2198,13 @@ local function InitializeControls()
 		resizable = false,
 		tweakDraggable = true,
 		tweakResizable = true,
-		noFont = true,
+		--noFont = true,
 		padding = {0, 0, 0, 0},
 		color = {0, 0, 0, 0},
 		parent = screen0,
 	}
 	mainWindow:SendToBack()
-	
+
 	buildTabHolder = Control:New{
 		x = options.leftPadding.value,
 		y = "0%",
@@ -2211,9 +2213,9 @@ local function InitializeControls()
 		padding = {2, 2, 2, -1},
 		parent = mainWindow,
 	}
-	
+
 	tabPanel = GetTabPanel(buildTabHolder)
-	
+
 	buttonsHolder = Control:New{
 		x = options.leftPadding.value,
 		y = (100/7) .. "%",
@@ -2222,7 +2224,7 @@ local function InitializeControls()
 		padding = {0, 0, 0, 0},
 		parent = mainWindow,
 	}
-	
+
 	background = Panel:New{
 		x = 0,
 		y = "15%",
@@ -2230,15 +2232,15 @@ local function InitializeControls()
 		bottom = 0,
 		draggable = false,
 		resizable = false,
-		noFont = true,
+		--noFont = true,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {1, 1, 1, options.background_opacity.value},
 		noClickThrough = true,
 		parent = mainWindow,
 	}
-	
+
 	buildTabHolder:SendToBack() -- behind background
-	
+
 	local function ReturnToOrders(cmdID)
 		if options.selectionClosesTabOnSelect.value then
 			if commandPanelMap.orders then
@@ -2248,7 +2250,7 @@ local function InitializeControls()
 			returnToOrdersCommand = cmdID
 		end
 	end
-	
+
 	for i = 1, #commandPanels do
 		local data = commandPanels[i]
 		local commandHolder = Control:New{
@@ -2260,7 +2262,7 @@ local function InitializeControls()
 			parent = buttonsHolder,
 		}
 		commandHolder:SetVisibility(false)
-		
+
 		local hotkey
 		if data.optionName then
 			hotkey = GetActionHotkey(EPIC_NAME .. data.optionName)
@@ -2271,12 +2273,12 @@ local function InitializeControls()
 		if data.returnOnClick then
 			data.onClick = ReturnToOrders
 		end
-		
-		
+
+
 		data.holder = commandHolder
 		data.buttons = GetButtonPanel(commandHolder, data.name, 3, 6,  false, data.buttonLayoutConfig, data.isStructure, data.onClick, data.buttonLayoutOverride)
 		local OnTabSelect = data.buttons.OnSelect
-		
+
 		if data.factoryQueue then
 			local queueHolder = Control:New{
 				x = "0%",
@@ -2287,7 +2289,7 @@ local function InitializeControls()
 				parent = commandHolder,
 			}
 			data.queue = GetQueuePanel(queueHolder, 6)
-			
+
 			-- If many things need doing they must be put in a function
 			-- but this works for now.
 			OnTabSelect = function ()
@@ -2295,14 +2297,14 @@ local function InitializeControls()
 				data.buttons.OnSelect()
 			end
 		end
-		
+
 		data.tabButton = GetTabButton(tabPanel, commandHolder, data.name, data.humanName, hotkey, data.loiterable, OnTabSelect)
-	
+
 		if data.gridHotkeys and ((not data.disableableKeys) or options.unitsHotkeys2.value) then
 			data.buttons.ApplyGridHotkeys(gridMap, (gridCustomOverrides and gridCustomOverrides[data.name]) or {})
 		end
 	end
-	
+
 	statePanel.holder = Control:New{
 		x = (100 - stateSectionWidth) .. "%",
 		y = "0%",
@@ -2312,14 +2314,14 @@ local function InitializeControls()
 		parent = buttonsHolder,
 	}
 	statePanel.holder:SetVisibility(false)
-	
+
 	statePanel.buttons = GetButtonPanel(statePanel.holder, "statePanel",
 		simpleModeEnabled and bigStateWidth or smallStateWidth,
 		simpleModeEnabled and bigStateHeight or smallStateHeight,
 		true,
 		buttonLayoutConfig.command
 	)
-	
+
 	SetIntegralVisibility(false)
 end
 
@@ -2507,22 +2509,22 @@ function widget:KeyPress(key, modifier, isRepeat)
 	if isRepeat then
 		return false
 	end
-	
+
 	if returnToOrdersCommand or (modifier.ctrl and options.ctrlDisableGrid.value) then
 		return false
 	end
-	
+
 	local currentTab = tabPanel.GetCurrentTab()
 	local commandPanel = currentTab and commandPanelMap[currentTab]
 	if (not commandPanel) or (not (commandPanel.gridHotkeys and ((not commandPanel.disableableKeys) or options.unitsHotkeys2.value))) then
 		return false
 	end
-	
+
 	local currentKeyMap = gridKeyMap
 	if gridCustomOverrides and gridCustomOverrides[currentTab] then
 		currentKeyMap = gridCustomOverrides[currentTab].keyMap
 	end
-	
+
 	local pos = currentKeyMap[key]
 	if pos then
 		local x, y = pos[2], pos[1]
@@ -2568,7 +2570,7 @@ function widget:Initialize()
 	RemoveAction("nextmenu")
 	RemoveAction("prevmenu")
 	initialized = true
-	
+
 	Chili = WG.Chili
 	Button = Chili.Button
 	Label = Chili.Label
@@ -2581,8 +2583,8 @@ function widget:Initialize()
 	Progressbar = Chili.Progressbar
 	Control = Chili.Control
 	screen0 = Chili.Screen0
-	
+
 	InitializeControls()
-	
+
 	WG.IntegralMenu = externalFunctions
 end

@@ -26,7 +26,7 @@ function WG.GetFont(size)
 	size = size or 13
 	if (not font[size]) or DISABLE then
 		font[size] = WG.Chili.Font:New {
-			font          = "FreeSansBold.otf",
+			font          = "GeogrotesqueCompMedium.otf", --"FreeSansBold.otf",
 			size          = size,
 			shadow        = true,
 			outline       = false,

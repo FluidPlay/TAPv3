@@ -4,7 +4,7 @@
 --shard_include("luarules/gadgets/ai/ba/commonfunctions.lua") 	-- doesn' work here
 VFS.Include("LuaRules/colors.h.lua")
 
-FontPath = "fonts/GeogrotesqueCompMedium.otf" --Kelson Sans Regular.otf" --Akrobat-SemiBold.otf"
+FontPath = "LuaUI/Fonts/GeogrotesqueCompMedium.otf"
 
 local spFindUnitCmdDesc     = Spring.FindUnitCmdDesc
 local spInsertUnitCmdDesc     = Spring.InsertUnitCmdDesc
