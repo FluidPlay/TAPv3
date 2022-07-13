@@ -93,7 +93,8 @@ local continueFadeInTime = 1.3
 local wndBorderSize = 4
 local fontSizeHeadline = 84
 local fontSizeAddon = 20
-local fontPath = "LuaUI/Fonts/MicrogrammaDBold.ttf"
+--local fontPath = "LuaUI/Fonts/MicrogrammaDBold.ttf"
+local fontPath = (VFS.Include("gamedata/configs/fontsettings.lua")).LuaUI
 local minTransparency_autoFade = 0.1
 local maxTransparency_autoFade = 0.7
 
@@ -119,7 +120,7 @@ local function SetWindowSkin(targetPanel, className)
 	if skin[className] then
 		newClass = skin[className]
 	end
-	
+
 	targetPanel.tiles = newClass.tiles
 	targetPanel.TileImage = newClass.TileImage
 	--targetPanel.backgroundColor = newClass.backgroundColor
@@ -137,10 +138,10 @@ local function TakeMouseOffEdge()
 	if outsideSpring then
 		return
 	end
-	
+
 	local screenWidth, screenHeight = Spring.GetViewGeometry()
 	local changed = false
-	
+
 	if mx < SCREEN_EDGE then
 		mx = SCREEN_EDGE
 		changed = true
@@ -148,7 +149,7 @@ local function TakeMouseOffEdge()
 		mx = screenWidth - SCREEN_EDGE
 		changed = true
 	end
-	
+
 	if my < SCREEN_EDGE then
 		my = SCREEN_EDGE
 		changed = true
@@ -156,7 +157,7 @@ local function TakeMouseOffEdge()
 		my = screenHeight - SCREEN_EDGE
 		changed = true
 	end
-	
+
 	if changed then
 		Spring.WarpMouse(mx, my)
 	end
@@ -169,19 +170,19 @@ local function InitializeNewtonFirezones()
 		return
 	end
 	local newtonDefID = UnitDefNames["turretimpulse"].id
-	
+
 	for i = 1, #newtonFirezones do
 		local data = newtonFirezones[i]
 		local units = Spring.GetUnitsInRectangle(data.newtons.x1, data.newtons.z1, data.newtons.x2, data.newtons.z2, Spring.GetMyTeamID())
 		local newtons = {}
-		
+
 		for j = 1, #units do
 			local unitID = units[j]
 			if Spring.GetUnitDefID(unitID) == newtonDefID then
 				newtons[#newtons + 1] = unitID
 			end
 		end
-		
+
 		if #newtons > 0 then
 			data.firezone.x, data.firezone.z = data.firezone.x1, data.firezone.z1
 			data.firezone.x1, data.firezone.z1 = nil, nil
@@ -218,7 +219,7 @@ end
 
 local function GetNewTextHandler(parentControl, paragraphSpacing, imageSize)
 	local offset = 0
-	
+
 	local holder = Chili.Control:New{
 		x = 0,
 		y = 0,
@@ -226,14 +227,14 @@ local function GetNewTextHandler(parentControl, paragraphSpacing, imageSize)
 		padding = {0,0,0,0},
 		parent = parentControl,
 	}
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.AddEntry(textBody, imageFile)
 		local textPos = 4
 		if imageFile then
 			textPos = imageSize + 10
-			
+
 			local image = Chili.Image:New{
 				x = 4,
 				y = offset,
@@ -259,7 +260,7 @@ local function GetNewTextHandler(parentControl, paragraphSpacing, imageSize)
 				}
 			end
 		end
-		
+
 		local label = Chili.TextBox:New{
 			x = textPos,
 			y = offset + 6,
@@ -271,35 +272,35 @@ local function GetNewTextHandler(parentControl, paragraphSpacing, imageSize)
 			fontsize = 14,
 			parent = holder,
 		}
-		
+
 		local offsetSize = (#label.physicalLines)*14 + 2
 		if imageFile and (offsetSize < imageSize) then
 			offsetSize = imageSize
 		end
-		
+
 		offset = offset + offsetSize + paragraphSpacing
 		holder:SetPos(nil, nil, nil, offset - paragraphSpacing/2)
 	end
-	
+
 	return externalFunctions
 end
 
 local function InitializeBriefingWindow()
 	local planetInformation = Spring.Utilities.CustomKeyToUsefulTable(Spring.GetModOptions().planetmissioninformationtext) or {}
 	WG.campaign_planetInformation = planetInformation
-	
+
 	local BRIEF_WIDTH = 720
 	local BRIEF_HEIGHT = 680
-	
+
 	local SCROLL_POS = 70
 	local SCROLL_HEIGHT = 170
-	
+
 	local wantUnpause = true
-	
+
 	local externalFunctions = {}
-	
+
 	local screenWidth, screenHeight = Spring.GetViewGeometry()
-	
+
 	local briefingWindow = Chili.Window:New{
 		classname = "main_window",
 		name = 'mission_galaxy_brief',
@@ -317,7 +318,7 @@ local function InitializeBriefingWindow()
 		parent = Chili.Screen0,
 	}
 	briefingWindow:SetVisibility(false)
-	
+
 	Chili.Label:New{
 		x = 0,
 		y = 12,
@@ -328,7 +329,7 @@ local function InitializeBriefingWindow()
 		caption = "Planet " .. planetInformation.name,
 		parent = briefingWindow,
 	}
-	
+
 	local mainHolder = Chili.ScrollPanel:New{
 		x = "4%",
 		y = SCROLL_POS,
@@ -337,7 +338,7 @@ local function InitializeBriefingWindow()
 		horizontalScrollbar = false,
 		parent = briefingWindow,
 	}
-	
+
 	local bonusHolder
 	if bonusObjectiveBlock then
 		bonusHolder = Chili.ScrollPanel:New{
@@ -349,7 +350,7 @@ local function InitializeBriefingWindow()
 			parent = briefingWindow,
 		}
 	end
-	
+
 	local textScroll = Chili.ScrollPanel:New{
 		x = "4%",
 		y = SCROLL_POS + SCROLL_HEIGHT + 22,
@@ -360,14 +361,14 @@ local function InitializeBriefingWindow()
 	}
 	local planetTextHandler = GetNewTextHandler(textScroll, 22, 64)
 	planetTextHandler.AddEntry(textOverride or planetInformation.description)
-	
+
 	if planetInformation.tips then
 		local tips = tipsOverride or planetInformation.tips
 		for i = 1, #tips do
 			planetTextHandler.AddEntry(tips[i].text, tips[i].image)
 		end
 	end
-	
+
 	Chili.Button:New{
 		x = "38%",
 		right = "38%",
@@ -383,7 +384,7 @@ local function InitializeBriefingWindow()
 		},
 		parent = briefingWindow
 	}
-	
+
 	local function TakeObjectivesLists()
 		if mainObjectiveBlock then
 			mainObjectiveBlock.SetParent(mainHolder, 0, 0)
@@ -392,7 +393,7 @@ local function InitializeBriefingWindow()
 			bonusObjectiveBlock.SetParent(bonusHolder, 0, 0)
 		end
 	end
-	
+
 	function externalFunctions.Show(withoutPause)
 		if WG.PauseScreen_SetEnabled then
 			WG.PauseScreen_SetEnabled(false, not gameNotStarted)
@@ -412,10 +413,10 @@ local function InitializeBriefingWindow()
 			end
 		end
 		TakeObjectivesLists()
-		
+
 		briefingWindow:SetVisibility(true)
 	end
-	
+
 	function externalFunctions.Hide()
 		if WG.PauseScreen_SetEnabled then
 			WG.PauseScreen_SetEnabled(true)
@@ -439,7 +440,7 @@ end
 
 local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam, fontSize)
 	fontSize = fontSize or 14
-	
+
 	local holderControl = Chili.Control:New{
 		x = 0,
 		y = position,
@@ -448,7 +449,7 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		padding = {0, 0, 0, 0},
 		parent = holderWindow,
 	}
-	
+
 	local offset = 0
 	local missionsLabel = Chili.Label:New{
 		x = 8,
@@ -462,9 +463,9 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		parent = holderControl,
 	}
 	offset = offset + 28
-	
+
 	local objectives = {}
-	
+
 	for i = 1, #items do
 		local label = Chili.TextBox:New{
 			x = 22,
@@ -508,7 +509,7 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		}
 		offset = offset + (#label.physicalLines)*14 + 2
 	end
-	
+
 	local function SetTentativeSuccess(index)
 		-- This is success that the UI draws, but it may still be overridden with failure by luaRules.
 		if objectives[index].terminated then
@@ -517,7 +518,7 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		objectives[index].image.file = SUCCESS_ICON
 		objectives[index].image:Invalidate()
 	end
-	
+
 	local function UpdateSuccess(index)
 		if objectives[index].terminated then
 			return
@@ -526,19 +527,19 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		if not newSuccess then
 			return
 		end
-		
+
 		if satisfyCount and newSuccess < satisfyCount then
 			return
 		end
-		
+
 		objectives[index].image.file = (newSuccess > 0 and SUCCESS_ICON) or FAILURE_ICON
 		objectives[index].image:Invalidate()
-		
+
 		objectives[index].success = (newSuccess > 0)
 		objectives[index].terminated = true
 		objectives[index].image = image
 	end
-	
+
 	local function UpdateObjectiveSuccess()
 		if gameRulesParam then
 			for i = 1, #objectives do
@@ -546,25 +547,25 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 			end
 		end
 	end
-	
+
 	UpdateObjectiveSuccess()
-	
+
 	local externalFunctions = {}
-	
+
 	function externalFunctions.Update()
 		UpdateObjectiveSuccess()
 	end
-	
+
 	function externalFunctions.SetTentativeSuccess()
 		for i = 1, #objectives do
 			SetTentativeSuccess(i)
 		end
 	end
-	
+
 	function externalFunctions.UpdateTooltip(text)
 		missionsLabel:SetCaption(text)
 	end
-	
+
 	function externalFunctions.SetParent(newParent, newX, newY)
 		if (not holderControl.parent) or (holderControl.parent.name ~= newParent.name) then
 			if holderControl.parent then
@@ -574,7 +575,7 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		end
 		holderControl:SetPos(newX, newY)
 	end
-	
+
 	function externalFunctions.MakeObjectivesString()
 		local objectivesString = ""
 		for i = 1, #objectives do
@@ -586,21 +587,21 @@ local function GetObjectivesBlock(holderWindow, position, items, gameRulesParam,
 		end
 		return objectivesString
 	end
-	
+
 	holderControl:SetPos(nil, nil, nil, offset)
-	
+
 	return externalFunctions, position + offset
 end
 
 local function InitializeObjectivesWindow()
 	local objectiveList = Spring.Utilities.CustomKeyToUsefulTable(Spring.GetModOptions().objectiveconfig) or {}
 	local bonusObjectiveList = Spring.Utilities.CustomKeyToUsefulTable(Spring.GetModOptions().bonusobjectiveconfig) or {}
-	
+
 	local thereAreBonusObjectives = (bonusObjectiveList and #bonusObjectiveList > 0)
 	if #objectiveList <= 0 and (not thereAreBonusObjectives) then
 		return nil
 	end
-	
+
 	local holderWindow = Chili.Window:New{
 		classname = "main_window_small",
 		name = 'mission_galaxy_objectives_4',
@@ -616,22 +617,22 @@ local function InitializeObjectivesWindow()
 		parent = Chili.Screen0,
 	}
 	holderWindow:SetVisibility(false)
-	
+
 	local externalFunctions = {}
-	
+
 	local position = 4
 	local mainBlockPosition = position
 	mainObjectiveBlock, position = GetObjectivesBlock(holderWindow, position, objectiveList,  "objectiveSuccess_")
 	local mainHeight = position + holderWindow.padding[2] + holderWindow.padding[4] + 3
 	local bonusHeight, bonusBlockPosition
-	
+
 	if #bonusObjectiveList > 0 then
 		position = position + 8
 		bonusBlockPosition = position
 		bonusObjectiveBlock, position = GetObjectivesBlock(holderWindow, position, bonusObjectiveList, "bonusObjectiveSuccess_")
 		bonusHeight = position + holderWindow.padding[2] + holderWindow.padding[4] + 3
 	end
-	
+
 	if ADD_GLOBAL_COMMAND_BUTTON and WG.GlobalCommandBar then
 		local function ToggleWindow()
 			if holderWindow then
@@ -640,9 +641,9 @@ local function InitializeObjectivesWindow()
 		end
 		globalCommandButton = WG.GlobalCommandBar.AddCommand(LUAUI_DIRNAME .. "images/advplayerslist/random.png", "", ToggleWindow)
 	end
-	
+
 	holderWindow:SetPos(nil, nil, nil, position + holderWindow.padding[2] + holderWindow.padding[4] + 3)
-	
+
 	local bonusVisible = true
 	local function SetBonusVisibility(newVisible)
 		if (not thereAreBonusObjectives) or (newVisible == bonusVisible) then
@@ -658,7 +659,7 @@ local function InitializeObjectivesWindow()
 		holderWindow:SetPos(nil, nil, nil, newHeight)
 	end
 	SetBonusVisibility(true)
-	
+
 	Chili.Button:New{
 		y = 3,
 		right = 3,
@@ -685,7 +686,7 @@ local function InitializeObjectivesWindow()
 			}
 		},
 	}
-	
+
 	local bonusToggleButton
 	if thereAreBonusObjectives then
 		bonusToggleButton = Chili.Button:New{
@@ -714,8 +715,8 @@ local function InitializeObjectivesWindow()
 			},
 		}
 	end
-	
-	
+
+
 	local function TakeObjectivesLists()
 		if mainObjectiveBlock then
 			mainObjectiveBlock.SetParent(holderWindow, 0, mainBlockPosition)
@@ -724,16 +725,16 @@ local function InitializeObjectivesWindow()
 			bonusObjectiveBlock.SetParent(holderWindow, 0, bonusBlockPosition)
 		end
 	end
-	
+
 	function externalFunctions.Show()
 		TakeObjectivesLists()
 		holderWindow:SetVisibility(true)
 	end
-	
+
 	function externalFunctions.Hide()
 		holderWindow:SetVisibility(false)
 	end
-	
+
 	return externalFunctions
 end
 
@@ -772,7 +773,7 @@ local function SendMissionResult(shutdown)
 	if missionResultSent or Spring.IsReplay() then
 		return
 	end
-	
+
 	if (not missionSustainedTime) then
 		if shutdown then
 			SendResignToLuaMenu(campaignBattleID)
@@ -780,16 +781,16 @@ local function SendMissionResult(shutdown)
 		return
 	end
 	missionResultSent = true
-	
+
 	local campaignPartialSaveData = Spring.GetModOptions().campaignpartialsavedata
 	if campaignPartialSaveData and campaignPartialSaveData ~= "" then
 		Spring.SendLuaMenuMsg(LOAD_CAMPAIGN_MESSAGE .. campaignPartialSaveData)
 	end
-	
+
 	if bonusObjectiveBlock then
 		bonusObjectiveBlock.Update()
 	end
-	
+
 	if missionWon then
 		SendVictoryToLuaMenu(campaignBattleID)
 	else
@@ -801,7 +802,7 @@ local function MissionGameOver(newMissionWon)
 	if missionEndFrame and (newMissionWon == missionWon) then
 		return
 	end
-	
+
 	-- Don't turn lost missions into won missions.
 	if newMissionWon and missionEndFrame then
 		return
@@ -809,11 +810,11 @@ local function MissionGameOver(newMissionWon)
 	missionWon = newMissionWon
 	missionEndFrame = Spring.GetGameFrame() + VICTORY_SUSTAIN_FRAMES
 	missionEndTime = osClock()
-	
+
 	if missionWon and mainObjectiveBlock then
 		mainObjectiveBlock.SetTentativeSuccess()
 	end
-	
+
 	if WG.Music then
 		WG.Music.PlayGameOverMusic(missionWon)
 	end
@@ -848,7 +849,7 @@ function IsOverWindow(x, y)
 	end
 	return false
 end
- 
+
 function widget:MousePress(x, y, button)
 	if missionSustainedTime then
 		local outsideSpring = select(6, spGetMouseState())
@@ -894,7 +895,7 @@ end
 
 local function DrawGameOverScreen(now)
 	local diffPauseTime = (now - missionEndTime)
-	
+
 	local text =  { 1.0, 1.0, (mouseOver and 0.9) or 1.0, 1.0 }
 	local text2 =  { 0.95, 0.95, (mouseOver and 0.85) or 0.95, 1.0 }
 	local outline =  { 0.4, 0.4, 0.4, 1.0 }
@@ -907,43 +908,43 @@ local function DrawGameOverScreen(now)
 	text[4] = text[4]*factor
 	outline[4] = outline[4]*factor
 	mouseOverColor[4] = mouseOverColor[4]*factor
-	
-	
+
+
 	--draw window
 	glPushMatrix()
-	
+
 	if mouseOver then
 		glColor(mouseOverColor)
 	else
 		glColor(colorWnd)
 	end
-	
+
 	glRect( wndX1, wndY1, wndX2, wndY2 )
 	glRect( wndX1 - wndBorderSize, wndY1 + wndBorderSize, wndX2 + wndBorderSize, wndY2 - wndBorderSize)
-	
+
 	myFont:Begin()
 	myFont:SetOutlineColor( outline )
 
 	myFont:SetTextColor( text )
 	myFont:Print((missionWon and "Victory") or "Defeat", (missionWon and victoryTextX) or defeatTextX, textY, fontSizeHeadline, "O" )
-	
+
 	if missionSustainedTime then
 		local secondaryFactor = min(maxTransparency_autoFade, max((now - missionSustainedTime) / continueFadeInTime, 0))
 		text2[4] = text2[4]*secondaryFactor
 		myFont:SetTextColor( text2 )
 		myFont:Print( "Click to continue", lowerTextX, textY - lineOffset, fontSizeAddon, "O" )
 	end
-	
+
 	myFont:End()
-	
+
 	glPopMatrix()
-	
+
 	glTexture(false)
 end
 
 local function UpdateWindowCoords()
 	screenx, screeny = Spring.GetViewGeometry()
-	
+
 	screenCenterX = screenx / 2
 	screenCenterY = screeny / 2
 	wndX1 = screenCenterX - boxWidth
@@ -956,7 +957,7 @@ local function UpdateWindowCoords()
 	lowerTextX = wndX1 + (wndX2 - wndX1) * 0.30
 	textY = wndY2 + (wndY1 - wndY2) * 0.3
 	lineOffset = (wndY1 - wndY2) * 0.24
-	
+
 	yCenter = wndY2 + (wndY1 - wndY2) * 0.5
 	xCut = wndX1 + (wndX2 - wndX1) * 0.19
 end
@@ -1011,7 +1012,7 @@ function widget:GameFrame(n)
 		wantPause = false
 		WG.PauseScreen_SetEnabled(false)
 	end
-	
+
 	if n == 10 then
 		InitializeNewtonFirezones()
 	end
@@ -1024,17 +1025,17 @@ function widget:Initialize()
 		briefingWindow = InitializeBriefingWindow()
 		briefingWindow.Show()
 	end
-	
+
 	WG.InitializeTranslation (languageChanged, GetInfo().name)
-	
+
 	widgetHandler:RegisterGlobal('MissionGameOver', MissionGameOver)
 	Spring.SendCommands("forcestart")
-	
+
 	WG.MissionResign = MissionResign
-	
+
 	myFont = glLoadFont(fontPath, fontSizeHeadline, nil, nil) -- FIXME: nils for #2564
 	UpdateWindowCoords()
-	
+
 	local initMissionGameOver = GetGameRulesHax("MissionGameOver")
 	if initMissionGameOver then
 		MissionGameOver(initMissionGameOver == 1)

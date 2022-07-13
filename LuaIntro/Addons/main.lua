@@ -41,7 +41,8 @@ end
 
 ------------------------------------------
 
-local font = gl.LoadFont("FreeSansBold.otf", 50, 20, 1.75)
+local fontName = (VFS.Include("gamedata/configs/fontsettings.lua")).name
+local font = gl.LoadFont(fontName, 50, 20, 1.75) --"FreeSansBold.otf"
 
 function addon.DrawLoadScreen()
 	local loadProgress = SG.GetLoadProgress()
@@ -57,11 +58,11 @@ function addon.DrawLoadScreen()
 	gl.PushMatrix()
 	gl.Scale(BAR_SCALING,BAR_SCALING,1)
 	gl.Translate(X_OFFSET,Y_OFFSET,0)
-	
+
 	gl.Texture(":n:LuaIntro/Images/barframe.png")
 		gl.TexRect(0.188,0.2194,0.810,0.097)
 	gl.Texture(false)
-	
+
 	gl.BeginEnd(GL.QUADS, function()
 		--progress
 		gl.Color(0.15,0.91,0.97,0.95)
@@ -92,7 +93,7 @@ function addon.DrawLoadScreen()
 		font:Print("Loading...", vsx * 0.5, vsy * 0.171, barTextSize*0.65, "oc")
 	end
 	gl.PopMatrix()
-	
+
 	gl.PopMatrix()
 end
 

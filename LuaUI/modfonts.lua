@@ -15,7 +15,8 @@
 
 
 -- ":n:" sets it to nearest texture filtering
-local DefaultFontName = ":n:" .. "fonts/GeogrotesqueCompMedium.otf"
+local DefaultFontName = ":n:" ..(VFS.Include("gamedata/configs/fontsettings.lua")).LuaUI
+		--"LuaUI/Fonts/GeogrotesqueCompMedium.otf"
 		-- .. LUAUI_DIRNAME .. "Fonts/FreeMonoBold_12"
 
 

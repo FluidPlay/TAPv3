@@ -17,6 +17,8 @@ if not VFS.FileExists("mission.lua") then
 	return
 end
 
+local fontName = (VFS.Include("gamedata/configs/fontsettings.lua")).name
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local Chili
@@ -72,7 +74,7 @@ local function ProcessColorCodes(text)
   if text == nil then
     return
   end
-  
+
   local coloredStrs = string.gmatch(text, COLOR_CODED_PATTERN)
   for str in coloredStrs do
     local fields = SplitString(str, "\\")
@@ -106,13 +108,13 @@ end
 
 local function ShowMessageBox(text, width, height, fontsize, pause)
   text = ProcessColorCodes(text)
-  
+
   local vsx, vsy = gl.GetViewSizes()
-  
+
   -- reverse compatibility
   if height == 0 or height == nil or type(height) ~= "number" then height = 300 end
   if fontsize == 0 or fontsize == nil or type(fontsize) ~= "number" then fontsize = 14 end
-  
+
   local x = math.floor((vsx - width)/2)
   local y = math.floor((vsy - height)/2)
 
@@ -189,16 +191,16 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 	local vsx, vsy = gl.GetViewSizes()
 	--local x = math.floor((vsx - width)/2)
 	local y = math.floor((vsy - height)/2)
-	
+
 	width = width or 360
 	height = height or 160
-	
+
 	-- we have an existing box, dispose of it
 	--if msgBoxPersistent then
 	--	msgBoxPersistent:ClearChildren()
 	--	msgBoxPersistent:Dispose()
 	--end
-	
+
 	-- we have an existing box, modify that one instead of making a new one
 	if msgBoxPersistent then
 		local widthChange = width - msgBoxPersistent.width
@@ -208,30 +210,30 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 		if onRightSide then
 			msgBoxPersistent.x = msgBoxPersistent.x - widthChange
 		end
-		
+
 		local x = ((imagePath and imagePersistent.width + imagePersistent.x) or 0) + 5
 		if imagePath then
 			imagePersistent.width = PERSISTENT_IMAGE_HEIGHT
 			imagePersistent.height = PERSISTENT_IMAGE_HEIGHT
 			imagePersistent.file = imagePath
 			imagePersistent.color = {1, 1, 1, 1}
-			
+
 			scrollPersistent.width = (width - x - 12)
 		else
 			imagePersistent.color = {1, 1, 1, 0}
 			scrollPersistent.width = (width - 6 - 8)
 		end
 		imagePersistent:Invalidate()
-		
+
 		scrollPersistent.height	= height - 8 - 8
 		--scrollPersistent:Invalidate()
-		
+
 		stackPersistent.y = height - 6
 		--stackPersistent.Invalidate()
-		
+
 		-- recreate textbox to make sure it never fails to update text
 		textPersistent:Dispose()
-		
+
 		textPersistent = Chili.TextBox:New{
 			text    = text or '',
 			align   = "left";
@@ -243,17 +245,17 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 			},
 		}
 		scrollPersistent:AddChild(textPersistent)
-		
+
 		if (not nextButton) and GetHaveNextButton() then
 			CreateNextButton(msgBoxPersistent)
 		end
-		
+
 		scrollPersistent:SetScrollPos(nil, 0)
 		countLabelPersistent:SetCaption(persistentMsgIndex .. " / " .. #persistentMsgHistory)
 		msgBoxPersistent:Invalidate()
 		return	-- done here, exit
 	end
-	
+
 	-- no messagebox exists, make one
 	msgBoxPersistent = Chili.Window:New{
 		parent = Chili.Screen0,
@@ -282,7 +284,7 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 		file = imagePath;
 		parent = msgBoxPersistent;
 	}
-	
+
 	local x = ((imagePath and imagePersistent.width + imagePersistent.x) or 0) + 5
 	scrollPersistent = Chili.ScrollPanel:New{
 		parent  = msgBoxPersistent;
@@ -293,7 +295,7 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 		horizontalScrollbar = false,
 		scrollbarSize = 6,
 	}
-	
+
 	textPersistent = Chili.TextBox:New{
 		text    = text or '',
 		align   = "left";
@@ -306,7 +308,7 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 		},
 		parent = scrollPersistent,
 	}
-	
+
 	stackPersistent = Chili.StackPanel:New{
 		parent = msgBoxPersistent,
 		padding = {0,0,0,0},
@@ -338,14 +340,14 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 			end
 		}
 	}
-		
+
 	countLabelPersistent = Chili.Label:New{
 		parent = stackPersistent,
 		caption = persistentMsgIndex .. " / " .. #persistentMsgHistory,
 		y = height,
 		align = center,
 	}
-	
+
 	buttonNextPersistent = Chili.Button:New{
 		parent = stackPersistent,
 		width = 32,
@@ -362,7 +364,7 @@ local function _ShowPersistentMessageBox(text, width, height, fontsize, imagePat
 			end
 		}
 	}
-	
+
 	if GetHaveNextButton() then
 		CreateNextButton(msgBoxPersistent)
 	end
@@ -406,7 +408,7 @@ end
 local function ShowConvoBoxChili(data)
   local vsx, vsy = gl.GetViewSizes()
   local width, height = vsx*0.4, CONVO_BOX_HEIGHT
-  
+
   local x = math.floor((vsx - width)/2)
   local y = vsy * 0.2	-- fits under chatbox
 
@@ -438,7 +440,7 @@ local function ShowConvoBoxChili(data)
       },
     }
   }
-  
+
   if data.image then
     Chili.Image:New {
       width = height,
@@ -450,13 +452,13 @@ local function ShowConvoBoxChili(data)
       parent = msgBoxConvo;
     }
   end
-  
+
   if data.sound then
     Spring.PlaySoundFile(data.sound, 1, 'ui')
   else
     Spring.PlaySoundFile("sounds/message_team.wav", 1, "ui")
   end
-  
+
   convoExpireFrame = Spring.GetGameFrame() + (data.time or 150)
 end
 
@@ -472,14 +474,14 @@ local function ClearConvoBox(noContinue)
   if msgBoxConvo then
     msgBoxConvo:Dispose()
     msgBoxConvo = nil
-    
+
     table.remove(convoQueue, 1)
   elseif convoString then
     convoString = nil
     font = nil
     table.remove(convoQueue, 1)
   end
-  
+
   if (not noContinue) and convoQueue[1] then
     ShowConvoBox(convoQueue[1])
   end
@@ -500,7 +502,7 @@ function ReceivePersistentMessages(newMessages)
   if #newMessages == #persistentMsgHistory then
     return
   end
-  
+
   ClearPersistentMessageHistory()
   for index, msg in pairs(newMessages) do
     local image = msg.image and ((msg.imageFromArchive and "" or "LuaUI/Images/") .. msg.image) or nil
@@ -535,12 +537,12 @@ function widget:Update(dt)
 			end
 		end
 	end
-	
+
 	timer = timer + dt
 	if timer < UPDATE_FREQUENCY then
 		return
 	end
-	
+
 	flashPhase = not flashPhase
 	if msgBoxPersistent and flashTime then
 		if flashTime > 0 then
@@ -558,9 +560,9 @@ end
 
 function widget:DrawScreen()
   if convoString then
-  
+
     local width, height = math.max(vsx*0.4, CONVO_BOX_WIDTH_MIN), CONVO_BOX_HEIGHT
-  
+
     local x = math.floor((vsx - width)/2)
     local y = vsy * 0.8	-- fits under chatbox
     if WG.Cutscene and WG.Cutscene.IsInCutscene() then
@@ -570,25 +572,25 @@ function widget:DrawScreen()
     end
 
     if font == nil then
-      --font = FontHandler.LoadFont("FreeSansBold.otf",convoFontsize,3,3)
-      font = gl.LoadFont("FreeSansBold.otf", convoFontSize,3,3)
+      --font = gl.LoadFont("FreeSansBold.otf", convoFontSize,3,3)
+	  font = gl.LoadFont(fontName, convoFontSize, 3, 3)
       convoString = font:WrapText(convoString, width-(convoImage and height or 0), height, convoFontSize)
     end
-    
+
     gl.Color(0,0,0,0.6)
     gl.Rect(x-2, y+2, x + width + 2, y - height - 2)
     gl.Color(1,1,1,1)
-    
+
     if convoImage then
       gl.Texture(convoImage)
       gl.TexRect(x, y - height, x + height, y)
       gl.Texture(false)
     end
-    
+
     local textHeight, _, numLines = gl.GetTextHeight(convoString)
     textHeight = textHeight*convoFontsize*numLines
     local textWidth = gl.GetTextWidth(convoString)*convoFontsize
-    
+
     local xt = x + (convoImage and height or 0) + 4
     local yt = y - textHeight/numLines - 8
     font:Begin()
@@ -611,7 +613,7 @@ function widget:Initialize()
   --  widget:DrawScreenForce()
   --  wh:oldDrawScreenWH()
   --end
-  
+
   if Chili then
     WG.ShowMessageBox = ShowMessageBox
     WG.ShowPersistentMessageBox = ShowPersistentMessageBox
@@ -619,22 +621,22 @@ function widget:Initialize()
   end
   WG.AddConvo = AddConvo
   WG.ClearConvoQueue = ClearConvoQueue
-  
+
   if WG.AddNoHideWidget then
     WG.AddNoHideWidget(self)
   end
-  
+
   widgetHandler:RegisterGlobal("MissionPersistentMessagesFromSynced", ReceivePersistentMessages)
   Spring.SendLuaRulesMsg("sendMissionPersistentMessages")
-  
+
   -- testing
   if TEST_MODE then
     local str = '\255\255\255\0In some remote\255\255\255\255 corner of the universe, poured out and glittering in innumerable solar systems, there once was a star on which clever animals invented knowledge. That was the highest and most mendacious minute of "world history" – yet only a minute. After nature had drawn a few breaths the star grew cold, and the clever animals had to die.'
     local str2 = 'Enemy nuclear silo spotted!'
-    
+
     local str3 = '\255\255\255\0Colored\008 text'
     local str4 = '\255\255\255\0Colored text\008 2'
-    
+
     WG.ShowPersistentMessageBox(str, 320, 100, 12, "LuaUI/Images/advisor2.jpg")
     --WG.ShowPersistentMessageBox(str4, 320, 100, 12, "LuaUI/Images/advisor2.jpg")
     --WG.AddConvo(str3, nil, "LuaUI/Images/advisor2.jpg", "sounds/voice.wav", 10*30)
@@ -650,7 +652,7 @@ function widget:Shutdown()
   --local wh = widgetHandler
   --wh.DrawScreen = wh.oldDrawScreenWH
   --wh.oldDrawScreenWH = nil
-  
+
   WG.ShowMessageBox = nil
   WG.ShowPersistentMessageBox = nil
   WG.HidePersistentMessageBox = nil

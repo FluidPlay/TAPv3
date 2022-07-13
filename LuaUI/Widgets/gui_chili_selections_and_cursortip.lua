@@ -1080,7 +1080,7 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 		itemPadding = {0,0,0,0},
 		padding     = {0,0,0,0},
 		caption = '',
-		--objectOverrideFont = WG.GetFont(BAR_FONT),
+		objectOverrideFont = WG.GetFont(BAR_FONT),
 		parent = parentControl
 	}
 
@@ -1132,7 +1132,7 @@ local function GetImageWithText(parentControl, name, initY, imageFile, caption, 
 		right = 0,
 		height = LEFT_LABEL_HEIGHT,
 		caption = IMAGE_FONTSIZE,
-		--objectOverrideFont = WG.GetFont(fontSize),
+		objectOverrideFont = WG.GetFont(fontSize),
 		parent = parentControl,
 	}
 	image:SetVisibility(false)
@@ -1180,7 +1180,7 @@ local function GetCostInfoPanel(parentControl, yPos)
 		height = ICON_SIZE,
 		width = 50,
 		caption = cyan .. 'Morph:',
-		--objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
+		objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
 		parent = holder,
 	}
 	local costImage = Chili.Image:New{
@@ -1197,7 +1197,7 @@ local function GetCostInfoPanel(parentControl, yPos)
 		right = 0,
 		height = BAR_SIZE,
 		caption = BAR_FONTSIZE,
-		--objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
+		objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
 		parent = holder,
 	}
 	local timeImage = Chili.Image:New{
@@ -1214,7 +1214,7 @@ local function GetCostInfoPanel(parentControl, yPos)
 		right = 0,
 		height = BAR_SIZE,
 		caption = BAR_FONTSIZE,
-		--objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
+		objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
 		parent = holder,
 	}
 
@@ -1259,7 +1259,7 @@ local function UpdateManualFireReload(reloadBar, parentImage, unitID, weaponNum,
 			minWidth = 4,
 			max = 1,
 			caption = false,
-			--noFont = true,
+			noFont = true,
 			color = reloadBarColor,
 			skinName = 'default',
 			orientation = "vertical",
@@ -1313,7 +1313,7 @@ local function GetUnitGroupIconButton(parentControl)
 		height = 0,
 		max = 1,
 		caption = false,
-		--noFont = true,
+		noFont = true,
 		color = fullHealthBarColor,
 		parent = holder
 	}
@@ -1340,7 +1340,7 @@ local function GetUnitGroupIconButton(parentControl)
 		height = 25,
 		align  = "right",
 		valign = "top",
-		---Test-MaDD objectOverrideFont = WG.GetSpecialFont(20, "outline", {outline = true}),
+		objectOverrideFont = WG.GetSpecialFont(20, "outline", {outline = true}),
 		parent = unitImage
 	}
 
@@ -1476,7 +1476,7 @@ local function GetSelectionStatsDisplay(parentControl)
 		y = 3,
 		right = 0,
 		valign  = 'top',
-		--objectOverrideFont = WG.GetFont(STATS_FONTSIZE),
+		objectOverrideFont = WG.GetFont(STATS_FONTSIZE),
 		parent = holder,
 	}
 
@@ -1852,7 +1852,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		y = 25,
 		right = 0,
 		height = BAR_SIZE,
-		--objectOverrideFont = WG.GetFont(DESC_FONTSIZE),
+		objectOverrideFont = WG.GetFont(DESC_FONTSIZE),
 		parent = rightPanel,
 	}
 
@@ -1874,7 +1874,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			y = PIC_HEIGHT + 31,
 			right = 0,
 			height = BAR_FONTSIZE,
-			--objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
+			objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
 			parent = rightPanel,
 		}
 		spaceClickLabel = Chili.Label:New{
@@ -1883,7 +1883,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			y = PIC_HEIGHT + 55,
 			right = 0,
 			height = 18,
-			--objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
+			objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
 			caption = green .. WG.Translate("interface", "space_click_show_stats"),
 			parent = rightPanel,
 		}
@@ -2195,7 +2195,7 @@ local function GetTooltipWindow()
 		draggable = false,
 		autosize  = true,
 		minWidth = RIGHT_WIDTH,
-		--noFont = true,
+		noFont = true,
 		padding = {6,4,6,2},
 		color = {1, 1, 1, options.tooltip_opacity.value},
 		parent = screen0
@@ -2210,7 +2210,7 @@ local function GetTooltipWindow()
 		height = 5,
 		valign = "ascender",
 		autoHeight = true,
-		--objectOverrideFont = WG.GetFont(TOOLTIP_FONTSIZE),
+		objectOverrideFont = WG.GetFont(TOOLTIP_FONTSIZE),
 		parent = window,
 	}
 	textTooltip:SetVisibility(false)
@@ -2471,7 +2471,7 @@ local function GetSelectionWindow()
 		resizable = false,
 		tweakDraggable = true,
 		tweakResizable = true,
-		--noFont = true,
+		noFont = true,
 		padding = {0, 0, 0, -1},
 		color = {0, 0, 0, 0},
 		parent = screen0,

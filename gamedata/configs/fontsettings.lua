@@ -10,12 +10,12 @@
 -- then:
 -- getFont().default => returns fonts/...otf
 
-FontName = "GeogrotesqueCompMedium.otf"
-FontPath = "fonts/"..FontName
-LuaUIFontPath = "LuaUI/Fonts/"..FontName
-SkinFontPath = "LuaUI/Widgets/Skins/Evolved/fonts/"..FontName
+local FontName = "GeogrotesqueCompMedium.otf"
+local fontData = { name = FontName, default = "fonts/"..FontName, LuaUI = "LuaUI/Fonts/"..FontName, skin = "LuaUI/Widgets/Skins/Evolved/fonts/"..FontName }
 
-function getFont()
-	return { name = FontName, default = FontPath, LuaUI = LuaUIFontPath, skin = SkinFontPath }
-end
+--function getFont()
+--	return { name = FontName, default = FontPath, LuaUI = LuaUIFontPath, skin = SkinFontPath }
+--end
+
+return fontData
 

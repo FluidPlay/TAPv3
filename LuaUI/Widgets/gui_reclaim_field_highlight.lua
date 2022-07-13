@@ -170,7 +170,8 @@ local featureClusters = {}
 local featuresUpdated = false
 local clusterMetalUpdated = false
 
-local font = gl.LoadFont("FreeSansBold.otf", BASE_FONT_SIZE, 0, 0)
+local fontName = (VFS.Include("gamedata/configs/fontsettings.lua")).name
+local font = gl.LoadFont(fontName, BASE_FONT_SIZE, 0, 0) --FreeSansBold.otf
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -188,7 +189,7 @@ local function UpdateDrawEnabled()
 			or (options.showhighlight.value == 'conandecon' and (conSelected and WG.showeco)) then
 		return true
 	end
-	
+
 	local currentCmd = spGetActiveCommand()
 	if currentCmd then
 		local activeCmdDesc = spGetActiveCmdDesc(currentCmd)
@@ -342,7 +343,7 @@ local function UpdateFeatures(gf)
 			knownFeatures[fID].clID = nil
 		end
 	end
-	
+
 	if benchmark then
 		benchmark:Leave("UpdateFeatures 2loop")
 		benchmark:Leave("UpdateFeatures")
@@ -374,7 +375,7 @@ local function ClusterizeFeatures()
 		benchmark:Enter("opticsObject:Run()")
 	end
 	opticsObject:Run()
-	
+
 	if benchmark then
 		benchmark:Leave("opticsObject:Run()")
 		benchmark:Enter("opticsObject:Clusterize(minDistance)")
@@ -457,10 +458,10 @@ local function ClustersToConvexHull()
 		if benchmark then
 			benchmark:Leave("ClustersToConvexHull 1st Part")
 		end
-		
+
 		--- TODO perform pruning as described in the article below, if convex hull algo will start to choke out
 		-- http://mindthenerd.blogspot.ru/2012/05/fastest-convex-hull-algorithm-ever.html
-		
+
 		if benchmark then
 			benchmark:Enter("ClustersToConvexHull 2nd Part")
 		end
@@ -512,7 +513,7 @@ local function ClustersToConvexHull()
 			benchmark:Leave("ClustersToConvexHull 2nd Part")
 			benchmark:Enter("ClustersToConvexHull 3rd Part")
 		end
-		
+
 		local totalArea = 0
 		local pt1 = convexHull[1]
 		for i = 2, #convexHull - 1 do
@@ -530,7 +531,7 @@ local function ClustersToConvexHull()
 		if benchmark then
 			benchmark:Leave("ClustersToConvexHull 3rd Part")
 		end
-		
+
 		convexHull.area = totalArea
 		convexHull.center = {x = cx/#convexHull, z = cz/#convexHull, y = cy + 1}
 
@@ -669,7 +670,7 @@ function widget:GameFrame(frame)
 	if featuresUpdated or (drawFeatureConvexHullSolidList == nil) then
 		ClusterizeFeatures()
 		ClustersToConvexHull()
-		
+
 		if benchmark then
 			benchmark:Enter("featuresUpdated or drawFeatureConvexHullSolidList == nil")
 		end

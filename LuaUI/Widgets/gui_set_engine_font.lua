@@ -15,7 +15,11 @@ local centerPosX = 0.5	-- note: dont go too far from 0.5
 local centerPosY = 0.49	-- note: dont go too far from 0.5
 
 --    local fontfile = "fonts/" .. Spring.GetConfigString("bar_font", "Poppins-Regular.otf")
-local fontfile = "fonts/GeogrotesqueCompMedium.otf" --Akrobat-SemiBold.otf
+--local fontfile = "fonts/GeogrotesqueCompMedium.otf"
+local fontData = VFS.Include("gamedata/configs/fontsettings.lua")
+local fontPath = fontData.default
+local fontName = fontData.name
+
 local vsx,vsy = Spring.GetViewGeometry()
 local widgetScale = (0.5 + (vsx*vsy / 5700000)) * customScale
 WG.uiScale = widgetScale
@@ -24,7 +28,7 @@ local fontfileScale = (0.5 + (vsx*vsy / 5700000))
 local fontfileSize = 40 --36
 local fontfileOutlineSize = 9
 local fontfileOutlineStrength = 2 --1.4
-local font = gl.LoadFont(fontfile, fontfileSize*fontfileScale, fontfileOutlineSize*fontfileScale, fontfileOutlineStrength)
+local font = gl.LoadFont(fontPath, fontfileSize*fontfileScale, fontfileOutlineSize*fontfileScale, fontfileOutlineStrength)
 
 local bgMargin = 6
 local screenHeight = 520-bgMargin-bgMargin
@@ -46,7 +50,7 @@ local function setEngineFont()
     Spring.SetConfigInt("FontOutlineWeight", fontfileOutlineStrength * 1.5)
 
     --Spring.SendCommands("font "..Spring.GetConfigString("bar_font2", "Exo2-SemiBold.otf"))
-    Spring.SendCommands("font GeogrotesqueCompMedium.otf") --Akrobat-SemiBold.otf")
+    Spring.SendCommands("font "..fontName) --Akrobat-SemiBold.otf")
 
     -- set spring engine default font cause it cant thee game archive fonts on launch
     Spring.SetConfigString("SmallFontFile", "FreeSansBold.otf")
@@ -64,7 +68,7 @@ function widget:ViewResize()
     local newFontfileScale = (0.5 + (vsx*vsy / 5700000))
     if (fontfileScale ~= newFontfileScale) then
         fontfileScale = newFontfileScale
-        font = gl.LoadFont(fontfile, fontfileSize*fontfileScale, fontfileOutlineSize*fontfileScale, fontfileOutlineStrength)
+        font = gl.LoadFont(fontPath, fontfileSize*fontfileScale, fontfileOutlineSize*fontfileScale, fontfileOutlineStrength)
         setEngineFont()
     end
     --if windowList then gl.DeleteList(windowList) end

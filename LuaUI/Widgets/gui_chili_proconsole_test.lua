@@ -614,7 +614,6 @@ options = {
 					--noFont = true,
 					backgroundColor = {1,1,1,1},
 					borderColor = {0,0,0,1},
-					--backgroundColor = {1,1,1,1},
 				}
 				if options.enableChatBackground.value then
 					window_chat:AddChild(inputspace)
@@ -632,7 +631,6 @@ options = {
 					--noFont = true,
 					backgroundColor = {1,1,1,1},
 					borderColor = {0,0,0,1},
-					--backgroundColor = {1,1,1,1},
 				}
 				if options.enableChatBackground.value then
 					window_chat:AddChild(inputspace)
@@ -739,7 +737,7 @@ options = {
 local function SetInputFontSize(size)
 	if options.changeFont.value then
 		Spring.SetConfigInt("FontSize", size, true) --3rd param true is "this game only"
-		---Test_MaDD Spring.SendCommands('font ' .. WG.Chili.EditBox.font.font)
+		Spring.SendCommands('font ' .. WG.Chili.EditBox.font.font) ---Remove: Test_MaDD
 	end
 end
 
@@ -993,12 +991,11 @@ local function AddMessage(msg, target, remake)
 		autoHeight=true,
 		autoObeyLineHeight=true,
 		--]]
-		---TEST: MaDD
-		--objectOverrideFont = WG.GetSpecialFont(size, "proconsole", {
-		--	outlineWidth = 3,
-		--	outlineWeight = 10,
-		--	outline = true,
-		--})
+		objectOverrideFont = WG.GetSpecialFont(size, "proconsole", {
+			outlineWidth = 3,
+			outlineWeight = 10,
+			outline = true,
+		})
 	}
 
 	if options.clickable_points.value then
@@ -1024,7 +1021,7 @@ local function AddMessage(msg, target, remake)
 				caption = '',
 				children = {
 					WG.Chili.Button:New{
-						--noFont = true,
+						noFont = true,
 						x=0;y=0;
 						width = 30,
 						height = 20,
@@ -1282,7 +1279,7 @@ local function MakeMessageWindow(name, enabled, ParentFunc)
 		parent = (enabled and screen0) or nil,
 		margin = { 0, 0, 0, 0 },
 		padding = { 0, 0, 0, 0 },
-		--noFont = true,
+		noFont = true,
 		dockable = true,
 		name = name,
 		x = x,
@@ -1623,7 +1620,7 @@ function widget:Initialize()
 		x = (options.backlogArrowOnRight.value and 0) or inputsize,
 		right = ((not options.backlogArrowOnRight.value) and 0) or inputsize,
 		bottom = 0,
-		--noFont = true,
+		noFont = true,
 		height = inputsize,
 		backgroundColor = {1,1,1,1},
 		borderColor = {0,0,0,1},
@@ -1657,7 +1654,7 @@ function widget:Initialize()
 		x = 0,
 		y = 0,
 		width = '100%',
-		--noFont = true,
+		noFont = true,
 		bottom = inputsize + 2, -- This line is temporary until chili is fixed so that ReshapeConsole() works both times! -- TODO is it still required??
 		verticalSmartScroll = true,
 -- DISABLED FOR CLICKABLE TextBox		disableChildrenHitTest = true,
@@ -1684,7 +1681,7 @@ function widget:Initialize()
 		padding = { 3,3,3,3 },
 		x = 0,
 		y = 0,
-		--noFont = true,
+		noFont = true,
 		width = '100%',
 		bottom = inputsize + 2, -- This line is temporary until chili is fixed so that ReshapeConsole() works both times! -- TODO is it still required??
 		verticalSmartScroll = true,
@@ -1704,7 +1701,7 @@ function widget:Initialize()
 		y = 5,
 		right = 5,
 		bottom = 5,
-		--noFont = true,
+		noFont = true,
 		verticalSmartScroll = true,
 		backgroundColor = {0,0,0,0},
 		borderColor = {0,0,0,0},

@@ -21,10 +21,7 @@ local DISABLE = false
 
 local font = {}
 local specialFont = {}
-
-VFS.Include("gamedata/configs/fontsettings.lua")
-
-local fontName = getFont().name
+local fontName = (VFS.Include("gamedata/configs/fontsettings.lua")).name
 
 function WG.GetFont(size)
 	size = size or 13

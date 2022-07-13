@@ -1102,8 +1102,8 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 		width = width,
 		height = height,
 		caption = buttonLayout.caption or false,
-		--noFont = not buttonLayout.caption,
-		--objectOverrideFont = WG.GetFont(14),
+		noFont = not buttonLayout.caption,
+		objectOverrideFont = WG.GetFont(14),
 		padding = {0, 0, 0, 0},
 		parent = parent,
 		preserveChildrenOrder = true,
@@ -1201,7 +1201,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 				height = config.height,
 				align = config.align,
 				fontsize = config.fontsize,
-				--objectOverrideFont = WG.GetFont(config.fontsize),
+				objectOverrideFont = WG.GetFont(config.fontsize),
 				caption = text,
 				parent = button,
 			}
@@ -1813,8 +1813,8 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 	button.backgroundColor[4] = 0.4
 
 	if disabled then
-		--button.font = WG.GetSpecialFont(14, "integral_grey", {outlineColor = {0, 0, 0, 1}, color = {0.6, 0.6, 0.6, 1}})
-		button.font.color = {0.6, 0.6, 0.6, 1} ---test:MaDD
+		button.font = WG.GetSpecialFont(14, "integral_grey", {outlineColor = {0, 0, 0, 1}, color = {0.6, 0.6, 0.6, 1}})
+		--button.font.color = {0.6, 0.6, 0.6, 1} ---test:MaDD
 		button.supressButtonReaction = true
 	end
 

@@ -49,7 +49,7 @@ options = {
 
 showStickyTags = options.stickyTags.value
 
-VFS.Include("gamedata/taptools.lua")
+local fontName = (VFS.Include("gamedata/configs/fontsettings.lua")).name
 
 --------------------------------------------------------------------------------
 -- config
@@ -59,13 +59,13 @@ local nameScaling			= true
 local useThickLeterring		= true
 local heightOffset			= 50
 local fontSize				= 15		-- not real fontsize, it will be scaled
-local scaleFontAmount		= 90 --120 (60 == no downscale)
+local scaleFontAmount		= 90 		-- 120 (60 == no downscale)
 local fontShadow			= true		-- only shows if font has a white outline
 local shadowOpacity			= 0.35
 
 local loadedFontSize = 55
-local font = gl.LoadFont(FontPath, loadedFontSize, 10, 10)
-local shadowFont = gl.LoadFont(FontPath, loadedFontSize, 38, 1.6)
+local font = gl.LoadFont(fontName, loadedFontSize, 10, 10)
+local shadowFont = gl.LoadFont(fontName, loadedFontSize, 38, 1.6)
 
 local vsx, vsy = Spring.GetViewGeometry()
 
