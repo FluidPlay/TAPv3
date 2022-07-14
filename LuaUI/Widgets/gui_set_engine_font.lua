@@ -39,7 +39,7 @@ local screenY = (vsy*centerPosY) + (screenHeight/2)
 
 
 local function setEngineFont()
-    local relativesize = 0.75
+    local relativesize = 0.5 --0.75
     --"fonts/FreeSansBold.otf"
     Spring.SetConfigInt("SmallFontSize", fontfileSize*fontfileScale * relativesize)
     Spring.SetConfigInt("SmallFontOutlineWidth", fontfileOutlineSize*fontfileScale * relativesize)

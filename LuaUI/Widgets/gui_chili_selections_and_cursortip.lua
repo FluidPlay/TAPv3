@@ -47,11 +47,11 @@ local white = '\255\255\255\255'
 local yellow = '\255\255\255\1'
 
 local selectionTooltip = "\n" .. green .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select") .. "\n" ..
-	green .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
-	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
-	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
-	green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
-	green .. WG.Translate("interface", "space_click_show_stats")
+		green .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
+		green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
+		green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
+		green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
+		green .. WG.Translate("interface", "space_click_show_stats")
 
 local singleSelectionTooltip = "\n" .. green .. WG.Translate("interface", "lmb") .. ": " .. "Center view" .. "\n" .. green .. WG.Translate("interface", "space_click_show_stats")
 
@@ -68,13 +68,13 @@ local selectionWindow
 
 local ICON_SIZE = 20
 local BAR_SIZE = 22
-local BAR_FONTSIZE = 13
+local BAR_FONT = 13
 local BAR_SPACING = 24
-local IMAGE_FONTSIZE = 12
-local DESC_FONTSIZE = 10
-local TOOLTIP_FONTSIZE = 13
-local STATS_FONTSIZE = 13
-local NAME_FONTSIZE = 14
+local IMAGE_FONT = 12
+local DESC_FONT = 10
+local TOOLTIP_FONT = 13
+local STATS_FONT = 13
+local NAME_FONT = 14
 local LEFT_SPACE = 24
 local LEFT_LABEL_HEIGHT = 16
 local SEL_BUTTON_SHORTENING = 2
@@ -111,62 +111,62 @@ local _, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" ,
 local UNIT_BURST_DAMAGES = VFS.Include(LUAUI_DIRNAME .. "Configs/burst_damages.lua" , nil, VFS.ZIP)
 
 local terraformGeneralTip =
-	green.. 'Click&Drag'..white..': Free draw terraform. \n'..
-	green.. 'Alt+Click&Drag'..white..': Box terraform. \n'..
-	green.. 'Alt+Ctrl+Click&Drag'..white..': Hollow box terraform. \n'..
-	green.. 'Ctrl+Click on unit' ..white..': Terraform around unit. \n'..
-	'\n'
+green.. 'Click&Drag'..white..': Free draw terraform. \n'..
+		green.. 'Alt+Click&Drag'..white..': Box terraform. \n'..
+		green.. 'Alt+Ctrl+Click&Drag'..white..': Hollow box terraform. \n'..
+		green.. 'Ctrl+Click on unit' ..white..': Terraform around unit. \n'..
+		'\n'
 
 local terraCmdTip = {
 	[CMD_RAMP] =
-		yellow..'[Ramp between two points]\n'..
-		'1: ' .. green.. 'Click&Drag'..white..' from start to end. \n' ..
-		'2: ' .. green.. 'Click' ..white..' again to set width. \n'..
-		'\n'..
-		yellow..'[Ramp with raised end]\n'..
-		'1: ' .. green.. 'Click'..white..' at start. \n'..
-		'2: ' .. green.. 'Click&Drag'..white..' at end to set height. \n'..
-		'3: ' .. green.. 'Click' ..white..' again to set width. \n'..
-		'\n'..
-		yellow..'[Modifiers]\n'..
-		'- Hold '.. green..'Ctrl or Alt'..white..' and '.. green..'drag' ..white..' in Step 1 to set start height. \n'..
-		'- Hold '.. green..'Alt'..white..' to snap height or gradient. \n'..
-		'- Press '..green.. 'Space'..white..' to cycle raise/lower. \n'..
-		'\n'..
-		yellow..'[Wireframe indicator colors]\n'..
-		green.. 'Green'..white..': All units can traverse. \n'..
-		green.. 'Yellow'..white..': Vehicles cannot traverse. \n'..
-		green.. 'Red'..white..': Only all-terrain units can traverse.',
+	yellow..'[Ramp between two points]\n'..
+			'1: ' .. green.. 'Click&Drag'..white..' from start to end. \n' ..
+			'2: ' .. green.. 'Click' ..white..' again to set width. \n'..
+			'\n'..
+			yellow..'[Ramp with raised end]\n'..
+			'1: ' .. green.. 'Click'..white..' at start. \n'..
+			'2: ' .. green.. 'Click&Drag'..white..' at end to set height. \n'..
+			'3: ' .. green.. 'Click' ..white..' again to set width. \n'..
+			'\n'..
+			yellow..'[Modifiers]\n'..
+			'- Hold '.. green..'Ctrl or Alt'..white..' and '.. green..'drag' ..white..' in Step 1 to set start height. \n'..
+			'- Hold '.. green..'Alt'..white..' to snap height or gradient. \n'..
+			'- Press '..green.. 'Space'..white..' to cycle raise/lower. \n'..
+			'\n'..
+			yellow..'[Wireframe indicator colors]\n'..
+			green.. 'Green'..white..': All units can traverse. \n'..
+			green.. 'Yellow'..white..': Vehicles cannot traverse. \n'..
+			green.. 'Red'..white..': Only all-terrain units can traverse.',
 	[CMD_LEVEL] = terraformGeneralTip ..
-		yellow..'[During Terraform Draw]\n'..
-		green.. 'Ctrl'..white..': Draw straight line segment. \n'..
-		'\n'..
-		yellow..'[After Terraform Draw]\n'..
-		green.. 'Alt'..white..': Snap to starting height / below water level (prevent ships) / below water level (prevent land units). \n'..
-		green.. 'Ctrl'..white..': Hold and point at terrain to level to height pointed at.\n'..
-		'\n'..
-		yellow..'[Any Time]\n'..
-		green.. 'Space'..white..': Cycle through only raise/lower',
+			yellow..'[During Terraform Draw]\n'..
+			green.. 'Ctrl'..white..': Draw straight line segment. \n'..
+			'\n'..
+			yellow..'[After Terraform Draw]\n'..
+			green.. 'Alt'..white..': Snap to starting height / below water level (prevent ships) / below water level (prevent land units). \n'..
+			green.. 'Ctrl'..white..': Hold and point at terrain to level to height pointed at.\n'..
+			'\n'..
+			yellow..'[Any Time]\n'..
+			green.. 'Space'..white..': Cycle through only raise/lower',
 	[CMD_RAISE] = terraformGeneralTip ..
-		yellow..'[During Terraform Draw]\n'..
-		green.. 'Ctrl'..white..': Draw straight line segment. \n'..
-		'\n'..
-		yellow..'[After Terraform Draw]\n'..
-		green.. 'Alt'..white..': Snap to steps of 15 height. \n'..
-		green.. 'Ctrl'..white..': Snap to 0 height.',
+			yellow..'[During Terraform Draw]\n'..
+			green.. 'Ctrl'..white..': Draw straight line segment. \n'..
+			'\n'..
+			yellow..'[After Terraform Draw]\n'..
+			green.. 'Alt'..white..': Snap to steps of 15 height. \n'..
+			green.. 'Ctrl'..white..': Snap to 0 height.',
 	[CMD_SMOOTH] = terraformGeneralTip ..
-		yellow..'[During Terraform Draw]\n'..
-		green.. 'Ctrl'..white..': Draw straight line segment.',
+			yellow..'[During Terraform Draw]\n'..
+			green.. 'Ctrl'..white..': Draw straight line segment.',
 	[CMD_RESTORE] = terraformGeneralTip ..
-		yellow..'[Any Time]\n'..
-		green.. 'Space'..white..': Limit to only raise/lower',
+			yellow..'[Any Time]\n'..
+			green.. 'Space'..white..': Limit to only raise/lower',
 }
 
 local DRAWING_TOOLTIP =
-	green.. 'Left click'..white..': Draw on map. \n' ..
-	green.. 'Right click'..white..': Erase. \n' ..
-	green.. 'Middle click'..white..': Place marker. \n' ..
-	green.. 'Double click'..white..': Place marker with label.'
+green.. 'Left click'..white..': Draw on map. \n' ..
+		green.. 'Right click'..white..': Erase. \n' ..
+		green.. 'Middle click'..white..': Place marker. \n' ..
+		green.. 'Double click'..white..': Place marker with label.'
 
 local SPECIAL_WEAPON_RELOAD_PARAM = "specialReloadRemaining"
 local JUMP_RELOAD_PARAM = "jumpReload"
@@ -375,21 +375,21 @@ options = {
 		end,
 	},
 	groupbehaviour = {name='Unit Grouping Behaviour', type='radioButton',
-		value='overflow',
-		items = {
-			{key = 'overflow',	name = 'On window overflow'},
-			{key = 'multitype',	name = 'With multiple unit types'},
-			{key = 'always',		name = 'Always'},
-		},
-		path = selPath,
+					  value='overflow',
+					  items = {
+						  {key = 'overflow',	name = 'On window overflow'},
+						  {key = 'multitype',	name = 'With multiple unit types'},
+						  {key = 'always',		name = 'Always'},
+					  },
+					  path = selPath,
 	},
 	showgroupinfo = {name='Show Group Info', type='bool', value=true,
-		path = selPath,
-		OnChange = function(self)
-			if selectionWindow then
-				selectionWindow.SetGroupInfoVisible(self.value)
-			end
-		end,
+					 path = selPath,
+					 OnChange = function(self)
+						 if selectionWindow then
+							 selectionWindow.SetGroupInfoVisible(self.value)
+						 end
+					 end,
 	},
 	ctrlFilter = {
 		name = 'Ctrl Selection Filtering',
@@ -917,7 +917,7 @@ end
 
 local function GetIsHoldingDrawKey()
 	if drawHotkeyBytesCount == 0 then
-	WG.drawtoolKeyPressed = false
+		WG.drawtoolKeyPressed = false
 		return false
 	end
 	for i = 1, drawHotkeyBytesCount do
@@ -1112,7 +1112,7 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 end
 
 local function GetImageWithText(parentControl, name, initY, imageFile, caption, fontSize, iconSize, textOffset, xOffset)
-	fontSize = fontSize or IMAGE_FONTSIZE
+	fontSize = fontSize or IMAGE_FONT
 	iconSize = iconSize or ICON_SIZE
 	xOffset = xOffset or 0
 
@@ -1131,7 +1131,7 @@ local function GetImageWithText(parentControl, name, initY, imageFile, caption, 
 		y = initY + (textOffset or 0),
 		right = 0,
 		height = LEFT_LABEL_HEIGHT,
-		caption = IMAGE_FONTSIZE,
+		caption = IMAGE_FONT,
 		objectOverrideFont = WG.GetFont(fontSize),
 		parent = parentControl,
 	}
@@ -1180,7 +1180,7 @@ local function GetCostInfoPanel(parentControl, yPos)
 		height = ICON_SIZE,
 		width = 50,
 		caption = cyan .. 'Morph:',
-		objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
+		objectOverrideFont = WG.GetFont(NAME_FONT),
 		parent = holder,
 	}
 	local costImage = Chili.Image:New{
@@ -1196,8 +1196,8 @@ local function GetCostInfoPanel(parentControl, yPos)
 		y = 2,
 		right = 0,
 		height = BAR_SIZE,
-		caption = BAR_FONTSIZE,
-		objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
+		caption = BAR_FONT,
+		objectOverrideFont = WG.GetFont(NAME_FONT),
 		parent = holder,
 	}
 	local timeImage = Chili.Image:New{
@@ -1213,8 +1213,8 @@ local function GetCostInfoPanel(parentControl, yPos)
 		y = 2,
 		right = 0,
 		height = BAR_SIZE,
-		caption = BAR_FONTSIZE,
-		objectOverrideFont = WG.GetFont(NAME_FONTSIZE),
+		caption = BAR_FONT,
+		objectOverrideFont = WG.GetFont(NAME_FONT),
 		parent = holder,
 	}
 
@@ -1476,7 +1476,7 @@ local function GetSelectionStatsDisplay(parentControl)
 		y = 3,
 		right = 0,
 		valign  = 'top',
-		objectOverrideFont = WG.GetFont(STATS_FONTSIZE),
+		objectOverrideFont = WG.GetFont(STATS_FONT),
 		parent = holder,
 	}
 
@@ -1538,24 +1538,24 @@ local function GetSelectionStatsDisplay(parentControl)
 		end
 
 		local unitInfoString = WG.Translate("interface", "selected_units") .. ": " .. Format(total_count) .. "\n" ..
-			WG.Translate("interface", "value") .. ": " .. Format(total_cost) .. " / " ..  Format(total_finishedcost) .. "\n" ..
-			WG.Translate("interface", "health") .. ": " .. Format(total_hp) .. " / " ..  Format(total_maxhp) .. "\n"
+				WG.Translate("interface", "value") .. ": " .. Format(total_cost) .. " / " ..  Format(total_finishedcost) .. "\n" ..
+				WG.Translate("interface", "health") .. ": " .. Format(total_hp) .. " / " ..  Format(total_maxhp) .. "\n"
 
 		if total_maxShield ~= 0 then
 			unitInfoString = unitInfoString .. WG.Translate("interface", "shields") .. ": " .. Format(total_shield) .. " / " ..  Format(total_maxShield) .. "\n"
 		end
 		if total_totalbp ~= 0 then
 			unitInfoString = unitInfoString ..
-				WG.Translate("interface", "buildpower") .. ": " .. Format(total_usedbp) .. " / " .. Format(total_totalbp) .. "\n"
+					WG.Translate("interface", "buildpower") .. ": " .. Format(total_usedbp) .. " / " .. Format(total_totalbp) .. "\n"
 		end
 		if total_metalincome ~= 0 or total_metaldrain ~= 0 or total_energyincome ~= 0 or total_energydrain ~= 0 then
 			unitInfoString = unitInfoString ..
-				WG.Translate("interface", "metal") .. ": " .. FormatPlusMinus(total_metalincome) .. white .. " / " ..  FormatPlusMinus(-total_metaldrain) .. white .. "\n" ..
-				WG.Translate("interface", "energy") .. ": " .. FormatPlusMinus(total_energyincome) .. white .. " / " ..  FormatPlusMinus(-total_energydrain) .. white .. "\n"
+					WG.Translate("interface", "metal") .. ": " .. FormatPlusMinus(total_metalincome) .. white .. " / " ..  FormatPlusMinus(-total_metaldrain) .. white .. "\n" ..
+					WG.Translate("interface", "energy") .. ": " .. FormatPlusMinus(total_energyincome) .. white .. " / " ..  FormatPlusMinus(-total_energydrain) .. white .. "\n"
 		end
 		if burstClass and total_totalburst ~= 0 then
 			unitInfoString = unitInfoString ..
-				WG.Translate("interface", "burst_damage") .. ": " .. ((unreliableBurst and "~") or "") .. Format(total_totalburst) .. "\n"
+					WG.Translate("interface", "burst_damage") .. ": " .. ((unreliableBurst and "~") or "") .. Format(total_totalburst) .. "\n"
 		end
 
 		statLabel:SetCaption(unitInfoString)
@@ -1844,22 +1844,22 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		end
 	end
 
-	local unitNameUpdate = GetImageWithText(rightPanel, "unitNameUpdate", 1, nil, nil, NAME_FONTSIZE, nil, 2, 1)
+	local unitNameUpdate = GetImageWithText(rightPanel, "unitNameUpdate", 1, nil, nil, NAME_FONT, nil, 2, 1)
 
-	local unitDesc = Chili.TextBox:New{
+	local unitDesc = Chili.TextBox:New{ --Player Name in its info box
 		name = "unitDesc",
 		x = 4,
 		y = 25,
 		right = 0,
 		height = BAR_SIZE,
-		objectOverrideFont = WG.GetFont(DESC_FONTSIZE),
+		objectOverrideFont = WG.GetFont(DESC_FONT),
 		parent = rightPanel,
 	}
 
 	local costInfoUpdate = GetImageWithText(leftPanel, "costInfoUpdate", PIC_HEIGHT + 4, IMAGE.COST, nil, nil, ICON_SIZE, 4)
 	local metalInfoUpdate = GetImageWithText(leftPanel, "metalInfoUpdate", PIC_HEIGHT + LEFT_SPACE + 4, IMAGE.METAL, nil, nil, ICON_SIZE, 4)
 	local energyInfoUpdate = GetImageWithText(leftPanel, "energyInfoUpdate", PIC_HEIGHT + 2*LEFT_SPACE + 4, IMAGE.ENERGY, nil, nil, ICON_SIZE, 4)
-	local maxHealthLabel = GetImageWithText(rightPanel, "maxHealthLabel", PIC_HEIGHT + 4, IMAGE.HEALTH, nil, NAME_FONTSIZE, ICON_SIZE, 2, 2)
+	local maxHealthLabel = GetImageWithText(rightPanel, "maxHealthLabel", PIC_HEIGHT + 4, IMAGE.HEALTH, nil, NAME_FONT, ICON_SIZE, 2, 2)
 
 	local healthBarUpdate = GetBarWithImage(rightPanel, "healthBarUpdate", PIC_HEIGHT + 4, IMAGE.HEALTH, {0, 1, 0, 1}, GetHealthColor)
 
@@ -1873,8 +1873,8 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			x = 4,
 			y = PIC_HEIGHT + 31,
 			right = 0,
-			height = BAR_FONTSIZE,
-			objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
+			height = BAR_FONT,
+			objectOverrideFont = WG.GetFont(IMAGE_FONT),
 			parent = rightPanel,
 		}
 		spaceClickLabel = Chili.Label:New{
@@ -1883,7 +1883,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			y = PIC_HEIGHT + 55,
 			right = 0,
 			height = 18,
-			objectOverrideFont = WG.GetFont(IMAGE_FONTSIZE),
+			objectOverrideFont = WG.GetFont(IMAGE_FONT),
 			caption = green .. WG.Translate("interface", "space_click_show_stats"),
 			parent = rightPanel,
 		}
@@ -2210,7 +2210,7 @@ local function GetTooltipWindow()
 		height = 5,
 		valign = "ascender",
 		autoHeight = true,
-		objectOverrideFont = WG.GetFont(TOOLTIP_FONTSIZE),
+		objectOverrideFont = WG.GetFont(TOOLTIP_FONT),
 		parent = window,
 	}
 	textTooltip:SetVisibility(false)
@@ -2229,10 +2229,11 @@ local function GetTooltipWindow()
 	end
 
 	function externalFunctions.SetPosition(x, y)
-		y = screenHeight - y
+		screenWidth, screenHeight = Spring.GetViewGeometry() --TODO: Optimize, must only be called when screen changes
+		y = screenHeight - y -- -350 --test:MaDD
 
 		if x + window.width > screenWidth - 2 then
-			x = screenWidth - window.width - 2
+			x = screenWidth - window.width - 2 -- 200 --test:MaDD
 		end
 		if y + window.height > screenHeight - 2 then
 			y = screenHeight - window.height - 2
@@ -2463,7 +2464,7 @@ local function GetSelectionWindow()
 		bottom    = 0,
 		width     = 450,
 		height    = height,
-        minWidth  = 450,
+		minWidth  = 450,
 		minHeight = 120,
 		bringToFrontOnClick = false,
 		dockable  = true,

@@ -1814,7 +1814,6 @@ local function GetTabButton(panel, contentControl, name, humanName, hotkey, loit
 
 	if disabled then
 		button.font = WG.GetSpecialFont(14, "integral_grey", {outlineColor = {0, 0, 0, 1}, color = {0.6, 0.6, 0.6, 1}})
-		--button.font.color = {0.6, 0.6, 0.6, 1} ---test:MaDD
 		button.supressButtonReaction = true
 	end
 

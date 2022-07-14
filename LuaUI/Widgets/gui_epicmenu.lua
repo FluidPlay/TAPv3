@@ -138,17 +138,17 @@ local br = '\n'
 local showTidal = false
 if not confdata.description then confdata.description = '' end
 local gameInfoText = ''
-	..Game.modName ..br..br
-	..'Spring Engine version: '..Spring.Utilities.GetEngineVersion()..br..br
-	..'Map: ' ..Game.mapName ..br
-	
-	..'    Size: '..Game.mapX..' x '..Game.mapY..br
-	..'    Gravity: '..math.round(Game.gravity)..br
-	.. (showTidal and ('    Tidal Power: '..Game.tidal..br) or '')
-	..'    Water Damage: '..Game.waterDamage..br
-	..'    '.. Game.mapDescription..br
-	..br..br
-	..confdata.description
+		..Game.modName ..br..br
+		..'Spring Engine version: '..Spring.Utilities.GetEngineVersion()..br..br
+		..'Map: ' ..Game.mapName ..br
+
+		..'    Size: '..Game.mapX..' x '..Game.mapY..br
+		..'    Gravity: '..math.round(Game.gravity)..br
+		.. (showTidal and ('    Tidal Power: '..Game.tidal..br) or '')
+		..'    Water Damage: '..Game.waterDamage..br
+		..'    '.. Game.mapDescription..br
+		..br..br
+		..confdata.description
 
 local function returnSelf(self) return self end
 
@@ -262,10 +262,10 @@ local function CapCase(str)
 	local str = str:lower()
 	str = str:gsub( '_', ' ' )
 	str = str:sub(1, 1):upper() .. str:sub(2)
-	
+
 	str = str:gsub( ' (.)',
-		function(x) return (' ' .. x):upper(); end
-		)
+			function(x) return (' ' .. x):upper(); end
+	)
 	return str
 end
 
@@ -438,9 +438,9 @@ end
 --------------------------------------------------------------------------------
 
 WG.crude.SetSkin = function(Skin)
-  if Chili then
-	Chili.theme.skin.general.skinName = Skin
-  end
+	if Chili then
+		Chili.theme.skin.general.skinName = Skin
+	end
 end
 
 --Reset custom widget settings, defined in Initialize
@@ -481,11 +481,11 @@ local function LoadKeybinds()
 		if file_return then
 			keybounditems, keybind_date = file_return.keybinds, file_return.date
 			if keybounditems and keybind_date then
-				
+
 				if not otvalidate(keybounditems) then
 					keybounditems = {}
 				end
-				
+
 				loaded = true
 				keybind_date = keybind_date or defaultkeybind_date    -- reverse compat
 				if not keybind_date or keybind_date == 0 or (keybind_date+0) < defaultkeybind_date then
@@ -508,16 +508,16 @@ local function LoadKeybinds()
 			end
 		end
 	end
-	
+
 	if not loaded then
 		keybounditems = CopyTable(defaultkeybinds, true)
 		keybind_date = defaultkeybind_date
 	end
-	
+
 	if not otvalidate(keybounditems) then
 		keybounditems = {}
 	end
-	
+
 end
 
 ----------------------------------------------------------------
@@ -589,7 +589,7 @@ end
 local function IsSinglePlayer()
 	local playerlist = Spring.GetPlayerList() or {}
 	local myPlayerID = Spring.GetMyPlayerID()
-	 for i = 1, #playerlist do
+	for i = 1, #playerlist do
 		local playerID = playerlist[i]
 		if myPlayerID ~= playerID then
 			local _, active, spectator = Spring.GetPlayerInfo(playerID, false)
@@ -608,11 +608,11 @@ local function AllowPauseOnMenuChange(pause)
 	if pause == nil then
 		pause = true
 	end
-	
+
 	if Spring.GetSpectatingState() then
 		return false
 	end
-	
+
 	if pause then
 		if settings.config['epic_Settings/HUD_Panels/Pause_Screen_Menu_pauses_in_SP'] == false then
 			return false
@@ -622,11 +622,11 @@ local function AllowPauseOnMenuChange(pause)
 			return false
 		end
 	end
-	
+
 	if IsSinglePlayer() == false then
 		return false
 	end
-	
+
 	return true
 end
 WG.crude.AllowPauseOnMenuChange = AllowPauseOnMenuChange
@@ -647,11 +647,11 @@ local function CanSaveGame()
 	if Spring.IsCheatingEnabled() then
 		return true
 	end
-	
+
 	if isMission then
 		return IntToBool(Spring.GetModOptions().cansavegame)
 	end
-	
+
 	return IsSinglePlayer()
 end
 
@@ -663,9 +663,9 @@ local function KillSubWindow(makingNew)
 	if window_sub_cur then
 		settings.sub_pos_x = window_sub_cur.x
 		settings.sub_pos_y = window_sub_cur.y
-		
+
 		settings.subwindow_height = window_sub_cur.height
-		
+
 		window_sub_cur:Dispose()
 		window_sub_cur = nil
 		curPath = ''
@@ -737,7 +737,7 @@ local function MakeFlags()
 			ScrollPanel:New{
 				x = 5, y = 15,
 				right = 5, bottom = 3+B_HEIGHT,
-				
+
 				children = {
 					Grid:New{
 						columns = 2,
@@ -750,10 +750,10 @@ local function MakeFlags()
 			},
 			--close button
 			Button:New{caption = 'Close',  x = 5, y = 0-B_HEIGHT, bottom = 5, right = 5,
-				name = 'makeFlagCloseButton';
-				objectOverrideFont = WG.GetFont(),
-				OnClick = {function(self) window_flags:Dispose(); window_flags = nil; end },
-				width = window_width-20,
+					   name = 'makeFlagCloseButton';
+					   objectOverrideFont = WG.GetFont(),
+					   OnClick = {function(self) window_flags:Dispose(); window_flags = nil; end },
+					   width = window_width-20,
 				--backgroundColor = color.sub_close_bg, textColor = color.sub_close_fg,
 				--classname = "navigation_button",
 			},
@@ -765,7 +765,7 @@ end
 local function MakeHelp(caption, text)
 	local window_height = 400
 	local window_width = 400
-	
+
 	window_help = Window:New{
 		caption = caption or 'Help?',
 		x = settings.sub_pos_x,
@@ -805,10 +805,10 @@ end
 local function GetReadableHotkeyMod(mod)
 	local modlowercase = mod:lower()
 	return (modlowercase:find('a%+') and 'Alt+' or '') ..
-		(modlowercase:find('c%+') and 'Ctrl+' or '') ..
-		(modlowercase:find('m%+') and 'Meta+' or '') ..
-		(modlowercase:find('s%+') and 'Shift+' or '') ..
-		''
+			(modlowercase:find('c%+') and 'Ctrl+' or '') ..
+			(modlowercase:find('m%+') and 'Meta+' or '') ..
+			(modlowercase:find('s%+') and 'Shift+' or '') ..
+			''
 end
 
 local function HotKeyBreakdown(hotkey) --convert hotkey string into a standardized hotkey string
@@ -824,16 +824,16 @@ local function HotKeyBreakdown(hotkey) --convert hotkey string into a standardiz
 		elseif str2 == 'm' or str2 == 'meta'     then meta = true
 		end
 	end
-	
+
 	local mod = '' ..
-		(alt and 'A+' or '') ..
-		(ctrl and 'C+' or '') ..
-		(meta and 'M+' or '') ..
-		(shift and 'S+' or '')
-	
+			(alt and 'A+' or '') ..
+			(ctrl and 'C+' or '') ..
+			(meta and 'M+' or '') ..
+			(shift and 'S+' or '')
+
 	local key = hotkey_table[#hotkey_table]
 	key = key:gsub( 'numpadplus', 'numpad+')
-	
+
 	return mod, key
 end
 local function GetReadableHotkey(hotkey)
@@ -867,26 +867,26 @@ local function AssignKeyBindAction(hotkey, actionName, verbose)
 		end
 		echo( 'Hotkey (' .. GetReadableHotkey(hotkey) .. ') bound to action: ' .. actionName )
 	end
-	
+
 	--actionName = actionName:lower()
 	if type(hotkey) == 'string' then
 		--otset( keybounditems, actionName, hotkey )
-		
+
 		--echo("bind " .. hotkey .. " " .. actionName)
 		spSendCommands("bind " .. hotkey .. " " .. actionName)
-		
+
 		local buildCommand = actionName:find('buildunit_')
 		local isUnitCommand
 		local isUnitStateCommand
 		local isUnitInstantCommand
-		
+
 		if custom_cmd_actions[actionName] then
 			local number = custom_cmd_actions[actionName].cmdType
 			isUnitCommand = number == 1
 			isUnitStateCommand = number == 2
 			isUnitInstantCommand = number == 3
 		end
-			
+
 		if custom_cmd_actions[actionName] or buildCommand then
 			-- bind shift+hotkey as well if needed for unit commands
 			local alreadyShift = hotkey:lower():find("s%+") or hotkey:lower():find("shift%+")
@@ -898,7 +898,7 @@ local function AssignKeyBindAction(hotkey, actionName, verbose)
 				end
 			end
 		end
-			
+
 	end
 end
 
@@ -906,10 +906,10 @@ end
 local function CreateOptionAction(path, option)
 
 	local kbfunc = option.OnChange
-	
+
 	if option.type == 'bool' then
 		kbfunc = function()
-		
+
 			local wname = option.wname
 			-- [[ Note: following code between -- [[ and  --]] is just to catch an exception. Is not part of code's logic.
 			if not pathoptions[path] or not otget( pathoptions[path], wname..option.key ) then
@@ -931,9 +931,9 @@ local function CreateOptionAction(path, option)
 			newval = not pathoption.value
 			pathoption.value = newval
 			otset( pathoptions[path], wname..option.key, pathoption )
-						
+
 			option.OnChange({checked = newval})
-			
+
 			if path == curPath then
 				MakeSubWindow(path, false)
 			end
@@ -944,7 +944,7 @@ local function CreateOptionAction(path, option)
 		AddAction(actionName, kbfunc, nil, "t")
 	end
 	actionToOption[actionName] = option
-	
+
 	if option.hotkey then
 		local existingRegister = otget( keybounditems, actionName) --check whether existing actionname is already bound with a custom hotkey in zkkey
 		if existingRegister == nil then
@@ -966,18 +966,18 @@ local function UnassignKeyBind(actionName, verbose)
 	local actionHotkeys = GetActionHotkeys(actionName)
 	if actionHotkeys then
 		for _, actionHotkey in ipairs(actionHotkeys) do
-				
+
 			--[[
 				unbind and unbindaction don't work on a command+params, only on the command itself
 			--]]
-			
+
 			local actionName_split = explode(' ', actionName)
 			local actionName_cmd = actionName_split[1]
-			
+
 			--echo("unbind " .. actionHotkey .. ' ' .. actionName_cmd:lower())
 			spSendCommands("unbind " .. actionHotkey .. ' ' .. actionName_cmd:lower()) -- must be lowercase when calling unbind
 			--spSendCommands("unbindaction " .. actionName ) --don't do this, unbinding one select would unbind all.
-			
+
 			if verbose then
 				echo( 'Unbound hotkeys from action: ' .. actionName )
 			end
@@ -995,25 +995,25 @@ local function ReApplyKeybinds()
 	{"\2", "\1" },
 	]]
 	--echo 'ReApplyKeybinds'
-	
+
 	if useUiKeys then
 		return
 	end
-	
+
 	for _, elem in ipairs(keybounditems) do
 		local actionName = elem[1]
 		local hotkey = elem[2]
 		--actionName = actionName:lower()
 		UnassignKeyBind(actionName, false)
-		
+
 		local hotkeyTable = type(hotkey) == 'table' and hotkey or {hotkey}
-		
+
 		for _, hotkey2 in ipairs(hotkeyTable) do
 			if hotkey2 ~= 'None' then
 				AssignKeyBindAction(hotkey2, actionName, false)
 			end
 		end
-		
+
 		--echo("unbindaction(1) ", actionName)
 		--echo("bind(1) ", hotkey, actionName)
 	end
@@ -1024,16 +1024,16 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 	if not wname then
 		wname = path
 	end
-	
+
 	local path2 = path
 	if not option then
 		if not pathoptions[path] then
 			pathoptions[path] = {}
 		end
-		
+
 		-- must be before path var is changed
 		local icon = subMenuIcons[path]
-		
+
 		local pathexploded = explode('/', path)
 		local pathend = pathexploded[#pathexploded]
 		pathexploded[#pathexploded] = nil
@@ -1048,7 +1048,7 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 			end,
 			isDirectoryButton = true,
 		}
-		
+
 		if path == '' and path2 == '' then --prevent adding '...' button on '' (Main Menu)
 			return
 		end
@@ -1056,17 +1056,17 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 	if not pathoptions[path] then
 		AddOption( path )
 	end
-	
+
 	if not option.key then
 		option.key = option.name
 	end
 	option.wname = wname
-	
+
 	local curkey = path .. '_' .. option.key
 	--local fullkey = ('epic_'.. curkey)
 	local fullkey = GetFullKey(path, option)
 	fullkey = fullkey:gsub(' ', '_')
-	
+
 	--get spring config setting
 	local valuechanged = false
 	local newval
@@ -1082,7 +1082,7 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 			newval = settings.config[fullkey]
 		end
 	end
-	
+
 	if option.type ~= 'button' and option.type ~= 'label' and option.default == nil then
 		if option.value ~= nil then
 			option.default = option.value
@@ -1090,33 +1090,33 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 			option.default = newval
 		end
 	end
-	
-	
+
+
 	if newval ~= nil and option.value ~= newval then --must nilcheck newval
 		valuechanged = true
 		option.value = newval
 	end
-	
+
 	local origOnChange = option.OnChange
-	
+
 	local controlfunc = function() end
 	if option.type == 'button' and (option.action) and (not option.noAutoControlFunc) then
 		controlfunc =
-			function(self)
-				spSendCommands{option.action}
-			end
+		function(self)
+			spSendCommands{option.action}
+		end
 	elseif option.type == 'bool' then
-		
+
 		controlfunc =
-			function(self)
-				if self then
-					option.value = self.checked
-				end
-				if option.springsetting then --if widget supplies option for springsettings
-					Spring.SetConfigInt( option.springsetting, BoolToInt(option.value) )
-				end
-				settings.config[fullkey] = option.value
+		function(self)
+			if self then
+				option.value = self.checked
 			end
+			if option.springsetting then --if widget supplies option for springsettings
+				Spring.SetConfigInt( option.springsetting, BoolToInt(option.value) )
+			end
+			settings.config[fullkey] = option.value
+		end
 
 	elseif option.type == 'number' then
 		if option.valuelist then
@@ -1126,82 +1126,82 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 		end
 		--option.desc_orig = option.desc or ''
 		controlfunc =
-			function(self)
-				if self then
-					if option.valuelist then
-						option.value = option.valuelist[self.value]
-					else
-						option.value = self.value
-					end
-					--self.tooltip = option.desc_orig .. ' - Current: ' .. option.value
+		function(self)
+			if self then
+				if option.valuelist then
+					option.value = option.valuelist[self.value]
+				else
+					option.value = self.value
 				end
-				
-				if option.springsetting then
-					if not option.value then
-						echo ('<EPIC Menu> Error #444', fullkey)
-					else
-						Spring.SetConfigInt( option.springsetting, option.value )
-					end
-				end
-				settings.config[fullkey] = option.value
+				--self.tooltip = option.desc_orig .. ' - Current: ' .. option.value
 			end
-	
+
+			if option.springsetting then
+				if not option.value then
+					echo ('<EPIC Menu> Error #444', fullkey)
+				else
+					Spring.SetConfigInt( option.springsetting, option.value )
+				end
+			end
+			settings.config[fullkey] = option.value
+		end
+
 	elseif option.type == 'colors' then
 		controlfunc =
-			function(self)
-				if self then
-					option.value = self.color
-				end
-				settings.config[fullkey] = option.value
+		function(self)
+			if self then
+				option.value = self.color
 			end
-	
+			settings.config[fullkey] = option.value
+		end
+
 	elseif option.type == 'list' then
 		controlfunc =
-			function(item)
-				option.value = item.value
-				settings.config[fullkey] = option.value
-			end
+		function(item)
+			option.value = item.value
+			settings.config[fullkey] = option.value
+		end
 	elseif option.type == 'radioButton' then
 		controlfunc =
-			function(item)
-				option.value = item.value
-				settings.config[fullkey] = option.value
-				
-				if (path == curPath) or filterUserInsertedTerm~= '' then --we need to refresh the window to show changes, and current path is irrelevant if we are doing search
-					MakeSubWindow(curPath, false) --remake window to update the buttons' visuals when pressed
-				end
+		function(item)
+			option.value = item.value
+			settings.config[fullkey] = option.value
+
+			if (path == curPath) or filterUserInsertedTerm~= '' then --we need to refresh the window to show changes, and current path is irrelevant if we are doing search
+				MakeSubWindow(curPath, false) --remake window to update the buttons' visuals when pressed
 			end
+		end
 	end
 	origOnChange = origOnChange or function() end
 	option.OnChange = function(self)
 		controlfunc(self) --note: 'self' in this context will be refer to the button/checkbox/slider state provided by Chili UI
 		origOnChange(option)
 	end
-	
+
 	--call onchange once
 	if valuechanged and option.type ~= 'button' and (origOnChange ~= nil)
-		--and not option.springsetting --need a different solution
-		then
+	--and not option.springsetting --need a different solution
+	then
 		origOnChange(option)
 	end
-	
+
 	--Keybindings
 	if (option.type == 'button' and not option.isDirectoryButton) or option.type == 'bool' then
 		local actionName = GetActionName(path, option)
-		
+
 		--migrate from old logic, make sure this is done before setting orig_key
 		if option.hotkey and type(option.hotkey) == 'table' then
 			option.hotkey = option.hotkey.mod .. option.hotkey.key --change hotkey table into string
 		end
-		
+
 		if option.hotkey then
-		  local orig_hotkey = ''
-		  orig_hotkey = option.hotkey
-		  option.orig_hotkey = orig_hotkey
+			local orig_hotkey = ''
+			orig_hotkey = option.hotkey
+			option.orig_hotkey = orig_hotkey
 		end
-		
+
 		CreateOptionAction(path, option)
-	--Keybinds for radiobuttons
+		--Keybinds for radiobuttons
 	elseif option.type == 'radioButton' then --if its a list of checkboxes:
 		for i = 1, #option.items do --prepare keybinds for each of radioButton's checkbox
 			local item = option.items[i] --note: referring by memory
@@ -1210,17 +1210,17 @@ local function AddOption(path, option, wname ) --Note: this is used when loading
 			item.OnChange = function() option.OnChange(item) end --OnChange() is an 'option.OnChange()' that feed on an input of 'item'(instead of 'self'). So that it always execute the 'value' of 'item' regardless of current 'value' of 'option'
 			local actionName = GetActionName(path, item)
 			if item.hotkey then
-			  local orig_hotkey = ''
-			  orig_hotkey = item.hotkey
-			  item.orig_hotkey = orig_hotkey
+				local orig_hotkey = ''
+				orig_hotkey = item.hotkey
+				item.orig_hotkey = orig_hotkey
 			end
-			
+
 			CreateOptionAction(path, item)
 		end
 	end
-	
+
 	otset( pathoptions[path], wname..option.key, option )--is used for remake epicMenu's button(s)
-	
+
 	-- hax
 	if hackyOptionMemoryWhitelist[option.name] then
 		hackyOptionMemory[option.name] = option
@@ -1241,20 +1241,20 @@ end
 
 -- sets key and wname for each option so that GetOptionHotkey can work before widget initialization completes
 local function PreIntegrateWidget(w)
-	
+
 	local options = w.options
 	if type(options) ~= 'table' then
 		return
 	end
-	
+
 	local wname = w.whInfo.name
 	local defaultpath = w.options_path or ('Settings/Misc/' .. wname)
-	
+
 	if w.options.order then
 		echo ("<EPIC Menu> " .. wname ..  ", don't index an option with the word 'order' please, it's too soon and I'm not ready.")
 		w.options.order = nil
 	end
-	
+
 	--Generate order table if it doesn't exist
 	if not w.options_order then
 		w.options_order = {}
@@ -1262,7 +1262,7 @@ local function PreIntegrateWidget(w)
 			w.options_order[#(w.options_order) + 1] = k
 		end
 	end
-	
+
 
 	for i = 1, #w.options_order do
 		local k = w.options_order[i]
@@ -1271,7 +1271,7 @@ local function PreIntegrateWidget(w)
 			Spring.Log(widget:GetInfo().name, LOG.ERROR,  '<EPIC Menu> Error in loading custom widget settings in ' .. wname .. ', order table incorrect.' )
 			return
 		end
-		
+
 		option.key = k
 		option.wname = wname
 	end
@@ -1280,28 +1280,28 @@ end
 
 --(Un)Store custom widget settings for a widget
 local function IntegrateWidget(w, addoptions, index)
-	
+
 	local options = w.options
 	if type(options) ~= 'table' then
 		return
 	end
-	
+
 	local wname = w.whInfo.name
 	local defaultpath =  w.options_path or ('Settings/Misc/' .. wname)
-	
-	
+
+
 	--[[
 	--If a widget disables itself in widget:Initialize it will run the removewidget before the insertwidget is complete. this fix doesn't work
 	if not WidgetEnabled(wname) then
 		return
 	end
 	--]]
-	
+
 	if w.options.order then
 		echo ("<EPIC Menu> " .. wname ..  ", don't index an option with the word 'order' please, it's too soon and I'm not ready.")
 		w.options.order = nil
 	end
-	
+
 	--Generate order table if it doesn't exist
 	if not w.options_order then
 		w.options_order = {}
@@ -1309,8 +1309,8 @@ local function IntegrateWidget(w, addoptions, index)
 			w.options_order[#(w.options_order) + 1] = k
 		end
 	end
-	
-	
+
+
 	for i = 1, #w.options_order do
 		local k = w.options_order[i]
 		local option = options[k]
@@ -1318,41 +1318,41 @@ local function IntegrateWidget(w, addoptions, index)
 			Spring.Log(widget:GetInfo().name, LOG.ERROR,  '<EPIC Menu> Error in loading custom widget settings in ' .. wname .. ', order table incorrect.' )
 			return
 		end
-		
+
 		--Add empty onchange function if doesn't exist
 		if not option.OnChange or type(option.OnChange) ~= 'function' then
 			w.options[k].OnChange = function(self) end
 		end
-		
+
 		--store default
 		w.options[k].default = w.options[k].value
-		
-		
+
+
 		option.key = k
 		option.wname = wname
-		
+
 		local origOnChange = w.options[k].OnChange
-		
+
 		if option.type ~= 'button' then
 			option.OnChange =
-				function(self)
-					if self then
-						w.options[k].value = self.value
-					end
-					origOnChange(self)
+			function(self)
+				if self then
+					w.options[k].value = self.value
 				end
+				origOnChange(self)
+			end
 		else
 			option.OnChange = origOnChange
 		end
-		
+
 		local path = option.path or defaultpath
-		
-		
+
+
 		-- [[
 		local value = w.options[k].value
 		w.options[k].value = nil
 		w.options[k].priv_value = value
-		
+
 		--setmetatable( w.options[k], temp )
 		--local temp = w.options[k]
 		--w.options[k] = {}
@@ -1367,26 +1367,26 @@ local function IntegrateWidget(w, addoptions, index)
 				return t.priv_value
 			end
 		end
-		
+
 		w.options[k].__newindex = function(t, key, val)
 			-- For some reason this is called twice per click with the same parameters for most options
 			-- a few rare options have val = nil for their second call which resets the option.
-			
+
 			if key == 'value' then
 				if val ~= nil then -- maybe this isn't needed
-				  --echo ('set val', wname, k, key, val)
-				  t.priv_value = val
-				  
-				  local fullkey = GetFullKey(path, option)
-				  fullkey = fullkey:gsub(' ', '_')
-				  settings.config[fullkey] = option.value
+					--echo ('set val', wname, k, key, val)
+					t.priv_value = val
+
+					local fullkey = GetFullKey(path, option)
+					fullkey = fullkey:gsub(' ', '_')
+					settings.config[fullkey] = option.value
 				end
 			else
-			  rawset(t, key, val)
+				rawset(t, key, val)
 			end
-			
+
 		end
-		
+
 		setmetatable( w.options[k], w.options[k] )
 		--]]
 		if addoptions then
@@ -1394,13 +1394,13 @@ local function IntegrateWidget(w, addoptions, index)
 		else
 			RemOption(path, option, wname )
 		end
-		
+
 	end
-	
+
 	if window_sub_cur then
 		MakeSubWindow(curPath, false)
 	end
-	
+
 	wantToReapplyBinding = true --request ReApplyKeybind() in widget:Update(). IntegrateWidget() will be called many time during LUA loading but ReApplyKeybind() will be done only once in widget:Update()
 end
 
@@ -1434,7 +1434,7 @@ end
 local function MakeKeybindWindow( path, option, hotkeyButton, optionControl, option )
 	local window_height = 80
 	local window_width = 300
-	
+
 	get_key = true
 	get_key_bind_mod = option.bindMod
 	get_key_bind_without_mod = option.bindWithoutMod
@@ -1445,11 +1445,11 @@ local function MakeKeybindWindow( path, option, hotkeyButton, optionControl, opt
 	kb_control = optionControl
 	kb_option = option
 	kb_action = GetActionName(path, option)
-	
+
 	UnassignKeyBind(kb_action, true) -- 2nd param = verbose
 	--otset( keybounditems, kb_action, nil )
 	otset( keybounditems, kb_action, 'None' )
-		
+
 	window_getkey = Window:New{
 		caption = 'Set a HotKey',
 		x = (scrW-window_width)/2,
@@ -1471,7 +1471,7 @@ end
 --Get hotkey action and readable hotkey string. Note: this is used in MakeHotkeyedControl() which make hotkey handled by Chili.
 local function GetHotkeyData(path, option)
 	local actionName = GetActionName(path, option)
-	
+
 	local hotkey = otget( keybounditems, actionName )
 	if type(hotkey) == 'table' then
 		hotkey = hotkey[1]
@@ -1480,13 +1480,13 @@ local function GetHotkeyData(path, option)
 		if hotkey:find('%+%+') then
 			hotkey = hotkey:gsub( '%+%+', '+plus' )
 		end
-		
+
 		return GetReadableHotkey(hotkey)
 	end
 	if (not hotkey ) and option.hotkey then  --if widget supplied default hotkey: return widget's hotkey (this only effect hotkey on Chili menu)
 		return option.hotkey
 	end
-	
+
 	return 'None' --show "none" on epicmenu's menu
 end
 
@@ -1501,7 +1501,7 @@ local function MakeHotkeyedControl(control, path, option, icon, noHotkey, minHei
 		end
 		control.right = 2
 		control:DetectRelativeBounds()
-			
+
 		if icon then
 			local iconImage = Image:New{file = icon, width = 16, height = 16}
 			children = {iconImage}
@@ -1518,7 +1518,7 @@ local function MakeHotkeyedControl(control, path, option, icon, noHotkey, minHei
 		end
 		control.right = hklength+2 --room for hotkey button on right side
 		control:DetectRelativeBounds()
-		
+
 		local hkbutton = Button:New{
 			name = option.wname .. ' hotKeyButton';
 			minHeight = minHeight or 30,
@@ -1538,7 +1538,7 @@ local function MakeHotkeyedControl(control, path, option, icon, noHotkey, minHei
 			--textColor = color.sub_button_fg,
 			tooltip = 'Hotkey: ' .. hotkeystring,
 		}
-		
+
 		--local children = {}
 		if icon then
 			local iconImage = Image:New{file = icon, width = 16, height = 16}
@@ -1547,7 +1547,7 @@ local function MakeHotkeyedControl(control, path, option, icon, noHotkey, minHei
 		children[#children+1] = control
 		children[#children+1] = hkbutton
 	end
-	
+
 	return Panel:New{
 		width = "100%",
 		orientation = 'horizontal',
@@ -1594,7 +1594,7 @@ WG.crude.MakeHotkey = function(path, optionkey)
 	if not get_key then
 		MakeKeybindWindow( path, option, hotkey )
 	end
-	
+
 end
 --]]
 
@@ -1602,24 +1602,24 @@ local function SearchElement(termToSearch, path)
 	local filtered_pathOptions = {}
 	local tree_children = {} --used for displaying buttons
 	local maximumResult = 50 --maximum result to display. Any more it will just say "too many"
-	
+
 	local DiggDeeper = function() end --must declare itself first before callin self within self
 	DiggDeeper = function(currentPath)
 		local virtualCategoryHit = false --category deduced from the text label preceding the option(s)
 		for _, elem in ipairs(pathoptions[currentPath]) do
 			local option = elem[2]
-			
+
 			local lowercase_name = option.name:lower()
 			local lowercase_text = option.text and option.text:lower() or ''
 			local lowercase_desc = option.desc and option.desc:lower() or ''
 			local found_name = SearchInText(lowercase_name, termToSearch) or SearchInText(lowercase_text, termToSearch) or SearchInText(lowercase_desc, termToSearch) or virtualCategoryHit
-					
+
 			--if option.advanced and not settings.config['epic_Settings_Show_Advanced_Settings'] then
 			if option.hidden or (option.advanced and not settings.showAdvanced) then
 				--do nothing
 			elseif option.type == 'button' then
 				local hide = false
-				
+
 				if option.isDirectoryButton then --this type of button is defined in AddOption(path, option, wname) (a link into submenu)
 					local menupath = currentPath .. ((currentPath == "") and "" or "/") .. option.name
 					if pathoptions[menupath] then
@@ -1630,7 +1630,7 @@ local function SearchElement(termToSearch, path)
 						end
 					end
 				end
-				
+
 				if not hide then
 					local hotkeystring = GetHotkeyData(currentPath, option)
 					local lowercase_hotkey = hotkeystring:lower()
@@ -1699,7 +1699,7 @@ local function SearchElement(termToSearch, path)
 		end
 	end
 	DiggDeeper(path)
-	
+
 	local roughNumberOfHit = #filtered_pathOptions
 	if roughNumberOfHit == 0 then
 		tree_children[1] = Label:New{caption = "- no match for \"" .. filterUserInsertedTerm .."\" -",  objectOverrideFont = WG.GetSpecialFont(13, "epic_postit", {color = color.postit})}
@@ -1724,30 +1724,30 @@ MakeSubWindow = function(path, pause, labelScroll)
 	if pause == nil then
 		pause = true
 	end
-	
+
 	if not pathoptions[path] then
 		return
 	end
-	
+
 	local explodedpath = explode('/', path)
 	explodedpath[#explodedpath] = nil
 	local parent_path = table.concat(explodedpath, '/')
-	
+
 	local settings_height = #(pathoptions[path]) * B_HEIGHT
 	local settings_width = 270
-	
+
 	local tree_children = {}
 	local hotkeybuttons = {}
-	
+
 	local root = path == ''
-	
+
 	local searchedElement
 	if filterUserInsertedTerm ~= "" then --this check whether window is a remake for Searching or not.
 		--if Search term is being used then remake the Search window instead of normal window
 		parent_path = path --User go "back" (back button) to HERE if we go "back" after searching
 		searchedElement, tree_children = SearchElement(filterUserInsertedTerm, path)
 	end
-	
+
 	local listOfElements = searchedElement or pathoptions[path] --show search result or show all
 	local pathLabeling = searchedElement and ""
 	for _, elem in ipairs(listOfElements) do
@@ -1770,15 +1770,15 @@ MakeSubWindow = function(path, pause, labelScroll)
 					end},
 					backgroundColor = color.transGray,
 					tooltip = currentPath,
-					
+
 					padding = {2, 2, 2, 2},
 				}
 				pathLabeling = currentPath
 			end
 		end
-		
+
 		local optionkey = option.key
-		
+
 		--fixme: shouldn't be needed (?)
 		if not option.OnChange then
 			option.OnChange = function(self) end
@@ -1786,7 +1786,7 @@ MakeSubWindow = function(path, pause, labelScroll)
 		if not option.desc then
 			option.desc = ''
 		end
-		
+
 		local simpleModeCull = (not root) and ((not option.simpleMode) == settings.simpleSettingsMode) and (not option.everyMode)
 		if simpleModeCull and confdata.simpleModeFullDirectory then
 			for i = 1, #confdata.simpleModeFullDirectory do
@@ -1799,13 +1799,13 @@ MakeSubWindow = function(path, pause, labelScroll)
 		if simpleModeCull and option.isDirectoryButton and confdata.simpleModeDirectory[option.name] then
 			simpleModeCull = false
 		end
-		
+
 		--if option.advanced and not settings.config['epic_Settings_Show_Advanced_Settings'] then
 		if option.hidden or (option.advanced and not settings.showAdvanced) or simpleModeCull then
 			--do nothing
 		elseif option.type == 'button' then
 			local hide = false
-			
+
 			if option.wname == 'epic' then --menu
 				local menupath = option.desc
 				if pathoptions[menupath] and #(pathoptions[menupath]) == 0 then
@@ -1813,7 +1813,7 @@ MakeSubWindow = function(path, pause, labelScroll)
 					settings_height = settings_height - B_HEIGHT
 				end
 			end
-			
+
 			if not hide then
 				local escapeSearch = searchedElement and option.desc and option.desc:find(currentPath) and option.isDirectoryButton --this type of button will open sub-level when pressed (defined in "AddOption(path, option, wname )")
 				local disabled = option.DisableFunc and option.DisableFunc()
@@ -1831,21 +1831,21 @@ MakeSubWindow = function(path, pause, labelScroll)
 					--textColor = disabled and color.disabled_fg or color.sub_button_fg,
 					classname = (disabled and "button_disabled"),
 					tooltip = option.desc,
-					
+
 					padding = {2, 2, 2, 2},
 				}
-				
+
 				if icon then
 					local width = root and 24 or 16
 					local pos = root and 4 or 8
 					Image:New{file = icon, width = width, height = width, parent = button, x = pos, y = pos}
 				end
-				
+
 				Label:New{parent = button, x = 35, y = button_height*0.2,  caption = option.name, objectOverrideFont = WG.GetFont(),}
-				
+
 				tree_children[#tree_children+1] = MakeHotkeyedControl(button, path, option, nil, option.isDirectoryButton or option.noHotkey, button_height)
 			end
-			
+
 		elseif option.type == 'label' then
 			tree_children[#tree_children+1] = Label:New{caption = option.value or option.name, objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_header", {color = color.sub_header})}
 			if labelScroll and (labelScroll == (option.value or option.name)) then
@@ -1855,14 +1855,14 @@ MakeSubWindow = function(path, pause, labelScroll)
 		elseif option.type == 'text' then
 			tree_children[#tree_children+1] = Label:New{caption = option.name, objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_header", {color = color.sub_header})}
 			tree_children[#tree_children+1] =
-				TextBox:New{
-					name = option.wname .. " " .. option.name;
-					width = "100%",
-					minHeight = 30,
-					text = option.value,
-					WG.GetFont(),
-				}
-			
+			TextBox:New{
+				name = option.wname .. " " .. option.name;
+				width = "100%",
+				minHeight = 30,
+				text = option.value,
+				WG.GetFont(),
+			}
+
 		elseif option.type == 'bool' then
 			local chbox = Checkbox:New{
 				x = 0,
@@ -1870,14 +1870,14 @@ MakeSubWindow = function(path, pause, labelScroll)
 				right = 35,
 				caption = option.name,
 				checked = option.value or false,
-				
+
 				OnClick = {option.OnChange},
 				objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_fg", {color = color.sub_fg}),
 				tooltip   = option.desc,
 			}
 			option.epic_reference = chbox
 			tree_children[#tree_children+1] = MakeHotkeyedControl(chbox,  path, option, icon, option.noHotkey, nil, 8)
-			
+
 		elseif option.type == 'number' then
 			settings_height = settings_height + B_HEIGHT
 			local icon = option.icon
@@ -1895,26 +1895,26 @@ MakeSubWindow = function(path, pause, labelScroll)
 				numberPanel:AddChild(Label:New{caption = option.name, objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_fg", {color = color.sub_fg}), x = 20, y = 0, HitTest = returnSelf})
 			else
 				numberPanel:AddChild(Label:New{padding = {0, 0, 0, 0}, caption = option.name, tooltip = option.desc, y = 0,
-					objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_fg", {color = color.sub_fg}), HitTest = returnSelf})
+											   objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_fg", {color = color.sub_fg}), HitTest = returnSelf})
 			end
 			if option.valuelist then
 				option.value = GetIndex(option.valuelist, option.value)
 			end
 			numberPanel:AddChild(
-				Trackbar:New{
-					y = 14,
-					width = "100%",
-					caption = option.name,
-					value = option.value,
-					trackColor = color.sub_fg,
-					min = option.min or 0,
-					max = option.max or 100,
-					step = option.step or 1,
-					[option.update_on_the_fly and "OnChange" or "OnMouseup"] = {option.OnChange },
-					useValueTooltip = not option.tooltipFunction,
-					tooltipFunction = option.tooltipFunction,
-					tooltip_format = option.tooltip_format,
-				}
+					Trackbar:New{
+						y = 14,
+						width = "100%",
+						caption = option.name,
+						value = option.value,
+						trackColor = color.sub_fg,
+						min = option.min or 0,
+						max = option.max or 100,
+						step = option.step or 1,
+						[option.update_on_the_fly and "OnChange" or "OnMouseup"] = {option.OnChange },
+						useValueTooltip = not option.tooltipFunction,
+						tooltipFunction = option.tooltipFunction,
+						tooltip_format = option.tooltip_format,
+					}
 			)
 			tree_children[#tree_children+1] = numberPanel
 		elseif option.type == 'list' then
@@ -1925,16 +1925,16 @@ MakeSubWindow = function(path, pause, labelScroll)
 				item.value = item.key --for 'OnClick'
 				settings_height = settings_height + B_HEIGHT
 				tree_children[#tree_children+1] = Button:New{
-						name = option.wname .. " " .. item.name;
-						width = "100%",
-						caption = item.name,
-						objectOverrideFont = WG.GetFont(),
-						OnClick = {function(self) option.OnChange(item) end },
-						--classname = "submenu_navigation_button",
-						--backgroundColor = color.sub_button_bg,
-						--textColor = color.sub_button_fg,
-						tooltip = item.desc,
-					}
+					name = option.wname .. " " .. item.name;
+					width = "100%",
+					caption = item.name,
+					objectOverrideFont = WG.GetFont(),
+					OnClick = {function(self) option.OnChange(item) end },
+					--classname = "submenu_navigation_button",
+					--backgroundColor = color.sub_button_bg,
+					--textColor = color.sub_button_fg,
+					tooltip = item.desc,
+				}
 			end
 			--[[
 			tree_children[#tree_children+1] = ComboBox:New {
@@ -1948,7 +1948,7 @@ MakeSubWindow = function(path, pause, labelScroll)
 			for i = 1, #option.items do
 				local item = option.items[i]
 				settings_height = settings_height + B_HEIGHT
-				
+
 				local cb = Checkbox:New{
 					--x = 0,
 					right = 35,
@@ -1962,61 +1962,61 @@ MakeSubWindow = function(path, pause, labelScroll)
 				}
 				local icon = option.items[i].icon
 				tree_children[#tree_children+1] = MakeHotkeyedControl( cb, path, item, icon, option.noHotkey, nil, 1)
-				
+
 			end
 			tree_children[#tree_children+1] = Control:New{height = 2, minHeight = 0, padding = {0, 6, 0, 0},}
 		elseif option.type == 'colors' then
 			settings_height = settings_height + B_HEIGHT*2.5
 			tree_children[#tree_children+1] = Label:New{caption = option.name, objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_fg", {color = color.sub_fg}),}
 			tree_children[#tree_children+1] =
-				Colorbars:New{
-					width = "100%",
-					height = B_HEIGHT*2,
-					tooltip = option.desc,
-					color = option.value or {1, 1, 1, 1},
-					OnClick = {option.OnChange},
-				}
-				
+			Colorbars:New{
+				width = "100%",
+				height = B_HEIGHT*2,
+				tooltip = option.desc,
+				color = option.value or {1, 1, 1, 1},
+				OnClick = {option.OnChange},
+			}
+
 		end
 	end
-	
+
 	local window_height = min(400, scrH - B_HEIGHT*6)
 	if settings_height < window_height then
 		window_height = settings_height+10
 	end
 	local window_width = 300
-	
+
 	local window_children = {}
 	window_children[#window_children+1] =
-		ScrollPanel:New{
-			x = 5, y = 15,
-			bottom = B_HEIGHT+26,
-			right = 5,
-			children = {
-				StackPanel:New{
-					x = 0,
-					y = 0,
-					right = 0,
-					orientation = "vertical",
-					--width  = "100%",
-					height = "100%",
-					backgroundColor = color.sub_bg,
-					children = tree_children,
-					itemMargin = {2, 2, 2, 2},
-					resizeItems = false,
-					centerItems = false,
-					autosize = true,
-				},
-				
-			}
+	ScrollPanel:New{
+		x = 5, y = 15,
+		bottom = B_HEIGHT+26,
+		right = 5,
+		children = {
+			StackPanel:New{
+				x = 0,
+				y = 0,
+				right = 0,
+				orientation = "vertical",
+				--width  = "100%",
+				height = "100%",
+				backgroundColor = color.sub_bg,
+				children = tree_children,
+				itemMargin = {2, 2, 2, 2},
+				resizeItems = false,
+				centerItems = false,
+				autosize = true,
+			},
+
 		}
-	
+	}
+
 	if scrollTo then
 		scrollToPanel = window_children[#window_children]
 	end
-	
+
 	window_height = window_height + B_HEIGHT
-	
+
 	local buttonBar = Grid:New{
 		x = 5;bottom = 5;
 		right = 5, height = B_HEIGHT,
@@ -2027,13 +2027,13 @@ MakeSubWindow = function(path, pause, labelScroll)
 		resizeItems = true,
 		centerItems = false,
 	}
-	
+
 	window_children[#window_children+1] = Checkbox:New{
 		--x = 0,
 		width = 125;
 		right = 5,
 		bottom = B_HEIGHT + 5;
-		
+
 		caption = 'Simple Settings',
 		checked = settings.simpleSettingsMode,
 		OnChange = {function(self)
@@ -2043,78 +2043,78 @@ MakeSubWindow = function(path, pause, labelScroll)
 		objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_fg", {color = color.sub_fg}),
 		tooltip   = 'For experienced users only.',
 	}
-	
+
 	window_children[#window_children+1] = buttonBar
-	
+
 	--back button
 	if parent_path then
 		Button:New{name = 'backButton', noFont = true,
-			OnClick = {
-				function()
-					KillSubWindow(not root)
-					filterUserInsertedTerm = ''
-					if not root then
-						MakeSubWindow(parent_path, false)
-					end
-				end
-			},
+				   OnClick = {
+					   function()
+						   KillSubWindow(not root)
+						   filterUserInsertedTerm = ''
+						   if not root then
+							   MakeSubWindow(parent_path, false)
+						   end
+					   end
+				   },
 			--backgroundColor = color.sub_back_bg, textColor = color.sub_back_fg,
 			--classname = "back_button",
-			height = B_HEIGHT,
-			padding = {2, 2, 2, 2},
-			parent = buttonBar,
-			children = {
-				Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/arrow_left.png', width = 16, height = 16, parent = button, x = 4, y = 2},
-				Label:New{caption = 'Back', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
-			}
+				   height = B_HEIGHT,
+				   padding = {2, 2, 2, 2},
+				   parent = buttonBar,
+				   children = {
+					   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/arrow_left.png', width = 16, height = 16, parent = button, x = 4, y = 2},
+					   Label:New{caption = 'Back', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
+				   }
 		}
 	end
-	
+
 	--search button
 	Button:New{name = 'searchButton', noFont = true,
-		OnClick = {function() spSendCommands("chat", "PasteText /search:" ) end },
+			   OnClick = {function() spSendCommands("chat", "PasteText /search:" ) end },
 		--textColor = color.sub_close_fg, backgroundColor = color.sub_close_bg,
 		--classname = "navigation_button",
-		height = B_HEIGHT,
-		padding = {2, 2, 2, 2},
-		parent = buttonBar,
-		children = {
-			Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/find.png', width = 16, height = 16, parent = button, x = 4, y = 2},
-			Label:New{caption = 'Search', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
-		}
+			   height = B_HEIGHT,
+			   padding = {2, 2, 2, 2},
+			   parent = buttonBar,
+			   children = {
+				   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/find.png', width = 16, height = 16, parent = button, x = 4, y = 2},
+				   Label:New{caption = 'Search', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
+			   }
 	}
-	
+
 	if not searchedElement then --do not display reset setting button when search is a bunch of mixed options
 		--reset button
 		Button:New{name = 'resetButton', noFont = true,
-			OnClick = {function() ResetWinSettings(path); RemakeEpicMenu(); end },
+				   OnClick = {function() ResetWinSettings(path); RemakeEpicMenu(); end },
 			--textColor = color.sub_close_fg, backgroundColor = color.sub_close_bg,
 			--classname = "navigation_button",
-			tooltip = "Reset the settings within this submenu. Use 'Settings/Reset Settings' to reset all settings.",
-			height = B_HEIGHT,
-			padding = {2, 2, 2, 2},
-			parent = buttonBar,
-			children = {
-				Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/undo_white.png', width = 16, height = 16, parent = button, x = 4, y = 2},
-				Label:New{caption = 'Reset', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
-			}
+				   tooltip = "Reset the settings within this submenu. Use 'Settings/Reset Settings' to reset all settings.",
+				   height = B_HEIGHT,
+				   padding = {2, 2, 2, 2},
+				   parent = buttonBar,
+				   children = {
+					   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/undo_white.png', width = 16, height = 16, parent = button, x = 4, y = 2},
+					   Label:New{caption = 'Reset', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
+				   }
 		}
 	end
-	
+
 	--close button
 	Button:New{name = 'menuCloseButton', noFont = true,
-		OnClick = {function() KillSubWindow(); filterUserInsertedTerm = '';  end },
+			   OnClick = {function() KillSubWindow(); filterUserInsertedTerm = '';  end },
 		--textColor = color.sub_close_fg, backgroundColor = color.sub_close_bg,
 		--classname = "navigation_button",
-		height = B_HEIGHT,
-		padding = {2, 2, 2, 2},
-		parent = buttonBar,
-		children = {
-			Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/close.png', width = 16, height = 16, parent = button, x = 4, y = 2},
-			Label:New{caption = 'Close', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
-		}
+			   height = B_HEIGHT,
+			   padding = {2, 2, 2, 2},
+			   parent = buttonBar,
+			   children = {
+				   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/close.png', width = 16, height = 16, parent = button, x = 4, y = 2},
+				   Label:New{caption = 'Close', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
+			   }
 	}
-	
+
 	KillSubWindow(true)
 	curPath = path -- must be done after KillSubWindow
 	window_sub_cur = Window:New{
@@ -2133,7 +2133,7 @@ MakeSubWindow = function(path, pause, labelScroll)
 		children = window_children,
 	}
 	AdjustWindow(window_sub_cur)
-	
+
 	if pause and AllowPauseOnMenuChange(true) then
 		spSendCommands("pause 1")
 	end
@@ -2201,7 +2201,7 @@ local function MakeExitConfirmWindow(text, action, height, unpauseOnYes, unpause
 	local menu_height = height or 64
 
 	LeaveExitConfirmWindow()
-	
+
 	window_exit_confirm = Window:New{
 		name = 'exitwindow_confirm',
 		parent = screen0,
@@ -2289,7 +2289,7 @@ local function GetMainPanel(parent, width, height)
 	if width < 372 then
 		sliderWidth = width - 276
 	end
-	
+
 	if height < 45 then
 		if width > 435 then
 			stackChildren[#stackChildren + 1] = StackPanel:New{
@@ -2308,7 +2308,7 @@ local function GetMainPanel(parent, width, height)
 			}
 			holderWidth = holderWidth + 64
 		end
-		
+
 		stackChildren[#stackChildren + 1] = StackPanel:New{
 			orientation = 'horizontal',
 			width = 78,
@@ -2324,7 +2324,7 @@ local function GetMainPanel(parent, width, height)
 			},
 		}
 		holderWidth = holderWidth + 80
-		
+
 		stackChildren[#stackChildren + 1] = Image:New{tooltip = 'Volume', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol.png', width = 18, height = 18}
 		stackChildren[#stackChildren + 1] = Grid:New{
 			height = 24,
@@ -2336,7 +2336,7 @@ local function GetMainPanel(parent, width, height)
 			padding = {0, -2, 0, 0},
 			itemPadding = {0, 0, 0, 0},
 			itemMargin = {0, 0, 0, 0},
-			
+
 			children = {
 				Trackbar:New{
 					tooltip = 'Volume',
@@ -2353,7 +2353,7 @@ local function GetMainPanel(parent, width, height)
 						end
 					},
 				},
-				
+
 				Trackbar:New{
 					tooltip = 'Music',
 					height = 12,
@@ -2390,7 +2390,7 @@ local function GetMainPanel(parent, width, height)
 		--        end
 		--    },
 		--}
-		
+
 		holderWidth = holderWidth + sliderWidth + 2
 	else
 		stackChildren[#stackChildren + 1] = Grid:New{
@@ -2406,7 +2406,7 @@ local function GetMainPanel(parent, width, height)
 			padding = {0, 0, 0, 0},
 			itemPadding = {0, 0, 0, 0},
 			itemMargin = {0, 0, 0, 0},
-			
+
 			children = {
 				StackPanel:New{
 					orientation = 'horizontal',
@@ -2438,9 +2438,9 @@ local function GetMainPanel(parent, width, height)
 				},
 			},
 		}
-		
+
 		holderWidth = holderWidth + 82
-		
+
 		stackChildren[#stackChildren + 1] = Grid:New{
 			height = '100%',
 			width = sliderWidth,
@@ -2451,7 +2451,7 @@ local function GetMainPanel(parent, width, height)
 			padding = {0, 0, 0, 0},
 			itemPadding = {1, 1, 1, 1},
 			itemMargin = {1, 1, 1, 1},
-			
+
 			children = {
 				--Label:New{caption = 'Vol', width = 20, objectOverrideFont = WG.GetSpecialFont(13, "epic_main_fg", {color = color.main_fg}) },
 				Image:New{tooltip = 'Volume', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol.png', width = 18, height = 18},
@@ -2470,7 +2470,7 @@ local function GetMainPanel(parent, width, height)
 						end
 					},
 				},
-				
+
 				Image:New{tooltip = 'Music', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol_music.png', width = 18, height = 18},
 				Trackbar:New{
 					tooltip = 'Music',
@@ -2493,13 +2493,13 @@ local function GetMainPanel(parent, width, height)
 		}
 		masterVolumeTrackbar = stackChildren[#stackChildren].children[2]
 		musicTrackbar = stackChildren[#stackChildren].children[4]
-		
+
 		holderWidth = holderWidth + sliderWidth + 2
 	end
-	
+
 	stackChildren[#stackChildren + 1] = img_flag
 	holderWidth = holderWidth + 26
-	
+
 	stackChildren[#stackChildren + 1] = Button:New{
 		name = 'subMenuButton',
 		OnClick = {function() ActionSubmenu(nil, '') end},
@@ -2516,7 +2516,7 @@ local function GetMainPanel(parent, width, height)
 		},
 	}
 	holderWidth = holderWidth + 80
-	
+
 	if luaMenu then
 		stackChildren[#stackChildren + 1] = Button:New{
 			name = 'lobbyButton',
@@ -2535,7 +2535,7 @@ local function GetMainPanel(parent, width, height)
 		}
 		holderWidth = holderWidth + 80
 	end
-	
+
 	-- FPS
 	--Grid:New{
 	--    orientation = 'horizontal',
@@ -2556,7 +2556,7 @@ local function GetMainPanel(parent, width, height)
 	--        img_flag,
 	--    },
 	--},
-	
+
 	-- Game Logo
 	--Image:New{tooltip = title_text, file = title_image, height = B_HEIGHT, width = B_HEIGHT},
 	--
@@ -2568,7 +2568,7 @@ local function GetMainPanel(parent, width, height)
 	--        Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/move.png', height = B_HEIGHT-2, width = B_HEIGHT-2},
 	--    },
 	--},
-	
+
 	local mainPanel = Panel:New{
 		y = 0,
 		right = 0,
@@ -2579,7 +2579,7 @@ local function GetMainPanel(parent, width, height)
 		margin = {0, 0, 0, 0},
 		padding = {0, 0, 3, 6},
 		parent = parent,
-		
+
 		children = {
 			StackPanel:New{
 				name = 'stack_main',
@@ -2592,12 +2592,12 @@ local function GetMainPanel(parent, width, height)
 				itemMargin = {1, 1, 1, 1},
 				autoArrangeV = false,
 				autoArrangeH = false,
-				
+
 				children = stackChildren,
 			}
 		}
 	}
-	
+
 	return mainPanel
 end
 
@@ -2614,15 +2614,15 @@ local function MakeMenuBar()
 	local crude_width = 380
 	local crude_minWidth = 350
 	local crude_height = B_HEIGHT_MAIN + 8
-	
+
 	-- A bit evil, but par for the course
 	lbl_fps = Label:New{name = 'lbl_fps', caption = 'FPS:', objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_header", {color = color.sub_header}), margin = {0, 5, 0, 0}}
 	lbl_gtime = Label:New{name = 'lbl_gtime', caption = '00:00', width = 55, height = 5, objectOverrideFont = WG.GetSpecialFont(13, "epic_sub_header", {color = color.sub_header})}
 	lbl_clock = Label:New{name = 'lbl_clock', caption = 'Clock', width = 45, height = 5, objectOverrideFont = WG.GetSpecialFont(13, "epic_main_fg", {color = color.main_fg})} -- autosize = false}
 	img_flag = Image:New{tooltip = 'Choose Language', file = ":cn:".. LUAUI_DIRNAME .. "Images/flags/".. flagByLang[settings.lang] ..'.png', width = 16, height = 11, OnClick = {MakeFlags }, padding = {4, 4, 4, 6}  }
-	
+
 	local screen_width, screen_height = Spring.GetWindowGeometry()
-	
+
 	window_crude = Window:New{
 		name = 'epicmenubar',
 		x = screen_width - crude_width,
@@ -2654,7 +2654,7 @@ local function MakeMenuBar()
 			end
 		}
 	}
-	
+
 	panel_background = Panel:New{
 		classname = settings.menuClassname,
 		x = 0,
@@ -2672,33 +2672,33 @@ end
 local function MakeSaveLoadButtons()
 	local imgPath = LUAUI_DIRNAME  .. 'images/'
 	AddOption('',
-	{
-		type='button',
-		name='Save Game',
-		desc = 'Save game (not available in multiplayer and tutorials).',
-		OnChange = function()
-				if WG.SaveGame and CanSaveGame() then
-					WG.SaveGame.CreateSaveWindow()
-				end
-			end,
-		key='Save Game',
-		icon = imgPath .. 'commands/Bold/unload.png',
-		DisableFunc = function() return not CanSaveGame() end
-	})
-	
+			{
+				type='button',
+				name='Save Game',
+				desc = 'Save game (not available in multiplayer and tutorials).',
+				OnChange = function()
+					if WG.SaveGame and CanSaveGame() then
+						WG.SaveGame.CreateSaveWindow()
+					end
+				end,
+				key='Save Game',
+				icon = imgPath .. 'commands/Bold/unload.png',
+				DisableFunc = function() return not CanSaveGame() end
+			})
+
 	AddOption('',
-	{
-		type='button',
-		name='Load Game',
-		desc = '',
-		OnChange = function()
-				if WG.SaveGame then
-					WG.SaveGame.CreateLoadWindow()
-				end
-			end,
-		key='Load Game',
-		icon = imgPath .. 'commands/Bold/load.png',
-	})
+			{
+				type='button',
+				name='Load Game',
+				desc = '',
+				OnChange = function()
+					if WG.SaveGame then
+						WG.SaveGame.CreateLoadWindow()
+					end
+				end,
+				key='Load Game',
+				icon = imgPath .. 'commands/Bold/load.png',
+			})
 end
 
 local function MakeQuitButtons()
@@ -2708,7 +2708,7 @@ local function MakeQuitButtons()
 	--	value = 'Quit game',
 	--	key = 'Quit game',
 	--})
-	
+
 	local imgPath = LUAUI_DIRNAME  .. 'images/'
 
 	AddOption('', {
@@ -2717,11 +2717,11 @@ local function MakeQuitButtons()
 		desc = "Ask teammates to resign",
 		icon = imgPath..'epicmenu/whiteflag_check.png',
 		OnChange = function()
-				if not (Spring.GetPlayerRulesParam(Spring.GetLocalPlayerID(), "initiallyPlayingPlayer") ~= 1 or PlayingButNoTeammate() or isMission) then
-					spSendCommands("say !poll resign")
-					ActionMenu()
-				end
-			end,
+			if not (Spring.GetPlayerRulesParam(Spring.GetLocalPlayerID(), "initiallyPlayingPlayer") ~= 1 or PlayingButNoTeammate() or isMission) then
+				spSendCommands("say !poll resign")
+				ActionMenu()
+			end
+		end,
 		key = 'Vote Resign',
 		DisableFunc = function()
 			return (Spring.GetPlayerRulesParam(Spring.GetLocalPlayerID(), "initiallyPlayingPlayer") ~= 1 or PlayingButNoTeammate() or isMission)
@@ -2733,23 +2733,23 @@ local function MakeQuitButtons()
 		desc = "Abandon team and become spectator",
 		icon = imgPath..'epicmenu/whiteflag.png',
 		OnChange = function()
-				if not (isMission or Spring.GetSpectatingState()) then
-					MakeExitConfirmWindow("Are you sure you want to resign?", function()
-						if AllowPauseOnMenuChange(true) then
-							spSendCommands("pause 1")
+			if not (isMission or Spring.GetSpectatingState()) then
+				MakeExitConfirmWindow("Are you sure you want to resign?", function()
+					if AllowPauseOnMenuChange(true) then
+						spSendCommands("pause 1")
+					end
+					local frame = Spring.GetGameFrame()
+					if frame and frame > 0 then
+						if WG.MissionResign then
+							WG.MissionResign()
+						else
+							Spring.SendLuaRulesMsg("forceresign")
+							spSendCommands{"spectator"}
 						end
-						local frame = Spring.GetGameFrame()
-						if frame and frame > 0 then
-							if WG.MissionResign then
-								WG.MissionResign()
-							else
-								Spring.SendLuaRulesMsg("forceresign")
-								spSendCommands{"spectator"}
-							end
-						end
-					end, nil, true, true)
-				end
-			end,
+					end
+				end, nil, true, true)
+			end
+		end,
 		key = 'Resign',
 		DisableFunc = function()
 			return (Spring.GetSpectatingState() or isMission)
@@ -2761,16 +2761,16 @@ local function MakeQuitButtons()
 		desc = "Restart the game",
 		icon = imgPath..'epicmenu/undo.png',
 		OnChange = function()
-				-- Only allow restarting for local games or by the host of steam coop.
-				if Spring.GetMenuName and Spring.SendLuaMenuMsg and Spring.GetMenuName() then
-					local myPing = select(6, Spring.GetPlayerInfo(Spring.GetMyPlayerID(), false))
-					if myPing and myPing < 40 then
-						MakeExitConfirmWindow("Are you sure you want to restart?", function()
-							Spring.SendLuaMenuMsg("restartGame")
-						end, nil, false, true)
-					end
+			-- Only allow restarting for local games or by the host of steam coop.
+			if Spring.GetMenuName and Spring.SendLuaMenuMsg and Spring.GetMenuName() then
+				local myPing = select(6, Spring.GetPlayerInfo(Spring.GetMyPlayerID(), false))
+				if myPing and myPing < 40 then
+					MakeExitConfirmWindow("Are you sure you want to restart?", function()
+						Spring.SendLuaMenuMsg("restartGame")
+					end, nil, false, true)
 				end
-			end,
+			end
+		end,
 		key = 'Restart',
 		DisableFunc = function()
 			-- Only allow restarting for local games or by the host of steam coop.
@@ -2830,11 +2830,11 @@ function widget:Initialize()
 		return
 	end
 	init = true
-	
-	
+
+
 	spSendCommands("unbindaction hotbind")
 	spSendCommands("unbindaction hotunbind")
-	
+
 
 	-- setup Chili
 	Chili = WG.Chili
@@ -2857,7 +2857,7 @@ function widget:Initialize()
 	screen0 = Chili.Screen0
 
 	widget:ViewResize(Spring.GetViewGeometry())
-	
+
 	-- Set default positions of windows on first run
 	local screenWidth, screenHeight = Spring.GetWindowGeometry()
 	if not settings.subwindow_height then
@@ -2867,7 +2867,7 @@ function widget:Initialize()
 		settings.sub_pos_x = math.floor(screenWidth/2 - 150)
 		settings.sub_pos_y = math.floor(screenHeight/2 - settings.subwindow_height * 0.55)
 	end
-	
+
 	if not keybounditems then
 		keybounditems = {}
 	end
@@ -2892,7 +2892,7 @@ function widget:Initialize()
 	AddOption('Hotkeys')
 	AddOption('Settings/Unit Behaviour')
 	AddOption('Help')
-	
+
 	local imgPath = LUAUI_DIRNAME  .. 'images/'
 	AddOption('Settings/Reset Settings')
 	AddOption('Settings/Audio')
@@ -2903,7 +2903,7 @@ function widget:Initialize()
 	AddOption('Settings/HUD Presets')
 	AddOption('Settings/Interface')
 	AddOption('Settings/Misc')
-	
+
 
 	-- Add pre-configured button/options found in epicmenu config file
 	local options_temp = CopyTable(epic_options, true)
@@ -2911,12 +2911,12 @@ function widget:Initialize()
 		local option = options_temp[i]
 		AddOption(option.path, option)
 	end
-	
+
 	MakeSaveLoadButtons()
 	MakeQuitButtons()
-	
+
 	AddOption('', {type = 'label', name = '', value = '', key = ''})
-	
+
 	-- About button
 	--AddOption('Settings', {
 	--    type = 'text',
@@ -2925,7 +2925,7 @@ function widget:Initialize()
 	--    --desc = "about game",
 	--    key = 'About',
 	--})
-	
+
 	-- Clears all saved settings of custom widgets stored in crudemenu's config
 	WG.crude.ResetSettings = function()
 		for path, _ in pairs(pathoptions) do
@@ -2934,12 +2934,12 @@ function widget:Initialize()
 		RemakeEpicMenu()
 		echo 'Cleared all settings.'
 	end
-	
+
 	-- clear all keybindings
 	WG.crude.ResetKeys = function()
 		keybounditems = {}
 		keybounditems = CopyTable(defaultkeybinds, true) --restore with mods zkkey's default value
-		
+
 		--restore with widget's default value:
 		for path, subtable in pairs ( pathoptions) do
 			for _, element in ipairs(subtable) do
@@ -2952,11 +2952,11 @@ function widget:Initialize()
 				end
 			end
 		end
-		
+
 		ReApplyKeybinds() --unbind all hotkey and re-attach with stuff in keybounditems table
 		echo 'Reset all hotkeys to default.'
 	end
-	
+
 	-- get hotkey
 	WG.crude.GetHotkey = function(actionName, all) --Note: declared here because keybounditems must not be empty
 		local actionHotkey = GetActionHotkey(actionName)
@@ -2982,11 +2982,11 @@ function widget:Initialize()
 			return ret
 		end
 	end
-	
+
 	WG.crude.GetHotkeys = function(actionName)
 		return WG.crude.GetHotkey(actionName, true)
 	end
-	
+
 	WG.crude.GetHotkeyRaw = function(actionName, all) --Note: declared here because keybounditems must not be empty
 		local actionHotkey = GetActionHotkey(actionName)
 		--local hotkey = keybounditems[actionName] or actionHotkey
@@ -3011,7 +3011,7 @@ function widget:Initialize()
 			return ret
 		end
 	end
-	
+
 	-- set hotkey
 	WG.crude.SetHotkey =  function(actionName, hotkey, func) --Note: declared here because pathoptions must not be empty
 		if hotkey then
@@ -3044,23 +3044,23 @@ function widget:Initialize()
 			end
 		end
 	end
-	
+
 	function WG.crude.SetMenuSkinClass(newClassName)
 		if newClassName == settings.menuClassname then
 			return
 		end
 		settings.menuClassname = newClassName
-		
+
 		local currentSkin = Chili.theme.skin.general.skinName
 		local skin = Chili.SkinHandler.GetSkin(currentSkin)
-		
+
 		local newClass = skin[newClassName]
 		if not newClass then
 			newClass = skin.panel
 			newClassName = "panel"
 		end
 		panel_background.classname = newClassName
-		
+
 		panel_background.tiles = newClass.tiles
 		panel_background.TileImageFG = newClass.TileImageFG
 		--panel_background.backgroundColor = newClass.backgroundColor
@@ -3071,47 +3071,47 @@ function widget:Initialize()
 		end
 		panel_background:Invalidate()
 	end
-		
+
 	-- Add custom actions for the following keybinds
 	AddAction("crudemenu", ActionMenu, nil, "t")
 	AddAction("show_toggle_crudemenu", ToggleActionMenu, nil, "t")
 	AddAction("crudesubmenu", ActionSubmenu, nil, "t")
 	AddAction("viewlobby", ViewLobby, nil, "t")
 	AddAction("exitwindow", ActionExitWindow, nil, "t")
-	
+
 	MakeMenuBar()
-	
+
 	useUiKeys = settings.config['epic_Settings/Misc_Use_uikeys.txt']
-	
+
 	if not useUiKeys then
 		spSendCommands("unbindall")
 	else
 		echo('You have opted to use the engine\'s uikeys.txt. The menu keybind system will not be used.')
 	end
-	
+
 	LoadKeybinds()
 	ReApplyKeybinds()
-	
+
 	-- Override widgethandler functions for the purposes of alerting crudemenu
 	-- when widgets are loaded, unloaded or toggled
 	widgetHandler.OriginalInsertWidget = widgetHandler.InsertWidget
 	widgetHandler.InsertWidget = function(self, widget)
 		PreIntegrateWidget(widget)
-		
+
 		local ret = self:OriginalInsertWidget(widget)
-		
+
 		if type(widget) == 'table' and type(widget.options) == 'table' then
 			IntegrateWidget(widget, true)
 			if not (init) then
 				RemakeEpicMenu()
 			end
 		end
-		
-		
+
+
 		checkWidget(widget)
 		return ret
 	end
-	
+
 	widgetHandler.OriginalRemoveWidget = widgetHandler.RemoveWidget
 	widgetHandler.RemoveWidget = function(self, widget)
 		local ret = self:OriginalRemoveWidget(widget)
@@ -3121,15 +3121,15 @@ function widget:Initialize()
 				RemakeEpicMenu()
 			end
 		end
-		
+
 		checkWidget(widget)
 		return ret
 	end
-	
+
 	widgetHandler.OriginalToggleWidget = widgetHandler.ToggleWidget
 	widgetHandler.ToggleWidget = function(self, name)
 		local ret = self:OriginalToggleWidget(name)
-		
+
 		local w = widgetHandler:FindWidget(name)
 		if w then
 			checkWidget(w)
@@ -3139,18 +3139,18 @@ function widget:Initialize()
 		return ret
 	end
 	init = false
-	
+
 	--intialize remote menu trigger
 	WG.crude.OpenPath = function(path, pause) --Note: declared here so that it work in local copy
 		if not settings.simpleSettingsMode then -- Menus are mostly empty in simpleSettingsMode
 			MakeSubWindow(path, pause) -- FIXME should pause the game
 		end
 	end
-	
+
 	WG.crude.OpenPathToLabel = function(path, pause, labelName)
 		MakeSubWindow(path, pause, labelName)
 	end
-	
+
 	--intialize remote menu trigger 2
 	WG.crude.ShowMenu = function()  --// allow other widget to toggle-up Epic-Menu. This'll enable access to game settings' Menu via click on other GUI elements.
 		if not settings.show_crudemenu then
@@ -3158,17 +3158,17 @@ function widget:Initialize()
 			ShowHideCrudeMenu()
 		end
 	end
-	
+
 	--intialize remote option fetcher
 	WG.GetWidgetOption = function(wname, path, key)  -- still fails if path and key are un-concatenatable
 		return (pathoptions and path and key and wname and pathoptions[path] and otget( pathoptions[path], wname .. key ) ) or {}
 	end
-	
+
 	--intialize remote option setter
 	WG.SetWidgetOption = function(wname, path, key, value)
 		if (pathoptions and path and key and wname and pathoptions[path] and otget( pathoptions[path], wname..key ) ) then
 			local option = otget( pathoptions[path], wname..key )
-			
+
 			option.OnChange({checked = value, value = value, color = value})
 		end
 	end
@@ -3182,23 +3182,23 @@ function widget:Shutdown()
 
 		widgetHandler.RemoveWidget = widgetHandler.OriginalRemoveWidget
 		widgetHandler.OriginalRemoveWidget = nil
-		
+
 		widgetHandler.ToggleWidget = widgetHandler.OriginalToggleWidget
 		widgetHandler.OriginalToggleWidget = nil
 	end
-	
 
-  if window_crude then
-	screen0:RemoveChild(window_crude)
-  end
-  if window_sub_cur then
-	screen0:RemoveChild(window_sub_cur)
-  end
 
-  RemoveAction("crudemenu")
-  RemoveAction("crudesubmenu")
- 
-  spSendCommands("unbind esc crudemenu")
+	if window_crude then
+		screen0:RemoveChild(window_crude)
+	end
+	if window_sub_cur then
+		screen0:RemoveChild(window_sub_cur)
+	end
+
+	RemoveAction("crudemenu")
+	RemoveAction("crudesubmenu")
+
+	spSendCommands("unbind esc crudemenu")
 end
 
 
@@ -3268,12 +3268,12 @@ function widget:Update()
 			lbl_clock:SetCaption( os.date(format) )
 		end
 	end
-	
+
 	if wantToReapplyBinding then --widget integration request ReApplyKeybinds()?
 		ReApplyKeybinds() --unbind all action/key, rebind action/key
 		wantToReapplyBinding = false
 	end
-	
+
 	HandleScroll()
 end
 
@@ -3290,7 +3290,7 @@ function widget:GameFrame(n)
 		if not totalSaveGameFrame then
 			totalSaveGameFrame = Spring.GetGameRulesParam("totalSaveGameFrame") or 0
 		end
-		
+
 		if (n + totalSaveGameFrame)%30 == 0 then
 			lbl_gtime:SetCaption(GetTimeString((n + totalSaveGameFrame)/30))
 		end
@@ -3300,26 +3300,26 @@ end
 function widget:KeyPress(key, modifier, isRepeat, label)
 	if not get_key_bind_mod then
 		if key == KEYSYMS.LCTRL
-			or key == KEYSYMS.RCTRL
-			or key == KEYSYMS.LALT
-			or key == KEYSYMS.RALT
-			or key == KEYSYMS.LSHIFT
-			or key == KEYSYMS.RSHIFT
-			or key == KEYSYMS.LMETA
-			or key == KEYSYMS.RMETA
-			or key == KEYSYMS.SPACE
-			then
-			
+				or key == KEYSYMS.RCTRL
+				or key == KEYSYMS.LALT
+				or key == KEYSYMS.RALT
+				or key == KEYSYMS.LSHIFT
+				or key == KEYSYMS.RSHIFT
+				or key == KEYSYMS.LMETA
+				or key == KEYSYMS.RMETA
+				or key == KEYSYMS.SPACE
+		then
+
 			return
 		end
 	end
-	
+
 	local modstring =
-		(modifier.alt and 'A+' or '') ..
-		(modifier.ctrl and 'C+' or '') ..
-		(modifier.meta and 'M+' or '') ..
-		(modifier.shift and 'S+' or '')
-	
+	(modifier.alt and 'A+' or '') ..
+			(modifier.ctrl and 'C+' or '') ..
+			(modifier.meta and 'M+' or '') ..
+			(modifier.shift and 'S+' or '')
+
 	--Set a keybinding
 	if get_key then
 		get_key = false
@@ -3345,16 +3345,16 @@ function widget:KeyPress(key, modifier, isRepeat, label)
 			translatedkey = translatedkey:gsub("n_", "") -- Remove 'n_' prefix from number keys.
 		end
 		local hotkey = modstring .. translatedkey
-		
+
 		Spring.Echo("Binding key code", key, "Translated", translatedkey, "Modifer", modstring)
-		
+
 		if key ~= KEYSYMS.ESCAPE then
 			--otset( keybounditems, kb_action, hotkey )
 			AssignKeyBindAction(hotkey, kb_action, true) -- param4 = verbose
 			otset( keybounditems, kb_action, hotkey )
 		end
 		ReApplyKeybinds()
-		
+
 		if kb_path == curPath and kb_button then
 			local hotkeystring = GetHotkeyData(kb_path, kb_option)
 			kb_button:SetCaption(hotkeystring)
@@ -3365,19 +3365,19 @@ function widget:KeyPress(key, modifier, isRepeat, label)
 				kb_control:UpdateClientArea()
 			end
 		end
-		
+
 		if get_key_bind_notify_function then
 			get_key_bind_notify_function()
 			get_key_bind_notify_function = false
 		end
-		
+
 		if WG.COFC_HotkeyChangeNotification then
 			WG.COFC_HotkeyChangeNotification()
 		end
-		
+
 		return true
 	end
-	
+
 end
 
 function ActionExitWindow()
@@ -3423,7 +3423,7 @@ do --Set our prefered camera mode when first screen frame is drawn. The engine a
 		function widget:DrawScreen() --game event: Draw Screen
 			if screenFrame >= 1 then --detect frame no.2
 				local option = otget( pathoptions['Settings/Camera'], 'Settings/Camera'..'Camera Type' ) --get camera option we saved earlier in gui_epicmenu.lua\AddOption()
-				
+
 				option.OnChange(option) --re-apply our settings
 				Spring.Echo("Epicmenu: Switching to " .. option.value .. " camera mode") --notify in log what happen.
 				widgetHandler:RemoveWidgetCallIn("DrawScreen", self) --stop updating "widget:DrawScreen()" event. Note: this is a special "widgetHandler:RemoveCallIn" for widget that use "handler = true".
