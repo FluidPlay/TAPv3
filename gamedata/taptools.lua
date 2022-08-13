@@ -4,7 +4,7 @@
 --shard_include("luarules/gadgets/ai/ba/commonfunctions.lua") 	-- doesn' work here
 VFS.Include("LuaRules/colors.h.lua")
 
-FontPath = "LuaUI/Fonts/GeogrotesqueCompMedium.otf"
+FontPath = "LuaUI/Fonts/GeogrotesqueCompMedium.otf" --Kelson Sans Regular.otf" --Akrobat-SemiBold.otf"
 
 local spFindUnitCmdDesc     = Spring.FindUnitCmdDesc
 local spInsertUnitCmdDesc     = Spring.InsertUnitCmdDesc
@@ -101,6 +101,7 @@ function ipairs_remove(t, value)
 	end
 end
 
+---OBSOLETE: this is redundant with table.remove, according to the lua docs
 function ipairs_removeIdx(t, index)
 	local size = #t
 	t[index] = t[size]      -- replace it with last item

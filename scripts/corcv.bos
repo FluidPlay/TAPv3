@@ -1,0 +1,240 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SIG_BUILD		4	
+
+piece  base, beam, door1, door2, stand, gun, turret;
+
+static-var  notBuilding, statechg_DesiredState, statechg_StateChanging;
+
+
+activatescr()
+{
+	turn door1 to z-axis <0.000000> now;
+	turn door1 to z-axis <-60.005495> speed <190.791209>;
+	turn door2 to z-axis <0.000000> now;
+	turn door2 to z-axis <60.005495> speed <190.791209>;
+	sleep 40;
+	
+	turn stand to x-axis <0.000000> now;
+	turn stand to x-axis <45.000000> speed <190.791209>;
+	turn gun to x-axis <0.000000> now;
+	turn gun to x-axis <-35.000000> speed <190.791209>;
+	sleep 40;
+}
+
+deactivatescr()
+{
+	set INBUILDSTANCE to 0;
+	turn turret to y-axis <0.000000> speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	
+	turn stand to x-axis <45.000000> speed <192.747253>;
+	turn gun to x-axis <-35.000000> speed <194.703297>;
+	sleep 40;
+
+	turn stand to x-axis <0.000000> speed <191.978022>;
+	turn gun to x-axis <0.000000> speed <192.467033>;
+	sleep 40;
+
+	turn door1 to z-axis <-60.604396> speed <192.747253>;
+	turn door2 to z-axis <60.846154> speed <194.703297>;
+	sleep 40;
+
+	turn door1 to z-axis <0.000000> speed <191.978022>;
+	turn door2 to z-axis <0.000000> speed <192.467033>;
+	sleep 40;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script deactivatescr();
+			notBuilding = 1;
+			currentstate = 1;
+		}
+		else
+		{
+			call-script activatescr();
+			notBuilding = 0;
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	notBuilding = 1;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+StartBuilding(heading, pitch)
+{
+	start-script RequestState(0);
+	while( notBuilding ) sleep 100;
+	signal SIG_BUILD;
+	turn turret to y-axis heading speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	set INBUILDSTANCE to 1;
+}
+
+StopBuilding()
+{
+	signal SIG_BUILD;	
+	set-signal-mask SIG_BUILD;
+	sleep 6000;
+	set-signal-mask 0;
+	signal SIG_BUILD;	
+	start-script RequestState(1);
+}
+
+QueryNanoPiece(piecenum)
+{
+	piecenum = beam;
+}
+
+// =========================
+// Attack (Harvest) weapon:
+// =========================
+
+AimPrimary(heading, pitch)
+{
+//	if (blockWeaponFlag)
+//		return (0);
+	turn gun to x-axis <0.000000> - pitch speed <400.000000>;
+	wait-for-turn gun around x-axis;
+	
+	return (1);
+}
+
+FirePrimary()
+{
+	sleep 50; //150
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = gun; //turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = beam; //flare;
+}
+
+// =========================
+
+/*
+TargetHeading(Func_Var_1)
+{
+	Static_Var_1 = 0 - Func_Var_1;
+}
+*/
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam type BITMAPONLY | BITMAP2;
+		explode door1 type BITMAPONLY | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP4;
+		explode gun type BITMAPONLY | BITMAP5;
+		explode stand type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP2;
+		return (corpsetype);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam type FALL | BITMAP2;
+		explode door1 type BITMAPONLY | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP4;
+		explode gun type SHATTER | BITMAP5;
+		explode stand type FALL | BITMAP1;
+		explode turret type FALL | BITMAP2;
+		return (corpsetype);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode door1 type BITMAPONLY | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP4;
+		explode gun type SHATTER | BITMAP5;
+		explode stand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		return (corpsetype);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode beam type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode door1 type BITMAPONLY | BITMAP3;
+	explode door2 type BITMAPONLY | BITMAP4;
+	explode gun type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode stand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	return corpsetype;
+}
