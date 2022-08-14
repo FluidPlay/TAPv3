@@ -82,7 +82,7 @@ local function ProcessUnitDef(udName, ud)
       end
     end
   end
-  
+
   -- convert the death explosions
   if (isstring(ud.explodeas)) then
     local fullName = udName .. '_' .. string.lower(ud.explodeas)
@@ -96,7 +96,7 @@ local function ProcessUnitDef(udName, ud)
       ud.selfdestructas = fullName
     end
   end
-  
+
 end
 
 
@@ -283,10 +283,12 @@ end
  end
 
  for _, weaponDef in pairs(WeaponDefs) do
-	local name = weaponDef.name
-	if name:find('fake') or name:find('Fake') or name:find('Bogus') or name:find('NoWeapon') then
-		weaponDef.customparams.fake_weapon = 1
-	end
+	 if weaponDef.name then
+		 local name = weaponDef.name
+		 if name:find('fake') or name:find('Fake') or name:find('Bogus') or name:find('NoWeapon') then
+			 weaponDef.customparams.fake_weapon = 1
+		 end
+	 end
  end
 -- Set defaults for napalm (area damage)
 local area_damage_defaults = VFS.Include("gamedata/unitdef_defaults/area_damage_defs.lua")
@@ -303,7 +305,7 @@ for name, wd in pairs (WeaponDefs) do
 		if not cp.area_damage_time_falloff then cp.area_damage_time_falloff = area_damage_defaults.time_falloff end
 	end
 end
- 
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -312,12 +314,12 @@ end
  for _, weaponDef in pairs(WeaponDefs) do
     weaponDef.noselfdamage = (weaponDef.noselfdamage ~= false)
  end
- 
+
 -- remove experience bonuses
 for _, weaponDef in pairs(WeaponDefs) do
 	weaponDef.ownerExpAccWeight = 0
 end
- 
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -334,7 +336,7 @@ end
 		weaponDef.tilelength = (weaponDef.tilelength and weaponDef.tilelength*4) or 800
 	end
  end
- 
+
  --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -343,10 +345,10 @@ end
 for _, weaponDef in pairs(WeaponDefs) do
 	if weaponDef.shieldpowerregenenergy and weaponDef.shieldpowerregenenergy > 0 then
 		weaponDef.customparams = weaponDef.customparams or {}
-		
+
 		weaponDef.customparams.shield_rate = weaponDef.shieldpowerregen
 		weaponDef.customparams.shield_drain = weaponDef.shieldpowerregenenergy
-		
+
 		weaponDef.shieldpowerregen = 0
 		weaponDef.shieldpowerregenenergy = 0
 	end

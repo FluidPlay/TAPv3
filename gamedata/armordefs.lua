@@ -87,6 +87,8 @@ end
 
 -- use categories to set shield and feature damage. Feature damage uses the default armor class
 for name, wd in pairs(DEFS.weaponDefs) do
+	if wd.name then
+
 	local weaponNameLower = wd.name:lower()
 	local maxDamage = -0.000001
 	for _, dAmount in pairs(wd.damage) do
@@ -100,7 +102,7 @@ for name, wd in pairs(DEFS.weaponDefs) do
 
 	-- Stats
 	wd.customparams.stats_damage = wd.customparams.stats_damage or maxDamage
-	
+
 	-- raw_damage is damage per frame. shot_damage is full damage per reload.
 	wd.customparams.raw_damage = maxDamage/((wd.customparams.effective_beam_time or wd.beamtime or 1/30) * 30)
 	wd.customparams.shot_damage = maxDamage*(wd.projectiles or 1)*(wd.burst or 1)
@@ -150,7 +152,7 @@ for name, wd in pairs(DEFS.weaponDefs) do
 		-- It fixes long beams vs shield cases.
 		wd.damage.shield = 0
 	end
-	
+
 	-- damage vs features
 	if wd.customparams and wd.customparams.damage_vs_feature then
 		wd.damage.default = tonumber(wd.customparams.damage_vs_feature)
@@ -169,6 +171,7 @@ for name, wd in pairs(DEFS.weaponDefs) do
 		if (cp.disarmdamagemult) and (tobool(cp.disarmdamageonly)) then
 			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
 		end
+	end
 	end
 end
 
