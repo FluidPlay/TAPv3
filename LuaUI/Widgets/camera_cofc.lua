@@ -44,6 +44,7 @@ local scrollPath = 'Settings/Camera/COFC Scroll Behaviour'
 local miscPath = 'Settings/Camera/COFC Controls'
 local cameraFollowPath = 'Settings/Camera/COFC Following'
 local minimap_path = 'Settings/HUD Panels/Minimap'
+
 options_order = {
 	'helpwindow',
 
@@ -441,7 +442,7 @@ Complete Overhead/Free Camera has six actions:
 		name = "Invert scrolling direction",
 		desc = "Invert scrolling direction (doesn't apply to smoothscroll).",
 		type = 'bool',
-		value = true,
+		value = false, --true
 		noHotkey = true,
 		path = scrollPath,
 	},
@@ -449,7 +450,7 @@ Complete Overhead/Free Camera has six actions:
 		name = 'Smooth scrolling',
 		desc = 'Use smoothscroll method when mouse scrolling.',
 		type = 'bool',
-		value = false,
+		value = true, --false
 		noHotkey = true,
 		path = scrollPath,
 	},
