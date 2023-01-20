@@ -1,6 +1,6 @@
 local confdata = {}
 confdata.title = 'Z.K.'
-confdata.title_image = LUAUI_DIRNAME .. 'Images/ZK_logo.png'
+confdata.title_image = LUAUI_DIRNAME .. 'Images/taplogo.png'
 confdata.default_source_file = 'zk_keys.lua' --the file in ZIP archive where default key is stored.
 confdata.mission_keybinds_file = 'zk_keys.lua' --the filename to be used for Mission mod. set this to NIL if want to use mission's name as filename.
 -- confdata.regular_keybind_file = LUAUI_DIRNAME .. 'Configs/zk_keys.lua' --for Multiplayer this is automatically set according to modName in epicmenu.lua
