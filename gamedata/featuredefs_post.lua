@@ -129,73 +129,126 @@ GenerateModuleWrecks()
 --  Per-unitDef featureDefs
 --
 
-local DEAD_MULT = 0.4
-local HEAP_MULT = 0.2
+local DEAD_METAL_MULT = 0.6
+local DEAD_DMG_MULT = 0.5
+local DEAD_CRUSHRES_MULT = 1
+--
+local HEAP_METAL_MULT = 0.25
+local HEAP_DMG_MULT = 0.25
+local HEAP_CRUSHRES_MULT = 0.5
 
-local function ProcessUnitDef(udName, ud)
+-- Process the unitDefs
+local UnitDefs = DEFS.unitDefs
 
-  local fds = ud.featuredefs
-  if (not istable(fds)) then
-    return
-  end
+local function ProcessUnitDef(udName, uDef)
 
-  -- add this unitDef's featureDefs
-  for fdName, fd in pairs(fds) do
-    if (isstring(fdName) and istable(fd)) then
-      local fullName = udName .. '_' .. fdName
-      FeatureDefs[fullName] = fd
+	local unitFeatureDefs = uDef.featuredefs
+	if (not istable(unitFeatureDefs)) then
+		return end
 
-      if fd.featuredead then -- it's a DEAD feature
-        if not fd.metal then fd.metal = ud.buildcostmetal * DEAD_MULT end
-        if not fd.description then fd.description = "Wreckage - "..ud.name end
-      else --it's a HEAP feature
-        if not fd.metal then fd.metal = ud.buildcostmetal * HEAP_MULT end
-        if not fd.description then fd.description = "Debris - "..ud.name end
-      end
-      
-      fd.footprintx = fd.footprintx or ud.footprintx
-      fd.footprintz = fd.footprintz or ud.footprintz
+	-- Automatically set metal and resistance of this featureDef, according to its unitdef info
+	local function calculateMetalAndDamage(id, featuredef, uDef)
+		local metalFactor, damageFactor, crushresistFactor, groupMult = 1, 1, 1, 1
+		if id:find("dead") then
+			metalFactor, damageFactor, crushresistFactor = DEAD_METAL_MULT, DEAD_DMG_MULT, DEAD_CRUSHRES_MULT
+		elseif id:find("heap") then
+			metalFactor, damageFactor, crushresistFactor = HEAP_METAL_MULT, HEAP_DMG_MULT, HEAP_CRUSHRES_MULT
+		end
+		if uDef.customparams and uDef.customparams.groupsize then
+			groupMult = 1/uDef.customparams.groupsize
+		end
+		featuredef.metal = uDef.buildcostmetal * metalFactor * groupMult --true buildcostmetal
+		featuredef.damage = uDef.maxdamage * damageFactor    --health
+		local crushResist = uDef.crushresistance or uDef.mass
+		if crushResist then
+			featuredef.crushresistance = crushResist * crushresistFactor
+		end
+		--Spring.Echo("name, id, metal, damage: "..uDef.name..", "..id..", "..featuredef.metal..", "..featuredef.damage)
+		return featuredef
+	end
 
-      fd.customparams = fd.customparams or {}
-      fd.customparams.fromunit = "1"
-      fd.damage = fd.customparams.health_override or ud.maxdamage
-      fd.energy = 0
-      fd.reclaimable = true
-      fd.reclaimtime = fd.metal
-      fd.filename = ud.filename
-    end
-  end
+	-- add this unitDef's featureDefs
+	for featID, featureData in pairs(unitFeatureDefs) do
+		if (isstring(featID) and istable(featureData)) then
 
-  -- FeatureDead name changes
-  for fdName, fd in pairs(fds) do
-    if (isstring(fdName) and istable(fd)) then
-      if (isstring(fd.featuredead)) then
-        local fullName = udName .. '_' .. fd.featuredead:lower()
-        if (FeatureDefs[fullName]) then
-          fd.featuredead = fullName
-        end
-      end
-    end
-  end
+			if uDef.buildcostmetal and uDef.maxdamage then
+				featureData = calculateMetalAndDamage(featID, featureData, uDef) end
+			-- Make all unit's featureDefs 'unpushable'
+			featureData.mass = 99999
+			--Spring.Echo("Fullname: uDefID - ".. uDefID .." id - ".. featID)
 
-  -- convert the unit corpse name
-  if (isstring(ud.corpse)) then
-    local fullName = udName .. '_' .. ud.corpse:lower()
-    local fd = FeatureDefs[fullName]
-    if (fd) then
-      if fd.resurrectable ~= 0 then
-        fd.resurrectable = 1
-      end
-      ud.corpse = fullName
-	  --if fd.metal ~= ud.buildcostmetal*0.4 or fd.damage ~= ud.maxdamage then
-	  --  Spring.Echo(ud.name)
-	  --end
-    end
-  end
+			--if featureData.featuredead then -- it's a DEAD feature
+			--	if not featureData.metal then
+			--		featureData.metal = ud.buildcostmetal * DEAD_MULT end
+			--	if not featureData.description then
+			--		featureData.description = "Wreckage - "..ud.name end
+			--	else --it's a HEAP feature
+			--		if not featureData.metal then featureData.metal = ud.buildcostmetal * HEAP_MULT end
+			--		if not featureData.description then featureData.description = "Debris - "..ud.name
+			--	end
+			--end
+
+			featureData.footprintx = featureData.footprintx or uDef.footprintx
+			featureData.footprintz = featureData.footprintz or uDef.footprintz
+
+			featureData.customparams = featureData.customparams or {}
+			featureData.customparams.fromunit = "1"
+			featureData.damage = featureData.customparams.health_override or uDef.maxdamage
+			featureData.energy = 0
+			featureData.reclaimable = true
+			featureData.reclaimtime = featureData.metal
+			featureData.filename = uDef.filename
+
+			local fullName = udName .. '_' .. featID
+			FeatureDefs[fullName] = featureData
+			UnitDefs[udName].featuredefs[featID] = featureData
+		end
+	end
+
+	-- FeatureDead name changes
+	--(featureName of the feature to spawn when this feature is destroyed)
+	for fdName, fd in pairs(unitFeatureDefs) do
+		if (isstring(fdName) and istable(fd)) then
+			if (isstring(fd.featuredead)) then
+				local fullName = udName .. '_' .. fd.featuredead:lower()
+				if (FeatureDefs[fullName]) then
+					fd.featuredead = fullName	end
+			end
+		end
+	end
+
+	-- convert the unit corpse name
+	if (isstring(uDef.corpse)) then
+		local fullName = udName .. '_' .. uDef.corpse:lower()
+		local fd = FeatureDefs[fullName]
+		if (fd) then
+			if fd.resurrectable ~= 0 then
+				fd.resurrectable = 1
+			end
+			uDef.corpse = fullName
+		end
+	end
+
+	--TAP-TODO: add smallfeaturenoblock to modoptions
+	if Spring.GetModOptions().smallfeaturenoblock == "enabled" then
+		for id,featureDef in pairs(FeatureDefs) do
+			if featureDef.name ~= "rockteeth" and
+					featureDef.name ~= "rockteethx" then
+				if featureDef.footprintx ~= nil and featureDef.footprintz ~= nil then
+					if tonumber(featureDef.footprintx) <= 2 and tonumber(featureDef.footprintz) <= 2 then
+						--Spring.Echo(featureDef.name)
+						--Spring.Echo(featureDef.footprintx .. "x" .. featureDef.footprintz)
+						featureDef.blocking = false
+						--Spring.Echo(featureDef.blocking)
+					end
+				end
+			end
+		end
+	end
 
 end
 
-
+--------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 -- Process the unitDefs
@@ -210,14 +263,15 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
--- resurrectable = -1 seems to be broken, set it to 0 for all values which are not 1
 
 for name, def in pairs(FeatureDefs) do
+	-- resurrectable = -1 seems to be broken, set it to 0 for all values which are not 1
 	if def.resurrectable ~= 1 then
 		def.resurrectable = 0
 	end
+	-- Fix for engine de-prioritising features with 0 metal in force-reclaim mode
 	if not def.metal or def.metal == 0 then
-		def.metal = 0.001 -- engine deprioritises things with 0m in force-reclaim mode
+		def.metal = 0.001
 		def.autoreclaimable = false
 	end
 end
