@@ -19,7 +19,7 @@ return { cloakskirm = {
     aim_lookahead  = 60,
     modelradius    = [[18]],
     midposoffset   = [[0 6 0]],
-    --reload_move_penalty = 0.8,
+    reload_move_penalty = 0.8,
     cus_noflashlight = 1,
     bait_level_default = 0,
   },
@@ -29,7 +29,7 @@ return { cloakskirm = {
   footprintZ             = 2,
   iconType               = [[kbotskirm]],
   leaveTracks            = true,
-  maxDamage              = 420,
+  maxDamage              = 380,
   maxSlope               = 36,
   maxVelocity            = 2.3,
   maxWaterDepth          = 20,
@@ -53,7 +53,7 @@ return { cloakskirm = {
   trackStretch           = 0.8,
   trackType              = [[ComTrack]],
   trackWidth             = 16,
-  turnRate               = 2640,
+  turnRate               = 2244,
   upright                = true,
 
   weapons                = {
@@ -77,6 +77,7 @@ return { cloakskirm = {
       craterMult              = 0,
 
       customParams        = {
+        reaim_time = 1, -- Keep aiming at target to prevent sideways gun, which can lead to teamkill.
         burst = Shared.BURST_RELIABLE,
 
         light_camera_height = 1600,

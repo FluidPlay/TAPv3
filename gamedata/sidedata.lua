@@ -9,18 +9,26 @@
 --------------------------------------------------------------------------------
 
 local sideData = {
---  [1] = {
---    name      = 'Random',
---    startunit = 'random_comm',
+	{
+		name = 'Bow', --ARM
+		startunit = 'armcom',
+	},
+	{
+		name = 'Kern', --CORE
+		startunit = 'corcom',
+	},
+	  --[1] = {
+	  --  name      = 'Random',
+	  --  startunit = 'random_comm',
+	  --},
+--ZK:  [1] = {
+--    name      = 'Robots',
+--    startunit = 'update_your_damn_engine',
 --  },
-  [1] = {
-    name      = 'Robots',
-    startunit = 'update_your_damn_engine',
-  },
---  [2] = {
---    name      = 'Chicken (Robots if disabled)',
---    startunit = 'chickenbroodqueen',
---  },
+	--  [2] = {
+	--    name      = 'Chicken (Robots if disabled)',
+	--    startunit = 'chickenbroodqueen',
+	--  },
 }
 
 --------------------------------------------------------------------------------

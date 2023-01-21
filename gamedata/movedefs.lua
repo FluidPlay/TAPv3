@@ -224,33 +224,16 @@ local moveDefs = {
 	--	subMarine = 1,
 	--},
 
+
+
+
+
+
+
+
 	---###########################
 	---   TAP entries go below
 	---###########################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	BOSSBOT = {	--Used by Boss Commanders
 		allowRawMovement = true,
@@ -605,6 +588,7 @@ local moveDefs = {
 	},
 	KBOT2 = {		-- All basic kbots really
 		allowRawMovement = true,
+		heatmapping = true,		-- TODO: Check - Trying heatmapping here
 		crushstrength = 0,		--10
 		footprintx = 3,
 		footprintz = 3,
@@ -868,23 +852,23 @@ local moveDefs = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
--- convert from map format to the expected array format
+-- convert from table/pairs format to the expected array/ipairs format
 
-local array = {}
-local i = 1
-for k,v in pairs(moveDefs) do
-	v.heatmapping = false -- disable heatmapping
-	v.allowRawMovement = true
-	array[i] = v
-	v.name = k
-	i = i + 1
+local moveDefs = {}
+
+for moveName, moveData in pairs(moveDefs) do
+	--moveData.heatmapping = false -- disable heatmapping
+	moveData.allowRawMovement = true
+	moveData.name = moveName
+
+	moveDefs[#moveDefs + 1] = moveData
 end
 
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-return array
+return moveDefs
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

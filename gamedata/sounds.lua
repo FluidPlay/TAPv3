@@ -7,12 +7,26 @@ local Sounds = {
 			--file = "sounds/talk.wav",
 			file = nil,
 		},
-		--MultiSelect = {
-		--   file = "sounds/button9.wav",
-		--},
+		MultiSelect = {
+			file = "sounds/ui/button9.wav",
+			in3d = "false",
+		},
 		MapPoint = {
-			file = "sounds/beep4_decrackled.wav",
+			--file = "sounds/beep4_decrackled.wav",
+			file = "sounds/ui/beep6.wav",
+			rolloff = 0.3,
+			dopplerscale = 0,
+
 			maxconcurrent = 3,
+		},
+		FailedCommand = {
+			file = "sounds/replies/cantdo4.wav",
+		},
+		LoudFlame = {
+			file = "sounds/weapons/flamhvy1.wav",
+			gain = 0.8,
+			pitchmod = 0.01,
+			gainmod  = 0.6,
 		},
 		--[[
 		MyAwesomeSounds = {
@@ -29,6 +43,8 @@ local Sounds = {
 			MapEntryValExtract(items, "rolloff", rolloff);
 		},
 		--]]
+
+		-- TEMP : == ZK Specific ==
 		PulseLaser = {
 			file = "sounds/weapon/laser/pulse_laser_start.wav",
 			pitchmod = 0.15,
@@ -170,9 +186,15 @@ local function AutoAdd(subDir, generalOpts)
 end
 
 -- add sounds
-AutoAdd("weapon", defaultOpts)
-AutoAdd("explosion", defaultOpts)
-AutoAdd("reply", replyOpts)
-AutoAdd("music", noVariation)
+AutoAdd("weapon", defaultOpts) --TEMP:ZK
+AutoAdd("reply", replyOpts)		--TEMP:ZK
+AutoAdd("explosion", defaultOpts) --TEMP:ZK
+AutoAdd("music", noVariation)	--
+
+AutoAdd("critters", replyOpts)
+AutoAdd("replies", replyOpts)
+AutoAdd("ui", defaultOpts)
+AutoAdd("weapons", defaultOpts)
+AutoAdd("voice", defaultOpts)	--For Scavengers
 
 return Sounds
