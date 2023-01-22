@@ -32,7 +32,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Uses the SelectionChanged call-in
--- Replace your LuaUI/widgets.lua with our LuaUI/cawidgets.lua to benefit from
+-- Replace your LuaUI/widgets.lua with our LuaUI/tapwidgets.lua to benefit from
 -- it in other mods
 
 local GetSelectedUnits = Spring.GetSelectedUnits

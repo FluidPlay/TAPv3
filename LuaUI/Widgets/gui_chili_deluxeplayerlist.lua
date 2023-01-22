@@ -507,7 +507,7 @@ local function ProcessUnit(unitID, unitDefID, unitTeam, remove)
 				if remove then
 					finishedUnits[unitID] = nil
 					stats.mMobs = stats.mMobs + metal
-					-- [f=0087651] [cawidgets.lua] Error: Error in UnitGiven(): [string "LuaUI/Widgets/gui_chili_deluxeplayerlist.lu..."]:410: attempt to index local 'stats' (a nil value)
+					-- [f=0087651] [tapwidgets.lua] Error: Error in UnitGiven(): [string "LuaUI/Widgets/gui_chili_deluxeplayerlist.lu..."]:410: attempt to index local 'stats' (a nil value)
 				elseif isbuilt then
 					finishedUnits[unitID] = true
 					stats.mMobs = stats.mMobs + metal

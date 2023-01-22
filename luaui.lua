@@ -21,7 +21,7 @@ LUAUI_DIRNAME = 'LuaUI/'
 
 VFS.DEF_MODE = VFS.ZIP
 
-local STARTUP_FILENAME = LUAUI_DIRNAME .. 'camain.lua'
+local STARTUP_FILENAME = LUAUI_DIRNAME .. 'tapmain.lua' --tapmain.lua
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
