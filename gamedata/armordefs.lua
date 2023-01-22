@@ -48,8 +48,7 @@ local armorDefs = {
 	armorair={"corbw","armaca","armawac","armca","armcsa","armsehak","armsfig","corawac","corca","corcsa",
 			  "corhunt","corsfig","armkam","armatlas","armbrawl","armdfly","armpeep","armsaber","armseap",
 			  "corseah","corape","corcut","corfink","corseap","corvalk","armblade","armliche","armlance",
-			  "armpnix","armsb","armthund","corstil","corhurc","corsb","corshad","cortitan","corcrw","armanac",
-			  "corsnap",},
+			  "armpnix","armsb","armthund","corstil","corhurc","corsb","corshad","cortitan","corcrw",},
 	--lightair={"corbw","armaca","armawac","armca","armcsa","armfig","armhawk","armsehak","armsfig","corawac","corca","corcsa","corhunt","corsfig","corvamp","corveng",},
 	--supportair={"armkam","armatlas","armbrawl","armdfly","armpeep","armsaber","armseap","corseah","corape","corcut","corfink","corseap","corvalk","armblade",},
 	--heavyair={"armliche","armlance","armpnix","armsb","armthund","corstil","corhurc","corsb","corshad","cortitan","corcrw",},
@@ -65,7 +64,7 @@ local armorDefs = {
 				 "cordrag","corestor","coreyes","corfatf","corfdrag","corfhp","corfmine3","corfmkr","corfort","corfrad","corgant","corgantuw","corgeo","corhp",
 				 "corjamt","corlab","cormakr","cormexp","cormine1","cormine2","cormine3","cormine4","cormmkr","cormstor","cornanotc","corrad","corsd",
 				 "corshroud","corsonar","corsy","cortarg","cortron","coruwadves","coruwadvms","coruwes","coruwfus","coruwmmm","coruwms",
-				 "corvp","corwin","csubpen","tllmedfusion","armsonar","scavengerdroppodbeacon_scav","armmstor", "cormstor", "armuwadvms", "coruwadvms",
+				 "corvp","corwin","csubpen","tllmedfusion","armsonar","scavengerdroppodbeacon_scav","armmstor", "armuwadvms",
 				 "armsilo", "corsilo",
 	},
 
@@ -118,27 +117,27 @@ local armorDefs = {
 	ore = { "orelrg", "oreuber", "oremoho", "oresml", },
 
 	--//OLDER / OBSOLETE:
-	CHICKEN = {
-	"nest",
-	"chicken_drone",
-	"chicken_digger",
-	"chickens",
-	"chickenr",
-	"chicken_dodo",
-	"chickena",
-	"chickenc",
-	"chicken_spidermonkey",
-	"chicken_listener",
-	"chickenq",
-	"chickent",
-	"chicken_sporeshooter",
-	"chickenwurm",
-	"chicken_leaper",
-	"chickenblobber",
-	"chicken_shield",
-	"chicken_tiamat",
-	"chicken_dragon",
-	},
+	--CHICKEN = {
+	--"nest",
+	--"chicken_drone",
+	--"chicken_digger",
+	--"chickens",
+	--"chickenr",
+	--"chicken_dodo",
+	--"chickena",
+	--"chickenc",
+	--"chicken_spidermonkey",
+	--"chicken_listener",
+	--"chickenq",
+	--"chickent",
+	--"chicken_sporeshooter",
+	--"chickenwurm",
+	--"chicken_leaper",
+	--"chickenblobber",
+	--"chicken_shield",
+	--"chicken_tiamat",
+	--"chicken_dragon",
+	--},
 
 	-- populated automatically
 	PLANES = {
@@ -198,95 +197,96 @@ for name, wd in pairs(DEFS.weaponDefs) do
 	end
 end
 
--- use categories to set shield and feature damage. Feature damage uses the default armor class
-for name, wd in pairs(DEFS.weaponDefs) do
-	if wd.name then
-
-	local weaponNameLower = wd.name:lower()
-	local maxDamage = -0.000001
-	for _, dAmount in pairs(wd.damage) do
-		maxDamage = math.max(maxDamage, dAmount)
-	end
-	for categoryName, _ in pairs(armorDefs) do
-		wd.damage[categoryName] = wd.damage[categoryName] or wd.damage.default
-	end
-	wd.damage.default = maxDamage
-	wd.damage.shield = maxDamage
-
-	-- Stats
-	wd.customparams.stats_damage = wd.customparams.stats_damage or maxDamage
-
-	-- raw_damage is damage per frame. shot_damage is full damage per reload.
-	wd.customparams.raw_damage = maxDamage/((wd.customparams.effective_beam_time or wd.beamtime or 1/30) * 30)
-	wd.customparams.shot_damage = maxDamage*(wd.projectiles or 1)*(wd.burst or 1)
-
-	-- damage vs shields
-	if wd.customparams and wd.customparams.damage_vs_shield then
-		wd.damage.shield = tonumber(wd.customparams.damage_vs_shield)
-	else
-		local cp = wd.customparams or {}
-
-		if wd.paralyzer then
-			wd.damage.shield = maxDamage * EMP_DAMAGE_MOD
-		end
-
-		-- add extra damage vs shields for mixed EMP damage units
-		if cp.extra_damage then
-			wd.damage.shield = wd.damage.shield + tonumber(cp.extra_damage) * EMP_DAMAGE_MOD
-		end
-
-		if (cp.timeslow_damagefactor) then
-			if (tobool(cp.timeslow_onlyslow)) then
-				wd.damage.shield = 0
-			end
-			wd.damage.shield = wd.damage.shield + (tonumber(wd.customparams.timeslow_damagefactor) * maxDamage * SLOW_DAMAGE_MOD)
-		end
-
-		if (cp.disarmdamagemult) then
-			if (tobool(cp.disarmdamageonly)) then
-				wd.damage.shield = 0
-			end
-			wd.damage.shield = wd.damage.shield + (tonumber(wd.customparams.disarmdamagemult) * maxDamage * DISARM_DAMAGE_MOD)
-		end
-
-		-- weapon type bonuses
-		if weaponNameLower:find("flamethrower") or weaponNameLower:find("flame thrower") then
-			wd.customparams.shield_mult = FLAMER_DAMAGE_MOD
-			wd.damage.shield = wd.damage.shield * FLAMER_DAMAGE_MOD
-		elseif weaponNameLower:find("gauss") then
-			wd.customparams.shield_mult = GAUSS_DAMAGE_MOD
-			wd.damage.shield = wd.damage.shield * GAUSS_DAMAGE_MOD
-		end
-	end
-	wd.customparams.shield_damage = wd.damage.shield/((wd.customparams.effective_beam_time or wd.beamtime or 1/30) * 30)
-	wd.customparams.stats_shield_damage = wd.damage.shield
-	if wd.beamtime and wd.beamtime >= 0.1 then
-		-- Settings damage default to 0 removes cratering and impulse so is not universally applied.
-		-- It fixes long beams vs shield cases.
-		wd.damage.shield = 0
-	end
-
-	-- damage vs features
-	if wd.customparams and wd.customparams.damage_vs_feature then
-		wd.damage.default = tonumber(wd.customparams.damage_vs_feature)
-	else
-		local cp = wd.customparams or {}
-
-		if wd.paralyzer then
-			-- paralyzer is hardcoded in Spring to deal no wreck damage so this handling does nothing.
-			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
-		end
-
-		if (cp.timeslow_damagefactor) and (tobool(cp.timeslow_onlyslow)) then
-			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
-		end
-
-		if (cp.disarmdamagemult) and (tobool(cp.disarmdamageonly)) then
-			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
-		end
-	end
-	end
-end
+--TODO: Fix/analyze
+---- use categories to set shield and feature damage. Feature damage uses the default armor class
+--for name, wd in pairs(DEFS.weaponDefs) do
+--	if wd.name then
+--
+--	local weaponNameLower = wd.name:lower()
+--	local maxDamage = -0.000001
+--	for _, dAmount in pairs(wd.damage) do
+--		maxDamage = math.max(maxDamage, dAmount)
+--	end
+--	for categoryName, _ in pairs(armorDefs) do
+--		wd.damage[categoryName] = wd.damage[categoryName] or wd.damage.default
+--	end
+--	wd.damage.default = maxDamage
+--	wd.damage.shield = maxDamage
+--
+--	-- Stats
+--	wd.customparams.stats_damage = wd.customparams.stats_damage or maxDamage
+--
+--	-- raw_damage is damage per frame. shot_damage is full damage per reload.
+--	wd.customparams.raw_damage = maxDamage/((wd.customparams.effective_beam_time or wd.beamtime or 1/30) * 30)
+--	wd.customparams.shot_damage = maxDamage*(wd.projectiles or 1)*(wd.burst or 1)
+--
+--	-- damage vs shields
+--	if wd.customparams and wd.customparams.damage_vs_shield then
+--		wd.damage.shield = tonumber(wd.customparams.damage_vs_shield)
+--	else
+--		local cp = wd.customparams or {}
+--
+--		if wd.paralyzer then
+--			wd.damage.shield = maxDamage * EMP_DAMAGE_MOD
+--		end
+--
+--		-- add extra damage vs shields for mixed EMP damage units
+--		if cp.extra_damage then
+--			wd.damage.shield = wd.damage.shield + tonumber(cp.extra_damage) * EMP_DAMAGE_MOD
+--		end
+--
+--		if (cp.timeslow_damagefactor) then
+--			if (tobool(cp.timeslow_onlyslow)) then
+--				wd.damage.shield = 0
+--			end
+--			wd.damage.shield = wd.damage.shield + (tonumber(wd.customparams.timeslow_damagefactor) * maxDamage * SLOW_DAMAGE_MOD)
+--		end
+--
+--		if (cp.disarmdamagemult) then
+--			if (tobool(cp.disarmdamageonly)) then
+--				wd.damage.shield = 0
+--			end
+--			wd.damage.shield = wd.damage.shield + (tonumber(wd.customparams.disarmdamagemult) * maxDamage * DISARM_DAMAGE_MOD)
+--		end
+--
+--		-- weapon type bonuses
+--		if weaponNameLower:find("flamethrower") or weaponNameLower:find("flame thrower") then
+--			wd.customparams.shield_mult = FLAMER_DAMAGE_MOD
+--			wd.damage.shield = wd.damage.shield * FLAMER_DAMAGE_MOD
+--		elseif weaponNameLower:find("gauss") then
+--			wd.customparams.shield_mult = GAUSS_DAMAGE_MOD
+--			wd.damage.shield = wd.damage.shield * GAUSS_DAMAGE_MOD
+--		end
+--	end
+--	wd.customparams.shield_damage = wd.damage.shield/((wd.customparams.effective_beam_time or wd.beamtime or 1/30) * 30)
+--	wd.customparams.stats_shield_damage = wd.damage.shield
+--	if wd.beamtime and wd.beamtime >= 0.1 then
+--		-- Settings damage default to 0 removes cratering and impulse so is not universally applied.
+--		-- It fixes long beams vs shield cases.
+--		wd.damage.shield = 0
+--	end
+--
+--	-- damage vs features
+--	if wd.customparams and wd.customparams.damage_vs_feature then
+--		wd.damage.default = tonumber(wd.customparams.damage_vs_feature)
+--	else
+--		local cp = wd.customparams or {}
+--
+--		if wd.paralyzer then
+--			-- paralyzer is hardcoded in Spring to deal no wreck damage so this handling does nothing.
+--			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
+--		end
+--
+--		if (cp.timeslow_damagefactor) and (tobool(cp.timeslow_onlyslow)) then
+--			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
+--		end
+--
+--		if (cp.disarmdamagemult) and (tobool(cp.disarmdamageonly)) then
+--			wd.damage.default = 0.001 -- Settings damage default to 0 removes cratering and impulse
+--		end
+--	end
+--	end
+--end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -320,6 +320,16 @@ end
 
 for name, wd in pairs(DEFS.weaponDefs) do
 	ProcessSoundDefaults(wd)
+end
+
+-- Copy regular unit armor def to its Scavengers counterpart
+for categoryName, categoryUnits in pairs(armorDefs) do
+	for _, thisUdID in pairs(categoryUnits) do
+		if not string.find(thisUdID, '_scav') then
+			table.insert(armorDefs[categoryName], thisUdID.."_scav")
+			--Spring.Echo("Added Scav Unit: ", thisUdID, " to armorclass: "..categoryName)
+		end
+	end
 end
 
 local system = VFS.Include('gamedata/system.lua')

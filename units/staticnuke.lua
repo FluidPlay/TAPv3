@@ -46,7 +46,7 @@ return { staticnuke = {
   weapons                       = {
 
     {
-      def                = [[CRBLMSSL]],
+      def                = [[CRBLMSSLZK]],
       badTargetCategory  = [[SWIM LAND SHIP HOVER]],
       onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
     },
@@ -56,7 +56,7 @@ return { staticnuke = {
 
   weaponDefs                    = {
 
-    CRBLMSSL = {
+    CRBLMSSLZK = {
       name                    = [[Strategic Nuclear Missile]],
       areaOfEffect            = 1920,
       cegTag                  = [[NUCKLEARMINI]],

@@ -19,7 +19,7 @@ return {
        height = 20,
        hitdensity = 100,
        metal = wreck_metal,
-       object = "gingerbread",
+       object = "Features/armcom_dead", --"gingerbread",
        reclaimable = true,
        seqnamereclamate = "TREE1RECLAMATE",
     },

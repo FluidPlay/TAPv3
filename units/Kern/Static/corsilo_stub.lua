@@ -128,7 +128,7 @@ return {
 				impulseboost = 0.5,
 				impulsefactor = 0.5,
 				metalpershot = 1500,
-				model = "crblmssl",
+				model = "Projectiles/crblmssl",
 				name = "Intercontinental thermonuclear ballistic missile",
 				range = 72000,
 				reloadtime = 2,

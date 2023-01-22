@@ -128,7 +128,7 @@ return {
 				impulseboost = 0.5,
 				impulsefactor = 0.5,
 				metalpershot = 1000,
-				model = "ballmiss",
+				model = "Projectiles/ballmiss",
 				name = "Intercontinental ballistic nuclear warhead",
 				range = 72000,
 				reloadtime = 2,

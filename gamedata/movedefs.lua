@@ -854,21 +854,21 @@ local moveDefs = {
 
 -- convert from table/pairs format to the expected array/ipairs format
 
-local moveDefs = {}
+local moveDefsArray = {}
 
 for moveName, moveData in pairs(moveDefs) do
 	--moveData.heatmapping = false -- disable heatmapping
 	moveData.allowRawMovement = true
 	moveData.name = moveName
 
-	moveDefs[#moveDefs + 1] = moveData
+	moveDefsArray[#moveDefsArray + 1] = moveData
 end
 
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-return moveDefs
+return moveDefsArray
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

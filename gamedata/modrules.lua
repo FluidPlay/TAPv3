@@ -113,7 +113,8 @@ local modrules  = {
   },
 
   system = {
-    pathFinderSystem = (Spring.GetModOptions() and (Spring.GetModOptions().pathfinder == "qtpfs") and 1) or 0, -- QTPFS causes desync https://springrts.com/mantis/view.php?id=5936
+	--pathFinderSystem = (Spring.GetModOptions() and (Spring.GetModOptions().pathfinder == "qtpfs") and 1) or 0, -- QTPFS causes desync https://springrts.com/mantis/view.php?id=5936
+	pathFinderSystem = 0,
 	pathFinderUpdateRate = 0.005,   -- default 0.007, higher means more updates -- ZK: 0.0000001,
 	pathFinderRawDistMult = 1.25, -- ZK: 100000,
 	allowTake = true,	-- Enables and disables the /take UI command.
