@@ -9,7 +9,7 @@
 VFS.Include("gamedata/taptools.lua")
 VFS.Include("gamedata/post_save_to_customparams.lua")
 
-local unitDefs = DEFS.unitDefs
+--local unitDefs = DEFS.unitDefs
 local unitDefsData = VFS.Include("gamedata/configs/unitdefs_data.lua")
 local weaponDefsData = VFS.Include("gamedata/configs/weapondefs_data.lua")
 

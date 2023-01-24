@@ -60,7 +60,8 @@ MergeTable = Spring.Utilities.MergeTable
 -- handle unitdefs and the weapons they contain
 
 -- Process the unitDefs
-local UnitDefs = DEFS.unitDefs
+--local UnitDefs = DEFS.unitDefs
+Spring.Echo("UnitDefs_Post - UnitDefs: "..(istable(UnitDefs) and "FOUND" or "NOT FOUND"))
 if istable(UnitDefs) and not UnitDefs == nil then
 	for _, ud in pairs(UnitDefs) do
 		if not ud.customparams then

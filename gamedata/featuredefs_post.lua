@@ -126,6 +126,7 @@ end
 
 
 --------------------------------------------------------------------------------
+-- Process the unitDefs
 
 for uDefID, uDef in pairs(UnitDefs) do
   if (isstring(uDefID) and istable(uDef)) then
