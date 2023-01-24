@@ -35,7 +35,7 @@ return {
 		name = "Duck",
 		noautofire = false,
 		nochasecategory = "MOBILE ",
-		objectname = "Critters/critter_duck.s3o",
+		objectname = "Units/Other/Critters/critter_duck.s3o",
 		reclaimable = false,
 		script = "Critters/critter_duck.lua",
 		seismicsignature = 0,

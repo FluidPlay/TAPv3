@@ -42,7 +42,7 @@ return {
         movementclass = "COMMANDERKBOT",
         name = "Commander",
         nochasecategory = "ALL",
-        objectname = "armcom.s3o",
+        objectname = "Units/Bow/ARMCOM",
         pushresistant = true,
         radardistance = 700,
         radaremitheight = 40,

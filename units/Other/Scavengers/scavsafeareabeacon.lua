@@ -26,7 +26,7 @@ return {
 		maxwaterdepth = 0,
 		mincloakdistance = 250,
 		name = "Spreader",
-		objectname = "scav_safeareabeacon.s3o",
+		objectname = "scavs/scav_safeareabeacon.s3o",
 		--script = "scripts/ARMEYES.cob",
 		seismicsignature = 200,
 		sightdistance = 1560,

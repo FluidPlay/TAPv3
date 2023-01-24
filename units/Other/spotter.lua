@@ -27,7 +27,7 @@ return {
 		maxvelocity = 0,
 		name = "spotter",
 		noautofire = false,
-		objectname = "meteorite.s3o",
+		objectname = "Units/Other/meteorite.s3o",
 		radardistance = 600,
 		seismicsignature = 4,
 		selfdestructas = "",

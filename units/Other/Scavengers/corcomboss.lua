@@ -42,7 +42,7 @@ return {
 		movementclass = "AKBOT2",
 		name = "Scavengers Final Boss",
 		nochasecategory = "ALL",
-		objectname = "CORCOM",
+		objectname = "Units/Kern/CORCOM",
 		pushresistant = true,
 		radardistance = 700,
 		radaremitheight = 40,

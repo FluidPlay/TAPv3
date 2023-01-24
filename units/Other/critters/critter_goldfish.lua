@@ -32,7 +32,7 @@ return {
 		name = "Goldfish",
 		noautofire = false,
 		nochasecategory = "MOBILE ",
-		objectname = "Critters/critter_goldfish.s3o",
+		objectname = "Units/Other/Critters/critter_goldfish.s3o",
 		reclaimable = false,
 		script = "Critters/critter_goldfish.lua",
 		seismicsignature = 0,

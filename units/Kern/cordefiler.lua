@@ -18,6 +18,7 @@ return {
 		maxDamage = 18158,
 		maxSlope = 40,
 		name = [[Defiler]],
+		objectname = "Units/Kern/corcom.s3o",
 		side = [[CORE]],
 		sightDistance = 550,
 		unitname = [[cordefiler]],

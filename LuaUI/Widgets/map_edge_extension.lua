@@ -79,7 +79,7 @@ options = {
 			{name = 'Cutaway',  key = 'cutaway', desc = "Draw the edge of the map with a cutaway effect", hotkey = nil},
 			{name = 'Disable',  key = 'disable', desc = "Draw no edge extension",                         hotkey = nil},
 		},
-		value = 'grid',  --default at start of widget is to be disabled!
+		value = 'texture',  --default at start of widget is to be disabled!
 		OnChange = function(self)
 			Spring.SendCommands("mapborder " .. ((self.value == 'cutaway' or self.value == 'texture') and "1" or "0"))
 			drawingEnabled = (self.value == "texture") or (self.value == "grid")

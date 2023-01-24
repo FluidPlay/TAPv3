@@ -31,7 +31,7 @@ return {
 		maxslope = 20,
 		maxwaterdepth = 99999,
 		name = "Small Pandore Chunk",
-		objectname = "ore_sml.s3o",
+		objectname = "Units/Other/ore_sml.s3o",
         reclaimable = true,
 		seismicsignature = 0,
 		selfdestructas = "geo",
