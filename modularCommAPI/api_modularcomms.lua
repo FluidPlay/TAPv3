@@ -10,8 +10,8 @@ local function GetInfo()
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
 		api       = true,
-		enabled   = true,
-		alwaysStart = true,
+		enabled   = false, --true,
+		alwaysStart = true, --true,
 	}
 end
 

@@ -17,7 +17,7 @@
 
 local unitDefsData = VFS.Include("gamedata/configs/unitdefs_data.lua")
 VFS.Include("gamedata/taptools.lua")
---local function istable(x)  return (type(x) == 'table') end
+local debug = false
 
 -- Switch for when we want to save defs into customparams as strings (so that a widget can then write them to file)
 -- The widget to do so can be found in 'etc/Lua/bake_unitdefs_post'
@@ -36,7 +36,7 @@ local weaponDmgTypes = VFS.Include("gamedata/configs/weapondamagetypes.lua")
     --VFS.Include("LuaRules/Utilities/utilities_emul.lua")
     --CopyTable = Spring.Utilities.CopyTable
     --MergeTable = Spring.Utilities.MergeTable
-local minimumbuilddistancerange = 155
+local minimumbuilddistancerange = 60 --155
 
 -------------------------
 -- DEFS POST PROCESSING
@@ -64,22 +64,20 @@ end
 -- process unitdefs
 function UnitDef_Post(name, uDef)
     -- TODO: Below is not working (_scav units still don't exist at this time), move elsewhere
-	if string.find(name, '_scav') then
-        Spring.Echo("uDef name being processed: "..name)
-		local scavnamelength = string.len(name)
-		local scavname = string.sub(name, 1, scavnamelength -5)
-		ApplyUnitDefs_Data(scavname, uDef)
-	    -- Any post processing after unitdefs_data.lua is applied should come after this
-		ApplyGroupCosts(scavname, uDef)
-	else
-		ApplyUnitDefs_Data(name, uDef)
-		ApplyGroupCosts(name, uDef)
-	end
-	-- [deprecated, now done straight in ssheet] Add reverse move to units with customDef allowreversemove defined as true
-	--if uDef.speed and uDef.customParams then -- and uDef.customParams.allowreversemove == "1"
-	--	Spring.Echo(name.." has allowreversemove.")
-	--	uDef.rSpeed = uDef.speed * 0.6
+	--if string.find(name, '_scav') then
+    --    Spring.Echo("uDef name being processed: "..name)
+	--	local scavnamelength = string.len(name)
+	--	local scavname = string.sub(name, 1, scavnamelength -5)
+	--	ApplyUnitDefs_Data(scavname, uDef)
+	--    -- Any post processing after unitdefs_data.lua is applied should come after this
+	--	ApplyGroupCosts(scavname, uDef)
+	--else
+	--	ApplyUnitDefs_Data(name, uDef)
+	--	ApplyGroupCosts(name, uDef)
 	--end
+	ApplyUnitDefs_Data(name, uDef)
+	ApplyGroupCosts(name, uDef)
+
     --Set a minimum for builddistance
     if uDef.builddistance ~= nil and uDef.builddistance < minimumbuilddistancerange then
         uDef.builddistance = minimumbuilddistancerange
@@ -233,7 +231,9 @@ function WeaponDef_Post(name, wDef, udName)
         end
 
 		if damageType ~= "omni" then
-			Spring.Echo("Standalone Weapon - name: "..(name or "name N/A").." | wDefname: "..(wDef.name or "N/A").." | type: "..(damageType or "N/A"))
+			if debug then
+				Spring.Echo("Standalone Weapon - name: "..(name or "name N/A").." | wDefname: "..(wDef.name or "N/A").." | type: "..(damageType or "N/A"))
+			end
             --Spring.Echo("Has customParams: "..((wDef.customParams ~= nil) and "YES" or "NO").." damagetype: "..(wDef.customParams and wDef.customParams.damagetype or "NOTFOUND"))
 		end
 	elseif (weaponDmgTypes[udName] ~= nil) then				-- otherwise, check if it's defined in weaponDmgTypes
@@ -352,7 +352,7 @@ function ModOptions_Post (UnitDefs, WeaponDefs)
 	end
 
 	--## Last but not least, save alldefs after post, if desired
-	if (VFS.FileExists('gamedata/alldefs_post_save.lua')) then
-		VFS.Include('gamedata/alldefs_post_save.lua')
-	end
+	--if (VFS.FileExists('gamedata/alldefs_post_save.lua')) then
+	--	VFS.Include('gamedata/alldefs_post_save.lua')
+	--end
 end

@@ -111,6 +111,7 @@ end
 
 --------------------------------------------------------------------------------
 
+--Spring.Echo("--- Parsing WeaponDefs - Found: "..(istable(WeaponDefs) and "TRUE" or "FALSE"))
 
 -- handle standalone weapondefs
 for name,wd in pairs(WeaponDefs) do

@@ -267,6 +267,8 @@ end
 --------------------------------------------------------------------------------
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+	if not GG.Upgrades_UnitCloakShieldDef then
+		return end
 	local cloakShieldDef = cloakShieldDefs[unitDefID] or GG.Upgrades_UnitCloakShieldDef(unitID)
 	if (not cloakShieldDef) then
 		return

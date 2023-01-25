@@ -738,7 +738,9 @@ local function ConvertToRegularTable(stable)
 end
 
 function gadget:GameOver()
-	awardList = ConvertToRegularTable( SYNCED.awardList )
+	awardList = {}
+	if type(SYNCED.awardList)=="table" then
+		awardList = ConvertToRegularTable( SYNCED.awardList ) end  --TAPfix
 	Script.LuaUI.SetAwardList( awardList )
 
 	for team,awards in pairs(awardList) do

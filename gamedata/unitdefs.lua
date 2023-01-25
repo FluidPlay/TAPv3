@@ -130,48 +130,49 @@ end
 --  Basic checks to kill unitDefs that will crash ".give all"
 --
 
-for name, def in pairs(unitDefs) do
-  local cob = 'scripts/'   .. name .. '.cob'
+--for name, def in pairs(unitDefs) do
+--  local cob = 'scripts/'   .. name .. '.cob'
+--
+--  local obj = def.objectName or def.objectname
+--  if (obj == nil) then
+--    unitDefs[name] = nil
+--    Spring.Log(section, LOG.ERROR, 'removed ' .. name ..
+--                ' unitDef, missing objectname param')
+--    for k,v in pairs(def) do print('',k,v) end
+--  else
+--    local objfile = 'objects3d/' .. obj
+--    if ((not VFS.FileExists(objfile))           and
+--        (not VFS.FileExists(objfile .. '.3do')) and
+--        (not VFS.FileExists(objfile .. '.s3o'))) then
+--      unitDefs[name] = nil
+--      Spring.Log(section, LOG.ERROR, 'removed ' .. name
+--                  .. ' unitDef, missing model file  (' .. obj .. ')')
+--    end
+--  end
+--end
 
-  local obj = def.objectName or def.objectname
-  if (obj == nil) then
-    unitDefs[name] = nil
-    Spring.Log(section, LOG.ERROR, 'removed ' .. name ..
-                ' unitDef, missing objectname param')
-    for k,v in pairs(def) do print('',k,v) end
-  else
-    local objfile = 'objects3d/' .. obj
-    if ((not VFS.FileExists(objfile))           and
-        (not VFS.FileExists(objfile .. '.3do')) and
-        (not VFS.FileExists(objfile .. '.s3o'))) then
-      unitDefs[name] = nil
-      Spring.Log(section, LOG.ERROR, 'removed ' .. name
-                  .. ' unitDef, missing model file  (' .. obj .. ')')
-    end
-  end
-end
 
-
-for name, def in pairs(unitDefs) do
-  local badOptions = {}
-  local buildOptions = def.buildOptions or def.buildoptions
-  if (buildOptions) then
-    for i, option in ipairs(buildOptions) do
-      if (unitDefs[option] == nil) then
-        table.insert(badOptions, i)
-        Spring.Log(section, LOG.ERROR, 'removed the "' .. option ..'" entry'
-                    .. ' from the "' .. name .. '" build menu')
-      end
-    end
-    if (#badOptions > 0) then
-      local removed = 0
-      for _, badIndex in ipairs(badOptions) do
-        table.remove(buildOptions, badIndex - removed)
-        removed = removed + 1
-      end
-    end
-  end
-end
+---TODO: Move this to happen after alldefs_post
+--for name, def in pairs(unitDefs) do
+--  local badOptions = {}
+--  local buildOptions = def.buildOptions or def.buildoptions
+--  if (buildOptions) then
+--    for i, option in ipairs(buildOptions) do
+--      if (unitDefs[option] == nil) then
+--        table.insert(badOptions, i)
+--        Spring.Log(section, LOG.ERROR, 'removed the "' .. option ..'" entry'
+--                    .. ' from the "' .. name .. '" build menu')
+--      end
+--    end
+--    if (#badOptions > 0) then
+--      local removed = 0
+--      for _, badIndex in ipairs(badOptions) do
+--        table.remove(buildOptions, badIndex - removed)
+--        removed = removed + 1
+--      end
+--    end
+--  end
+--end
 
 
 --------------------------------------------------------------------------------

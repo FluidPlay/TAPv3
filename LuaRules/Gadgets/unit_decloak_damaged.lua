@@ -321,6 +321,8 @@ end
 --------------------------------------------------------------------------------
 
 function gadget:UnitCreated(unitID, unitDefID)
+	if not GG.Upgrades_UnitCanCloak then
+		return end
 	local ud = UnitDefs[unitDefID]
 	if cloakUnitDefID[unitDefID] or GG.Upgrades_UnitCanCloak(unitID) then
 		local cloakDescID = Spring.FindUnitCmdDesc(unitID, CMD_CLOAK)

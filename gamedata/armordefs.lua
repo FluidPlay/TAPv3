@@ -323,14 +323,14 @@ for name, wd in pairs(DEFS.weaponDefs) do
 end
 
 -- Copy regular unit armor def to its Scavengers counterpart
-for categoryName, categoryUnits in pairs(armorDefs) do
-	for _, thisUdID in pairs(categoryUnits) do
-		if not string.find(thisUdID, '_scav') then
-			table.insert(armorDefs[categoryName], thisUdID.."_scav")
-			--Spring.Echo("Added Scav Unit: ", thisUdID, " to armorclass: "..categoryName)
-		end
-	end
-end
+--for categoryName, categoryUnits in pairs(armorDefs) do
+--	for _, thisUdID in pairs(categoryUnits) do
+--		if not string.find(thisUdID, '_scav') then
+--			table.insert(armorDefs[categoryName], thisUdID.."_scav")
+--			--Spring.Echo("Added Scav Unit: ", thisUdID, " to armorclass: "..categoryName)
+--		end
+--	end
+--end
 
 local system = VFS.Include('gamedata/system.lua')
 

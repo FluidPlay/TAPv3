@@ -21,7 +21,7 @@ return {
 		mass = 50,
 		maxwaterdepth = 0,
 		name = "Dice",
-		objectname = "dice.s3o",
+		objectname = "Units/Other/dice.s3o",
 		repairable = false,
 		script = "Other/dice.lua",
 		seismicsignature = 0,

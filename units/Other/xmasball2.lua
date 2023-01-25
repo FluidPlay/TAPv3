@@ -21,7 +21,7 @@ return {
 		mass = 50,
 		maxwaterdepth = 0,
 		name = "Xmas ball",
-		objectname = "xmasball2.s3o",
+		objectname = "Units/Other/xmasball2.s3o",
 		repairable = false,
 		script = "xmasball.lua",
 		seismicsignature = 0,

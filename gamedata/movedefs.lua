@@ -60,15 +60,15 @@ local moveDefs = {
 		depthmodparams = common_depthmodparams,
 	},
 
-	AKBOT2 = { --amphib
-		footprintx = 2,
-		footprintz = 2,
-		maxwaterdepth = 5000,
-		depthmod = 0,
-		maxslope = 36,
-		crushstrength = 50,
-	},
-
+	--AKBOT2 = { --amphib
+	--	footprintx = 2,
+	--	footprintz = 2,
+	--	maxwaterdepth = 5000,
+	--	depthmod = 0,
+	--	maxslope = 36,
+	--	crushstrength = 50,
+	--},
+	--
 	AKBOT3 = { --amphib
 		footprintx = 3,
 		footprintz = 3,
@@ -859,7 +859,7 @@ local moveDefsArray = {}
 for moveName, moveData in pairs(moveDefs) do
 	--moveData.heatmapping = false -- disable heatmapping
 	moveData.allowRawMovement = true
-	moveData.name = moveName
+	moveData.name = moveName --string.lower()
 
 	moveDefsArray[#moveDefsArray + 1] = moveData
 end

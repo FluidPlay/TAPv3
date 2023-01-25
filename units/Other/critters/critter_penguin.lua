@@ -37,7 +37,7 @@ return {
 		name = "Penguin",
 		noautofire = false,
 		nochasecategory = "MOBILE ",
-		objectname = "Units/Other/Critters/critter_penguin.s3o",
+		objectname = "Critters/critter_penguin.s3o",
 		reclaimable = false,
 		script = "Critters/critter_penguin.lua",
 		seismicsignature = 0,
