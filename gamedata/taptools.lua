@@ -604,6 +604,10 @@ function Split(s, separator)
 end
 -- Usage example: engineVersion = Split(Engine.version, '-') => engineVersion[0], engineVersion[1]
 
+function GetUnitHarvestStorage(unitID)
+	local oreLoad = spGetUnitRulesParam(unitID, "oreLoad")
+	return (oreLoad or 0)
+end
 
 --function indent(i, str)
 --	local result = ""

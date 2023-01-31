@@ -12,14 +12,16 @@ local spGetUnitSeparation = Spring.GetUnitSeparation
 local spGetFullBuildQueue = Spring.GetFullBuildQueue --use this only for factories, to ignore rally points
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitDefID = Spring.GetUnitDefID
-local spGetUnitHarvestStorage = Spring.GetUnitHarvestStorage
 
 local function sqrDistance(x1,z1,x2,z2)
     local dx,dz = x1-x2,z1-z2
     return dx*dx + dz*dz
 end
 
---redundant to taptools, to prevent making this include too big
+--=====================================================================================
+--  Below functions are redundant to taptools, to prevent making this include too big
+--=====================================================================================
+
 local function math_clamp(min, max, n)
     if not isnumber(min) or not isnumber(max) or not isnumber(n) then
         return n
@@ -30,6 +32,13 @@ local function math_clamp(min, max, n)
         n = min end
     return n
 end
+
+local function GetUnitHarvestStorage(unitID)
+	local oreLoad = spGetUnitRulesParam(unitID, "oreLoad")
+	return (oreLoad or 0)
+end
+
+--================
 
 local function hasBuildQueue(unitID)
     local buildqueue = spGetFullBuildQueue(unitID) -- => nil | buildOrders = { [1] = { [number unitDefID] = number count }, ... } }
@@ -138,7 +147,7 @@ function getLoadPercentage(unitID, unitDef)
     if not unitDef.customParams or not unitDef.customParams.maxorestorage then
         return 0 end
     local maxorestorage = tonumber(unitDef.customParams.maxorestorage)
-    return math_clamp(spGetUnitHarvestStorage(unitID) / maxorestorage, 0,1)
+    return math_clamp(GetUnitHarvestStorage(unitID) / maxorestorage, 0,1)
 end
 
 

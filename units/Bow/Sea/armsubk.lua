@@ -147,9 +147,6 @@ return {
 				damage = {
 					default = 900,
 				},
-				customparams = {
-					bar_model = "torpedo.s3o",
-				}
 			},
 		},
 		weapons = {
