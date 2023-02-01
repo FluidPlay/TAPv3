@@ -489,7 +489,7 @@ end
 else
 ----------------------------------------------------------------
 
-local bgcorner = ":n:LuaRules/Images/bgcorner.png"
+local bgcorner = ":n:LuaRules/images/bgcorner.png"
 local customScale = 1.23
 local uiScale = customScale
 local myPlayerID = Spring.GetMyPlayerID()

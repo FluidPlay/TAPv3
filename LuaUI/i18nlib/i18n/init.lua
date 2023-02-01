@@ -12,6 +12,8 @@ local interpolate = VFS.Include(path .. 'interpolate.lua')
 local variants    = VFS.Include(path .. 'variants.lua')
 local version     = VFS.Include(path .. 'version.lua')
 
+local Debug = false -- Log translation warnings (like missing translation in a certain language) and errors
+
 i18n.plural, i18n.interpolate, i18n.variants, i18n.version, i18n._VERSION = plural, interpolate, variants, version, version
 
 
@@ -147,8 +149,10 @@ function i18n.translate(key, data, newLocale)
       end
       local missingTranslation = missingTranslations[key]
       if not missingTranslation[fallback] then
-        Spring.Log("i18n", "warning", "\"" .. key .. "\" is not translated in " .. fallback)
-        missingTranslation[fallback] = true
+			if Debug then
+				Spring.Log("i18n", "warning", "\"" .. key .. "\" is not translated in " .. fallback)
+			end
+			missingTranslation[fallback] = true
       end
     end
   end
@@ -157,8 +161,10 @@ function i18n.translate(key, data, newLocale)
   end
   local missingTranslation = missingTranslations[key]
   if not missingTranslation["_all"] then
-    Spring.Log("i18n", "error", "No translation found for \"" .. key .. "\"")
-    missingTranslation["_all"] = true
+		if Debug then
+			Spring.Log("i18n", "error", "No translation found for \"" .. key .. "\"")
+		end
+		missingTranslation["_all"] = true
   end
   return data.default
 end
@@ -199,8 +205,10 @@ function i18n.loadFile(path)
     return x()
   end)
   if not success then
-    Spring.Log("i18n", LOG.ERROR, "Failed to parse file " .. path .. ": ")
-    Spring.Log("i18n", LOG.ERROR, data)
+	  if Debug then
+		  Spring.Log("i18n", LOG.ERROR, "Failed to parse file " .. path .. ": ")
+		  Spring.Log("i18n", LOG.ERROR, data)
+	  end
     return nil
   end
   i18n.load(data)

@@ -7,7 +7,7 @@ function widget:GetInfo()
 		license		= "GNU GPL, v2 or later",
 		layer		= 20,
 		handler		= true, --for adding customCommand into UI
-		enabled		= true  --loaded by default?
+		enabled		= false--true  --loaded by default?
 	}
 end
 

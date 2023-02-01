@@ -405,7 +405,7 @@ function widget:Initialize()
 	-- ZK compatability stuff
 	WG.icons.SetPulse('gbcidle', true)
 	WG.GlobalBuildCommand = { -- add compatibility functions to a table in widget globlals
-		CommandNotifyPreQue = CommandNotifyPreQue, --an event which is called by "unit_initial_queue.lua" to notify other widgets that it is giving pregame commands to the commander.
+		CommandNotifyPreQue = CommandNotifyPreQue, --an event which is called by "unit_initial_queue_zk.lua" to notify other widgets that it is giving pregame commands to the commander.
 		CommandNotifyMex = CommandNotifyMex, --an event which is called by "cmd_mex_placement.lua" to notify other widgets of mex build commands.
 		CommandNotifyTF = CommandNotifyTF, -- an event called by "gui_lasso_terraform.lua" to notify other widgets of terraform commands.
 		CommandNotifyRaiseAndBuild = CommandNotifyRaiseAndBuild, -- an event called by "gui_lasso_terraform.lua" to notify other widgets of raise-and-build commands.
@@ -1091,7 +1091,7 @@ function widget:CommandsChanged()
 	end
 end
 
---	A ZK compatibility function: receive broadcasted event from "unit_initial_queue.lua" (ZK specific) which
+--	A ZK compatibility function: receive broadcasted event from "unit_initial_queue_zk.lua" (ZK specific) which
 function CommandNotifyPreQue(unitID)
 	if includedBuilders[unitID] then
 		includedBuilders[unitID].cmdtype = commandType.drec

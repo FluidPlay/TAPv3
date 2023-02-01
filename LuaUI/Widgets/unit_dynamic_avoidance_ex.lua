@@ -2134,7 +2134,7 @@ end
 --2
 --"unit_tactical_ai.lua" -ZeroK gadget by Google Frog
 --3
---"Initial Queue" widget, "Allows you to queue buildings before game start" (unit_initial_queue.lua), author = "Niobium",
+--"Initial Queue" widget, "Allows you to queue buildings before game start" (unit_initial_queue_zk.lua), author = "Niobium",
 --4
 --"unit_smart_nanos.lua" widget, "Enables auto reclaim & repair for idle nano turrets , author = Owen Martindell
 --5

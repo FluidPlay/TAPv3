@@ -9,7 +9,7 @@ function gadget:GetInfo()
     date      = "16 August 2015",
     license   = "GNU GPL, v2 or later",
     layer     = 5,
-    enabled   = true  --  loaded by default?
+    enabled   = false--true  --  loaded by default?
   }
 end
 
@@ -46,18 +46,19 @@ for unitDefID = 1, #UnitDefs do
 	local ud = UnitDefs[unitDefID]
 	local upkeep = ud.customParams.upkeep_energy
 	local cloakerUpkeep = ud.customParams.area_cloak_upkeep
-	
-	upkeep = upkeep and tonumber(upkeep)
-	cloakerUpkeep = cloakerUpkeep and tonumber(cloakerUpkeep)
-	if (upkeep and upkeep > 0) or (cloakerUpkeep and cloakerUpkeep > 0) then
-		drainUnitDefID[unitDefID] = {
-			upkeep = upkeep,
-			upkeepPerUpdate = upkeep and upkeep*PERIOD/TEAM_SLOWUPDATE_RATE,
-		}
-		if cloakerUpkeep then
-			-- Upkeep is always paid because cloakers are only active when the unit is active.
-			drainUnitDefID[unitDefID].cloakerUpkeep = cloakerUpkeep + (upkeep or 0)
-			drainUnitDefID[unitDefID].cloakerUpkeepPerUpdate = (cloakerUpkeep + (upkeep or 0))*PERIOD/TEAM_SLOWUPDATE_RATE
+	if (upkeep ~= nil and cloakerUpkeep ~= nil) then
+		upkeep = upkeep and tonumber(upkeep)
+		cloakerUpkeep = cloakerUpkeep and tonumber(cloakerUpkeep)
+		if (upkeep and upkeep > 0) or (cloakerUpkeep and cloakerUpkeep > 0) then
+			drainUnitDefID[unitDefID] = {
+				upkeep = upkeep,
+				upkeepPerUpdate = upkeep and upkeep*PERIOD/TEAM_SLOWUPDATE_RATE,
+			}
+			if cloakerUpkeep then
+				-- Upkeep is always paid because cloakers are only active when the unit is active.
+				drainUnitDefID[unitDefID].cloakerUpkeep = cloakerUpkeep + (upkeep or 0)
+				drainUnitDefID[unitDefID].cloakerUpkeepPerUpdate = (cloakerUpkeep + (upkeep or 0))*PERIOD/TEAM_SLOWUPDATE_RATE
+			end
 		end
 	end
 end
@@ -181,6 +182,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 end
 
 function gadget:UnitFinished(unitID, unitDefID, teamID)
+	-- TODO: Check for GG.Upgrades...
 	if (drainUnitDefID[unitDefID] and not unitMap[unitID]) or GG.Upgrades_UnitCloakShieldDef(unitID) or GG.Upgrades_UnitJammerEnergyDrain(unitID) then
 		local def = drainUnitDefID[unitDefID]
 		if not def then
