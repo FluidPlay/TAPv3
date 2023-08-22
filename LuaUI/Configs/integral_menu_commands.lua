@@ -110,7 +110,22 @@ local unitTypes = {
 	UTILITY         = {order = 11, row = 2, col = 6},
 }
 
+-- Add build options to be shown in integral menu here
 local factoryUnitPosDef = {
+	armvp = {
+		armfav=unitTypes.RIOT,
+		armflash=unitTypes.RAIDER,
+		armstump = unitTypes.HEAVY_SOMETHING,
+		armsam = unitTypes.ANTI_AIR,
+		armmart = unitTypes.ARTILLERY,
+		armlatnk = unitTypes.RIOT,
+		armbull = unitTypes.HEAVY_SOMETHING,
+		armyork = unitTypes.SKIRMISHER,
+		armmanni   = unitTypes.SPECIAL,
+		armmerl  = unitTypes.ARTILLERY,
+		armintr  = unitTypes.RAIDER,
+		armjam  = unitTypes.UTILITY,
+	},
 	factorycloak = {
 		cloakcon          = unitTypes.CONSTRUCTOR,
 		cloakraid         = unitTypes.RAIDER,
@@ -339,6 +354,14 @@ local special_commands = {
 	zenith            = {order = 5, row = 2, col = 4},
 	raveparty         = {order = 6, row = 2, col = 5},
 	mahlazer          = {order = 7, row = 2, col = 6},
+	---TAP
+	armlatnk          = {order = 1, row = 1, col = 1},
+	armbull 		  = {order = 1, row = 1, col = 2},
+	armyork			  = {order = 1, row = 1, col = 3},
+	armmanni   		  = {order = 1, row = 1, col = 4},
+	armmerl= {order = 2, row = 1, col = 1},
+	armintr= {order = 2, row = 1, col = 1},
+	armjam = {order = 2, row = 1, col = 1},
 	[CMD_RAMP]        = {order = 16, row = 3, col = 1},
 	[CMD_LEVEL]       = {order = 17, row = 3, col = 2},
 	[CMD_RAISE]       = {order = 18, row = 3, col = 3},
