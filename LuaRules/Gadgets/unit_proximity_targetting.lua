@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date    = "2022",
 		license = "PD",
 		layer   = 0,
-		enabled = true
+		enabled = false --true
 	}
 end
 
