@@ -147,6 +147,9 @@ return {
 				damage = {
 					default = 900,
 				},
+				customparams = {
+					bar_model = "cortorpedo.s3o",
+				}
 			},
 		},
 		weapons = {

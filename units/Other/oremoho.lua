@@ -31,7 +31,7 @@ return {
 		maxslope = 20,
 		maxwaterdepth = 99999,
 		name = "Moho Pandore Chunk",
-		objectname = "Units/Other/ore_sml.s3o",
+		objectname = "ARMGEO",
         reclaimable = true,
 		seismicsignature = 0,
 		selfdestructas = "geo",

@@ -27,7 +27,7 @@ return {
 		movementclass = "KBOT2",
 		name = "Peewee",
 		nochasecategory = "VTOL",
-		objectname = "Units/Bow/ARMPW",
+		objectname = "Units/Bow/ARMPW.s3o",
 		seismicsignature = 0,
 		selfdestructas = "smallExplosionGenericSelfd",
 		sightdistance = 429,
@@ -36,7 +36,7 @@ return {
 		turnrate = 1056,
 		upright = true,
 		customparams = {
-			description_long = "Peewee is a basic infantry Kbot. Being very cheap to build and having high top speeds can be useful for scouting and taking down unguarded metal extractors and eco. In late T1 warfare Peewees can be used for ambushing Commanders and speedy skirmishing. Light armor and short range makes it susceptible to defensive towers and riot tanks",  
+			description_long = "Peevee is a basic infantry Kbot. Being very cheap to build and having high top speeds can be useful for scouting and taking down unguarded metal extractors and eco. In late T1 warfare Peevees can be used for ambushing Commanders and speedy skirmishing. Light armor and short range makes it susceptible to defensive towers and riot tanks",
 			wpn1turretx = 300,
 			wpn1turrety = 300,
 		},

@@ -32,7 +32,7 @@ return {
 		maxpitch = 0.2,
 		maxvelocity = 1.8,
 		name = "SeaGull",
-		objectname = "Critters/critter_gull.s3o",
+		objectname = "Units/Other/Critters/critter_gull.s3o",
 		reclaimable = false,
 		script = "Critters/critter_gull.lua",
 		seismicsignature = 0,

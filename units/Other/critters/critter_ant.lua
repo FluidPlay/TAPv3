@@ -35,7 +35,7 @@ return {
 		name = "Ant",
 		noautofire = false,
 		nochasecategory = "MOBILE ",
-		objectname = "Critters/critter_ant.s3o",
+		objectname = "Units/Other/Critters/critter_ant.s3o",
 		reclaimable = false,
 		script = "Critters/critter_ant.cob",
 		seismicsignature = 0,

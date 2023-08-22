@@ -4,7 +4,7 @@ function widget:GetInfo() return {
 	author    = "Sprung",
 	license   = "PD",
 	layer     = 1,
-	enabled   = true,
+	enabled   = false--true,
 } end
 
 options_path = 'Settings/Graphics/Unit Visibility/Radar Icons'
