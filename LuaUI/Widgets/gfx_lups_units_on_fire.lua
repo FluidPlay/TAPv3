@@ -18,7 +18,7 @@ end
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitHealth = Spring.GetUnitHealth
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMapZK.lua")
 local trackedUnits = IterableMap.New()
 
 local CHECK_INTERVAL = 6

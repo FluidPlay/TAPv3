@@ -107,7 +107,7 @@ function IterableMap.New()
 			end
 		end
 	end
-	
+
 	function api.ApplyNoArg(funcToApply)
 		local i = 1
 		while i <= indexMax do
@@ -120,7 +120,6 @@ function IterableMap.New()
 			end
 		end
 	end
-	
 	
 	-- This 'method' of iteration is for barbarians. Seems to have performance
 	-- similar to Apply.

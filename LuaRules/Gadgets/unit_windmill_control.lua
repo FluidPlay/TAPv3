@@ -13,7 +13,7 @@ function gadget:GetInfo()
 		date     = "June 29, 2007",
 		license  = "GNU GPL, v2 or later",
 		layer    = 2, -- after `start_waterlevel.lua` (for map height adjustment)
-		enabled  = true -- loaded by default?
+		enabled  = false --true -- loaded by default?
 	}
 end
 
@@ -32,7 +32,7 @@ local turbineUnitDef = UnitDefNames['energywind']
 local WIND_HEALTH = turbineUnitDef.health
 local TIDAL_HEALTH = turbineUnitDef.customParams.tidal_health
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMapZK.lua")
 local windmills = IterableMap.New()
 
 local TIDAL_HEIGHT = -10

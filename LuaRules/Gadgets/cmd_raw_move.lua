@@ -374,7 +374,7 @@ local function HandleRawMove(unitID, unitDefID, cmdParams)
 		unitData.ux, unitData.uz = x, z
 		if travelled < (stuckTravelOverride[unitDefID] or STUCK_TRAVEL) then
 			unitData.stuckCheckTimer = math.floor(math.random()*6) + 5
-			if not GG.floatUnit[unitID] then
+			if not GG.floatUnit or not GG.floatUnit[unitID] then
 				if distSq < GIVE_UP_STUCK_DIST_SQ then
 					StopRawMoveUnit(unitID, true)
 					--Spring.Echo("ret 4")

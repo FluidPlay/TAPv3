@@ -132,7 +132,7 @@ local createdFrame = {}
 local textColor = {0.7, 1.0, 0.7, 1.0} -- r g b alpha
 local textSize = 13.0
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMapZK.lua")
 local screwyWaypointUnits = IterableMap.New()
 
 -- gr = groupe selected/wanted

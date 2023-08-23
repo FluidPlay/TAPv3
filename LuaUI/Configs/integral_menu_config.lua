@@ -480,7 +480,7 @@ local commandPanels = {
 		buttonLayoutConfig = buttonLayoutConfig.build,
 	},
 	{
-		humanName = "Special",
+		humanName = "Advanced", --"Special",
 		name = "special",
 		inclusionFunction = function(cmdID)
 			local position = buildCmdSpecial[cmdID]

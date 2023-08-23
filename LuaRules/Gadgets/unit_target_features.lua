@@ -15,7 +15,7 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMapZK.lua")
 
 local spGetUnitWeaponState   = Spring.GetUnitWeaponState
 local spSetUnitWeaponState   = Spring.SetUnitWeaponState

@@ -94,7 +94,7 @@ end
 local spGetMyAllyTeamID     = Spring.GetMyAllyTeamID
 local spGetSpectatingState  = Spring.GetSpectatingState
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMapZK.lua")
 
 local shieldUnitDefs
 

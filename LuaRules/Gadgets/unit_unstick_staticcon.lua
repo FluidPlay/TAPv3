@@ -14,7 +14,7 @@ function gadget:GetInfo()
 	}
 end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMapZK.lua")
 local handledUnits = IterableMap.New()
 
 -- Config --
