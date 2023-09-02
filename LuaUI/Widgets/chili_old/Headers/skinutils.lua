@@ -27,6 +27,8 @@ local _DrawTextureAspect = _DrawTextureAspect
 
 
 function _DrawTiledTexture(x,y,w,h, skLeft,skTop,skRight,skBottom, texw,texh, texIndex)
+	texw = texw * (WG.imageScale or 1) --0.5
+	texh = texh * (WG.imageScale or 1) --0.5
     texIndex = texIndex or 0
 
     local txLeft   = skLeft/texw

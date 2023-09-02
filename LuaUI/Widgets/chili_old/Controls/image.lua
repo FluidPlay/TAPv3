@@ -27,6 +27,9 @@ local inherited = this.inherited
 --//=============================================================================
 
 local function _DrawTextureAspect(x,y,w,h ,tw,th, flipy)
+	w = w * (WG.imageScale or 1) --0.5
+	h = h * (WG.imageScale or 1) --0.5
+
   local twa = w/tw
   local tha = h/th
 

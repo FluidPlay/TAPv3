@@ -489,8 +489,8 @@ function DrawWindow(obj)
 end
 
 function DrawRepeatingTiledWindow(obj)
-	local w = obj.width
-	local h = obj.height
+	local w = obj.width  * 0.5
+	local h = obj.height * 0.5
 
 	local skLeft, skTop, skRight, skBottom = unpack4(obj.tiles)
 

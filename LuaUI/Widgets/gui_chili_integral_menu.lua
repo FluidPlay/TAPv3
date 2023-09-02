@@ -34,6 +34,7 @@ local spGetUnitRepeat = Spring.Utilities.GetUnitRepeat
 local spGetViewGeometry = Spring.GetViewGeometry
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spSetActiveCommand = Spring.SetActiveCommand
+local spForceLayoutUpdate = Spring.ForceLayoutUpdate
 
 -- Configuration
 include("colors.lua")
@@ -2565,10 +2566,24 @@ function widget:GameFrame(n)
 	end
 end
 
+local function OverrideDefaultMenu()
+	local function layoutHandler(xIcons, yIcons, cmdCount, commands)
+		widgetHandler.commands = commands
+		widgetHandler.commands.n = cmdCount
+		widgetHandler:CommandsChanged()
+		local customCmds = widgetHandler.customCommands
+		return '', xIcons, yIcons, {}, customCmds, {}, {}, {}, {}, {}, {[1337]=9001}
+	end
+	widgetHandler:ConfigLayoutHandler(layoutHandler)
+	spForceLayoutUpdate()
+end
+
 function widget:Initialize()
 	RemoveAction("nextmenu")
 	RemoveAction("prevmenu")
 	initialized = true
+
+	OverrideDefaultMenu()
 
 	Chili = WG.Chili
 	Button = Chili.Button

@@ -1,9 +1,21 @@
+--local langs = {
+--	{ lang = 'en', flag = 'gb', name = 'English' },
+--	{ lang = 'ru', flag = 'ru', name = 'Русский' },
+--	{ lang = 'pl', flag = 'pl', name = 'Polski' },
+--	{ lang = 'de', flag = 'de', name = 'Deutsch' },
+--	{ lang = 'tr', flag = 'tr', name = 'Türkçe' },
+--}
+
 local langs = {
 	{ lang = 'en', flag = 'gb', name = 'English' },
 	{ lang = 'ru', flag = 'ru', name = 'Русский' },
 	{ lang = 'pl', flag = 'pl', name = 'Polski' },
+	{ lang = 'pt', flag = 'br', name = 'Português-BR' },
+	{ lang = 'it', flag = 'it', name = 'Italiano' },
 	{ lang = 'de', flag = 'de', name = 'Deutsch' },
 	{ lang = 'tr', flag = 'tr', name = 'Türkçe' },
+	{ lang = 'zh', flag = 'cn', name = '簡體中文' },
+	{ lang = 'zh_TW', flag = 'tw', name = '繁體中文' },
 }
 
 --[[ On Windows, far eastern fonts are börkçe by default, and
@@ -13,9 +25,9 @@ the job for Chobby who should run a parallel instance to
 do just that (ideally detecting whether the user's system
 language requires it by default) and leave information
 about it. ]]
-if Platform.osFamily ~= "Windows" or VFS.FileExists("LuaUI/font_config_generated", VFS.RAW) then
-	langs[#langs + 1] = { lang = 'zh', flag = 'cn', name = '中文' }
-end
+--if Platform.osFamily ~= "Windows" or VFS.FileExists("LuaUI/font_config_generated", VFS.RAW) then
+--	langs[#langs + 1] = { lang = 'zh', flag = 'cn', name = '中文' }
+--end
 
 local flagByLang, langByFlag = {}, {}
 for i = 1, #langs do
@@ -29,4 +41,3 @@ setmetatable(langByFlag, { __index = function()
 end})
 
 return langs, flagByLang, langByFlag
-	

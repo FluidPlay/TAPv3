@@ -4,7 +4,7 @@
 local skin = {
   info = {
     name    = "Evolved",
-    version = "0.3",
+    version = "0.3", -- "0.33" by MaDDoX (HiDPI version)
     author  = "jK",
   }
 }
@@ -17,7 +17,7 @@ skin.general = {
   borderColor = {1.0, 1.0, 1.0, 1.0},
 
   font = {
-	  font    = SKINDIR .. "fonts/GeogrotesqueCompMedium.otf", --n019003l.pfb",
+	font    = SKINDIR .. "fonts/GeogrotesqueCompMedium.otf", --n019003l.pfb",
     color        = {1,1,1,1},
     outlineColor = {0.05,0.05,0.05,0.9},
     outline = false,
@@ -36,8 +36,8 @@ skin.icons = {
 skin.button = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.20, 0.38, 0.46, 0.95},
   focusColor  = {0.20, 0.42, 0.50, 0.9},
@@ -50,8 +50,8 @@ skin.button = {
 skin.button_tiny = {
   TileImageBK = ":cl:tech_button_bright_tiny_bk.png",
   TileImageFG = ":cl:tech_button_bright_tiny_fg.png",
-  tiles = {12, 12, 12, 12}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {6, 6, 6, 6}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.20, 0.38, 0.46, 0.95},
   focusColor  = {0.20, 0.42, 0.50, 0.9},
@@ -64,8 +64,8 @@ skin.button_tiny = {
 skin.overlay_button = {
   TileImageBK = ":cl:tech_button_small_bk.png",
   TileImageFG = ":cl:tech_button_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0, 0, 0, 0.7},
   focusColor  = {0.94, 0.50, 0.23, 0.7},
@@ -77,8 +77,8 @@ skin.overlay_button = {
 skin.overlay_button_tiny = {
   TileImageBK = ":cl:tech_button_tiny_bk.png",
   TileImageFG = ":cl:tech_button_tiny_fg.png",
-  tiles = {12, 12, 12, 12}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {6, 6, 6, 6}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0, 0, 0, 0.7},
   focusColor  = {0.94, 0.50, 0.23, 0.7},
@@ -90,8 +90,8 @@ skin.overlay_button_tiny = {
 skin.button_square = {
   TileImageBK = ":cl:tech_button_action_bk.png",
   TileImageFG = ":cl:tech_button_action_fg.png",
-  tiles = {22, 22, 22, 22}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {11, 11, 11, 11}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0, 0, 0, 0.7},
   focusColor  = {0.94, 0.50, 0.23, 0.4},
@@ -104,7 +104,7 @@ skin.button_tab = {
   -- yes these are reverted, but also a lie (see images), only one is used
   TileImageFG = ":cl:tech_tabbaritem_fg.png",
   TileImageBK = ":cl:tech_tabbaritem_bk.png",
-  tiles = {10, 10, 10, 0}, --// tile widths: left,top,right,bottom
+  tiles = {5, 5, 5, 0}, --// tile widths: left,top,right,bottom
   padding = {1, 1, 1, 2},
   -- since it's color multiplication, it's easier to control white color (1, 1, 1) than black color (0, 0, 0) to get desired results
   backgroundColor = {0, 0, 0, 1.0},
@@ -118,8 +118,8 @@ skin.button_tab = {
 skin.button_large = {
   TileImageBK = ":cl:tech_button_bk.png",
   TileImageFG = ":cl:tech_button_fg.png",
-  tiles = {120, 60, 120, 60}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {60, 30, 60, 30}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0, 0, 0, 0.7},
   focusColor  = {0.94, 0.50, 0.23, 0.7},
@@ -131,8 +131,8 @@ skin.button_large = {
 skin.button_highlight = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.2, 0.25, 0.35, 0.7},
   focusColor  = {0.3, 0.375, 0.525, 0.5},
@@ -144,8 +144,8 @@ skin.button_highlight = {
 skin.button_square = {
   TileImageBK = ":cl:tech_button_action_bk.png",
   TileImageFG = ":cl:tech_button_action_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0, 0, 0, 0.7},
   focusColor  = {0.94, 0.50, 0.23, 0.4},
@@ -157,8 +157,8 @@ skin.button_square = {
 skin.action_button = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.98, 0.48, 0.26, 0.65},
   focusColor  = {0.98, 0.48, 0.26, 0.9},
@@ -170,8 +170,8 @@ skin.action_button = {
 skin.option_button = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.21, 0.53, 0.60, 0.65},
   focusColor  = {0.21, 0.53, 0.60, 0.9},
@@ -183,8 +183,8 @@ skin.option_button = {
 skin.negative_button = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.85, 0.05, 0.25, 0.65},
   focusColor  = {0.85, 0.05, 0.25, 0.9},
@@ -196,8 +196,8 @@ skin.negative_button = {
 skin.button_disabled = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.2, 0.2, 0.2, 0.65},
   focusColor  = {0, 0, 0, 0},
@@ -210,8 +210,8 @@ skin.combobox = {
 	TileImageBK = ":cl:combobox_ctrl.png",
 	TileImageFG = ":cl:combobox_ctrl_fg.png",
 	TileImageArrow = ":cl:combobox_ctrl_arrow.png",
-	tiles   = {22, 22, 48, 22},
-	padding = {10, 10, 24, 10},
+	tiles   = {11, 11, 24, 11},
+	padding = {5, 5, 12, 5},
 
 	backgroundColor = {1, 1, 1, 0.7},
 	borderColor = {1,1,1,0},
@@ -223,8 +223,8 @@ skin.combobox = {
 skin.combobox_window = {
 	clone     = "window";
 	TileImage = ":cl:combobox_wnd.png";
-	tiles     = {2, 2, 2, 2};
-	padding   = {4, 3, 3, 4};
+	tiles     = {1, 1, 1, 1};
+	padding   = {1, 1.5, 1.5, 2};
 }
 
 
@@ -246,7 +246,7 @@ skin.checkbox = {
   TileImageBK = ":cl:checkbox.png",
   TileImageFG_round = ":cl:radiobutton_checked.png",
   TileImageBK_round = ":cl:radiobutton.png",
-  tiles       = {3,3,3,3},
+  tiles       = {1.5,1.5,1.5,1.5},
   boxsize     = 13,
 
   DrawControl = DrawCheckbox,
@@ -264,7 +264,7 @@ skin.editbox = {
 
   TileImageBK = ":cl:panel2_bg.png",
   TileImageFG = ":cl:editbox_border.png",
-  tiles       = {2, 2, 2, 2},
+  tiles       = {1, 1, 1, 1},
   cursorFramerate = 1, -- Per second
 
   DrawControl = DrawEditBox,
@@ -277,7 +277,7 @@ skin.textbox = {
   bkgndtiles = {14,14,14,14},
 
   TileImageFG = ":cl:panel2_border.png",
-  tiles       = {2, 2, 2, 2},
+  tiles       = {1, 1, 1, 1},
 
   borderColor     = {0.0, 0.0, 0.0, 0.0},
   focusColor      = {0.0, 0.0, 0.0, 0.0},
@@ -299,7 +299,7 @@ skin.imagelistview = {
 
   imageBK  = ":cl:node_selected_bw.png",
   imageFG  = ":cl:node_selected.png",
-  tiles    = {9, 9, 9, 9},
+  tiles    = {4.5, 4.5, 4.5, 4.5},
 
   DrawItemBackground = DrawItemBkGnd,
 }
@@ -318,7 +318,7 @@ skin.imagelistviewitem = {
 skin.panel = {
   TileImageBK = ":c:tech_overlaywindow.png",
   TileImageFG = ":cl:empty.png",
-  tiles = {2, 2, 2, 2},
+  tiles = {1, 1, 1, 1},
   backgroundColor = {1, 1, 1, 0.7},
 
   DrawControl = DrawPanel,
@@ -327,7 +327,7 @@ skin.panel = {
 skin.panel_internal = {
   TileImageBK = ":c:tech_overlaywindow.png",
   TileImageFG = ":cl:empty.png",
-  tiles = {2, 2, 2, 2},
+  tiles = {1, 1, 1, 1},
 
   backgroundColor = {1, 1, 1, 0.6},
 
@@ -337,8 +337,8 @@ skin.panel_internal = {
 skin.panel_button = {
   TileImageBK = ":cl:tech_button_bright_small_bk.png",
   TileImageFG = ":cl:tech_button_bright_small_fg.png",
-  tiles = {20, 14, 20, 14}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {0.2, 0.25, 0.35, 0.7},
   focusColor  = {0.3, 0.375, 0.525, 0.5},
@@ -350,8 +350,8 @@ skin.panel_button = {
 skin.panel_button_rounded = {
   TileImageBK = ":cl:tech_button_rounded.png",
   TileImageFG = ":cl:tech_buttonbk_rounded.png",
-  tiles = {32, 32, 32, 32}, --// tile widths: left,top,right,bottom
-  padding = {10, 10, 10, 10},
+  tiles = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
+  padding = {5, 5, 5, 5},
 
   backgroundColor = {1, 1, 1, 1.0},
   focusColor  = {0.3, 0.375, 0.525, 0.5},
@@ -363,7 +363,7 @@ skin.panel_button_rounded = {
 skin.panelSmall = {
   TileImageBK = ":cl:tech_button.png",
   TileImageFG = ":cl:empty.png",
-  tiles = {2, 2, 2, 2},
+  tiles = {1, 1, 1, 1},
 
   DrawControl = DrawPanel,
 }
@@ -371,7 +371,7 @@ skin.panelSmall = {
 skin.overlay_panel = {
   TileImageBK = ":c:tech_overlaywindow.png",
   TileImageFG = ":cl:empty.png",
-  tiles = {2, 2, 2, 2}, --// tile widths: left,top,right,bottom
+  tiles = {1, 1, 1, 1}, --// tile widths: left,top,right,bottom
   backgroundColor = {1, 1, 1, 0.7},
 
   DrawControl = DrawPanel,
@@ -379,42 +379,62 @@ skin.overlay_panel = {
 
 local fancyBase = {
   TileImageFG = ":cl:empty.png",
-  tiles = {32, 32, 32, 32},
+  tiles = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
 }
 
 local fancySmallBase = {
   TileImageFG = ":cl:empty.png",
-  tiles = {16, 16, 16, 16},
+  tiles = {8, 8, 8, 8},
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
 }
 
 local fancyPanels = {
-	{"0100", {30, 8, 30, 1}, {0, 4, 0, 0}},
-	{"0110", {156, 36, 1, 1}, {0, 10, 0, 0}},
-	{"1100", {1, 36, 156, 1}, {0, 10, 0, 0}},
-	{"0120", {212, 36, 212, 1}, {6, 16, 0, 0}},
-	{"2100", {212, 36, 212, 1}, {0, 16, 6, 0}},
-	{"1011", {172, 1, 172, 37}, {8, 0, 8, 4}},
-	{"2011", {172, 1, 8, 37}, {4, 0, 8, 4}},
-	{"1021", {8, 1, 172, 37}, {8, 0, 4, 4}},
+	{"0100", {15, 4, 15, 1}, {0, 4, 0, 0}},	-- TileImageBK, tiles, padding
+	{"0110", {78, 18, 1, 1}, {0, 10, 0, 0}},
+	{"1100", {1, 18, 78, 1}, {0, 10, 0, 0}},
+	{"0120", {106, 18, 106, 1}, {6, 16, 0, 0}},
+	{"2100", {106, 18, 106, 1}, {0, 16, 6, 0}},
+	{"1011", {86, 1, 86, 18}, {8, 0, 8, 4}},
+	{"2011", {106, 1, 4, 18}, {4, 0, 8, 4}},
+	{"1021", {4, 1, 106, 18}, {8, 0, 4, 4}},
+	--
+	-- Original: LoDPI, Small margins version:
+	--{"0100", {30, 8, 30, 1}, {0, 4, 0, 0}},	-- TileImageBK, tiles, padding
+	--{"0110", {156, 36, 1, 1}, {0, 10, 0, 0}},
+	--{"1100", {1, 36, 156, 1}, {0, 10, 0, 0}},
+	--{"0120", {212, 36, 212, 1}, {6, 16, 0, 0}},
+	--{"2100", {212, 36, 212, 1}, {0, 16, 6, 0}},
+	--{"1011", {172, 1, 172, 37}, {8, 0, 8, 4}},
+	--{"2011", {172, 1, 8, 37}, {4, 0, 8, 4}},
+	--{"1021", {8, 1, 172, 37}, {8, 0, 4, 4}},
+	--
+	-- LoDPI, Large margins version:
+	--{"0100", {30, 8, 30, 1}, {10, 14, 10, 10}},	-- TileImageBK, tiles, padding
+	--{"0110", {156, 36, 1, 1}, {10, 20, 10, 10}},
+	--{"1100", {1, 36, 156, 1}, {10, 20, 10, 10}},
+	--{"0120", {212, 36, 212, 1}, {16, 26, 10, 10}},
+	--{"2100", {212, 36, 212, 1}, {10, 26, 16, 10}},
+	--{"1011", {172, 1, 172, 37}, {18, 10, 18, 14}},
+	--{"2011", {172, 1, 8, 37}, {14, 10, 18, 14}},
+	--{"1021", {8, 1, 172, 37}, {18, 10, 14, 14}},
 }
 
 local fancyPanelsSmall = {
-	{"0011_small", {175, 1, 102, 10}, {12, 0, 0, 6}},
-	{"1001_small", {102, 1, 175, 10}, {0, 0, 12, 6}},
-	{"0110_small", {58, 36, 1, 1}, {12, 4, 0, 0}},
-	{"1100_small", {1, 36, 58, 1}, {0, 4, 12, 0}},
-	{"0120_small", {80, 36, 80, 1}, {0, 10, 0, 0}},
-	{"2100_small", {80, 36, 80, 1}, {0, 10, 0, 0}},
-	{"0001_small", {92, 1, 92, 10}, {0, 0, 0, 6}},
+	{"0011_small", {87, 1, 51, 5}, {12, 0, 0, 6}},
+	{"1001_small", {51, 1, 87, 5}, {0, 0, 12, 6}},
+	{"0110_small", {29, 18, 1, 1}, {12, 4, 0, 0}},
+	{"1100_small", {1, 18, 29, 1}, {0, 4, 12, 0}},
+	{"0120_small", {40, 18, 40, 1}, {0, 10, 0, 0}},
+	{"2100_small", {40, 18, 40, 1}, {0, 10, 0, 0}},
+	{"0001_small", {46, 1, 46, 10}, {0, 0, 0, 6}},
 }
 
 local fancyPanelsLarge = {
-	{"0110_large", {156, 36, 1, 1}, {11, 7, 0, 0}},
-	{"1100_large", {1, 36, 156, 1}, {0, 7, 11, 0}},
+	{"0110_large", {78, 18, 1, 1}, {11, 7, 0, 0}},
+	{"1100_large", {1, 18, 78, 1}, {0, 7, 11, 0}},
 }
 
 local function LoadPanels(panelList)
@@ -425,7 +445,7 @@ local function LoadPanels(panelList)
 			skin[name].TileImageBK = ":cl:" .. name .. ".png"
 		else
 			local name = "panel_" .. panelList[i][1]
-			skin[name] = Spring.Utilities.CopyTable(fancyBase)
+			skin[name] = Spring.Utilities.CopyTable(fancyBase)		-- init Values, set on fancyBase
 			skin[name].tiles = panelList[i][2]
 			skin[name].padding = panelList[i][3]
 			skin[name].TileImageBK = ":cl:" .. name .. ".png"
