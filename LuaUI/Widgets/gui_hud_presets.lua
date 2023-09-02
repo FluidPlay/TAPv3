@@ -53,6 +53,10 @@ local SKIN_FLUSH = {
 	global = "panel_0001_small",
 }
 
+-- How to add/change a panel skin:
+-- First, add a new entry within chili_old / evolved's skin.lua, fancyPanels table
+-- Set it up and assign it here in gui_hud_presets
+
 local function SetFancySkin()
 	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_1100_small")
 	WG.SetWidgetOption(integralName, integralPath, "fancySkinning", true)
@@ -71,11 +75,11 @@ local function SetFancySkinBottomLeft()
 	WG.SetWidgetOption(integralName, integralPath, "fancySkinning", true)
 	WG.SetWidgetOption(integralName, integralPath, "flushLeft", true)
 	WG.SetWidgetOption(minimapName, minimapPath, "fancySkinning", "panel_1100_large")
-	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_2100")
+	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_mainwindow") --panel_2100
 	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_1001_small")
 	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_2011")
 	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_1011")
-	
+
 	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_0011_small")
 end
 
@@ -88,7 +92,7 @@ local function SetFancySkinBottomRight()
 	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_1001_small")
 	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_2011")
 	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_1011")
-	
+
 	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_0011_small")
 end
 

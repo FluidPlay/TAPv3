@@ -9,6 +9,7 @@ Window = Control:Inherit{
   minHeight = 50,
   defaultWidth  = 400,
   defaultHeight = 300,
+  padding         = {7, 7, 7, 7}, --left, top, right, bottom
 }
 
 local this = Window
