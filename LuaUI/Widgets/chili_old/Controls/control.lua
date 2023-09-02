@@ -2,7 +2,7 @@
 
 Control = Object:Inherit{
   classname       = 'control',
-  padding         = {5, 5, 5, 5},
+  padding         = {5, 5, 5, 5}, --left, top, right, bottom
   borderThickness = 1.5,
   borderColor     = {1.0, 1.0, 1.0, 0.6},
   borderColor2    = {0.0, 0.0, 0.0, 0.8},
@@ -33,8 +33,8 @@ Control = Object:Inherit{
   safeOpengl      = true, --// enables scissors
 
   font = {
-    font          = "FreeSansBold.otf",
-    size          = 14,
+    font          = "fonts/GeogrotesqueCompMedium.otf", --"FreeSansBold.otf",
+    size          = 18,
     shadow        = false,
     outline       = false,
     outlineWidth  = 3,

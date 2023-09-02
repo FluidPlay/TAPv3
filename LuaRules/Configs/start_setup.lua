@@ -23,6 +23,6 @@ START_STORAGE = 0
 
 COMM_SELECT_TIMEOUT = 30 * 15 -- 15 seconds
 
-DEFAULT_UNIT = UnitDefNames["dyntrainer_strike_base"].id
-DEFAULT_UNIT_NAME = "Strike Trainer"
+DEFAULT_UNIT = UnitDefNames["armcom"].id --dyntrainer_strike_base
+DEFAULT_UNIT_NAME = "Bow Commander"
 

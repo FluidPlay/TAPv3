@@ -114,6 +114,8 @@ local _DrawTiledTexture = _DrawTiledTexture
 
 
 function _DrawTiledBorder(x,y,w,h, skLeft,skTop,skRight,skBottom, texw,texh, texIndex)
+	--texw = texw * (WG.imageScale or 1) --0.5
+	--texh = texh * (WG.imageScale or 1) --0.5
   texIndex = texIndex or 0
 
   local txLeft   = skLeft/texw
@@ -199,8 +201,8 @@ local _DrawTiledBorder = _DrawTiledBorder
 local function _DrawDragGrip(obj)
   local x = obj.x + 13
   local y = obj.y + 8
-  local w = obj.dragGripSize[1]
-  local h = obj.dragGripSize[2]
+  local w = obj.dragGripSize[1] * (WG.imageScale or 1)
+  local h = obj.dragGripSize[2] * (WG.imageScale or 1)
 
   gl.Color(0.8,0.8,0.8,0.9)
   gl.Vertex(x, y + h*0.5)
