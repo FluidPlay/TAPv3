@@ -199,7 +199,7 @@ confdata.subMenuIcons = {
 	['Settings/Interface/Commands']                 = imgPath..'commands/bold/attack.png',
 	
 	['Settings/HUD Panels/Minimap']                 = imgPath..'epicmenu/map.png',
-	['Settings/HUD Panels/Economy Panel']           = imgPath..'ibeam.png',
+	['Settings/HUD Panels/Economy Panel']           = imgPath..'ore.png',	--ibeam
 	['Settings/HUD Panels/Commander Selector']      = imgPath..'epicmenu/corcommander.png',
 	['Settings/HUD Panels/Tooltip']                 = imgPath..'epicmenu/lightbulb.png',
 	['Settings/HUD Panels/Chat']                    = imgPath..'advplayerslist/chat.png',

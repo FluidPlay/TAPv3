@@ -1131,7 +1131,7 @@ local function calcMinimapMexDrawList()
 end
 
 DrawIncomeLabels = function()
-	glTexture("LuaUI/Images/ibeam.png")
+	glTexture("LuaUI/Images/ore.png")	--ibeam
 	glDepthTest(false)
 	glColor(1,1,1)
 

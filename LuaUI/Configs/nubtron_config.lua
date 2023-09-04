@@ -200,7 +200,7 @@ local steps = {
 		passIfAny	= { 'clickedNubtron' },
 	},
 	epilogue13 = {
-		image		= 'LuaUI/Images/ibeam.png',
+		image		= 'LuaUI/Images/ore.png',	--ibeam
 		passIfAny	= { 'clickedNubtron' },
 	},
 	epilogue14 = {

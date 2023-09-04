@@ -1552,7 +1552,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		width  = imageWidth,
 		height = imageHeight,
 		keepAspect = true,
-		file   = 'LuaUI/Images/ibeam.png',
+		file   = 'LuaUI/Images/ore.png',	--ibeam
 	}
 
 	lbl_storage_metal = Chili.Label:New{
