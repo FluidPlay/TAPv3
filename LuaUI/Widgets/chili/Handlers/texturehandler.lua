@@ -73,6 +73,7 @@ function TextureHandler.LoadTexture(arg1, arg2, arg3)
 		filename = arg1
 		obj = arg2
 	end
+	filename = ":n:"..filename
 	
 	local tex = loaded[filename]
 	if (tex) then

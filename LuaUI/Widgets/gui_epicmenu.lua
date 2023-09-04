@@ -1503,7 +1503,7 @@ local function MakeHotkeyedControl(control, path, option, icon, noHotkey, minHei
 		control:DetectRelativeBounds()
 
 		if icon then
-			local iconImage = Image:New{file = icon, width = 16, height = 16}
+			local iconImage = Image:New{file = icon, width = 64, height = 64} --16, 16
 			children = {iconImage}
 		end
 		children[#children+1] = control
