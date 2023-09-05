@@ -153,7 +153,7 @@ confdata.subMenuIcons = {
 	['Hotkeys']         = imgPath..'epicmenu/keyboard.png',
 	
 	['Hotkeys/Misc']                = imgPath..'epicmenu/misc.png',
-	['Hotkeys/Camera']              = imgPath..'epicmenu/video_camera.png',
+	['Hotkeys/Camera']              = imgPath..'epicmenu/camera.png',
 	['Hotkeys/Construction']        = imgPath..'factory.png',
 	['Hotkeys/Selection']           = imgPath..'epicmenu/selection.png',
 	['Hotkeys/Commands']            = imgPath..'commands/Bold/move.png',
@@ -168,11 +168,11 @@ confdata.subMenuIcons = {
 	
 	['Settings/Reset Settings']     = imgPath..'epicmenu/undo.png',
 	['Settings/Audio']              = imgPath..'epicmenu/vol.png',
-	['Settings/Camera']             = imgPath..'epicmenu/video_camera.png',
+	['Settings/Camera']             = imgPath..'epicmenu/camera.png',
 	['Settings/Graphics']           = imgPath..'epicmenu/graphics.png',
-	['Settings/Accessibility']      = imgPath..'map/minimap_colors_simple.png',
+	['Settings/Accessibility']      = imgPath..'epicmenu/accessibility.png', --minimap_colors_simple.png',
 	['Settings/HUD Panels']         = imgPath..'epicmenu/control_panel.png',
-	['Settings/HUD Presets']        = imgPath..'epicmenu/speed-test-icon.png',
+	['Settings/HUD Presets']        = imgPath..'epicmenu/hud-presets.png',	 --speed-test-icon.png
 	['Settings/Interface']          = imgPath..'epicmenu/robotarm.png',
 	['Settings/Misc']               = imgPath..'epicmenu/misc.png',
 	['Settings/Tips']    = imgPath..'epicmenu/questionmark.png',

@@ -2064,7 +2064,7 @@ MakeSubWindow = function(path, pause, labelScroll)
 				   padding = {2, 2, 2, 2},
 				   parent = buttonBar,
 				   children = {
-					   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/arrow_left.png', width = 16, height = 16, parent = button, x = 4, y = 2},
+					   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/back.png', width = 16, height = 16, parent = button, x = 4, y = 2},
 					   Label:New{caption = 'Back', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
 				   }
 		}
@@ -2095,7 +2095,7 @@ MakeSubWindow = function(path, pause, labelScroll)
 				   padding = {2, 2, 2, 2},
 				   parent = buttonBar,
 				   children = {
-					   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/undo_white.png', width = 16, height = 16, parent = button, x = 4, y = 2},
+					   Image:New{file = LUAUI_DIRNAME  .. 'images/epicmenu/reset.png', width = 16, height = 16, parent = button, x = 4, y = 2}, --undo_white.png
 					   Label:New{caption = 'Reset', x = 24, y = 4, objectOverrideFont = WG.GetFont(),}
 				   }
 		}
@@ -2319,7 +2319,7 @@ local function GetMainPanel(parent, width, height)
 			padding = {0, 2, 0, 0},
 			itemMargin = {1, 0, 0, 0},
 			children = {
-				Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/game.png', width = 20, height = 26},
+				Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/gametime.png', width = 20, height = 26},  --game.png
 				lbl_gtime,
 			},
 		}
@@ -2418,7 +2418,7 @@ local function GetMainPanel(parent, width, height)
 					padding = {0, 1, 0, 0},
 					itemMargin = {2, 0, 0, 0},
 					children = {
-						Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/game.png', width = 20, height = 20},
+						Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/gametime.png', width = 20, height = 20}, --game.png
 						lbl_gtime,
 					},
 				},
@@ -2697,7 +2697,7 @@ local function MakeSaveLoadButtons()
 					end
 				end,
 				key='Load Game',
-				icon = imgPath .. 'commands/Bold/load.png',
+				icon = imgPath .. 'epicmenu/load.png', --commands/Bold/load.png
 			})
 end
 
@@ -2715,7 +2715,7 @@ local function MakeQuitButtons()
 		type = 'button',
 		name = 'Vote Resign',
 		desc = "Ask teammates to resign",
-		icon = imgPath..'epicmenu/whiteflag_check.png',
+		icon = imgPath..'epicmenu/resign-vote.png', --whiteflag_check
 		OnChange = function()
 			if not (Spring.GetPlayerRulesParam(Spring.GetLocalPlayerID(), "initiallyPlayingPlayer") ~= 1 or PlayingButNoTeammate() or isMission) then
 				spSendCommands("say !poll resign")
@@ -2731,7 +2731,7 @@ local function MakeQuitButtons()
 		type = 'button',
 		name = 'Resign',
 		desc = "Abandon team and become spectator",
-		icon = imgPath..'epicmenu/whiteflag.png',
+		icon = imgPath..'epicmenu/resign.png', --whiteflag
 		OnChange = function()
 			if not (isMission or Spring.GetSpectatingState()) then
 				MakeExitConfirmWindow("Are you sure you want to resign?", function()
