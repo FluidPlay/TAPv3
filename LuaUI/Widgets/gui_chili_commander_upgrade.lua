@@ -777,7 +777,7 @@ local function CreateMainWindow()
 		y = 0,
 		bottom = 0,
 		keepAspect = true,
-		file = "LuaUI/Images/commands/Bold/cancel.png",
+		file = "LuaUI/Images/commands/Bold/stop.png",  -- cancel
 		parent = cancelButton,
 	}
 end

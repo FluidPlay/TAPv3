@@ -192,7 +192,7 @@ local imageDir = 'LuaUI/Images/commands/'
 
 local overrides = {
 	[CMD.ATTACK] = { texture = imageDir .. 'Bold/attack.png'},
-	[CMD.STOP] = { texture = imageDir .. 'Bold/cancel.png'},
+	[CMD.STOP] = { texture = imageDir .. 'Bold/stop.png'},	--cancel
 	[CMD.FIGHT] = { texture = imageDir .. 'Bold/fight.png'},
 	[CMD.GUARD] = { texture = imageDir .. 'Bold/guard.png'},
 	[CMD.MOVE] = { texture = imageDir .. 'Bold/move.png'},
