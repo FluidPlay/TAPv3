@@ -30,12 +30,12 @@ skin.general = {
 
 
 skin.icons = {
-  imageplaceholder = ":cl:placeholder.png",
+  imageplaceholder = ":cn:placeholder.png",
 }
 
 skin.button = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -48,8 +48,8 @@ skin.button = {
 }
 
 skin.button_tiny = {
-  TileImageBK = ":cl:tech_button_bright_tiny_bk.png",
-  TileImageFG = ":cl:tech_button_bright_tiny_fg.png",
+  TileImageBK = ":cn:tech_button_bright_tiny_bk.png",
+  TileImageFG = ":cn:tech_button_bright_tiny_fg.png",
   tiles = {6, 6, 6, 6}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -62,8 +62,8 @@ skin.button_tiny = {
 }
 
 skin.overlay_button = {
-  TileImageBK = ":cl:tech_button_small_bk.png",
-  TileImageFG = ":cl:tech_button_small_fg.png",
+  TileImageBK = ":cn:tech_button_small_bk.png",
+  TileImageFG = ":cn:tech_button_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -75,8 +75,8 @@ skin.overlay_button = {
 }
 
 skin.overlay_button_tiny = {
-  TileImageBK = ":cl:tech_button_tiny_bk.png",
-  TileImageFG = ":cl:tech_button_tiny_fg.png",
+  TileImageBK = ":cn:tech_button_tiny_bk.png",
+  TileImageFG = ":cn:tech_button_tiny_fg.png",
   tiles = {6, 6, 6, 6}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -88,8 +88,8 @@ skin.overlay_button_tiny = {
 }
 
 skin.button_square = {
-  TileImageBK = ":cl:tech_button_action_bk.png",
-  TileImageFG = ":cl:tech_button_action_fg.png",
+  TileImageBK = ":cn:tech_button_action_bk.png",
+  TileImageFG = ":cn:tech_button_action_fg.png",
   tiles = {11, 11, 11, 11}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -102,8 +102,8 @@ skin.button_square = {
 
 skin.button_tab = {
   -- yes these are reverted, but also a lie (see images), only one is used
-  TileImageFG = ":cl:tech_tabbaritem_fg.png",
-  TileImageBK = ":cl:tech_tabbaritem_bk.png",
+  TileImageFG = ":cn:tech_tabbaritem_fg.png",
+  TileImageBK = ":cn:tech_tabbaritem_bk.png",
   tiles = {5, 5, 5, 0}, --// tile widths: left,top,right,bottom
   padding = {1, 1, 1, 2},
   -- since it's color multiplication, it's easier to control white color (1, 1, 1) than black color (0, 0, 0) to get desired results
@@ -116,8 +116,8 @@ skin.button_tab = {
 }
 
 skin.button_large = {
-  TileImageBK = ":cl:tech_button_bk.png",
-  TileImageFG = ":cl:tech_button_fg.png",
+  TileImageBK = ":cn:tech_button_bk.png",
+  TileImageFG = ":cn:tech_button_fg.png",
   tiles = {60, 30, 60, 30}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -129,8 +129,8 @@ skin.button_large = {
 }
 
 skin.button_highlight = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -142,8 +142,8 @@ skin.button_highlight = {
 }
 
 skin.button_square = {
-  TileImageBK = ":cl:tech_button_action_bk.png",
-  TileImageFG = ":cl:tech_button_action_fg.png",
+  TileImageBK = ":cn:tech_button_action_bk.png",
+  TileImageFG = ":cn:tech_button_action_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -155,8 +155,8 @@ skin.button_square = {
 }
 
 skin.action_button = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -168,8 +168,8 @@ skin.action_button = {
 }
 
 skin.option_button = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -181,8 +181,8 @@ skin.option_button = {
 }
 
 skin.negative_button = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -194,8 +194,8 @@ skin.negative_button = {
 }
 
 skin.button_disabled = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -207,9 +207,9 @@ skin.button_disabled = {
 }
 
 skin.combobox = {
-	TileImageBK = ":cl:combobox_ctrl.png",
-	TileImageFG = ":cl:combobox_ctrl_fg.png",
-	TileImageArrow = ":cl:combobox_ctrl_arrow.png",
+	TileImageBK = ":cn:combobox_ctrl.png",
+	TileImageFG = ":cn:combobox_ctrl_fg.png",
+	TileImageArrow = ":cn:combobox_ctrl_arrow.png",
 	tiles   = {11, 11, 24, 11},
 	padding = {5, 5, 12, 5},
 
@@ -222,7 +222,7 @@ skin.combobox = {
 
 skin.combobox_window = {
 	clone     = "window";
-	TileImage = ":cl:combobox_wnd.png";
+	TileImage = ":cn:combobox_wnd.png";
 	tiles     = {1, 1, 1, 1};
 	padding   = {1, 1.5, 1.5, 2};
 }
@@ -242,10 +242,10 @@ skin.combobox_item = {
 
 
 skin.checkbox = {
-  TileImageFG = ":cl:checkbox_arrow.png",
-  TileImageBK = ":cl:checkbox.png",
-  TileImageFG_round = ":cl:radiobutton_checked.png",
-  TileImageBK_round = ":cl:radiobutton.png",
+  TileImageFG = ":cn:checkbox_arrow.png",
+  TileImageBK = ":cn:checkbox.png",
+  TileImageFG_round = ":cn:radiobutton_checked.png",
+  TileImageBK_round = ":cn:radiobutton.png",
   tiles       = {1.5,1.5,1.5,1.5},
   boxsize     = 13,
 
@@ -262,8 +262,8 @@ skin.editbox = {
   focusColor  = {1, 1, 1, 1},
   borderColor = {1, 1, 1, 0.6},
 
-  TileImageBK = ":cl:panel2_bg.png",
-  TileImageFG = ":cl:editbox_border.png",
+  TileImageBK = ":cn:panel2_bg.png",
+  TileImageFG = ":cn:editbox_border.png",
   tiles       = {1, 1, 1, 1},
   cursorFramerate = 1, -- Per second
 
@@ -273,10 +273,10 @@ skin.editbox = {
 skin.textbox = {
   hintFont = table.merge({color = {1,1,1,0.7}}, skin.general.font),
 
-  TileImageBK = ":cl:panel2_bg.png",
+  TileImageBK = ":cn:panel2_bg.png",
   bkgndtiles = {14,14,14,14},
 
-  TileImageFG = ":cl:panel2_border.png",
+  TileImageFG = ":cn:panel2_border.png",
   tiles       = {1, 1, 1, 1},
 
   borderColor     = {0.0, 0.0, 0.0, 0.0},
@@ -297,16 +297,16 @@ skin.imagelistview = {
   colorFG          = {0, 0, 0, 0},
   colorFG_selected = {1,1,1,1},
 
-  imageBK  = ":cl:node_selected_bw.png",
-  imageFG  = ":cl:node_selected.png",
+  imageBK  = ":cn:node_selected_bw.png",
+  imageFG  = ":cn:node_selected.png",
   tiles    = {4.5, 4.5, 4.5, 4.5},
 
   DrawItemBackground = DrawItemBkGnd,
 }
 --[[
 skin.imagelistviewitem = {
-  imageFG = ":cl:glassFG.png",
-  imageBK = ":cl:glassBK.png",
+  imageFG = ":cn:glassFG.png",
+  imageBK = ":cn:glassBK.png",
   tiles = {17,15,17,20},
 
   padding = {12, 12, 12, 12},
@@ -316,8 +316,19 @@ skin.imagelistviewitem = {
 --]]
 
 skin.panel = {
-  TileImageBK = ":c:tech_overlaywindow.png",
-  TileImageFG = ":cl:empty.png",
+	--TileImageBK = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	--TileImageFG = ":cn:empty.png",
+	--tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	--padding = {60, 62, 60, 54},
+	--hitpadding = {4, 4, 4, 4},
+	--
+	----captionColor = {1, 1, 1, 0.45},
+	--backgroundColor = {0.1, 0.1, 0.1, 0.7},
+	--
+	--DrawControl = DrawPanel,
+
+  TileImageBK = ":c:panel_bow_small.png", --":c:tech_overlaywindow.png",
+  TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
   backgroundColor = {1, 1, 1, 0.7},
 
@@ -326,7 +337,7 @@ skin.panel = {
 
 skin.panel_internal = {
   TileImageBK = ":c:tech_overlaywindow.png",
-  TileImageFG = ":cl:empty.png",
+  TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
 
   backgroundColor = {1, 1, 1, 0.6},
@@ -335,8 +346,8 @@ skin.panel_internal = {
 }
 
 skin.panel_button = {
-  TileImageBK = ":cl:tech_button_bright_small_bk.png",
-  TileImageFG = ":cl:tech_button_bright_small_fg.png",
+  TileImageBK = ":cn:tech_button_bright_small_bk.png",
+  TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -348,8 +359,8 @@ skin.panel_button = {
 }
 
 skin.panel_button_rounded = {
-  TileImageBK = ":cl:tech_button_rounded.png",
-  TileImageFG = ":cl:tech_buttonbk_rounded.png",
+  TileImageBK = ":cn:tech_button_rounded.png",
+  TileImageFG = ":cn:tech_buttonbk_rounded.png",
   tiles = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
@@ -361,8 +372,8 @@ skin.panel_button_rounded = {
 }
 
 skin.panelSmall = {
-  TileImageBK = ":cl:tech_button.png",
-  TileImageFG = ":cl:empty.png",
+  TileImageBK = ":cn:tech_button.png",
+  TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
 
   DrawControl = DrawPanel,
@@ -370,7 +381,7 @@ skin.panelSmall = {
 
 skin.overlay_panel = {
   TileImageBK = ":c:tech_overlaywindow.png",
-  TileImageFG = ":cl:empty.png",
+  TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1}, --// tile widths: left,top,right,bottom
   backgroundColor = {1, 1, 1, 0.7},
 
@@ -378,14 +389,14 @@ skin.overlay_panel = {
 }
 
 local fancyBase = {
-  TileImageFG = ":cl:empty.png",
+  TileImageFG = ":cn:empty.png",
   tiles = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
 }
 
 local fancySmallBase = {
-  TileImageFG = ":cl:empty.png",
+  TileImageFG = ":cn:empty.png",
   tiles = {8, 8, 8, 8},
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
@@ -393,6 +404,7 @@ local fancySmallBase = {
 
 local fancyPanels = {
 	{"mainwindow", {15,15,15,15}, {5,5,5,5}},	-- Test one (added by MaDDoX)
+	{"bow_small", {550, 420, 547, 424}, {18,18,18,18}},
 	{"0100", {15, 4, 15, 1}, {0, 8, 0, 0}},	-- TileImageBK, tiles, padding
 	{"0110", {78, 18, 1, 1}, {0, 20, 0, 0}},
 	{"1100", {1, 18, 78, 1}, {0, 20, 0, 0}},
@@ -454,13 +466,13 @@ local function LoadPanels(panelList)
 		if type(fancyPanels[i]) == "string" then
 			local name = "panel_" .. panelList[i]
 			skin[name] = Spring.Utilities.CopyTable(fancyBase)
-			skin[name].TileImageBK = ":cl:" .. name .. ".png"
+			skin[name].TileImageBK = ":cn:" .. name .. ".png"
 		else
 			local name = "panel_" .. panelList[i][1]
 			skin[name] = Spring.Utilities.CopyTable(fancyBase)		-- init Values, set on fancyBase
 			skin[name].tiles = panelList[i][2]
 			skin[name].padding = panelList[i][3]
-			skin[name].TileImageBK = ":cl:" .. name .. ".png"
+			skin[name].TileImageBK = ":cn:" .. name .. ".png"
 		end
 	end
 end
@@ -473,19 +485,19 @@ for i = 1, #fancyPanelsSmall do
 	if type(fancyPanelsSmall[i]) == "string" then
 		local name = "panel_" .. fancyPanelsSmall[i]
 		skin[name] = Spring.Utilities.CopyTable(fancySmallBase)
-		skin[name].TileImageBK = ":cl:" .. name .. ".png"
+		skin[name].TileImageBK = ":cln:" .. name .. ".png"
 	else
 		local name = "panel_" .. fancyPanelsSmall[i][1]
 		skin[name] = Spring.Utilities.CopyTable(fancySmallBase)
 		skin[name].tiles = fancyPanelsSmall[i][2]
 		skin[name].padding = fancyPanelsSmall[i][3]
-		skin[name].TileImageBK = ":cl:" .. name .. ".png"
+		skin[name].TileImageBK = ":cn:" .. name .. ".png" --":cn:"
 	end
 end
 
 skin.progressbar = {
-  TileImageFG = ":cl:tech_progressbar_full.png",
-  TileImageBK = ":cl:tech_progressbar_empty.png",
+  TileImageFG = ":cn:tech_progressbar_full.png",
+  TileImageBK = ":cn:tech_progressbar_empty.png",
   tiles       = {14, 8, 14, 8},
   fillPadding     = {4, 3, 4, 3},
 
@@ -501,20 +513,20 @@ skin.multiprogressbar = {
 }
 
 skin.scrollpanel = {
-  BorderTileImage = ":cl:panel2_border.png",
+  BorderTileImage = ":cn:panel2_border.png",
   bordertiles = {2,2,2,2},
 
-  BackgroundTileImage = ":cl:panel2_bg.png",
+  BackgroundTileImage = ":cn:panel2_bg.png",
   bkgndtiles = {14,14,14,14},
 
-  TileImage = ":cl:tech_scrollbar.png",
+  TileImage = ":cn:tech_scrollbar.png",
   tiles     = {7,7,7,7},
-  KnobTileImage = ":cl:tech_scrollbar_knob.png",
+  KnobTileImage = ":cn:tech_scrollbar_knob.png",
   KnobTiles     = {6,8,6,8},
 
-  HTileImage = ":cl:tech_scrollbar.png",
+  HTileImage = ":cn:tech_scrollbar.png",
   htiles     = {7,7,7,7},
-  HKnobTileImage = ":cl:tech_scrollbar_knob.png",
+  HKnobTileImage = ":cn:tech_scrollbar_knob.png",
   HKnobTiles     = {6,8,6,8},
 
   KnobColorSelected = {1,0.7,0.1,0.8},
@@ -527,11 +539,11 @@ skin.scrollpanel = {
 }
 
 skin.trackbar = {
-  TileImage = ":cl:trackbar.png",
+  TileImage = ":cn:trackbar.png",
   tiles     = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
 
-  ThumbImage = ":cl:trackbar_thumb.png",
-  StepImage  = ":cl:trackbar_step.png",
+  ThumbImage = ":cn:trackbar_thumb.png",
+  StepImage  = ":cn:trackbar_step.png",
 
   hitpadding  = {4, 4, 5, 4},
 
@@ -539,12 +551,12 @@ skin.trackbar = {
 }
 
 skin.treeview = {
-  --ImageNode         = ":cl:node.png",
-  ImageNodeSelected = ":cl:node_selected.png",
+  --ImageNode         = ":cn:node.png",
+  ImageNodeSelected = ":cn:node_selected.png",
   tiles = {9, 9, 9, 9},
 
-  ImageExpanded  = ":cl:treeview_node_expanded.png",
-  ImageCollapsed = ":cl:treeview_node_collapsed.png",
+  ImageExpanded  = ":cn:treeview_node_expanded.png",
+  ImageCollapsed = ":cn:treeview_node_collapsed.png",
   treeColor = {1,1,1,0.1},
 
   DrawNode = DrawTreeviewNode,
@@ -576,26 +588,47 @@ skin.window = {
 }
 
 skin.main_window_small = {
-  TileImage = ":c:tech_mainwindow_small.png",
-  tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
-  padding = {10, 6, 10, 6},
-  hitpadding = {4, 4, 4, 4},
+	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	padding = {60, 62, 60, 54},
+	hitpadding = {4, 4, 4, 4},
 
-  captionColor = {1, 1, 1, 0.45},
-  backgroundColor = {0.1, 0.1, 0.1, 0.7},
+	captionColor = {1, 1, 1, 0.45},
+	backgroundColor = {0.1, 0.1, 0.1, 0.7},
 
-  boxes = {
-    resize = {-23, -19, -12, -8},
-    drag = {0, 0, "100%", 10},
-  },
+	boxes = {
+		resize = {-23, -19, -12, -8},
+		--drag = {0, 0, "100%", 10},
+		drag = {0, 0, 0, 0},
+	},
 
-  NCHitTest = NCHitTestWithPadding,
-  NCMouseDown = WindowNCMouseDown,
-  NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+	NCHitTest = NCHitTestWithPadding,
+	NCMouseDown = WindowNCMouseDown,
+	NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
 
-  DrawControl = DrawWindow,
-  DrawDragGrip = function() end,
-  DrawResizeGrip = DrawResizeGrip,
+	DrawControl = DrawWindow,
+	DrawDragGrip = function() end,
+	DrawResizeGrip = DrawResizeGrip,
+  --TileImage = ":c:tech_mainwindow_small.png",
+  --tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
+  --padding = {10, 6, 10, 6},
+  --hitpadding = {4, 4, 4, 4},
+  --
+  --captionColor = {1, 1, 1, 0.45},
+  --backgroundColor = {0.1, 0.1, 0.1, 0.7},
+  --
+  --boxes = {
+  --  resize = {-23, -19, -12, -8},
+  --  drag = {0, 0, "100%", 10},
+  --},
+  --
+  --NCHitTest = NCHitTestWithPadding,
+  --NCMouseDown = WindowNCMouseDown,
+  --NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+  --
+  --DrawControl = DrawWindow,
+  --DrawDragGrip = function() end,
+  --DrawResizeGrip = DrawResizeGrip,
 }
 
 skin.main_window_small_tall = {
@@ -622,49 +655,91 @@ skin.main_window_small_tall = {
 }
 
 skin.main_window_small_flat = {
-  TileImage = ":c:tech_mainwindow_small_flat.png",
-  tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
-  padding = {10, 6, 10, 6},
-  hitpadding = {4, 4, 4, 4},
+	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	padding = {60, 62, 60, 54},
+	hitpadding = {4, 4, 4, 4},
 
-  captionColor = {1, 1, 1, 0.45},
-  backgroundColor = {0.1, 0.1, 0.1, 0.7},
+	captionColor = {1, 1, 1, 0.45},
+	backgroundColor = {0.1, 0.1, 0.1, 0.7},
 
-  boxes = {
-    resize = {-23, -19, -12, -8},
-    drag = {0, 0, "100%", 10},
-  },
+	boxes = {
+		resize = {-23, -19, -12, -8},
+		--drag = {0, 0, "100%", 10},
+		drag = {0, 0, 0, 0},
+	},
 
-  NCHitTest = NCHitTestWithPadding,
-  NCMouseDown = WindowNCMouseDown,
-  NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+	NCHitTest = NCHitTestWithPadding,
+	NCMouseDown = WindowNCMouseDown,
+	NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
 
-  DrawControl = DrawWindow,
-  DrawDragGrip = function() end,
-  DrawResizeGrip = DrawResizeGrip,
+	DrawControl = DrawWindow,
+	DrawDragGrip = function() end,
+	DrawResizeGrip = DrawResizeGrip,
+  --TileImage = ":c:tech_mainwindow_small_flat.png",
+  --tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
+  --padding = {10, 6, 10, 6},
+  --hitpadding = {4, 4, 4, 4},
+  --
+  --captionColor = {1, 1, 1, 0.45},
+  --backgroundColor = {0.1, 0.1, 0.1, 0.7},
+  --
+  --boxes = {
+  --  resize = {-23, -19, -12, -8},
+  --  drag = {0, 0, "100%", 10},
+  --},
+  --
+  --NCHitTest = NCHitTestWithPadding,
+  --NCMouseDown = WindowNCMouseDown,
+  --NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+  --
+  --DrawControl = DrawWindow,
+  --DrawDragGrip = function() end,
+  --DrawResizeGrip = DrawResizeGrip,
 }
 
 skin.main_window_small_very_flat = {
-  TileImage = ":c:tech_mainwindow_small_very_flat.png",
-  tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
-  padding = {10, 6, 10, 6},
-  hitpadding = {4, 4, 4, 4},
+	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	padding = {60, 62, 60, 54},
+	hitpadding = {4, 4, 4, 4},
 
-  captionColor = {1, 1, 1, 0.45},
-  backgroundColor = {0.1, 0.1, 0.1, 0.7},
+	captionColor = {1, 1, 1, 0.45},
+	backgroundColor = {0.1, 0.1, 0.1, 0.7},
 
-  boxes = {
-    resize = {-23, -19, -12, -8},
-    drag = {0, 0, "100%", 10},
-  },
+	boxes = {
+		resize = {-23, -19, -12, -8},
+		--drag = {0, 0, "100%", 10},
+		drag = {0, 0, 0, 0},
+	},
 
-  NCHitTest = NCHitTestWithPadding,
-  NCMouseDown = WindowNCMouseDown,
-  NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+	NCHitTest = NCHitTestWithPadding,
+	NCMouseDown = WindowNCMouseDown,
+	NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
 
-  DrawControl = DrawWindow,
-  DrawDragGrip = function() end,
-  DrawResizeGrip = DrawResizeGrip,
+	DrawControl = DrawWindow,
+	DrawDragGrip = function() end,
+	DrawResizeGrip = DrawResizeGrip,
+  --TileImage = ":c:tech_mainwindow_small_very_flat.png",
+  --tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
+  --padding = {10, 6, 10, 6},
+  --hitpadding = {4, 4, 4, 4},
+  --
+  --captionColor = {1, 1, 1, 0.45},
+  --backgroundColor = {0.1, 0.1, 0.1, 0.7},
+  --
+  --boxes = {
+  --  resize = {-23, -19, -12, -8},
+  --  drag = {0, 0, "100%", 10},
+  --},
+  --
+  --NCHitTest = NCHitTestWithPadding,
+  --NCMouseDown = WindowNCMouseDown,
+  --NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+  --
+  --DrawControl = DrawWindow,
+  --DrawDragGrip = function() end,
+  --DrawResizeGrip = DrawResizeGrip,
 }
 
 skin.main_window_tall = {
@@ -691,9 +766,9 @@ skin.main_window_tall = {
 }
 
 skin.main_window = {
-  TileImage = ":c:tech_mainwindow.png",
-  tiles = {176, 64, 176, 64}, --// tile widths: left,top,right,bottom
-  padding = {10, 6, 10, 6},
+  TileImage = ":c:panel_mainwindow_2.png", --":c:tech_mainwindow.png",
+  tiles = {745, 400, 745, 450}, --// tile widths: left,top,right,bottom
+  padding = {60, 62, 60, 54},
   hitpadding = {4, 4, 4, 4},
 
   captionColor = {1, 1, 1, 0.45},
@@ -713,10 +788,35 @@ skin.main_window = {
   DrawResizeGrip = DrawResizeGrip,
 }
 
+--skin.main_window = {
+--	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+--	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+--	padding = {60, 62, 60, 54},
+--	hitpadding = {4, 4, 4, 4},
+--
+--	captionColor = {1, 1, 1, 0.45},
+--	backgroundColor = {0.1, 0.1, 0.1, 0.7},
+--
+--	boxes = {
+--		resize = {-23, -19, -12, -8},
+--		--drag = {0, 0, "100%", 10},
+--		drag = {0, 0, 0, 0},
+--	},
+--
+--	NCHitTest = NCHitTestWithPadding,
+--	NCMouseDown = WindowNCMouseDown,
+--	NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
+--
+--	DrawControl = DrawWindow,
+--	DrawDragGrip = function() end,
+--	DrawResizeGrip = DrawResizeGrip,
+--}
+
+
 skin.line = {
-  TileImage = ":cl:tech_line.png",
+  TileImage = ":cn:tech_line.png",
   tiles = {0, 0, 0, 0},
-  TileImageV = ":cl:tech_line_vert.png",
+  TileImageV = ":cn:tech_line_vert.png",
   tilesV = {0, 0, 0, 0},
   DrawControl = DrawLine,
 }
@@ -727,8 +827,8 @@ skin.tabbar = {
 
 skin.tabbaritem = {
   -- yes these are reverted, but also a lie (see images), only one is used
-  TileImageFG = ":cl:tech_tabbaritem_fg.png",
-  TileImageBK = ":cl:tech_tabbaritem_bk.png",
+  TileImageFG = ":cn:tech_tabbaritem_fg.png",
+  TileImageBK = ":cn:tech_tabbaritem_bk.png",
   tiles = {10, 10, 10, 0}, --// tile widths: left,top,right,bottom
   padding = {1, 1, 1, 2},
   -- since it's color multiplication, it's easier to control white color (1, 1, 1) than black color (0, 0, 0) to get desired results
