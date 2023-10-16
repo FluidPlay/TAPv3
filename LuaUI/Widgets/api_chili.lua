@@ -34,7 +34,7 @@ local function SetUiScale(scaleFactor)
 	WG.uiScale = realWidth/math.floor(realWidth/scaleFactor)
 end
 SetUiScale((Spring.GetConfigInt("interfaceScale", 100) or 100)/100) --150) or 150)/100)
-WG.imageScale = 0.5
+WG.imageScale = 0.5 --1
 
 function widget:RecvLuaMsg(msg)
 	if string.find(msg, UI_SCALE_MESSAGE) == 1 then
