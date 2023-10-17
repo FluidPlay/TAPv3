@@ -316,7 +316,7 @@ skin.imagelistviewitem = {
 --]]
 
 skin.panel = {
-	--TileImageBK = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	--TileImageBK = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	--TileImageFG = ":cn:empty.png",
 	--tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
 	--padding = {60, 62, 60, 54},
@@ -327,7 +327,7 @@ skin.panel = {
 	--
 	--DrawControl = DrawPanel,
 
-  TileImageBK = ":c:panel_bow_small.png", --":c:tech_overlaywindow.png",
+  TileImageBK = ":cn:panel_bow_small.png", --":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
   backgroundColor = {1, 1, 1, 0.7},
@@ -336,7 +336,7 @@ skin.panel = {
 }
 
 skin.panel_internal = {
-  TileImageBK = ":c:tech_overlaywindow.png",
+  TileImageBK = ":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
 
@@ -380,7 +380,7 @@ skin.panelSmall = {
 }
 
 skin.overlay_panel = {
-  TileImageBK = ":c:tech_overlaywindow.png",
+  TileImageBK = ":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1}, --// tile widths: left,top,right,bottom
   backgroundColor = {1, 1, 1, 0.7},
@@ -485,7 +485,7 @@ for i = 1, #fancyPanelsSmall do
 	if type(fancyPanelsSmall[i]) == "string" then
 		local name = "panel_" .. fancyPanelsSmall[i]
 		skin[name] = Spring.Utilities.CopyTable(fancySmallBase)
-		skin[name].TileImageBK = ":cln:" .. name .. ".png"
+		skin[name].TileImageBK = ":cn:" .. name .. ".png"		--cl
 	else
 		local name = "panel_" .. fancyPanelsSmall[i][1]
 		skin[name] = Spring.Utilities.CopyTable(fancySmallBase)
@@ -564,7 +564,7 @@ skin.treeview = {
 }
 
 skin.window = {
-  TileImage = ":c:tech_overlaywindow.png",
+  TileImage = ":cn:tech_overlaywindow.png",
   tiles = {2, 2, 2, 2}, --// tile widths: left,top,right,bottom
   padding = {13, 13, 13, 13},
   hitpadding = {4, 4, 4, 4},
@@ -588,7 +588,7 @@ skin.window = {
 }
 
 skin.main_window_small = {
-	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
@@ -598,8 +598,8 @@ skin.main_window_small = {
 
 	boxes = {
 		resize = {-23, -19, -12, -8},
-		--drag = {0, 0, "100%", 10},
-		drag = {0, 0, 0, 0},
+		drag = {0, 0, "100%", 10},
+		--drag = {0, 0, 0, 0},
 	},
 
 	NCHitTest = NCHitTestWithPadding,
@@ -609,7 +609,7 @@ skin.main_window_small = {
 	DrawControl = DrawWindow,
 	DrawDragGrip = function() end,
 	DrawResizeGrip = DrawResizeGrip,
-  --TileImage = ":c:tech_mainwindow_small.png",
+  --TileImage = ":cn:tech_mainwindow_small.png",
   --tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
   --padding = {10, 6, 10, 6},
   --hitpadding = {4, 4, 4, 4},
@@ -632,7 +632,7 @@ skin.main_window_small = {
 }
 
 skin.main_window_small_tall = {
-  TileImage = ":c:tech_mainwindow_small_tall.png",
+  TileImage = ":cn:tech_mainwindow_small_tall.png",
   tiles = {40, 40, 40, 40}, --// tile widths: left,top,right,bottom
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
@@ -655,7 +655,7 @@ skin.main_window_small_tall = {
 }
 
 skin.main_window_small_flat = {
-	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
@@ -665,8 +665,8 @@ skin.main_window_small_flat = {
 
 	boxes = {
 		resize = {-23, -19, -12, -8},
-		--drag = {0, 0, "100%", 10},
-		drag = {0, 0, 0, 0},
+		drag = {0, 0, "100%", 10},
+		--drag = {0, 0, 0, 0},
 	},
 
 	NCHitTest = NCHitTestWithPadding,
@@ -676,7 +676,7 @@ skin.main_window_small_flat = {
 	DrawControl = DrawWindow,
 	DrawDragGrip = function() end,
 	DrawResizeGrip = DrawResizeGrip,
-  --TileImage = ":c:tech_mainwindow_small_flat.png",
+  --TileImage = ":cn:tech_mainwindow_small_flat.png",
   --tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
   --padding = {10, 6, 10, 6},
   --hitpadding = {4, 4, 4, 4},
@@ -699,7 +699,7 @@ skin.main_window_small_flat = {
 }
 
 skin.main_window_small_very_flat = {
-	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
@@ -709,8 +709,8 @@ skin.main_window_small_very_flat = {
 
 	boxes = {
 		resize = {-23, -19, -12, -8},
-		--drag = {0, 0, "100%", 10},
-		drag = {0, 0, 0, 0},
+		drag = {0, 0, "100%", 10},
+		--drag = {0, 0, 0, 0},
 	},
 
 	NCHitTest = NCHitTestWithPadding,
@@ -720,7 +720,7 @@ skin.main_window_small_very_flat = {
 	DrawControl = DrawWindow,
 	DrawDragGrip = function() end,
 	DrawResizeGrip = DrawResizeGrip,
-  --TileImage = ":c:tech_mainwindow_small_very_flat.png",
+  --TileImage = ":cn:tech_mainwindow_small_very_flat.png",
   --tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
   --padding = {10, 6, 10, 6},
   --hitpadding = {4, 4, 4, 4},
@@ -743,7 +743,7 @@ skin.main_window_small_very_flat = {
 }
 
 skin.main_window_tall = {
-  TileImage = ":c:tech_mainwindow_tall.png",
+  TileImage = ":cn:tech_mainwindow_tall.png",
   tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
@@ -766,7 +766,7 @@ skin.main_window_tall = {
 }
 
 skin.main_window = {
-  TileImage = ":c:panel_mainwindow_2.png", --":c:tech_mainwindow.png",
+  TileImage = ":cn:panel_mainwindow_2.png", --":cn:tech_mainwindow.png",
   tiles = {745, 400, 745, 450}, --// tile widths: left,top,right,bottom
   padding = {60, 62, 60, 54},
   hitpadding = {4, 4, 4, 4},
@@ -789,7 +789,7 @@ skin.main_window = {
 }
 
 --skin.main_window = {
---	TileImage = ":c:panel_bow_small.png", --":c:tech_mainwindow.png",
+--	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 --	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
 --	padding = {60, 62, 60, 54},
 --	hitpadding = {4, 4, 4, 4},

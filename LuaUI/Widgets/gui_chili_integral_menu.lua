@@ -799,15 +799,15 @@ local function UpdateBackgroundSkin()
 		local selectedCount = spGetSelectedUnitsCount()
 		if selectedCount and selectedCount > 0 then
 			if options.flushLeft.value then
-				newClass = skin.panel_0120_small
+				newClass = skin.panel_bow_small --panel_0120_small	--MaDDoX
 			else
-				newClass = skin.panel_2100_small
+				newClass = skin.panel_bow_small --panel_2100_small
 			end
 		else
 			if options.flushLeft.value then
-				newClass = skin.panel_0110
+				newClass = skin.panel_bow_small --skin.panel_0110
 			else
-				newClass = skin.panel_1100
+				newClass = skin.panel_bow_small	 --panel_1100
 			end
 		end
 	end

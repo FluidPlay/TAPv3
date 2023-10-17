@@ -58,7 +58,7 @@ options = {
 		end
 	},
 	addall = {
-		name = 'Add All',
+		name = 'Add Existing', --Add All
 		desc = 'Existing units will be added to group# when setting autogroup#.',
 		type = 'bool',
 		value = false,

@@ -58,42 +58,42 @@ local SKIN_FLUSH = {
 -- Set it up and assign it here in gui_hud_presets
 
 local function SetFancySkin()
-	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_1100_small")
+	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_bow_small") --panel_1100_small
 	WG.SetWidgetOption(integralName, integralPath, "fancySkinning", true)
 	WG.SetWidgetOption(integralName, integralPath, "flushLeft", false)
 	WG.SetWidgetOption(minimapName, minimapPath, "fancySkinning", "panel_bow_small") --panel_1100_large"
-	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_0120")
-	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_1001_small")
-	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_2021")
-	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_0001")
+	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_bow_small") --panel_0120
+	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_bow_small") --panel_1001_small
+	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_bow_small") --panel_2021
+	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_bow_small") --panel_0001
 	
-	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_0021")
+	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_bow_small")  --panel_0021
 end
 
 local function SetFancySkinBottomLeft()
-	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_0110_small")
+	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_bow_small") --panel_0110_small
 	WG.SetWidgetOption(integralName, integralPath, "fancySkinning", true)
 	WG.SetWidgetOption(integralName, integralPath, "flushLeft", true)
 	WG.SetWidgetOption(minimapName, minimapPath, "fancySkinning", "panel_bow_small") --panel_1100_large
-	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_mainwindow") --panel_2100
-	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_1001_small")
-	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_2011")
-	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_1011")
+	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_bow_small") --panel_2100 --panel_mainwindow
+	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_bow_small") --panel_1001_small
+	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_bow_small") --panel_2011
+	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_bow_small") --panel_1011
 
-	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_0011_small")
+	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_bow_small") --panel_0011_small
 end
 
 local function SetFancySkinBottomRight()
-	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_1100_small")
+	WG.SetWidgetOption(coreName, corePath, "fancySkinning", "panel_bow_small") --panel_1100_small
 	WG.SetWidgetOption(integralName, integralPath, "fancySkinning", true)
 	WG.SetWidgetOption(integralName, integralPath, "flushLeft", false)
 	WG.SetWidgetOption(minimapName, minimapPath, "fancySkinning", "panel_bow_small") --panel_0110_large
-	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_0120")
-	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_1001_small")
-	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_2011")
-	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_1011")
+	WG.SetWidgetOption(selName, selPath, "fancySkinning", "panel_bow_small") --panel_0120
+	WG.SetWidgetOption(globalName, globalPath, "fancySkinning", fancySkinOverride.global or "panel_bow_small") --panel_1001_small
+	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_bow_small") --panel_2011
+	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_bow_small") --panel_1011
 
-	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_0011_small")
+	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_bow_small") --panel_0011_small
 end
 
 local function SetNewOptions()

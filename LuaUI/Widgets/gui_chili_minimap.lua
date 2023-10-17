@@ -534,10 +534,10 @@ options = {
 		items = {
 			{key = 'panel', name = 'None'},
 			{key = 'panel_bow_small', name = 'Bottom Left',}, --panel_1100_large'
-			{key = 'panel_2100', name = 'Bottom Left Flush',},
-			{key = 'panel_0110_large', name = 'Bottom Right'},
-			{key = 'panel_0120', name = 'Bottom Right Flush'},
-			{key = 'panel_1001', name = 'Top Left',},
+			{key = 'panel_bow_small', name = 'Bottom Left Flush',}, --panel_2100
+			{key = 'panel_bow_small', name = 'Bottom Right'}, --panel_0110_large
+			{key = 'panel_bow_small', name = 'Bottom Right Flush'}, --panel_0120
+			{key = 'panel_bow_small', name = 'Top Left',}, --panel_1001
 		},
 		OnChange = function (self)
 			if not Chili then return end
