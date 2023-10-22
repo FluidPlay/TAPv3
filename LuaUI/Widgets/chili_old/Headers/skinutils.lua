@@ -26,7 +26,9 @@ end
 local _DrawTextureAspect = _DrawTextureAspect
 
 
-function _DrawTiledTexture(x,y,w,h, skLeft,skTop,skRight,skBottom, texw,texh, texIndex)
+function _DrawTiledTexture(x,y,w,h, skLeft,skTop,skRight,skBottom, texw,texh, texIndex, skHorScale, skVertScale)
+	texIndex = texIndex or 0 -- skHorScale, skVertScale should really be between skBottom and texw
+
 	texw = texw * (WG.imageScale or 1) --0.5
 	texh = texh * (WG.imageScale or 1) --0.5
     texIndex = texIndex or 0
@@ -36,10 +38,20 @@ function _DrawTiledTexture(x,y,w,h, skLeft,skTop,skRight,skBottom, texw,texh, te
     local txRight  = skRight/texw
     local txBottom = skBottom/texh
 
-    --//scale down the texture if we don't have enough space
-    local scaleY = h/(skTop+skBottom)
-    local scaleX = w/(skLeft+skRight)
-    local scale = (scaleX < scaleY) and scaleX or scaleY
+	skLeft = skLeft * (skHorScale or 1)
+	skRight = skRight * (skHorScale or 1)
+	skTop = skTop * (skVertScale or skHorScale or 1)		 -- if skVertScale is omitted, defaults to skHorScale
+	skBottom = skBottom * (skVertScale or skHorScale or 1)
+
+    --//if scale is not defined, scale down the texture if we don't have enough space
+	local scale
+	local scaleY, scaleX = 1, 1
+	if not (isnumber(skHorScale)) and not (isnumber(skVertScale)) then
+		scaleY = h/(skTop+skBottom)
+		scaleX = w/(skLeft+skRight)
+	end
+    scale = (scaleX < scaleY) and scaleX or scaleY
+	--scale = 0.2
     if (scale<1) then
       skTop = skTop * scale
       skBottom = skBottom * scale
@@ -282,6 +294,7 @@ function DrawWindow(obj)
   local h = obj.height
 
   local skLeft,skTop,skRight,skBottom = unpack4(obj.tiles)
+  local skHorScale, skVertScale = unpack2(obj.tileScale)
 
   local c = obj.color
   if (c) then
@@ -293,7 +306,7 @@ function DrawWindow(obj)
     local texInfo = gl.TextureInfo(obj.TileImage) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   gl.Texture(0,false)
 
   if (obj.caption) and not obj.noFont then
@@ -327,7 +340,8 @@ function DrawButton(obj)
     local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   --gl.Texture(0,false)
 
   local fgcolor = obj.borderColor
@@ -344,7 +358,8 @@ function DrawButton(obj)
     local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   gl.Texture(0,false)
 
   if (obj.caption) and not obj.noFont then
@@ -378,7 +393,8 @@ function DrawEditBox(obj)
 	TextureHandler.LoadTexture(0,obj.TileImageBK,obj)
 	local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
 	local tw,th = texInfo.xsize, texInfo.ysize
-	gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0, 0, obj.width, obj.height,  skLeft,skTop,skRight,skBottom, tw,th)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+	gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0, 0, obj.width, obj.height,  skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
 	--gl.Texture(0,false)
 
 	if obj.state.focused or obj.state.hovered then
@@ -389,7 +405,8 @@ function DrawEditBox(obj)
 	TextureHandler.LoadTexture(0,obj.TileImageFG,obj)
 	local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
 	local tw,th = texInfo.xsize, texInfo.ysize
-	gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0, 0, obj.width, obj.height,  skLeft,skTop,skRight,skBottom, tw,th)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+	gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0, 0, obj.width, obj.height,  skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
 	gl.Texture(0,false)
 
 	local text = obj.text and tostring(obj.text)
@@ -572,7 +589,8 @@ function DrawPanel(obj)
     local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   --gl.Texture(0,false)
 
   gl.Color(obj.borderColor)
@@ -580,7 +598,8 @@ function DrawPanel(obj)
     local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   gl.Texture(0,false)
 end
 
@@ -598,7 +617,8 @@ function DrawItemBkGnd(obj,x,y,w,h,state)
   TextureHandler.LoadTexture(0,obj.imageBK,obj)
     local texInfo = gl.TextureInfo(obj.imageBK) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   --gl.Texture(0,false)
 
   if (state=="selected") then
@@ -609,7 +629,8 @@ function DrawItemBkGnd(obj,x,y,w,h,state)
   TextureHandler.LoadTexture(0,obj.imageFG,obj)
     local texInfo = gl.TextureInfo(obj.imageFG) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   gl.Texture(0,false)
 end
 
@@ -666,7 +687,8 @@ function DrawScrollPanel(obj)
       end
 
       gl.Color(obj.backgroundColor)
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, obj.x,obj.y,width,height, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(obj.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, obj.x,obj.y,width,height, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
       gl.Texture(0,false)
   end
 
@@ -684,8 +706,8 @@ function DrawScrollPanel(obj)
     TextureHandler.LoadTexture(0,obj.TileImage,obj)
       local texInfo = gl.TextureInfo(obj.TileImage) or {xsize=1, ysize=1}
       local tw,th = texInfo.xsize, texInfo.ysize
-
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(obj.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     --gl.Texture(0,false)
 
     if obj._vscrolling or obj._vHovered then
@@ -704,7 +726,8 @@ function DrawScrollPanel(obj)
       local visible = clientHeight / contHeight
       local gripy = math.floor(y + h * pos) + 0.5
       local griph = math.floor(h * visible)
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,gripy,obj.scrollbarSize,griph, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(obj.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,gripy,obj.scrollbarSize,griph, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     --gl.Texture(0,false)
 
     gl.Color(1,1,1,1)
@@ -727,7 +750,8 @@ function DrawScrollPanel(obj)
       local texInfo = gl.TextureInfo(obj.HTileImage) or {xsize=1, ysize=1}
       local tw,th = texInfo.xsize, texInfo.ysize
 
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(obj.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     --gl.Texture(0,false)
 
     if obj._hscrolling or obj._hHovered then
@@ -746,7 +770,8 @@ function DrawScrollPanel(obj)
       local visible = clientWidth / contWidth
       local gripx = math.floor(x + w * pos) + 0.5
       local gripw = math.floor(w * visible)
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, gripx,y,gripw,obj.scrollbarSize, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(obj.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, gripx,y,gripw,obj.scrollbarSize, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     --gl.Texture(0,false)
   end
 
@@ -786,13 +811,15 @@ function DrawCheckbox(obj)
 
   local texInfo = gl.TextureInfo(imageBK) or {xsize=1, ysize=1}
   local tw,th = texInfo.xsize, texInfo.ysize
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   --gl.Texture(0,false)
 
   if (obj.state.checked) then
     local imageFG = obj.round and obj.TileImageFG_round or obj.TileImageFG
     TextureHandler.LoadTexture(0, imageFG, obj)
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(obj.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   end
   gl.Texture(0,false)
 
@@ -821,7 +848,8 @@ function DrawProgressbar(obj)
     local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     --gl.Texture(0,false)
   end
 
@@ -837,11 +865,12 @@ function DrawProgressbar(obj)
 		x, y = x + obj.fillPadding[1], y + obj.fillPadding[2]
 		w, h = w - (obj.fillPadding[1] + obj.fillPadding[3]), h - (obj.fillPadding[2] + obj.fillPadding[4])
 	end
-	
+
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
     if (obj.orientation == "horizontal") then
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w*percent,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w*percent,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     else
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y + (h - h*percent),w,h*percent, skLeft,skTop,skRight,skBottom, tw,th, 0)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y + (h - h*percent),w,h*percent, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     end
 
     --gl.ClipPlane(1, false)
@@ -870,7 +899,8 @@ function DrawTrackbar(self)
     TextureHandler.LoadTexture(0,self.TileImage,self)
     local texInfo = gl.TextureInfo(self.TileImage) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(self.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   end
     
   if not self.noDrawStep then
@@ -956,7 +986,8 @@ function DrawTreeviewNode(self)
       local texInfo = gl.TextureInfo(self.treeview.ImageNodeSelected) or {xsize=1, ysize=1}
       local tw,th = texInfo.xsize, texInfo.ysize
 
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	  local skHorScale, skVertScale = unpack2(self.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     gl.Texture(0,false)
   end
 end
@@ -1036,13 +1067,15 @@ function DrawLine(self)
       TextureHandler.LoadTexture(0,self.TileImageV,self)
         local texInfo = gl.TextureInfo(self.TileImageV) or {xsize=1, ysize=1}
         local tw,th = texInfo.xsize, texInfo.ysize
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, self.x + self.width * 0.5 - 2, self.y, 4, self.height, skLeft,skTop,skRight,skBottom, tw,th, 0)
+		local skHorScale, skVertScale = unpack2(self.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, self.x + self.width * 0.5 - 2, self.y, 4, self.height, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     else
       local skLeft,skTop,skRight,skBottom = unpack4(self.tiles)
       TextureHandler.LoadTexture(0,self.TileImage,self)
         local texInfo = gl.TextureInfo(self.TileImage) or {xsize=1, ysize=1}
         local tw,th = texInfo.xsize, texInfo.ysize
-      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, self.x, self.y + self.height * 0.5 - 2, self.width, 4, skLeft,skTop,skRight,skBottom, tw,th, 0)
+		local skHorScale, skVertScale = unpack2(self.tileScale)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, self.x, self.y + self.height * 0.5 - 2, self.width, 4, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
     end
 
   gl.Texture(0,false)
@@ -1071,7 +1104,8 @@ function DrawTabBarItem(obj)
     local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   --gl.Texture(0,false)
 
   if (obj.state.pressed) then
@@ -1086,7 +1120,8 @@ function DrawTabBarItem(obj)
     local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
     local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+	local skHorScale, skVertScale = unpack2(obj.tileScale)
+    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, x,y,w,h, skLeft,skTop,skRight,skBottom, tw,th, false, skHorScale, skVertScale)
   gl.Texture(0,false)
 
   if (obj.caption) and not obj.noFont then

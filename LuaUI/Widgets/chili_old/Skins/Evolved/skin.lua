@@ -300,6 +300,7 @@ skin.imagelistview = {
   imageBK  = ":cn:node_selected_bw.png",
   imageFG  = ":cn:node_selected.png",
   tiles    = {4.5, 4.5, 4.5, 4.5},
+  tileScale = {0.2, 0.2},
 
   DrawItemBackground = DrawItemBkGnd,
 }
@@ -330,6 +331,7 @@ skin.panel = {
   TileImageBK = ":cn:panel_bow_small.png", --":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
+  tileScale = {0.2, 0.2},
   backgroundColor = {1, 1, 1, 0.7},
 
   DrawControl = DrawPanel,
@@ -339,6 +341,7 @@ skin.panel_internal = {
   TileImageBK = ":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
+  tileScale = {0.2, 0.2},
 
   backgroundColor = {1, 1, 1, 0.6},
 
@@ -375,6 +378,7 @@ skin.panelSmall = {
   TileImageBK = ":cn:tech_button.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
+  tileScale = {0.2, 0.2},
 
   DrawControl = DrawPanel,
 }
@@ -499,6 +503,7 @@ skin.progressbar = {
   TileImageFG = ":cn:tech_progressbar_full.png",
   TileImageBK = ":cn:tech_progressbar_empty.png",
   tiles       = {14, 8, 14, 8},
+  tileScale = {0.2, 0.2},
   fillPadding     = {4, 3, 4, 3},
 
   font = {
@@ -521,6 +526,7 @@ skin.scrollpanel = {
 
   TileImage = ":cn:tech_scrollbar.png",
   tiles     = {7,7,7,7},
+  tileScale = {0.2, 0.2},
   KnobTileImage = ":cn:tech_scrollbar_knob.png",
   KnobTiles     = {6,8,6,8},
 
@@ -541,6 +547,7 @@ skin.scrollpanel = {
 skin.trackbar = {
   TileImage = ":cn:trackbar.png",
   tiles     = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
+  tileScale = {0.2, 0.2},
 
   ThumbImage = ":cn:trackbar_thumb.png",
   StepImage  = ":cn:trackbar_step.png",
@@ -554,6 +561,7 @@ skin.treeview = {
   --ImageNode         = ":cn:node.png",
   ImageNodeSelected = ":cn:node_selected.png",
   tiles = {9, 9, 9, 9},
+  tileScale = {0.2, 0.2},
 
   ImageExpanded  = ":cn:treeview_node_expanded.png",
   ImageCollapsed = ":cn:treeview_node_collapsed.png",
@@ -566,6 +574,7 @@ skin.treeview = {
 skin.window = {
   TileImage = ":cn:tech_overlaywindow.png",
   tiles = {2, 2, 2, 2}, --// tile widths: left,top,right,bottom
+  tileScale = {0.2, 0.2},
   padding = {13, 13, 13, 13},
   hitpadding = {4, 4, 4, 4},
 
@@ -590,6 +599,7 @@ skin.window = {
 skin.main_window_small = {
 	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	tileScale = {0.2, 0.2},
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
 
@@ -609,31 +619,12 @@ skin.main_window_small = {
 	DrawControl = DrawWindow,
 	DrawDragGrip = function() end,
 	DrawResizeGrip = DrawResizeGrip,
-  --TileImage = ":cn:tech_mainwindow_small.png",
-  --tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
-  --padding = {10, 6, 10, 6},
-  --hitpadding = {4, 4, 4, 4},
-  --
-  --captionColor = {1, 1, 1, 0.45},
-  --backgroundColor = {0.1, 0.1, 0.1, 0.7},
-  --
-  --boxes = {
-  --  resize = {-23, -19, -12, -8},
-  --  drag = {0, 0, "100%", 10},
-  --},
-  --
-  --NCHitTest = NCHitTestWithPadding,
-  --NCMouseDown = WindowNCMouseDown,
-  --NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
-  --
-  --DrawControl = DrawWindow,
-  --DrawDragGrip = function() end,
-  --DrawResizeGrip = DrawResizeGrip,
 }
 
 skin.main_window_small_tall = {
   TileImage = ":cn:tech_mainwindow_small_tall.png",
   tiles = {40, 40, 40, 40}, --// tile widths: left,top,right,bottom
+  tileScale = {0.2, 0.2},
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
 
@@ -657,6 +648,7 @@ skin.main_window_small_tall = {
 skin.main_window_small_flat = {
 	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	tileScale = {0.2, 0.2},
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
 
@@ -676,31 +668,12 @@ skin.main_window_small_flat = {
 	DrawControl = DrawWindow,
 	DrawDragGrip = function() end,
 	DrawResizeGrip = DrawResizeGrip,
-  --TileImage = ":cn:tech_mainwindow_small_flat.png",
-  --tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
-  --padding = {10, 6, 10, 6},
-  --hitpadding = {4, 4, 4, 4},
-  --
-  --captionColor = {1, 1, 1, 0.45},
-  --backgroundColor = {0.1, 0.1, 0.1, 0.7},
-  --
-  --boxes = {
-  --  resize = {-23, -19, -12, -8},
-  --  drag = {0, 0, "100%", 10},
-  --},
-  --
-  --NCHitTest = NCHitTestWithPadding,
-  --NCMouseDown = WindowNCMouseDown,
-  --NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
-  --
-  --DrawControl = DrawWindow,
-  --DrawDragGrip = function() end,
-  --DrawResizeGrip = DrawResizeGrip,
 }
 
 skin.main_window_small_very_flat = {
 	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+	tileScale = {0.2, 0.2},
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
 
@@ -720,31 +693,12 @@ skin.main_window_small_very_flat = {
 	DrawControl = DrawWindow,
 	DrawDragGrip = function() end,
 	DrawResizeGrip = DrawResizeGrip,
-  --TileImage = ":cn:tech_mainwindow_small_very_flat.png",
-  --tiles = {76, 30, 76, 30}, --// tile widths: left,top,right,bottom
-  --padding = {10, 6, 10, 6},
-  --hitpadding = {4, 4, 4, 4},
-  --
-  --captionColor = {1, 1, 1, 0.45},
-  --backgroundColor = {0.1, 0.1, 0.1, 0.7},
-  --
-  --boxes = {
-  --  resize = {-23, -19, -12, -8},
-  --  drag = {0, 0, "100%", 10},
-  --},
-  --
-  --NCHitTest = NCHitTestWithPadding,
-  --NCMouseDown = WindowNCMouseDown,
-  --NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
-  --
-  --DrawControl = DrawWindow,
-  --DrawDragGrip = function() end,
-  --DrawResizeGrip = DrawResizeGrip,
 }
 
 skin.main_window_tall = {
   TileImage = ":cn:tech_mainwindow_tall.png",
   tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
+  tileScale = {0.2, 0.2},
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
 
@@ -765,9 +719,11 @@ skin.main_window_tall = {
   DrawResizeGrip = DrawResizeGrip,
 }
 
+-- Used by the Economy panel
 skin.main_window = {
   TileImage = ":cn:panel_mainwindow_2.png", --":cn:tech_mainwindow.png",
   tiles = {745, 400, 745, 450}, --// tile widths: left,top,right,bottom
+  tileScale = {0.5, 0.5},
   padding = {60, 62, 60, 54},
   hitpadding = {4, 4, 4, 4},
 
@@ -787,31 +743,6 @@ skin.main_window = {
   DrawDragGrip = function() end,
   DrawResizeGrip = DrawResizeGrip,
 }
-
---skin.main_window = {
---	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
---	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
---	padding = {60, 62, 60, 54},
---	hitpadding = {4, 4, 4, 4},
---
---	captionColor = {1, 1, 1, 0.45},
---	backgroundColor = {0.1, 0.1, 0.1, 0.7},
---
---	boxes = {
---		resize = {-23, -19, -12, -8},
---		--drag = {0, 0, "100%", 10},
---		drag = {0, 0, 0, 0},
---	},
---
---	NCHitTest = NCHitTestWithPadding,
---	NCMouseDown = WindowNCMouseDown,
---	NCMouseDownPostChildren = WindowNCMouseDownPostChildren,
---
---	DrawControl = DrawWindow,
---	DrawDragGrip = function() end,
---	DrawResizeGrip = DrawResizeGrip,
---}
-
 
 skin.line = {
   TileImage = ":cn:tech_line.png",
