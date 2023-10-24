@@ -387,14 +387,17 @@ skin.overlay_panel = {
   TileImageBK = ":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1}, --// tile widths: left,top,right,bottom
+  tileScale = {0.2, 0.2},
   backgroundColor = {1, 1, 1, 0.7},
 
   DrawControl = DrawPanel,
 }
 
+--- These two are the base table for all the 'fancy' (9-slice) panels, overrides are set below
 local fancyBase = {
   TileImageFG = ":cn:empty.png",
   tiles = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
+  tileSize = {0.2,0.2},
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
 }
@@ -402,10 +405,12 @@ local fancyBase = {
 local fancySmallBase = {
   TileImageFG = ":cn:empty.png",
   tiles = {8, 8, 8, 8},
+  tileSize = {0.2,0.2},
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
 }
 
+---
 local fancyPanels = {
 	{"mainwindow", {15,15,15,15}, {5,5,5,5}},	-- Test one (added by MaDDoX)
 	{"bow_small", {550, 420, 547, 424}, {18,18,18,18}},
@@ -476,6 +481,8 @@ local function LoadPanels(panelList)
 			skin[name] = Spring.Utilities.CopyTable(fancyBase)		-- init Values, set on fancyBase
 			skin[name].tiles = panelList[i][2]
 			skin[name].padding = panelList[i][3]
+			if (panelList[i][4]) then
+				skin[name].tileScale = panelList[i][4] end
 			skin[name].TileImageBK = ":cn:" .. name .. ".png"
 		end
 	end
@@ -486,16 +493,18 @@ LoadPanels(fancyPanelsSmall)
 LoadPanels(fancyPanelsLarge)
 
 for i = 1, #fancyPanelsSmall do
-	if type(fancyPanelsSmall[i]) == "string" then
+	if type(fancyPanelsSmall[i]) == "string" then		-- Only one element (the first) is string, used to name the item
 		local name = "panel_" .. fancyPanelsSmall[i]
 		skin[name] = Spring.Utilities.CopyTable(fancySmallBase)
 		skin[name].TileImageBK = ":cn:" .. name .. ".png"		--cl
-	else
+	else												-- Remaining elements are tables
 		local name = "panel_" .. fancyPanelsSmall[i][1]
 		skin[name] = Spring.Utilities.CopyTable(fancySmallBase)
 		skin[name].tiles = fancyPanelsSmall[i][2]
 		skin[name].padding = fancyPanelsSmall[i][3]
-		skin[name].TileImageBK = ":cn:" .. name .. ".png" --":cn:"
+		if (fancyPanelsSmall[i][4]) then
+			skin[name].tileScale = fancyPanelsSmall[i][4] end
+		skin[name].TileImageBK = ":cn:" .. name .. ".png" --":cl:"
 	end
 end
 
@@ -719,12 +728,12 @@ skin.main_window_tall = {
   DrawResizeGrip = DrawResizeGrip,
 }
 
--- Used by the Economy panel
+-- Used by the end-game stats panel
 skin.main_window = {
   TileImage = ":cn:panel_mainwindow_2.png", --":cn:tech_mainwindow.png",
   tiles = {745, 400, 745, 450}, --// tile widths: left,top,right,bottom
   tileScale = {0.5, 0.5},
-  padding = {60, 62, 60, 54},
+  padding = {30, 31, 30, 27},
   hitpadding = {4, 4, 4, 4},
 
   captionColor = {1, 1, 1, 0.45},

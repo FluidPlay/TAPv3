@@ -529,8 +529,8 @@ options = {
 		},
 		OnChange = function (self)
 			if self.value == "panel_2011" then
-				fancySkinLeft = "panel_2011"
-				fancySkinRight = "panel_1021"
+				fancySkinLeft = "bow_small" --panel_2011
+				fancySkinRight = "bow_small" --panel_1021
 			else
 				fancySkinLeft = self.value
 				fancySkinRight = self.value
@@ -1535,6 +1535,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
+		tileScale = {0.2, 0.2},		-- That's where the outer frame size is set (@MaDDoX)
 
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()
@@ -1690,6 +1691,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
+		tileScale = {0.2, 0.2},
 
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()

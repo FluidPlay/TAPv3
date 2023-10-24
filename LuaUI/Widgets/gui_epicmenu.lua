@@ -20,7 +20,7 @@ local CheckLUAFileAndBackup = VFS.Include("LuaUI/file_backups.lua", nil, VFS.GAM
 --2) "OPTION" is then brought into epicMenuFactory\AddOption() which then attach a tracker which calls "SETTINGS" whenever "OnChange" is called.
 --Note: "SETTINGS" is container which come and go from epicMenuFactory. Its destination is at CAWidgetFactory which save into "Zk_data.lua".
 --4) "OPTION" are then brought into epicMenuFactory\MakeSubWindow() which then wrap the content(s) into regular buttons/checkboxes. This include the modified "OnChange"
---5) then Hotkey buttons is created in epicMenuFactory\MakeHotkeyedControl() and attached to regular buttons horizontally (thru 'StackPanel') which then sent back to  epicMenuFactory\MakeSubWindow()
+--5) then Hotkey buttons are created in epicMenuFactory\MakeHotkeyedControl() and attached to regular buttons horizontally (thru 'StackPanel') which then sent back to  epicMenuFactory\MakeSubWindow()
 --6) then epicMenuFactory\MakeSubWindow() attaches all created button(s) to main "Windows" and finished the job. (now waiting for ChiliFactory to render them all).
 --Note: hotkey button press is handled by Spring, but its registration & attachment with "OnChange" is handled by epicMenuFactory
 --Note: all button rendering & clicking is handled by ChiliFactory (which receive button settings & call "OnChange" if button is pressed)
@@ -2631,6 +2631,7 @@ local function MakeMenuBar()
 		height = crude_height,
 		minHeight = crude_height,
 		minWidth = crude_minWidth,
+		tileScale = {0.2, 0.2},
 		draggable = false,
 		tweakDraggable = true,
 		tweakResizable = true,
@@ -2655,10 +2656,11 @@ local function MakeMenuBar()
 		}
 	}
 
-	panel_background = Panel:New{
+	panel_background = Panel:New{				-- That's where the panel 9-slices is actually set (@MaDDoX)
 		classname = settings.menuClassname,
 		x = 0,
 		y = 0,
+		tileScale = {0.2, 0.2},
 		right = 0,
 		bottom = 0,
 		backgroundColor = {1, 1, 1, 1},

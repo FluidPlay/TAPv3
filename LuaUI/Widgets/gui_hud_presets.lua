@@ -866,7 +866,7 @@ local function SetupMinimapLeftPreset()
 		playerlistWidth,
 		playerlistHeight
 	)
-	
+
 	-- Chat
 	WG.SetWindowPosAndSize("ProChat",
 		chatX,

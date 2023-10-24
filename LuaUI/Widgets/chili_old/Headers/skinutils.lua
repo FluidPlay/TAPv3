@@ -25,7 +25,9 @@ function _DrawTextureAspect(x,y,w,h ,tw,th)
 end
 local _DrawTextureAspect = _DrawTextureAspect
 
-
+--- That's the 9-slices texture drawing method. It'll apply WG.imageScale to the texture size, then apply the 'local'
+--- skHorScale and skVertScale. If the latter two aren't defined, it will auto-shrink when there's not enough space.
+--- Those params are set from the object's tileScale param, in the main method call (eg.: window, panel)
 function _DrawTiledTexture(x,y,w,h, skLeft,skTop,skRight,skBottom, texw,texh, texIndex, skHorScale, skVertScale)
 	texIndex = texIndex or 0 -- skHorScale, skVertScale should really be between skBottom and texw
 
