@@ -68,14 +68,14 @@ local unitClasses = {
 	Raider	= { 'cloakraid' },
 }
 local unitClassNames = {
-	Mex		= 'Mex',
+	Mex		= 'Sprawler',
 	Solar	= 'Solar Collector',
-	LLT		= 'Lotus',
-	BotLab	= 'Cloakbot Factory',
+	LLT		= 'Light Laser Tower',
+	BotLab	= 'Bot Lab',
 	Radar	= 'Radar Tower',
 
-	Con		= 'Conjurer',
-	Raider	= 'Glaive',
+	Con		= 'Builder',
+	Raider	= 'Glaive',	-- leveler?
 }
 --mobile units
 local mClasses = { Con=1, Raider=1, }
@@ -243,7 +243,7 @@ local taskOrder = {
 }
 --use "states" from the steps table above.
 local tasks = {
-	
+
 	intro = {
 		--desc		= 'Introduction',
 		states		= {'intro', 'intro3', 'intro4', 'intro5', },
