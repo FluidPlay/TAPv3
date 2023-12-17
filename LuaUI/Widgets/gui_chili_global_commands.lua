@@ -482,15 +482,18 @@ local function InitializeControls()
 
 	-- handled differently because command is registered in another widget
 	buttons.toggle_eco_display = MakeCommandButton(contentHolder, offset,
-		'LuaUI/images/map/metalmap.png',
+		'LuaUI/Images/global/spotlight.png', --map/metalmap.png',
 		{action = 'showeco'}
 	)
 	offset = offset + 1
 
-	teamcolor_selector = MakeDropdownButtonsFromWidget(contentHolder, offset, "", 180, 'LuaUI/images/map/minimap_colors_simple.png', "Local Team Colors", "Settings/Interface/Team Colors", "colorSetting")
+	--'LuaUI/images/map/minimap_colors_simple.png'
+	teamcolor_selector = MakeDropdownButtonsFromWidget(contentHolder, offset, "", 180, 'LuaUI/Images/global/colors.png', "Local Team Colors", "Settings/Interface/Team Colors", "colorSetting")
 	offset = offset + 1
 
-	buttons.clearmapmarks = MakeCommandButton(contentHolder, offset, 'LuaUI/images/global/eraser.png', --		'LuaUI/images/drawingcursors/eraser.png',
+	--		'LuaUI/images/drawingcursors/eraser.png',
+	buttons.clearmapmarks = MakeCommandButton(contentHolder, offset,
+		'LuaUI/images/global/eraser.png',
 		{option = 'clearmapmarks'}
 	)
 	offset = offset + 1
