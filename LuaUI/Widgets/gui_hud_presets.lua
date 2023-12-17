@@ -81,7 +81,7 @@ local function SetFancySkinBottomLeft()
 	WG.SetWidgetOption(econName, econPath, "fancySkinning", fancySkinOverride.econ or "panel_bow_wide") --panel_2011
 	WG.SetWidgetOption(specName, specPath, "fancySkinning", "panel_bow_small") --panel_1011
 
-	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_bow_small") --panel_0011_small
+	WG.crude.SetMenuSkinClass(fancySkinOverride.epic or "panel_bow_wide") --panel_0011_small
 end
 
 local function SetFancySkinBottomRight()

@@ -20,6 +20,9 @@ include("colors.lua")
 VFS.Include("LuaRules/Configs/constants.lua")
 local MIN_STORAGE = 0.5
 
+-- UI settings
+local minWindowHeight = 170
+
 WG.allies = 1
 --[[
 WG.windEnergy = 0
@@ -529,8 +532,8 @@ options = {
 		},
 		OnChange = function (self)
 			if self.value == "panel_2011" then
-				fancySkinLeft = "bow_wide" --panel_2011; bow_small
-				fancySkinRight = "bow_wide" --panel_1021
+				fancySkinLeft = "bow_small" --panel_2011
+				fancySkinRight = "bow_small" --panel_1021
 			else
 				fancySkinLeft = self.value
 				fancySkinRight = self.value
@@ -1444,7 +1447,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 	local mouseDownOnReserve = false
 
 	--// Some (only some) Configuration for shared values
-	local subWindowWidth = '50%'
+	local subWindowWidth = '49.5%'
 	local screenHorizCentre = screenWidth / 2
 	local economyPanelWidth = math.min(660,screenWidth-10)
 
@@ -1461,8 +1464,8 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		x = oldX or (screenHorizCentre - economyPanelWidth/2),
 		y = oldY or 0,
 		clientWidth  = oldW or economyPanelWidth,
-		clientHeight = oldH or 116,
-		minHeight = 100,
+		clientHeight = oldH or 170, --116
+		minHeight = minWindowHeight, --100
 		draggable = false,
 		resizable = false,
 		tweakDraggable = true,

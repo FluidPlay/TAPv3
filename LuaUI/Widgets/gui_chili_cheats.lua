@@ -13,6 +13,8 @@ end
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
+local global_cheat_imgfile = "LuaUI/Images/global/cheat.png"
+
 local setAiPosCommand = {
 	id      = CMD_CHEAT_GIVE,
 	type    = CMDTYPE.ICON_MAP,
@@ -698,7 +700,7 @@ local function InitializeControls()
 				mainWindow:Show()
 			end
 		end
-		global_command_button = WG.GlobalCommandBar.AddCommand("LuaRules/Images/awards/trophy_friend.png", "", ToggleWindow)
+		global_command_button = WG.GlobalCommandBar.AddCommand(global_cheat_imgfile, "", ToggleWindow)  --LuaRules/Images/awards/trophy_friend.png
 	end
 
 	languageChanged() -- update texts

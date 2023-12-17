@@ -45,7 +45,7 @@ local function toggleTeamColors()
 end
 
 local globalCommands = {
-	
+
 }
 
 local teamcolor_selector, mapOverlay
@@ -125,13 +125,13 @@ options = {
 		OnChange = function (self)
 			local currentSkin = Chili.theme.skin.general.skinName
 			local skin = Chili.SkinHandler.GetSkin(currentSkin)
-			
+
 			local className = self.value
 			local newClass = skin.panel
 			if skin[className] then
 				newClass = skin[className]
 			end
-			
+
 			contentHolder.tiles = newClass.tiles
 			contentHolder.TileImageFG = newClass.TileImageFG
 			--contentHolder.backgroundColor = newClass.backgroundColor
@@ -249,7 +249,7 @@ local function MakeCommandButton(parent, position, file, params, vertical, onCli
 	desc = params.desc or ""
 	action = action or params.action
 	command = params.command
-	
+
 	local btn = Chili.Button:New{
 		x = (vertical and 0) or ((position - 1)*BUTTON_PLACE_SPACE + BUTTON_Y),
 		y = (vertical and ((position - 1)*BUTTON_PLACE_SPACE + BUTTON_Y)) or BUTTON_Y,
@@ -293,7 +293,7 @@ local function MakeCommandButton(parent, position, file, params, vertical, onCli
 end
 
 local function MakeDropdownButtonsFromWidget(parent, position, tooltip, width, titleImage, widgetName, widgetPath, settingName)
-	
+
 	local option = WG.GetWidgetOption(widgetName, widgetPath, settingName)
 	if not (option and option.items) then
 		return
@@ -304,9 +304,9 @@ local function MakeDropdownButtonsFromWidget(parent, position, tooltip, width, t
 		items[i] = option.items[i].name
 		keys[i] = option.items[i].key
 	end
-	
+
 	local freeze = true
-	
+
 	local overlaySelector = Chili.ComboBox:New{
 		x = (position - 1)*BUTTON_PLACE_SPACE + BUTTON_Y,
 		y = BUTTON_Y,
@@ -335,9 +335,9 @@ local function MakeDropdownButtonsFromWidget(parent, position, tooltip, width, t
 			end
 		},
 	}
-	
+
 	freeze = false
-	
+
 	local currentOverlayImage = Chili.Image:New{
 		x = 0,
 		y = 0,
@@ -351,7 +351,7 @@ local function MakeDropdownButtonsFromWidget(parent, position, tooltip, width, t
 end
 
 local function MakeDropdownButtons(parent, position, overlays)
-	
+
 	local overlayPanel = Panel:New{
 		x = 0,
 		y = 38,
@@ -361,19 +361,19 @@ local function MakeDropdownButtons(parent, position, overlays)
 		parent = screen0,
 		padding = {6,4,0,0}
 	}
-		
+
 	local function HideSelector()
 		overlayPanel:SetVisibility(false)
 	end
 	HideSelector()
-	
+
 	local overlayImageMap = {}
 	for i = 1, #overlays do
 		buttons["overlay_" .. overlays[i][2]] = MakeCommandButton(overlayPanel, i, overlays[i][1], {option = overlays[i][2]}, true, HideSelector)
-		
+
 		overlayImageMap[overlays[i][3]] = overlays[i][1]
 	end
-	
+
 	local overlaySelector = Chili.Button:New{
 		x = (position - 1)*BUTTON_PLACE_SPACE + BUTTON_Y,
 		y = BUTTON_Y,
@@ -392,7 +392,7 @@ local function MakeDropdownButtons(parent, position, overlays)
 			end
 		},
 	}
-		
+
 	local currentOverlayImage = Chili.Image:New{
 		x = 0,
 		y = 0,
@@ -400,9 +400,9 @@ local function MakeDropdownButtons(parent, position, overlays)
 		bottom = 0,
 		parent = overlaySelector,
 	}
-	
+
 	local externalFunctions = {}
-	
+
 	local oldDrawMode
 	function externalFunctions.UpdateOverlayImage()
 		local newDrawMode = Spring.GetMapDrawMode()
@@ -410,7 +410,7 @@ local function MakeDropdownButtons(parent, position, overlays)
 			return
 		end
 		oldDrawMode = newDrawMode
-		
+
 		currentOverlayImage.file = overlayImageMap[newDrawMode]
 		currentOverlayImage:Invalidate()
 	end
@@ -419,7 +419,7 @@ local function MakeDropdownButtons(parent, position, overlays)
 		overlaySelector.tooltip = newTooltip
 		overlaySelector:Invalidate()
 	end
-	
+
 	return externalFunctions
 end
 
@@ -472,51 +472,50 @@ local function InitializeControls()
 		{'LuaUI/images/map/heightmap.png', 'viewheightmap', "height"},
 		{'LuaUI/images/map/blockmap.png', 'viewblockmap', "pathTraversability"},
 	}
-	
+
 	-- Overlay related buttons
 	local offset = 1
-	
+
 	mapOverlay = MakeDropdownButtons(contentHolder, offset, overlayConfig)
 	mapOverlay.UpdateOverlayImage()
 	offset = offset + 1
-	
+
 	-- handled differently because command is registered in another widget
 	buttons.toggle_eco_display = MakeCommandButton(contentHolder, offset,
 		'LuaUI/images/map/metalmap.png',
 		{action = 'showeco'}
 	)
 	offset = offset + 1
-	
+
 	teamcolor_selector = MakeDropdownButtonsFromWidget(contentHolder, offset, "", 180, 'LuaUI/images/map/minimap_colors_simple.png', "Local Team Colors", "Settings/Interface/Team Colors", "colorSetting")
 	offset = offset + 1
-	
-	buttons.clearmapmarks = MakeCommandButton(contentHolder, offset,
-		'LuaUI/images/drawingcursors/eraser.png',
+
+	buttons.clearmapmarks = MakeCommandButton(contentHolder, offset, 'LuaUI/images/global/eraser.png', --		'LuaUI/images/drawingcursors/eraser.png',
 		{option = 'clearmapmarks'}
 	)
 	offset = offset + 1
-	
+
 	buttons.lastmsgpos = MakeCommandButton(contentHolder, offset,
 		'LuaUI/images/Crystal_Clear_action_flag.png',
 		{option = 'lastmsgpos'}
 	)
 	offset = offset + 1
-	
+
 	-- Global commands
 	offset = offset + 0.5
-	
+
 	buttons.place_retreat_zone = MakeCommandButton(contentHolder, offset,
 		'LuaUI/images/commands/Bold/retreat.png',
 		{action = 'sethaven', command = CMD_RETREAT_ZONE}
 	)
 	offset = offset + 1
-	
+
 	buttons.place_ferry_route = MakeCommandButton(contentHolder, offset,
 		'LuaUI/images/commands/Bold/ferry.png',
 		{action = 'setferry', command = CMD_SET_FERRY}
 	)
 	offset = offset + 1
-	
+
 	commandButtonOffset = offset + 0.5
 end
 
