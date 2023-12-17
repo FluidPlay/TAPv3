@@ -529,8 +529,8 @@ options = {
 		},
 		OnChange = function (self)
 			if self.value == "panel_2011" then
-				fancySkinLeft = "bow_small" --panel_2011
-				fancySkinRight = "bow_small" --panel_1021
+				fancySkinLeft = "bow_wide" --panel_2011; bow_small
+				fancySkinRight = "bow_wide" --panel_1021
 			else
 				fancySkinLeft = self.value
 				fancySkinRight = self.value

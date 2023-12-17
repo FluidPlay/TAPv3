@@ -410,10 +410,20 @@ local fancySmallBase = {
   backgroundColor = {1,1,1,1},
 }
 
----
+--- ---
+----- If it's a string entry, skin[name].TileImageBK = ":cn:" .. name .. ".png"
+----- [2] => "tiles" definition; [3] => "padding" definition; [4] => "tileScale" def (optional)
+--tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+--padding = {60, 62, 60, 54},
+--tileScale = {0.2, 0.2},
 local fancyPanels = {
 	{"mainwindow", {15,15,15,15}, {5,5,5,5}},	-- Test one (added by MaDDoX)
 	{"bow_small", {550, 420, 547, 424}, {18,18,18,18}},
+--	{"bow_tall", {418, 870, 418, 874}, {18,18,18,18}},	-- resulting image name => panel_bow_tall.png
+--	{"bow_wide", {1108, 400, 1098, 426}, {18,18,18,18}},
+	{"bow_tall", {209, 435, 209, 437}, {18,18,18,18}},	-- resulting image name => panel_bow_tall.png
+	{"bow_wide", {554, 200, 549, 213}, {18,18,18,18}},
+	----
 	{"0100", {15, 4, 15, 1}, {0, 8, 0, 0}},	-- TileImageBK, tiles, padding
 	{"0110", {78, 18, 1, 1}, {0, 20, 0, 0}},
 	{"1100", {1, 18, 78, 1}, {0, 20, 0, 0}},
