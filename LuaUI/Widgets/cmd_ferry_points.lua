@@ -175,7 +175,7 @@ function widget:CommandsChanged()
 		cursor  = 'Repair',
 		action  = 'setferry',
 		params  = { },
-		texture = 'LuaUI/Images/commands/Bold/ferry.png',
+		texture = 'LuaUI/Images/global/ferry_route.png',
 
 		pos = {CMD_REPEAT,CMD_MOVE_STATE,CMD_FIRE_STATE, CMD_RETREAT},
 	}

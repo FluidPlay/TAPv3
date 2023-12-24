@@ -467,10 +467,10 @@ local function InitializeControls()
 	}
 
 	local overlayConfig = {
-		{nil, 'viewstandard', "normal"},
-		{'LuaUI/images/map/fow.png', 'viewfow', "los"},
-		{'LuaUI/images/map/heightmap.png', 'viewheightmap', "height"},
-		{'LuaUI/images/map/blockmap.png', 'viewblockmap', "pathTraversability"},
+		{'LuaUI/Images/global/clear.png', 'viewstandard', "normal"},
+		{'LuaUI/Images/global/los.png', 'viewfow', "los"},
+		{'LuaUI/Images/global/heightmap.png', 'viewheightmap', "height"},
+		{'LuaUI/Images/global/pathing.png', 'viewblockmap', "pathTraversability"},
 	}
 
 	-- Overlay related buttons
@@ -508,13 +508,13 @@ local function InitializeControls()
 	offset = offset + 0.5
 
 	buttons.place_retreat_zone = MakeCommandButton(contentHolder, offset,
-		'LuaUI/images/commands/Bold/retreat.png',
+		'LuaUI/Images/global/retreat_zone.png',
 		{action = 'sethaven', command = CMD_RETREAT_ZONE}
 	)
 	offset = offset + 1
 
 	buttons.place_ferry_route = MakeCommandButton(contentHolder, offset,
-		'LuaUI/images/commands/Bold/ferry.png',
+		'LuaUI/Images/global/ferry_route.png',
 		{action = 'setferry', command = CMD_SET_FERRY}
 	)
 	offset = offset + 1
