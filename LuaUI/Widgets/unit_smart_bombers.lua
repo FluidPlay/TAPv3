@@ -32,12 +32,13 @@ local CMD_FIRE_STATE = CMD.FIRE_STATE
 local FIRESTATE_FIREATWILL = CMD.FIRESTATE_FIREATWILL or 2
 local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL
 
+--TODO: Generalize from customParams-fund
 local bomberDefIDs = {
-	[UnitDefNames["bomberprec"].id] = true,
-	[UnitDefNames["bomberriot"].id] = true,
-	[UnitDefNames["bomberdisarm"].id] = true,
-	[UnitDefNames["bomberheavy"].id] = true,
-	[UnitDefNames["bomberstrike"].id] = true,
+	[UnitDefNames["armliche"].id] = true,
+	[UnitDefNames["armpnix"].id] = true,
+	[UnitDefNames["armthund"].id] = true,
+	[UnitDefNames["corhurc"].id] = true,
+	[UnitDefNames["corshad"].id] = true,
 }
 
 --------------------------------------------------------------------------------

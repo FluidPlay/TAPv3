@@ -10,18 +10,34 @@ local spGetFeatureResources = Spring.GetFeatureResources
 local spGetUnitHealth   = Spring.GetUnitHealth
 local spGetUnitSeparation = Spring.GetUnitSeparation
 local spGetFullBuildQueue = Spring.GetFullBuildQueue --use this only for factories, to ignore rally points
+local spGetUnitCommands = Spring.GetUnitCommands
+local spGetCommandQueue = Spring.GetCommandQueue
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spValidUnitID = Spring.ValidUnitID
+local spGetUnitIsDead = Spring.GetUnitIsDead
+
+---==== Redundant to taptools
+
+function IsValidUnit(unitID)
+    if not isnumber(unitID) then
+        return false end
+    local unitDefID = spGetUnitDefID(unitID)
+    if unitDefID and spValidUnitID(unitID) and not spGetUnitIsDead(unitID) then
+        return true
+    end
+    return false
+end
+
+----========
 
 local function sqrDistance(x1,z1,x2,z2)
     local dx,dz = x1-x2,z1-z2
     return dx*dx + dz*dz
 end
 
---=====================================================================================
---  Below functions are redundant to taptools, to prevent making this include too big
---=====================================================================================
-
+--redundant to taptools, to prevent making this include too big
 local function math_clamp(min, max, n)
     if not isnumber(min) or not isnumber(max) or not isnumber(n) then
         return n
@@ -33,16 +49,11 @@ local function math_clamp(min, max, n)
     return n
 end
 
-local function GetUnitHarvestStorage(unitID)
-	local oreLoad = spGetUnitRulesParam(unitID, "oreLoad")
-	return (oreLoad or 0)
-end
-
---================
-
-local function hasBuildQueue(unitID)
+function HasBuildQueue(unitID)
+    if not IsValidUnit(unitID) then
+        return end
     local buildqueue = spGetFullBuildQueue(unitID) -- => nil | buildOrders = { [1] = { [number unitDefID] = number count }, ... } }
-    --spEcho("build queue size: "..(buildqueue and #buildqueue or "N/A"))
+    --Spring.Echo("build queue size: "..(buildqueue and #buildqueue or "N/A"))
     if buildqueue then
         return #buildqueue > 0
     else
@@ -50,25 +61,52 @@ local function hasBuildQueue(unitID)
     end
 end
 
-function getNearestUID (ud)
+function HasCommandQueue(unitID)
+    if not IsValidUnit(unitID) then
+        return end
+    local commandQueue = spGetCommandQueue(unitID, -1)
+    --local unitCommands = spGetUnitCommands(unitID, 20)
+
+    --Spring.Echo("command queue size: "..(#commandQueue or "nil"))
+
+    --if executingCmd[unitID] then
+    --    return false
+    --end
+    if commandQueue then
+        return #commandQueue > 0
+    end
+    return false
+end
+
+-- Nearest repairable, including unfinished (under construction, can be assisted)
+function getNearestAnyRepairableID (ud)
+    --NearestItemAround(unitID, pos, unitDef, radius, defCheck, idCheck, isFeature, teamID, allyTeamID)
     return NearestItemAround(ud.unitID, ud.pos, ud.unitDef, ud.radius,
             function(x) return (x.customParams.isorechunk == nil) end,
             function(x)
-                local health,maxHealth = spGetUnitHealth(x)
-                if not health or not maxHealth then
+                local health,maxHealth,paralyzeDamage,captureProgress,buildProgress=spGetUnitHealth(x)
+                --local done = buildProgress and buildProgress >= 1
+                if not health or not maxHealth then --or not done then
                     return nil end
-                return (health < (maxHealth * 0.99)) end)
+                return (health < (maxHealth * 0.99))
+            end,
+            false,
+            ud.team)
 end
 
 function getNearestRepairableID (ud)
     return NearestItemAround(ud.unitID, ud.pos, ud.unitDef, ud.radius,
-            function(x) return (x.customParams.isorechunk == nil) end ,
             function(x)
-                local health,maxHealth,_,_,done = spGetUnitHealth(x)
-                if not health or not maxHealth then
+                return (x.customParams == nil or x.customParams.isorechunk == nil) end ,
+            function(x)
+                local health,maxHealth,_,_,buildProgress = spGetUnitHealth(x)
+                local done = buildProgress and buildProgress >= 1
+                if health == nil or maxHealth == nil or not done then
                     return nil
                 end
-                return done and health < (maxHealth * 0.99) end )
+                return health < (maxHealth * 0.99) end,
+                ud.team
+            )
 end
 
 function getNearestFeatureID (ud)
@@ -104,9 +142,20 @@ end
 --end
 
 function getNearestFactoryID (ud)
+    --function NearestItemAround(unitID, pos, unitDef, radius, defCheck, idCheck, isFeature, teamID, allyTeamID)
     return NearestItemAround(ud.unitID, ud.pos, ud.unitDef, ud.radius,
-            function(x) return x.isFactory end,     --We're only interested in factories currently producing
-            function(x) return hasBuildQueue(x) end)
+            function(x) return x.isFactory end,     -- x.buildOptions and (#(x.buildOptions)>0) --We're only interested in factories currently producing
+            function(x) return HasBuildQueue(x) end,
+            false,
+            ud.team)
+end
+
+function getNearestBuilderID (ud)
+    return NearestItemAround(ud.unitID, ud.pos, ud.unitDef, ud.radius,
+            function(x) return x.isBuilder end,     -- x.buildOptions and (#(x.buildOptions)>0) --We're only interested in factories currently producing
+            function(x) return HasBuildQueue(x) end,
+            false,
+            ud.team)
 end
 
 function getNearestMetalID (ud)
@@ -136,18 +185,31 @@ end
 
 function getNearestOreTowerID (ud, oreTowers, maxOreTowerScanRange)
     return NearestItemAround(ud.unitID, ud.pos, ud.unitDef, maxOreTowerScanRange, nil,
-            function(x) return (oreTowers and oreTowers[x] or nil) end) --,
+                function(x) return (oreTowers and oreTowers[x] or nil) end,
+                false,
+                ud.team) --,
+    --(unitID, pos, unitDef, radius, defCheck, idCheck, isFeature, teamID, allyTeamID)
 end
 
 function getParentOreTowerID (ud, harvesters)
     return harvesters[ud.unitID] and harvesters[ud.unitID].parentOreTowerID
 end
 
+
+--- returns nil (not a harvester or current amount not initialized) or a given amount from 0 to max
+function getUnitHarvestStorage(unitID)
+    local oreLoad = spGetUnitRulesParam(unitID, "oreLoad")
+    if not isnumber(oreLoad) then
+        return 0
+    end
+    return oreLoad
+end
+
 function getLoadPercentage(unitID, unitDef)
     if not unitDef.customParams or not unitDef.customParams.maxorestorage then
         return 0 end
     local maxorestorage = tonumber(unitDef.customParams.maxorestorage)
-    return math_clamp(GetUnitHarvestStorage(unitID) / maxorestorage, 0,1)
+    return math_clamp(getUnitHarvestStorage(unitID) / maxorestorage, 0,1)
 end
 
 

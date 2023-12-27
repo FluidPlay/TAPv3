@@ -174,21 +174,27 @@ local JUMP_RELOAD_PARAM = "jumpReload"
 local reloadBarColor = {013, 245, 243, 1}
 local fullHealthBarColor = {0, 255, 0, 1}
 
+--TODO: Check, generalize
 local econStructureDefs = {
-	[UnitDefNames.staticmex.id] = {cost = UnitDefNames.staticmex.metalCost, mex = true},
+	--[UnitDefNames.staticmex.id] = {cost = UnitDefNames.staticmex.metalCost, mex = true},
+	[UnitDefNames.armmex.id] = {cost = UnitDefNames.armmex.metalCost, mex = true},
+	[UnitDefNames.cormex.id] = {cost = UnitDefNames.cormex.metalCost, mex = true},
 }
-for _, defName in pairs({"energywind", "energysolar", "energygeo", "energyheavygeo", "energyfusion", "energysingu"}) do
+for _, defName in pairs({"armwin", "corwin", "armawin", "corawin", "armsolar", "armadvsol", "corsolar", "coradvsol"}) do
 	local def = UnitDefNames[defName]
-	econStructureDefs[def.id] = { cost = def.metalCost, income = def.customParams.income_energy }
+	if def then
+		econStructureDefs[def.id] = { cost = def.metalCost, income = def.customParams and def.customParams.income_energy or nil }
+	end
 end
-econStructureDefs[UnitDefNames.energywind.id].isWind = true
+econStructureDefs[UnitDefNames.armwin.id].isWind = true
+econStructureDefs[UnitDefNames.corwin.id].isWind = true
 
-local TIDAL_HEALTH = UnitDefNames.energywind.customParams.tidal_health
+local TIDAL_HEALTH = UnitDefNames.armwin.customParams and UnitDefNames.armwin.customParams.tidal_health or nil
 
 local dynamicTooltipDefs = {
-	[UnitDefNames["terraunit"].id] = true,
-	[UnitDefNames["energypylon"].id] = true,
-	[UnitDefNames["zenith"].id] = true,
+	--[UnitDefNames["terraunit"].id] = true,
+	--[UnitDefNames["energypylon"].id] = true,
+	--[UnitDefNames["zenith"].id] = true,
 }
 
 for unitDefID,_ in pairs(econStructureDefs) do
@@ -196,7 +202,7 @@ for unitDefID,_ in pairs(econStructureDefs) do
 end
 
 local filterUnitDefIDs = {
-	[UnitDefNames["terraunit"].id] = true
+	--[UnitDefNames["terraunit"].id] = true
 }
 
 local tidalHeight
@@ -820,7 +826,7 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 		return
 	end
 
-	local income = econDef.income * mult
+	local income = econDef.income and (econDef.income * mult) or 0
 	local cost = econDef.cost
 	local extraText = ""
 	local healthOverride = false

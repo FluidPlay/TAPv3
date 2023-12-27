@@ -42,9 +42,10 @@ local toBeWaited = {count = 0, unit = {}}
 
 local wasTransported = {count = 0, unit = {}}
 
+-- TODO: Make it check if the unit is a transport from its tedclass customparam
 local transportDefs = {
-	[UnitDefNames["gunshiptrans"].id] = true,
-	[UnitDefNames["gunshipheavytrans"].id] = true,
+	--[UnitDefNames["gunshiptrans"].id] = true,
+	--[UnitDefNames["gunshipheavytrans"].id] = true,
 }
 
 local transport = {}

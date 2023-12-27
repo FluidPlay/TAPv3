@@ -105,8 +105,8 @@ local colorPurple = {0.9, 0.2, 1, 1}
 local colorDisarm = {0.5, 0.5, 0.5, 1}
 local colorCapture = {0.6, 1, 0.6, 1}
 
-local valkMaxCost = tonumber(UnitDefNames.gunshiptrans.customParams.transportcost)
-local valkMaxSize = UnitDefNames.gunshiptrans.transportSize * 2
+local valkMaxCost = tonumber(UnitDefNames.armbrawl.customParams and UnitDefNames.armbrawl.customParams.transportcost or 0)
+local valkMaxSize = UnitDefNames.armbrawl.transportSize * 2
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -132,19 +132,24 @@ local function AddFactoryOfUnits(defName)
 	end
 end
 
-AddFactoryOfUnits("factoryshield")
-AddFactoryOfUnits("factorycloak")
-AddFactoryOfUnits("factoryveh")
-AddFactoryOfUnits("factoryplane")
-AddFactoryOfUnits("factorygunship")
-AddFactoryOfUnits("factoryhover")
-AddFactoryOfUnits("factoryamph")
-AddFactoryOfUnits("factoryspider")
-AddFactoryOfUnits("factoryjump")
-AddFactoryOfUnits("factorytank")
-AddFactoryOfUnits("factoryship")
-AddFactoryOfUnits("striderhub")
-AddFactoryOfUnits("staticmissilesilo")
+AddFactoryOfUnits("armlab")
+AddFactoryOfUnits("armalab")
+AddFactoryOfUnits("armvp")
+AddFactoryOfUnits("armavp")
+AddFactoryOfUnits("armap")
+AddFactoryOfUnits("armaap")
+AddFactoryOfUnits("corlab")
+AddFactoryOfUnits("coralab")
+AddFactoryOfUnits("corvp")
+AddFactoryOfUnits("coravp")
+AddFactoryOfUnits("corap")
+AddFactoryOfUnits("coraap")
+AddFactoryOfUnits("armsy")
+AddFactoryOfUnits("corsy")
+AddFactoryOfUnits("armasy")
+AddFactoryOfUnits("corasy")
+AddFactoryOfUnits("armshltx")
+AddFactoryOfUnits("corgant")
 
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
 local factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
@@ -264,19 +269,38 @@ local function AddFactoryOfUnits(defName)
     end
 end
 
-AddFactoryOfUnits("factoryshield")
-AddFactoryOfUnits("factorycloak")
-AddFactoryOfUnits("factoryveh")
-AddFactoryOfUnits("factoryplane")
-AddFactoryOfUnits("factorygunship")
-AddFactoryOfUnits("factoryhover")
-AddFactoryOfUnits("factoryamph")
-AddFactoryOfUnits("factoryspider")
-AddFactoryOfUnits("factoryjump")
-AddFactoryOfUnits("factorytank")
-AddFactoryOfUnits("factoryship")
-AddFactoryOfUnits("striderhub")
-AddFactoryOfUnits("staticmissilesilo")
+AddFactoryOfUnits("armlab")
+AddFactoryOfUnits("armalab")
+AddFactoryOfUnits("armvp")
+AddFactoryOfUnits("armavp")
+AddFactoryOfUnits("armap")
+AddFactoryOfUnits("armaap")
+AddFactoryOfUnits("corlab")
+AddFactoryOfUnits("coralab")
+AddFactoryOfUnits("corvp")
+AddFactoryOfUnits("coravp")
+AddFactoryOfUnits("corap")
+AddFactoryOfUnits("coraap")
+AddFactoryOfUnits("armsy")
+AddFactoryOfUnits("corsy")
+AddFactoryOfUnits("armasy")
+AddFactoryOfUnits("corasy")
+AddFactoryOfUnits("armshltx")
+AddFactoryOfUnits("corgant")
+
+--AddFactoryOfUnits("factoryshield")
+--AddFactoryOfUnits("factorycloak")
+--AddFactoryOfUnits("factoryveh")
+--AddFactoryOfUnits("factoryplane")
+--AddFactoryOfUnits("factorygunship")
+--AddFactoryOfUnits("factoryhover")
+--AddFactoryOfUnits("factoryamph")
+--AddFactoryOfUnits("factoryspider")
+--AddFactoryOfUnits("factoryjump")
+--AddFactoryOfUnits("factorytank")
+--AddFactoryOfUnits("factoryship")
+--AddFactoryOfUnits("striderhub")
+--AddFactoryOfUnits("staticmissilesilo")
 
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
 local factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
@@ -293,12 +317,12 @@ for i = 1, #buildOpts do
 end
 
 -- Misc stuff without direct buildability
-addUnit(UnitDefNames["energyheavygeo"].id, "Buildings/Economy", true) -- moho geo
-addUnit(UnitDefNames["athena"].id, "Units/Misc", true) -- athena
-addUnit(UnitDefNames["wolverine_mine"].id, "Units/Misc", false) -- maybe should go under LV fac, like wolverine? to consider.
-addUnit(UnitDefNames["tele_beacon"].id, "Units/Misc", false)
-addUnit(UnitDefNames["asteroid"].id, "Units/Misc", false)
-
+---TODO: add asteroids and stuff
+--addUnit(UnitDefNames["energyheavygeo"].id, "Buildings/Economy", true) -- moho geo
+--addUnit(UnitDefNames["athena"].id, "Units/Misc", true) -- athena
+--addUnit(UnitDefNames["wolverine_mine"].id, "Units/Misc", false) -- maybe should go under LV fac, like wolverine? to consider.
+--addUnit(UnitDefNames["tele_beacon"].id, "Units/Misc", false)
+--addUnit(UnitDefNames["asteroid"].id, "Units/Misc", false)
 
 local lobbyIDs = {} -- stores peoples names by lobbyID to match commanders to owners
 local players = Spring.GetPlayerList()

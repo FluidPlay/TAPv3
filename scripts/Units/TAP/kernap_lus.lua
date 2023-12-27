@@ -129,6 +129,7 @@ local scriptEnv = { base = base,
 
 local PlayAnimation = VFS.Include("scripts/animations/kernap_anim.lua", scriptEnv)
 scriptEnv.PlayAnimation = PlayAnimation
+local buildPiece = piece 'build_pos'
 
 script_create, script_activate, script_deactivate, script_killed, MorphUp = VFS.Include("scripts/include/factory_base.lua", scriptEnv)
 
@@ -146,4 +147,13 @@ end
 
 function script.Killed(recentDamage, maxHealth)
     script_killed(recentDamage, maxHealth)
+end
+
+-- Assign the desired buildpiece to the variable above
+function script.QueryBuildInfo()
+    if buildPiece then
+        return buildPiece
+    else
+        return base
+    end
 end

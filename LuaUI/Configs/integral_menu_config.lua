@@ -589,18 +589,20 @@ local widgetSpaceHidden = {
 	[CMD.MOVE] = true,
 }
 
+--TODO: What's that for? test with armlab
 local factoryPlates = {
-	"platecloak",
-	"plateshield",
-	"plateveh",
-	"platehover",
-	"plategunship",
-	"plateplane",
-	"platespider",
-	"platejump",
-	"platetank",
-	"plateamph",
-	"plateship",
+	"armlab",
+	--"platecloak",
+	--"plateshield",
+	--"plateveh",
+	--"platehover",
+	--"plategunship",
+	--"plateplane",
+	--"platespider",
+	--"platejump",
+	--"platetank",
+	--"plateamph",
+	--"plateship",
 }
 
 -- Hide factory plates

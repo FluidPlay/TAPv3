@@ -31,7 +31,7 @@ local spTraceScreenRay = Spring.TraceScreenRay
 
 local abs = math.abs
 
-local geoDefID = UnitDefNames["energygeo"].id
+local geoDefID = UnitDefNames["armgeo"].id	--energygeo
 
 local mapX = Game.mapSizeX
 local mapZ = Game.mapSizeZ

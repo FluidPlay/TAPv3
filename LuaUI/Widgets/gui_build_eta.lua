@@ -13,10 +13,12 @@ end
 local gl     = gl
 local Spring = Spring
 
+--TODO: Generalize into units which have stockpiling weapons
 local stockpilerDefNames = {
-	"staticnuke",
-	"subtacmissile",
-	"shipcarrier"
+	"armsilo", "corsilo", "armcarry", "corcarry", "corfmd", "armamd",
+	--"staticnuke",
+	--"subtacmissile",
+	--"shipcarrier"
 }
 
 local stockpilerDefs = {}
@@ -271,7 +273,7 @@ function widget:UnitTaken(unitID, unitDefID, unitTeam, newTeam)
 	end
 end
 
-local terraunitDefID = UnitDefNames["terraunit"] and UnitDefNames["terraunit"].id
+local terraunitDefID = UnitDefNames["armck"] and UnitDefNames["armck"].id	--terraunit
 
 function widget:UnitFinished(unitID, unitDefID, unitTeam)
 	if unitDefID ~= terraunitDefID then

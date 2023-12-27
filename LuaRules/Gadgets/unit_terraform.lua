@@ -202,7 +202,7 @@ local nextUpdateCheck       = 0 -- Time at which to check performance
 -- Map terraform commands given by teamID and tag.
 local fallbackCommands  = {}
 
-local terraunitDefID = UnitDefNames["terraunit"].id
+local terraunitDefID = UnitDefNames["armck"].id	--terraunit
 local terraUnitHP = UnitDefs[terraunitDefID].health - 1000 -- Stop terraunit having full health to make it always able to be built.
 local terraUnitCost = UnitDefs[terraunitDefID].metalCost
 local terraBuildMult = terraUnitHP/UnitDefs[terraunitDefID].health
@@ -3921,7 +3921,7 @@ else
 -- UNSYNCED
 --------------------------------------------------------------------------------
 
-local terraunitDefID = UnitDefNames["terraunit"].id
+local terraunitDefID = UnitDefNames["armck"].id	--terraunit
 local terraUnits = {}
 
 function gadget:Initialize()

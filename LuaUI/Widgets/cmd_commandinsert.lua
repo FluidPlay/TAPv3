@@ -38,7 +38,7 @@ local positionCommand = {
 }
 
 local doNotHandleRaw = {
-	[-UnitDefNames["staticmex"].id] = true,
+	--[-UnitDefNames["staticmex"].id] = true,
 }
 
 local EMPTY_TABLE = {}

@@ -56,7 +56,7 @@ local left_arm3 = piece 'left_arm3'
 local left_head = piece 'left_head'
 local left_pointer = piece 'left_pointer'
 --
-local build_pos = piece 'build_pos'
+local buildPiece = piece 'build_pos'
 
 local pointer = { left_pointer, right_pointer }
 local advpointer = { left_pointer1, right_pointer1, left_pointer2, right_pointer2 }
@@ -154,9 +154,10 @@ local scriptEnv = { base = base,
 					SFX = SFX,
 }
 
-local buildPiece = build_pos --building_plate
 local PlayAnimation = VFS.Include("scripts/animations/bowvp_anim.lua", scriptEnv)
 scriptEnv.PlayAnimation = PlayAnimation
+
+--script_create = VFS.Include("scripts/include/factory_base.lua", scriptEnv)
 
 script_create, script_activate, script_deactivate, script_killed, MorphUp = VFS.Include("scripts/include/factory_base.lua", scriptEnv)
 
@@ -184,3 +185,4 @@ function script.QueryBuildInfo()
 		return base
 	end
 end
+

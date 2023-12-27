@@ -1,10 +1,11 @@
 --==============================
---== TAPrime HELPER FUNCTIONS ==
+--== TAP HELPER FUNCTIONS ==
 --==============================
 --shard_include("luarules/gadgets/ai/ba/commonfunctions.lua") 	-- doesn' work here
 VFS.Include("LuaRules/colors.h.lua")
 
-FontPath = "LuaUI/Fonts/GeogrotesqueCompMedium.otf" --Kelson Sans Regular.otf" --Akrobat-SemiBold.otf"
+FontPath = "LuaUI/Fonts/GeogrotesqueCompMedium.otf"
+--New: local FontPath = (VFS.Include("gamedata/configs/fontsettings.lua")).LuaUI
 
 local spFindUnitCmdDesc     = Spring.FindUnitCmdDesc
 local spInsertUnitCmdDesc     = Spring.InsertUnitCmdDesc
@@ -15,8 +16,13 @@ local spGetFeaturesInCylinder = Spring.GetFeaturesInCylinder
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetFeatureDefID = Spring.GetFeatureDefID
 local spValidFeatureID = Spring.ValidFeatureID
+local spGetUnitNearestAlly = Spring.GetUnitNearestAlly
 local spValidUnitID = Spring.ValidUnitID
+local spGetUnitIsDead = Spring.GetUnitIsDead
 local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitTeam	 = Spring.GetUnitTeam
+local spGetUnitFeatureSeparation = Spring.GetUnitFeatureSeparation
+local spGetUnitSeparation = Spring.GetUnitSeparation
 
 local spMarkerAddPoint = Spring.MarkerAddPoint
 local spMarkerErasePosition = Spring.MarkerErasePosition
@@ -38,7 +44,7 @@ function sqrDistance(x1,z1,x2,z2)
     if not x1 or not z1 or not x2 or not z2 then
         return 9999999 end
 	local dx,dz = x1-x2,z1-z2
-	return sqr(dx)+sqr(dz)
+	return dx*dx + dz*dz
 end
 
 -- eg.: distance(pos1, pos2) | pos1 = { x=n, y=n }
@@ -117,6 +123,16 @@ function ipairs_removeByElement(table, elementId, value)
 	end
 end
 
+-- Returns true if a table (tab) contains a certain value (searchVal)
+function ipairs_contains (tab, searchVal)
+	for idx,value in ipairs(tab) do
+		if value == searchVal then
+			return idx
+		end
+	end
+	return nil
+end
+
 -- Returns the index (if found) or nil if not found
 function ipairs_containsElement(table, elementId, value)
 	for k, v in ipairs(table) do
@@ -169,42 +185,46 @@ end
 
 -- Debug table keys and values, up to three nested levels
 ---TODO: Fix for iPairs, not really working (tested with weaponDef / damages itable)
-function DebugTable(tbl)
-	--Spring.Echo(" Debug Table: ")
+local function DebugTable(tbl)
 	for k, v in pairsByKeys(tbl) do
 		local str = ""
 		if type(v) == "table" then
+			str = str .. "{"
 			for k2, v2 in pairsByKeys(v) do
 				str = str .. k2 .. "="
 				if type(v2) == "table" then
 					str = str .. "{"
 					for k3, v3 in pairsByKeys(v2) do
-                        str = str .. k3 .. "="
+						str = str .. k3 .. "="
 						if type(v3) == "table" then
-                            str = str .. "{"
-                            for k4, v4 in pairsByKeys(v3) do
-                                str = str .. k4 .. "="
-                                if type(v4) == "table" then
-                                    str = str .. "{<table>}, "
-                                else
-                                    str = str .. tostring(v4) .. ", "
-                                end
-                            end
-                            str = str .. "}, "
+							str = str .. "{"
+							for k4, v4 in pairsByKeys(v3) do
+								str = str .. k4 .. "="
+								if type(v4) == "table" then
+									str = str .. "{<table>}, "
+								else
+									str = str .. tostring(v4) .. ", "
+								end
+							end
+							str = str .. "} "
+						elseif type(v3) == "string" then
+							str = str ..'"'..tostring(v2)..'", '
 						else
 							str = str .. tostring(v3) .. ", "
 						end
 					end
-					str = str .. "}, "
+					str = str .. "} "
+				elseif type(v2) == "string" then
+					str = str ..'"'..tostring(v2)..'", '
 				else
 					str = str ..tostring(v2)..", "
 				end
 			end
-			str = str .. "}, "
+			str = str .. "} "
 		else
 			str = tostring(v)..", "
 		end
-		Spring.Echo(tostring(k).."="..str..", ")
+		print(tostring(k).."="..str..", ")
 	end
 end
 
@@ -222,16 +242,6 @@ function DebugiTable(tbl)
 	--else
 	--	return tostring(tbl)
 	--end
-end
-
--- Returns true if a table (tab) contains a certain value (searchVal)
-function ipairs_contains (tab, searchVal)
-	for _,value in ipairs(tab) do
-		if value == searchVal then
-			return true
-		end
-	end
-	return false
 end
 
 -- Returns a key-sorted iterator which may be traversed by, eg:
@@ -445,9 +455,11 @@ function math_clamp(min, max, n)
         return n
     end
 	if n > max then
-		n = max end
+		n = max
+	end
 	if n < min then
-		n = min end
+		n = min
+	end
 	return n
 end
 
@@ -471,7 +483,7 @@ end
 --////////////////////////
 
 function HasTech(prereq, teamID)
-	if prereq == "" or prereq == nil then
+	if prereq == "" or prereq == nil or GG.TechCheck == nil then
 		return true end
 	return GG.TechCheck(prereq, teamID)
 end
@@ -529,7 +541,7 @@ function IsValidUnit(unitID)
     if not isnumber(unitID) then
         return false end
 	local unitDefID = spGetUnitDefID(unitID)
-	if unitDefID and spValidUnitID(unitID) then
+	if unitDefID and spValidUnitID(unitID) and not spGetUnitIsDead(unitID) then
 		return true
 	end
 	return false
@@ -596,6 +608,9 @@ function Distance2D(unitID, px, pz)
 end
 
 function Split(s, separator)
+	if s == nil then
+		return nil
+	end
     local results = {}
     for part in s:gmatch("[^" .. separator .. "]+") do
         results[#results + 1] = part
@@ -604,10 +619,6 @@ function Split(s, separator)
 end
 -- Usage example: engineVersion = Split(Engine.version, '-') => engineVersion[0], engineVersion[1]
 
-function GetUnitHarvestStorage(unitID)
-	local oreLoad = spGetUnitRulesParam(unitID, "oreLoad")
-	return (oreLoad or 0)
-end
 
 --function indent(i, str)
 --	local result = ""
@@ -628,24 +639,20 @@ end
 --- Advanced Functions
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
-function GetNearest (originUID, targets, isFeature)
-    local nearestSqrDistance = 999999
+function GetNearest (unitID, targets, isFeature)
+    local nearestDistance = 999999
     local nearestItemID = #targets > 0 and targets[1] or nil    --safe check
 
-    local ox,oy,oz = spGetUnitPosition(originUID)
-    local origin = {x = ox, y = oy, z = oz}
     for targetID in pairs(targets) do
-        local x,y,z
+		local dist
         if isFeature then
-            x,y,z = spGetFeaturePosition(targetID)
-        else
-            x,y,z = spGetUnitPosition(targetID) end
-        local target = { x = x, y = y, z = z }
-        local thisSqrDist = sqrDistance(origin.x, origin.z, target.x, target.z)
-        if isnumber(thisSqrDist) and isnumber(nearestSqrDistance)
-                and (thisSqrDist < nearestSqrDistance) then
+			dist = spGetUnitFeatureSeparation (unitID, targetID, true) -- 2D = true
+		else
+            dist = spGetUnitSeparation (unitID, targetID, true, true) --[, bool 2D [, bool surfaceDist ]] )
+		end
+        if isnumber(dist) and (dist < nearestDistance) then
             nearestItemID = targetID
-            nearestSqrDistance = thisSqrDist
+            nearestDistance = dist
         end
     end
     return nearestItemID
@@ -653,9 +660,22 @@ end
 
 -- typeCheck is a function (checking for true), if not defined it just returns the nearest unit
 -- idCheck is a function (checking for true), checks the targetID to see if it fits a certain criteria
-function NearestItemAround(unitID, pos, unitDef, radius, uDefCheck, uIDCheck, isFeature, teamID, allyTeamID)
+function NearestItemAround(unitID, pos, unitDef, radius, defCheck, idCheck, isFeature, teamID, allyTeamID)
+	--if pos == nil then
+	--	Spring.Echo("pos = nil")
+	--end
+	--if unitDef == nil then
+	--	Spring.Echo("unitDef = nil")
+	--end
+	if radius == nil then
+		--Spring.Echo("radius = nil")
+		radius = unitDef.buildDistance
+	end
+	if not pos or pos.x == nil or pos.z == nil then
+		return nil
+	end
     --TODO: Add "ally", "enemy", "neutral"; or finish processing allyTeamID
-    radius = radius and radius or 80 --default scan Radius
+    radius = radius and (radius-20) or 80 --default scan Radius; we're adding a 20 units buffer to prevent edge cases
     local itemsAround = isFeature
             and spGetFeaturesInCylinder(pos.x, pos.z, radius)
             or (teamID and spGetUnitsInCylinder(pos.x, pos.z, radius, teamID)
@@ -666,24 +686,48 @@ function NearestItemAround(unitID, pos, unitDef, radius, uDefCheck, uIDCheck, is
     --- Get list of valid targets
     for _,targetID in pairs(itemsAround) do
         if isFeature and spValidFeatureID(targetID) then
-            local targetDefID = spGetFeatureDefID(targetID)
-            local targetDef = (targetDefID ~= nil) and FeatureDefs[targetDefID] or nil
-            --if targetDef and targetDef.isFactory then ==> eg.: function(x) return x.isFactory end
-            if targetDef and (uDefCheck == nil or uDefCheck(targetDef))
-                    and (uIDCheck == nil or uIDCheck(targetID)) then
-                targets[targetID] = true
-            end
+			targets[targetID] = true
+			if defCheck then
+				local targetDefID = spGetFeatureDefID(targetID)
+				local targetDef = (targetDefID ~= nil) and FeatureDefs[targetDefID] or nil
+				if not defCheck(targetDef) then
+					targets[targetID] = nil
+				end
+			end
+			if idCheck then
+				if not idCheck(targetID) then
+					targets[targetID] = nil
+				end
+			end
         elseif IsValidUnit(targetID) and targetID ~= unitID then
-            local targetDefID = spGetUnitDefID(targetID)
-            local targetDef = (targetDefID ~= nil) and UnitDefs[targetDefID] or nil
-            if targetDef and (uDefCheck == nil or uDefCheck(targetDef))
-                    and (uIDCheck == nil or uIDCheck(targetID)) then
-                targets[targetID] = true
-            end
+			targets[targetID] = true
+			if teamID then
+				local targetTeam = spGetUnitTeam(targetID)
+				if not targetTeam == teamID then
+					targets[targetID] = nil end
+			end
+			if defCheck then
+				local targetDefID = spGetUnitDefID(targetID)
+				local targetDef = (targetDefID ~= nil) and UnitDefs[targetDefID] or nil
+				if not defCheck(targetDef) then
+					targets[targetID] = nil end
+			end
+			if idCheck then
+				if not idCheck(targetID) then
+					targets[targetID] = nil end
+			end
         end
     end
     return GetNearest (unitID, targets, isFeature)
 end
+
+-- This is faster than 'NearestItemAround', but won't work for neutral units or features
+function NearestAllyAround(unitID, radius)
+	radius = radius and (radius-20) or 80 --default scan Radius; we're adding a 20 units buffer to prevent edge cases
+	return spGetUnitNearestAlly(unitID, radius)
+end
+
+--( number unitID [, number range ] )
 
 --local buildTimes = {}
 --local variableCostUnit = {

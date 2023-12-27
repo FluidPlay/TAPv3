@@ -54,7 +54,7 @@ local glUnitPieceMultMatrix  = gl.UnitPieceMultMatrix
 -- Configuration
  
 local effectDefs = {
-	[UnitDefNames["planefighter"].id] = {
+	[UnitDefNames["armfig"].id] = {		-- TODO: Test it with armfig first; planefighter
 		fxList = {
 			{
 				emitVector        = {0, 0, -1},

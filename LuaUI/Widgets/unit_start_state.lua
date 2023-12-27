@@ -1062,11 +1062,15 @@ local function addUnit(defName, path)
 	end
 end
 
+local function istable(x)  return (type(x) == 'table')   end
+
 local function AddFactoryOfUnits(defName, plateDefName)
 	if unitAlreadyAdded[defName] then
 		return
 	end
 	local ud = UnitDefNames[defName]
+	if not istable(ud) then
+		return end
 	local name = string.gsub(ud.humanName, "/", "-")
 	addUnit(defName, name)
 	if plateDefName then
@@ -1078,19 +1082,38 @@ local function AddFactoryOfUnits(defName, plateDefName)
 	end
 end
 
-AddFactoryOfUnits("factoryshield",  "plateshield")
-AddFactoryOfUnits("factorycloak",   "platecloak")
-AddFactoryOfUnits("factoryveh",     "plateveh")
-AddFactoryOfUnits("factoryplane",   "plateplane")
-AddFactoryOfUnits("factorygunship", "plategunship")
-AddFactoryOfUnits("factoryhover",   "platehover")
-AddFactoryOfUnits("factoryamph",    "plateamph")
-AddFactoryOfUnits("factoryspider",  "platespider")
-AddFactoryOfUnits("factoryjump",    "platejump")
-AddFactoryOfUnits("factorytank",    "platetank")
-AddFactoryOfUnits("factoryship",    "plateship")
-AddFactoryOfUnits("striderhub")
-AddFactoryOfUnits("staticmissilesilo")
+--AddFactoryOfUnits("factoryshield",  "plateshield")
+--AddFactoryOfUnits("factorycloak",   "platecloak")
+--AddFactoryOfUnits("factoryveh",     "plateveh")
+--AddFactoryOfUnits("factoryplane",   "plateplane")
+--AddFactoryOfUnits("factorygunship", "plategunship")
+--AddFactoryOfUnits("factoryhover",   "platehover")
+--AddFactoryOfUnits("factoryamph",    "plateamph")
+--AddFactoryOfUnits("factoryspider",  "platespider")
+--AddFactoryOfUnits("factoryjump",    "platejump")
+--AddFactoryOfUnits("factorytank",    "platetank")
+--AddFactoryOfUnits("factoryship",    "plateship")
+--AddFactoryOfUnits("striderhub")
+--AddFactoryOfUnits("staticmissilesilo")
+
+AddFactoryOfUnits("armlab")
+AddFactoryOfUnits("armalab")
+AddFactoryOfUnits("armvp")
+AddFactoryOfUnits("armavp")
+AddFactoryOfUnits("armap")
+AddFactoryOfUnits("armaap")
+AddFactoryOfUnits("corlab")
+AddFactoryOfUnits("coralab")
+AddFactoryOfUnits("corvp")
+AddFactoryOfUnits("coravp")
+AddFactoryOfUnits("corap")
+AddFactoryOfUnits("coraap")
+AddFactoryOfUnits("armsy")
+AddFactoryOfUnits("corsy")
+AddFactoryOfUnits("armasy")
+AddFactoryOfUnits("corasy")
+AddFactoryOfUnits("armshltx")
+AddFactoryOfUnits("corgant")
 
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
 local factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)

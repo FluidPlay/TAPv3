@@ -11,7 +11,7 @@ local buildPowerCache = {}
 local rangeCache = {}
 local dynComm = {}
 local variableCostUnit = {
-	[UnitDefNames["terraunit"].id] = true
+	--[UnitDefNames["terraunit"].id] = true
 }
 
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam

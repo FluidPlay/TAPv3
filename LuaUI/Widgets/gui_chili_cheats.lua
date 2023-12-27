@@ -75,10 +75,13 @@ end
 
 local function AddFacCategory(name)
 	local ud = UnitDefNames[name]
+	if not ud then
+		Spring.Echo("Factory undefined: "..(name or "nil"))
+	end
 	local unitList = {name}
 	local offset = 1
 
-	local plateName = ud.customParams.parent_of_plate
+	local plateName = ud.customParams and ud.customParams.parent_of_plate or nil
 	if plateName then
 		offset = 2
 		unitList[offset] = plateName
@@ -115,19 +118,40 @@ for i = 1, #econ_list do -- adv geo not directly buildable
 	end
 end
 
-AddFacCategory("factorycloak") -- not using the factory name to prevent category vs unit confusion
-AddFacCategory("factoryshield")
-AddFacCategory("factoryveh")
-AddFacCategory("factorytank")
-AddFacCategory("factoryhover")
-AddFacCategory("factoryspider")
-AddFacCategory("factoryamph")
-AddFacCategory("factorygunship")
-AddFacCategory("factoryplane")
-AddFacCategory("factoryjump")
-AddFacCategory("factoryship")
-AddFacCategory("striderhub")
-AddFacCategory("staticmissilesilo")
+--AddFacCategory("factorycloak") -- not using the factory name to prevent category vs unit confusion
+--AddFacCategory("factoryshield")
+--AddFacCategory("factoryveh")
+--AddFacCategory("factorytank")
+--AddFacCategory("factoryhover")
+--AddFacCategory("factoryspider")
+--AddFacCategory("factoryamph")
+--AddFacCategory("factorygunship")
+--AddFacCategory("factoryplane")
+--AddFacCategory("factoryjump")
+--AddFacCategory("factoryship")
+--AddFacCategory("striderhub")
+--AddFacCategory("staticmissilesilo")
+
+AddFacCategory("armlab")
+AddFacCategory("armalab")
+AddFacCategory("armvp")
+AddFacCategory("armavp")
+AddFacCategory("armap")
+AddFacCategory("armaap")
+AddFacCategory("corlab")
+AddFacCategory("coralab")
+AddFacCategory("corvp")
+AddFacCategory("coravp")
+AddFacCategory("corap")
+AddFacCategory("coraap")
+AddFacCategory("armsy")
+AddFacCategory("corsy")
+AddFacCategory("armasy")
+AddFacCategory("corasy")
+AddFacCategory("armshltx")
+AddFacCategory("corgant")
+
+
 AddMiscCategory("eco", econ_list)
 AddMiscCategory("defense", defense_list)
 AddMiscCategory("intel_super", special_list)

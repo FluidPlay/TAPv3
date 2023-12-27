@@ -37,10 +37,10 @@ local dist3D = Spring.Utilities.Vector.Dist3D
 
 -- In elmos/frame
 local projectileDefs = {
-	[WeaponDefNames["bomberprec_bombsabot"].id] = {
-		anchor = 4.5,
-		pull = 0.62,
-	},
+	--[WeaponDefNames["bomberprec_bombsabot"].id] = {
+	--	anchor = 4.5,
+	--	pull = 0.62,
+	--},
 }
 
 function gadget:Initialize()

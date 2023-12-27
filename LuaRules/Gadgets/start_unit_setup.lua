@@ -44,8 +44,8 @@ local modInnateEnergy = INNATE_INC_ENERGY
 
 local storageUnits = {
 	{
-		unitDefID = UnitDefNames["staticstorage"].id,
-		storeAmount = UnitDefNames["staticstorage"].metalStorage
+		unitDefID = UnitDefNames["armmstor"].id,	--staticstorage
+		storeAmount = UnitDefNames["armmstor"].metalStorage	--staticstorage
 	}
 }
 

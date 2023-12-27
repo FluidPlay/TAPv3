@@ -37,11 +37,11 @@ local GetUnitCost           = Spring.Utilities.GetUnitCost
 
 local floor = math.floor
 
-local terraunitDefID = UnitDefNames["terraunit"].id
-local terraformCost  = UnitDefNames["terraunit"].metalCost
+local terraunitDefID = UnitDefNames["armck"].id	--terraunit
+local terraformCost  = UnitDefNames["armck"].metalCost	--terraunit
 
-local mexDefID = UnitDefNames["staticmex"].id
-local mexCost  = UnitDefNames["staticmex"].metalCost
+local mexDefID = UnitDefNames["armmex"].id		--staticmex
+local mexCost  = UnitDefNames["armmex"].metalCost	--staticmex
 
 local gameOver = false
 

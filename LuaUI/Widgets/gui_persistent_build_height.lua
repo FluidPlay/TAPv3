@@ -114,7 +114,7 @@ options = {
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
-local mexDefID = UnitDefNames["staticmex"].id
+local mexDefID = UnitDefNames["armmex"].id	--staticmex
 
 local INCREMENT_SIZE = 20
 

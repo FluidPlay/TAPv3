@@ -7,7 +7,7 @@ function widget:GetInfo()
     license   = "none",
 	handler   = false,
     layer     = 1,
-    enabled   = true,  --  loaded by default?
+    enabled   = false, --true,  --  loaded by default?
   }
 end
 
@@ -16,8 +16,8 @@ VFS.Include("LuaRules/Configs/customcmds.h.lua")
 local myTeamID = Spring.GetMyTeamID()
 
 local excludedFactory = {
-	[UnitDefNames["factorygunship"].id] = true,
-	[UnitDefNames["factoryplane"].id] = true
+	--[UnitDefNames["factorygunship"].id] = true,
+	--[UnitDefNames["factoryplane"].id] = true
 }
 
 function widget:UnitFromFactory(unitID, unitDefID, unitTeam, factID, factDefID, userOrders)

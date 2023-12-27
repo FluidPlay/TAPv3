@@ -23,7 +23,7 @@ local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetGameSeconds = Spring.GetGameSeconds
 ------------------------------------------------------------
 ------------------------------------------------------------
-local gaussUnitDefID = UnitDefNames["turretgauss"].id
+local gaussUnitDefID = UnitDefNames["armbeamer"].id --turretgauss
 local myTeamID
 local jumperAddInfo={}
 --Spread job stuff: (spread looping across 1 second)
@@ -43,7 +43,7 @@ local jumpersUnitID = {}
 local jumperDefs = VFS.Include("LuaRules/Configs/jump_defs.lua")
 
 local exclusions = {
-	UnitDefNames["jumpsumo"].id, -- has AoE damage on jump, could harm allies
+	--UnitDefNames["jumpsumo"].id, -- has AoE damage on jump, could harm allies
 	--UnitDefNames["jumpbomb"].id -- jump is precious
 }
 

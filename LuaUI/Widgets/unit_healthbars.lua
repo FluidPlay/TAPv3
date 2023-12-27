@@ -57,7 +57,8 @@ local TELEPORT_CHARGE_NEEDED = Spring.GetGameRulesParam("pw_teleport_time") or g
 local stockpileH = 24
 local stockpileW = 12
 
-local captureReloadTime = tonumber(UnitDefNames["vehcapture"].customParams.post_capture_reload) -- Hackity hax
+--TODO: Generalize; was: vehcapture
+local captureReloadTime = tonumber(UnitDefNames["bowdaemon"].customParams.post_capture_reload) -- Hackity hax
 local DISARM_DECAY_FRAMES = 1200
 
 local destructableFeature = {}

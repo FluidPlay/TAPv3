@@ -1,12 +1,15 @@
 local airpadDefs = {
-	[UnitDefNames["factoryplane"].id] = {
-		padPieceName = {"land"}
+	[UnitDefNames["armpad"].id] = {
+		padPieceName = {"land1"}
 	},
-	[UnitDefNames["staticrearm"].id] = {
+	[UnitDefNames["corpad"].id] = {
+		padPieceName = {"land1"}
+	},
+	[UnitDefNames["armasp"].id] = {
 		padPieceName = {"land1","land2","land3","land4"}
 	},
-	[UnitDefNames["shipcarrier"].id] = {
-		padPieceName = {"LandingFore","LandingAft"}
+	[UnitDefNames["corasp"].id] = {
+		padPieceName = {"land1","land2","land3","land4"}
 	},
 }
 

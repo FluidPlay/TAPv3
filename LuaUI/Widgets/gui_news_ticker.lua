@@ -145,7 +145,7 @@ for name,data in pairs(sounds) do
 end
 
 local noMonitor = {
-	[UnitDefNames.terraunit.id] = true,
+	--[UnitDefNames.terraunit.id] = true,
 }
 
 --local mFactor = 10 --multiply by current M income to get the minimum cost for newsworthiness

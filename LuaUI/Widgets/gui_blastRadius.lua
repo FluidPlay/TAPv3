@@ -67,10 +67,11 @@ local floor                 = math.floor
 
 -----------------------------------------------------------------------------------
 local alwaysDisplay = {
-	[UnitDefNames.energyfusion.id] = true,
-	[UnitDefNames.energysingu.id] = true,
-	[UnitDefNames.staticcon.id] = true,
-	[UnitDefNames.staticnuke.id] = true,
+	[UnitDefNames.armfus.id] = true,
+	--[UnitDefNames.energyfusion.id] = true,
+	--[UnitDefNames.energysingu.id] = true,
+	--[UnitDefNames.staticcon.id] = true,
+	--[UnitDefNames.staticnuke.id] = true,
 }
 
 -----------------------------------------------------------------------------------

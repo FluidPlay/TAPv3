@@ -246,7 +246,8 @@ local mouseUnit = {id = false}
 
 local mouseX, mouseY
 
-local mexDefID = UnitDefNames.staticmex.id
+--TODO: Seriously, generalize this. It's annoying..
+local mexDefID = UnitDefNames.armmex.id	--staticmex
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

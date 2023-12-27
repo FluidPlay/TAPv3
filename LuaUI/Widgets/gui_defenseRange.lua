@@ -27,143 +27,161 @@ local SPHERE_HEIGHTMOD = { heightMod = 1, }
 local alphaValue = 0.35
 local REDRAW_TIME = 0.1 -- Time in seconds to batch redraws within
 
+local function istable(x)  return (type(x) == 'table')   end
+
 local unitConfig = {}
 for unitName, conf in pairs({
-	staticantinuke = {
-		class = ANTI,
-		color = { 1, 1, 1 },
-		colorInBuild = { 0, 0.6, 0.8 },
-	},
-	turretemp = {
+	armrad = {
 		color = {1, 0.56, 0},
 		class = GROUND,
 	},
-	turretriot = {
-		color = {1, 0.54, 0},
+	corrad = {
+		color = {1, 0.56, 0},
 		class = GROUND,
 	},
-	turretgauss = {
-		color = {1, 0, 0},
-		class = GROUND,
-	},
-	mahlazer = {
-		color = {1, 0, 0},
-		class = GROUND,
-	},
-	turretantiheavy = {
-		color = {1, 0.47, 0},
-		class = GROUND,
-	},
-	staticheavyarty = {
-		color = {1, 0.3, 0},
-		class = GROUND,
-	},
-	tacnuke = {
-		color = {1, 0.4, 0},
-		class = GROUND,
-	},
-	turretaafar = {
-		color = {0, 0.56, 0.44},
-		class = AIR,
-	},
-	turretmissile = {
-		color = {1, 0, 0},
-		color2 = {0, 1, 0},
-		class = MIXED,
-	},
-	turretlaser = {
-		color = {1, 0, 0},
-		class = GROUND,
-	},
-	turretheavylaser = {
-		color = {1, 0.15, 0},
-		class = GROUND,
-	},
-	turretheavy = {
-		color = {1, 0.47, 0},
-		class = GROUND,
-	},
-	turretaalaser = {
-		color = {0, 0.8, 0.2},
-		class = AIR,
-	},
-	turretaaflak = {
-		color = {0, 0.43, 0.57},
-		class = AIR,
-	},
-	turretaaheavy = {
-		color = {0, 0, 1},
-		class = AIR,
-	},
-	turretaaclose = {
-		color = {0, 0, 1},
-		class = AIR,
-	},
-	staticarty = {
-		color = {1, 0.13, 0},
-		class = GROUND,
-	},
-	turrettorp = {
-		color = {1, 0, 0},
-		class = GROUND,
-	},
-	turretimpulse = {
-		color = {1, 0, 0},
-		class = GROUND,
-	},
-	staticshield = {
-		color = {1, 0, 1},
-		class = SHIELD,
-	},
-	staticradar = {
-		color = {0, 0.8, 0},
-		lineWidth = 3,
-		class = RADAR,
-	},
-	staticheavyradar = {
-		color = {0, 0.8, 0},
-		lineWidth = 3,
-		class = RADAR,
-	},
+
+	--staticantinuke = {
+	--	class = ANTI,
+	--	color = { 1, 1, 1 },
+	--	colorInBuild = { 0, 0.6, 0.8 },
+	--},
+	--turretemp = {
+	--	color = {1, 0.56, 0},
+	--	class = GROUND,
+	--},
+	--turretriot = {
+	--	color = {1, 0.54, 0},
+	--	class = GROUND,
+	--},
+	--turretgauss = {
+	--	color = {1, 0, 0},
+	--	class = GROUND,
+	--},
+	--mahlazer = {
+	--	color = {1, 0, 0},
+	--	class = GROUND,
+	--},
+	--turretantiheavy = {
+	--	color = {1, 0.47, 0},
+	--	class = GROUND,
+	--},
+	--staticheavyarty = {
+	--	color = {1, 0.3, 0},
+	--	class = GROUND,
+	--},
+	--tacnuke = {
+	--	color = {1, 0.4, 0},
+	--	class = GROUND,
+	--},
+	--turretaafar = {
+	--	color = {0, 0.56, 0.44},
+	--	class = AIR,
+	--},
+	--turretmissile = {
+	--	color = {1, 0, 0},
+	--	color2 = {0, 1, 0},
+	--	class = MIXED,
+	--},
+	--turretlaser = {
+	--	color = {1, 0, 0},
+	--	class = GROUND,
+	--},
+	--turretheavylaser = {
+	--	color = {1, 0.15, 0},
+	--	class = GROUND,
+	--},
+	--turretheavy = {
+	--	color = {1, 0.47, 0},
+	--	class = GROUND,
+	--},
+	--turretaalaser = {
+	--	color = {0, 0.8, 0.2},
+	--	class = AIR,
+	--},
+	--turretaaflak = {
+	--	color = {0, 0.43, 0.57},
+	--	class = AIR,
+	--},
+	--turretaaheavy = {
+	--	color = {0, 0, 1},
+	--	class = AIR,
+	--},
+	--turretaaclose = {
+	--	color = {0, 0, 1},
+	--	class = AIR,
+	--},
+	--staticarty = {
+	--	color = {1, 0.13, 0},
+	--	class = GROUND,
+	--},
+	--turrettorp = {
+	--	color = {1, 0, 0},
+	--	class = GROUND,
+	--},
+	--turretimpulse = {
+	--	color = {1, 0, 0},
+	--	class = GROUND,
+	--},
+	--staticshield = {
+	--	color = {1, 0, 1},
+	--	class = SHIELD,
+	--},
+	--staticradar = {
+	--	color = {0, 0.8, 0},
+	--	lineWidth = 3,
+	--	class = RADAR,
+	--},
+	--staticheavyradar = {
+	--	color = {0, 0.8, 0},
+	--	lineWidth = 3,
+	--	class = RADAR,
+	--},
 }) do
 	local unitDef = UnitDefNames[unitName]
-	local weaponDef
-	if conf.class ~= RADAR then
-		weaponDef = WeaponDefs[unitDef.weapons[1].weaponDef]
-	end
-
-	if conf.class == ANTI then
-		conf.weaponDef = CYLINDER_HEIGHTMOD
-		conf.radius = weaponDef.customParams.nuke_coverage
-	elseif conf.class == RADAR then
-		conf.weaponDef = CYLINDER_HEIGHTMOD
-		conf.radius = unitDef.radarRadius
-	elseif conf.class == SHIELD then
-		conf.weaponDef = SPHERE_HEIGHTMOD
-		conf.radius = weaponDef.shieldRadius
+	if not unitDef or not (type(unitDef.weapons) == "table") or not (type(conf) == "table") or not (conf.weaponDef)  then
+		Spring.Echo("unit undefined: "..unitName)
 	else
-		conf.weaponDef = weaponDef
-		conf.radius = weaponDef.range
-	end
+		local weaponDef
+		if conf.class ~= RADAR then
+			if istable(unitDef.weapons) and istable(unitDef.weapons[1]) then
+				weaponDef = WeaponDefs[unitDef.weapons[1].weaponDef]
+			end
+		end
+		if weaponDef then
+			if conf.class == ANTI then
+				conf.weaponDef = CYLINDER_HEIGHTMOD
+				conf.radius = weaponDef.customParams.nuke_coverage
+			elseif conf.class == RADAR then
+				conf.weaponDef = CYLINDER_HEIGHTMOD
+				conf.radius = unitDef.radarRadius
+			elseif conf.class == SHIELD then
+				conf.weaponDef = SPHERE_HEIGHTMOD
+				conf.radius = weaponDef.shieldRadius
+			else
+				conf.weaponDef = weaponDef
+				conf.radius = weaponDef.range
+			end
 
-	if not conf.lineWidth then
-		conf.lineWidth = 1.0
-	end
+			if not conf.lineWidth then
+				conf.lineWidth = 1.0
+			end
 
-	conf.color[4] = alphaValue
-	if conf.colorInBuild then
-		conf.colorInBuild[4] = alphaValue
-	end
-	if conf.color2 then
-		conf.color2[4] = alphaValue
-	end
+			conf.color[4] = alphaValue
+			if conf.colorInBuild then
+				conf.colorInBuild[4] = alphaValue
+			end
+			if conf.color2 then
+				conf.color2[4] = alphaValue
+			end
 
-	unitConfig[unitDef.id] = conf
+			unitConfig[unitDef.id] = conf
+		end
+	end
 end
 
 local unitDefIDRemap = {
-	[UnitDefNames["staticmissilesilo"].id] = UnitDefNames["tacnuke"].id,
-	[UnitDefNames["tacnuke"].id] = -1,
+	--[UnitDefNames["staticmissilesilo"].id] = UnitDefNames["tacnuke"].id,
+	--[UnitDefNames["tacnuke"].id] = -1,
 }
 
 -- speedups

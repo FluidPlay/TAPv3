@@ -86,10 +86,18 @@ local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 local _, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" , nil, VFS.ZIP)
 
 renderAtPos = {
-	[UnitDefNames["staticmex"].id] = true,
-	[UnitDefNames["energywind"].id] = true,
-	[UnitDefNames["energysolar"].id] = true,
-	[UnitDefNames["staticradar"].id] = true,
+	[UnitDefNames["armmex"].id] = true,
+	[UnitDefNames["armwin"].id] = true,
+	[UnitDefNames["armsolar"].id] = true,
+	[UnitDefNames["armrad"].id] = true,
+	[UnitDefNames["cormex"].id] = true,
+	[UnitDefNames["corwin"].id] = true,
+	[UnitDefNames["corsolar"].id] = true,
+	[UnitDefNames["corrad"].id] = true,
+	--[UnitDefNames["staticmex"].id] = true,
+	--[UnitDefNames["energywind"].id] = true,
+	--[UnitDefNames["energysolar"].id] = true,
+	--[UnitDefNames["staticradar"].id] = true,
 }
 
 --------------------------------------------------------------------------------

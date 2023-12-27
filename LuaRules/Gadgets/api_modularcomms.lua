@@ -1,1 +1,1 @@
-VFS.Include("modularCommAPI/api_modularcomms.lua")
+--VFS.Include("modularCommAPI/api_modularcomms.lua")

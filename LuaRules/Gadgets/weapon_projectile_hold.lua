@@ -25,8 +25,7 @@ local depthcharge = {
 }
 
 local projectileDefs = {
-	--[WeaponDefNames["hoverdepthcharge_depthcharge"].id] = depthcharge,
-	[WeaponDefNames["hoverdepthcharge_fake_depthcharge"].id] = depthcharge
+	--[WeaponDefNames["hoverdepthcharge_fake_depthcharge"].id] = depthcharge
 }
 
 local projectileSpeed = {

@@ -265,8 +265,9 @@ options = {
 	},
 }
 
-local charonID = UnitDefNames["gunshiptrans"].id
-local hercID = UnitDefNames["gunshipheavytrans"].id
+--TODO: Generalize, add advanced transports
+local charonID = UnitDefNames["armatlas"].id	--gunshiptrans
+local hercID = UnitDefNames["corvalk"].id	--gunshipheavytrans
 
 local spGetSelectedUnits = Spring.GetSelectedUnits
 local spSelectUnitArray = Spring.SelectUnitArray

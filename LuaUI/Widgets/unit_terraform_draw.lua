@@ -6,8 +6,8 @@ function widget:GetInfo()
     date      = "2017",
     license   = "GNU GPL, v2 or later",
     layer     = -10,
-    enabled   = true,
-    alwaysStart = true,
+    enabled   = false, --true,
+    alwaysStart = false, --true,
   }
 end
 
@@ -23,8 +23,8 @@ local spGetLocalTeamID    = Spring.GetLocalTeamID
 local spGetUnitIsStunned  = Spring.GetUnitIsStunned
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
-local terraunitDefID = UnitDefNames["terraunit"].id
-local terraOffset = UnitDefNames["terraunit"].height + 14 --magic number from ETA widget
+local terraunitDefID = UnitDefNames["armck"].id	--terraunit
+local terraOffset = UnitDefNames["armck"].height + 14 --magic number from ETA widget
 
 local FLASH_TIME = 1.4
 

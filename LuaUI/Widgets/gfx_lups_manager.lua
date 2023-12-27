@@ -63,7 +63,9 @@ local function AddFX(unitname,fx)
 	local ud = UnitDefNames[unitname]
 	--// Seasonal lups stuff
 
-	UnitEffects[ud.id] = fx
+	if ud then
+		UnitEffects[ud.id] = fx
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -89,7 +91,7 @@ end
 --------------------------------------------------------------------------------
 
 --// staticmex overdrive FX
-local staticmexDefID = UnitDefNames["staticmex"].id
+local staticmexDefID = UnitDefNames["armmex"].id	--TODO: Test; staticmex
 local staticmexes = {}
 local staticmexFX = staticmexGlow
 

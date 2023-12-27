@@ -91,7 +91,7 @@ local spIsUnitAllied         = Spring.IsUnitAllied
 --------------------------------------------------------------------------------
 
 local stockpileExceptions = {
-	[UnitDefNames["turretaaheavy"].id] = true,
+--	[UnitDefNames["turretaaheavy"].id] = true,
 }
 
 --------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ end
 
 
 --------------------------------------------------------------------------------
-local terraunitDefID = UnitDefNames["terraunit"].id
+local terraunitDefID = UnitDefNames["armck"].id	--terraunit
 
 local function AddEvent(unitID, unitDefID, color, cost)
   if (not spIsUnitAllied(unitID)) then
