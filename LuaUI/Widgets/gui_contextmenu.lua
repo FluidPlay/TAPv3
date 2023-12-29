@@ -217,7 +217,7 @@ options = {
 		max = 2000,
 		path = 'Settings/HUD Panels/Unit Stats Help Window'
 	},
-	
+
 	text_hotkey = {
 		name = 'Global Construction Hotkeys',
 		type = 'text',
@@ -246,7 +246,7 @@ local function addUnit (unitDefID, path, buildable)
 		path = options_path ..'/' .. path,
 	}
 	options_order[#options_order + 1] = optionName
-	
+
 	if (buildable) then
 		optionName = unitName .. 'build'
 		options[unitName .. 'build'] = {
@@ -443,7 +443,7 @@ local function GetUnitDefByHumanName(humanName)
 	--	UnitDefByHumanName_cache[humanName] = altResult
 	--	return altResult
 	--end
-	
+
 	UnitDefByHumanName_cache[humanName] = false
 	return false
 end
@@ -453,7 +453,7 @@ local function GetShieldRegenDrain(wd)
 	if shieldRegen == 0 and wd.customParams and wd.customParams.shield_rate then
 		shieldRegen = wd.customParams.shield_rate
 	end
-	
+
 	local shieldDrain = wd.shieldPowerRegenEnergy
 	if shieldDrain == 0 and wd.customParams and wd.customParams.shield_drain then
 		shieldDrain = wd.customParams.shield_drain
@@ -463,7 +463,7 @@ end
 
 local function weapons2Table(cells, ws, unitID)
 	local cells = cells
-	
+
 	local wd = WeaponDefs[ws.weaponID]
 	local cp = wd.customParams or emptyTable
 
@@ -479,7 +479,7 @@ local function weapons2Table(cells, ws, unitID)
 	if wd.manualFire then
 		name = name .. " (manual fire)"
 	end
-	
+
 	if ws.aa_only then
 		name = name .. " (anti-air only)"
 	end
@@ -557,7 +557,7 @@ local function weapons2Table(cells, ws, unitID)
 
 		-- get reloadtime and calculate dps
 		local reloadtime = tonumber(cp.script_reload) or wd.reload
-		
+
 		local dps  = math.floor(dam /reloadtime + 0.5)
 		local dpsw = math.floor(damw/reloadtime + 0.5)
 		local dpss = math.floor(dams/reloadtime + 0.5)
@@ -632,7 +632,7 @@ local function weapons2Table(cells, ws, unitID)
 		if cp.shield_mult then
 			shield_dam_str = shield_dam_str .. " x " .. math.floor(100*cp.shield_mult) .. '%'
 		end
-		
+
 		local show_damage = not cp.stats_hide_damage
 		local show_dps = not cp.stats_hide_dps
 		local show_reload = not cp.stats_hide_reload
@@ -649,7 +649,7 @@ local function weapons2Table(cells, ws, unitID)
 			show_damage = false
 			show_dps = false
 		end
-		
+
 		if cp.damage_vs_shield and cp.spawns_name then -- Badger
 			dam_str = tostring(cp.damage_vs_shield) .. " (" .. dam .. " + " .. (tonumber(cp.damage_vs_shield)-dam) .. " mine)"
 			dps_str = numformat(math.floor(tonumber(cp.damage_vs_shield)/reloadtime))
@@ -674,7 +674,7 @@ local function weapons2Table(cells, ws, unitID)
 				end
 			end
 		end
-		
+
 		if cp.post_capture_reload then
 			cells[#cells+1] = ' - Reloadtime:'
 			cells[#cells+1] = numformat (tonumber(cp.post_capture_reload)/30,2) .. 's'
@@ -740,7 +740,7 @@ local function weapons2Table(cells, ws, unitID)
 			else
 				cells[#cells+1] = numformat(((wd.range / wd.projectilespeed) + (wd.selfExplode and 25 or 0))/32) .. "s"
 			end
-			
+
 			if wd.selfExplode then
 				cells[#cells+1] = " - Explodes on timeout"
 			else
@@ -786,7 +786,7 @@ local function weapons2Table(cells, ws, unitID)
 				cells[#cells+1] = cp.spawns_expire .. "s"
 			end
 		end
-		
+
 		if cp.reload_move_mod_time then
 			cells[#cells+1] = ' - Move mult time: '
 			cells[#cells+1] = cp.reload_move_mod_time .. "s"
@@ -918,7 +918,7 @@ local function printAbilities(ud, unitID)
 
 	local cp = ud.customParams
 
-	
+
 	if ud.buildSpeed > 0 and not cp.nobuildpower then
 		local buildSpeed = ud.buildSpeed * (unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1)
 		cells[#cells+1] = 'Construction'
@@ -1000,7 +1000,7 @@ local function printAbilities(ud, unitID)
 
 	local radarRadius = unitID and Spring.GetUnitRulesParam(unitID, "radarRangeOverride") or ud.radarRadius
 	local jammerRadius = unitID and Spring.GetUnitRulesParam(unitID, "jammingRangeOverride") or ud.jammerRadius
-	
+
 	if (radarRadius > 0) or (jammerRadius > 0) or ud.targfac then
 		cells[#cells+1] = 'Provides intel'
 		cells[#cells+1] = ''
@@ -1250,12 +1250,12 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = 'Stores metal: '
 		cells[#cells+1] = ud.metalStorage .. " M"
 	end
-	
+
 	if ud.energyStorage > 0 then
 		cells[#cells+1] = 'Stores energy: '
 		cells[#cells+1] = ud.energyStorage .. " E"
 	end
-	
+
 	if (#cells > 2 and cells[#cells-1] == '') then
 		cells[#cells] = nil
 		cells[#cells] = nil
@@ -1269,9 +1269,9 @@ local function printWeapons(unitDef, unitID)
 
 	local wd = WeaponDefs
 	if not wd then return false end
-	
+
 	local ucp = unitDef.customParams
-	
+
 	for i=1, #unitDef.weapons do
 		if not unitID or -- filter out commander weapons not in current loadout
 		(  i == Spring.GetUnitRulesParam(unitID, "comm_weapon_num_1")
@@ -1298,12 +1298,12 @@ local function printWeapons(unitDef, unitID)
 					break
 				end
 			end
-			
+
 			if (not isDuplicate) and not weaponDef.customParams.fake_weapon then
 				local wsTemp = {
 					weaponID = weaponID,
 					count = 1,
-					
+
 					-- stuff that the weapon gets from the owner unit
 					aa_only = aa_only,
 					highTrajectory = unitDef.highTrajectoryType,
@@ -1312,7 +1312,7 @@ local function printWeapons(unitDef, unitID)
 					stockpile_cost = ucp.stockpilecost,
 					firing_arc = weapon.maxAngleDif
 				}
-				
+
 				-- dual wielding comms
 				if (unitID and i == Spring.GetUnitRulesParam(unitID, "comm_weapon_id_1") and i == Spring.GetUnitRulesParam(unitID, "comm_weapon_id_2")) then
 					wsTemp.count = 2
@@ -1333,7 +1333,7 @@ local function printWeapons(unitDef, unitID)
 		cells = weapons2Table(cells, ws, unitID)
 		--end
 	end
-	
+
 	return cells
 end
 
@@ -1416,7 +1416,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			width=32,
 		}
 	end
-	
+
 	if behaviourPath[ud.id] then
 		icons[#icons + 1] = Button:New{
 			x = 2,
@@ -1439,7 +1439,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		height = '100%',
 		padding = { 0, 0, 0, 0 },
 		}
-	
+
 	local statschildren = {}
 
 	local isCommander = (unitID and Spring.GetUnitRulesParam(unitID, "comm_level"))
@@ -1448,7 +1448,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	local health = numformat(ud.health)
 	local speed = numformat(ud.speed)
 	local mass = numformat(ud.mass)
-	
+
 	-- stuff for modular commanders
 	local legacyModules, legacyCommCost
 	if ud.customParams.commtype and not isCommander then	-- old style pregenerated commander (still used in missions etc.)
@@ -1498,13 +1498,13 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	if (legacyCommCost) then
 		costStr = costStr .. "(" .. legacyCommCost .. " M)"
 	end
-	
+
 	statschildren[#statschildren+1] = Label:New{ caption = 'STATS', textColor = color.stats_header, }
 	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
 
 	statschildren[#statschildren+1] = Label:New{ caption = 'Cost: ', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = costStr, textColor = color.stats_fg, }
-	
+
 	statschildren[#statschildren+1] = Label:New{ caption = 'Health: ', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = health, textColor = color.stats_fg, }
 
@@ -1548,14 +1548,14 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Metal: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (metal > 0 and '+' or '') .. numformat(metal,2) .. " M/s", textColor = color.stats_fg, }
 	end
-	
+
 	local energy = (isCommander and (Spring.GetUnitRulesParam(unitID, "wanted_energyIncome") or 0) or ((ud.energyMake or 0) - (ud.customParams.upkeep_energy or 0) + (ud.customParams.income_energy or 0)))
 
 	if energy ~= 0 then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Energy: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
 	end
-	
+
 	if ud.losRadius > 0 then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Sight: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.losRadius) .. " elmo", textColor = color.stats_fg, }
@@ -1610,7 +1610,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Reload move mult: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(100*tonumber(ud.customParams.reload_move_penalty)) .. "%", textColor = color.stats_fg, }
 	end
-	
+
 	if legacyModules then
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
@@ -1623,7 +1623,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	end
 
 	local cells = printAbilities(ud, isCommander and unitID)
-	
+
 	if cells and #cells > 0 then
 
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
@@ -1637,12 +1637,12 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	end
 
 	cells = printWeapons(ud, isCommander and unitID)
-	
+
 	if cells and #cells > 0 then
-		
+
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		
+
 		statschildren[#statschildren+1] = Label:New{ caption = 'WEAPONS', textColor = color.stats_header,}
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
 		for i=1, #cells do
@@ -1650,8 +1650,8 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		end
 	end
 
-	-- fixme: get a better way to get default buildlist?
-	local default_buildlist = UnitDefNames["shieldcon"].buildOptions
+	-- TODO: fixme: get a better way to get default buildlist?
+	local default_buildlist = UnitDefNames["armck"].buildOptions
 	local this_buildlist = ud.buildOptions
 	if ((#this_buildlist ~= #default_buildlist) and (#this_buildlist > 0)) then
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
@@ -1701,7 +1701,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 		statschildren[#statschildren+1] = Label:New{ caption = 'AoE radius: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(weaponStats.damageAreaOfEffect,2) .. " elmo", textColor = color.stats_fg, }
-		
+
 		if (weaponStats.customParams.setunitsonfire) then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Afterburn: ', textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = numformat((weaponStats.customParams.burntime or 450)/30) .. "s (15 DPS)", textColor = colorFire, }
@@ -1718,8 +1718,8 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-	
-	
+
+
 	local stack_icons = Chili.Control:New{
 		y = 3,
 		right = 1,
@@ -1729,13 +1729,13 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		itemMargin = {0,4,0,4},
 		children = icons,
 	}
-	
+
 	local stack_stats = Grid:New{
 		columns=2,
 		autoArrangeV  = false,
 		--height = (#statschildren/2)*statschildren[1].height,
 		height = (#statschildren/2)*15,
-		
+
 		width = '100%',
 		children = statschildren,
 		y = 1,
@@ -1743,7 +1743,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		itemPadding = {1,1,1,1},
 		itemMargin = {1,1,1,1},
 	}
-	
+
 	local helptext_stack = StackPanel:New{
 		orientation = 'vertical',
 		autoArrangeV  = false,
@@ -1782,7 +1782,7 @@ local function tooltipBreakdown(tooltip)
 			return udef or false
 		end
 	end
-	
+
 	return false
 end
 
@@ -1816,8 +1816,8 @@ MakeStatsWindow = function(ud, x,y, unitID)
 		x = scrH / 3
 		y = scrH / 3
 	end
-	
-	
+
+
 	if not options.window_to_cursor.value then
 		x = options.window_pos_x.value
 		y = options.window_pos_y.value
@@ -1836,12 +1836,12 @@ MakeStatsWindow = function(ud, x,y, unitID)
 		Button:New{
 			caption = 'Close',
 			OnClick = { function(self) KillStatsWindow(num) end },
-			
+
 			x=5,
 			height=B_HEIGHT,
 			right=5,
 			bottom=5,
-			
+
 			--backgroundColor=color.sub_back_bg,
 			--textColor=color.sub_back_fg,
 			--classname = "back_button",
@@ -1857,12 +1857,12 @@ MakeStatsWindow = function(ud, x,y, unitID)
 		parent = screen0,
 		backgroundColor = color.stats_bg,
 		classname = "main_window_small",
-		
+
 		minWidth = 250,
 		minHeight = 300,
-		
+
 		caption = Spring.Utilities.GetHumanName(ud, unitID) ..' - '.. Spring.Utilities.GetDescription(ud, unitID),
-		
+
 		children = children,
 	}
 	AdjustWindow(statswindows[num])
@@ -1870,7 +1870,7 @@ end
 
 local function PriceWindow(unitID, action)
 	local window_width = 250
-	
+
 	local header = 'Offer For Sale'
 	local command = '$sell'
 	local cancelText = 'Cancel Sale'
@@ -1882,12 +1882,12 @@ local function PriceWindow(unitID, action)
 		header = 'Place Bounty (5 Minutes - Cannot cancel!)'
 		command = '$bounty'
 	end
-	
+
 	local children = {}
 	children[#children+1] = Label:New{ caption = header, width=window_width, height=B_HEIGHT, textColor = color.context_header,}
-	
+
 	local grid_children = {}
-	
+
 	local dollar_amounts = {50,100,200,500,1000,2000,5000,10000, 0}
 	for i=1, #dollar_amounts do
 		local dollar_amount = dollar_amounts[i]
@@ -1924,18 +1924,18 @@ local function PriceWindow(unitID, action)
 		padding = {0,0,0,0},
 		itemPadding = {2,2,2,2},
 		itemMargin = {0,0,0,0},
-		
+
 		children = grid_children,
 	}
-	
+
 	children[#children+1] = price_grid
-	
+
 	children[#children+1] = Label:New{ caption = '', width=window_width, height=B_HEIGHT, autosize=false,}
 
 	children[#children+1] =  CloseButton(window_width)
-	
+
 	local window_height = (B_HEIGHT) * (#children-1) + grid_height
-		
+
 	local stack1 = StackPanel:New{
 		centerItems = false,
 		resizeItems=false,
@@ -1946,7 +1946,7 @@ local function PriceWindow(unitID, action)
 		itemMargin = {0,0,0,0},
 		children = children,
 	}
-	
+
 	local window = Window:New{
 		x = scrW/2,
 		y = scrH/2,
@@ -1968,7 +1968,7 @@ local function MakeUnitContextMenu(unitID,x,y)
 	local _, player 	= spGetTeamInfo(team, false)
 	local playerName 	= spGetPlayerInfo(player, false) or 'noname'
 	local teamColor 	= {spGetTeamColor(team)}
-		
+
 	local window_width = 200
 	--local buttonWidth = window_width - 0
 
@@ -1976,7 +1976,7 @@ local function MakeUnitContextMenu(unitID,x,y)
 		Label:New{ caption = Spring.Utilities.GetHumanName(ud) ..' - '.. Spring.Utilities.GetDescription(ud), width=window_width, textColor = color.context_header,},
 		Label:New{ caption = 'Player: ' .. playerName, width=window_width, textColor=teamColor },
 		Label:New{ caption = 'Alliance - ' .. alliance .. '    Team - ' .. team, width=window_width ,textColor = color.context_fg,},
-		
+
 		Button:New{
 			caption = 'Unit Info',
 			OnClick = { function() MakeStatsWindow(ud,x,y) end },
@@ -1988,7 +1988,7 @@ local function MakeUnitContextMenu(unitID,x,y)
 	}
 	local y = scrH-y
 	local x = x
-	
+
 	if marketandbounty then
 		if team == myTeamID then
 			children[#children+1] =  Button:New{
@@ -2021,16 +2021,16 @@ local function MakeUnitContextMenu(unitID,x,y)
 		end
 	end
 
-	
+
 	if ceasefires and myAlliance ~= alliance then
 		--window_height = window_height + B_HEIGHT*2 --error no such window_height!
 		children[#children+1] = Button:New{ caption = 'Vote for ceasefire', OnClick = { function() spSendLuaRulesMsg('cf:y'..alliance) end }, width=window_width}
 		children[#children+1] = Button:New{ caption = 'Break ceasefire/unvote', OnClick = { function() spSendLuaRulesMsg('cf:n'..alliance) spSendLuaRulesMsg('cf:b'..alliance) end }, width=window_width}
 	end
 	children[#children+1] = CloseButton()
-	
+
 	local window_height = (B_HEIGHT)* #children
-	
+
 	if window_unitcontext then
 		window_unitcontext:Dispose()
 	end
@@ -2046,7 +2046,7 @@ local function MakeUnitContextMenu(unitID,x,y)
 		itemMargin = {0,0,0,0},
 		children = children,
 	}
-	
+
 	window_unitcontext = Window:New{
 		x = x,
 		y = y,
@@ -2065,11 +2065,11 @@ end
 --------------------------------------------------------------------------------
 
 function widget:MousePress(x,y,button)
-	
+
 	if button ~= 1 then return end
-	
+
 	local alt, ctrl, meta, shift = spGetModKeyState()
-	
+
 	if meta then
 		----------
 		local groundTooltip
@@ -2085,9 +2085,9 @@ function widget:MousePress(x,y,button)
 		----------
 		local cur_ttstr = screen0.currentTooltip or groundTooltip or spGetCurrentTooltip()
 		local ud = tooltipBreakdown(cur_ttstr)
-		
+
 		local _,cmd_id = Spring.GetActiveCommand()
-		
+
 		if cmd_id then
 			return false
 		end
@@ -2096,18 +2096,18 @@ function widget:MousePress(x,y,button)
 			MakeStatsWindow(ud,x,y)
 			return true
 		end
-		
+
 		local type, data = spTraceScreenRay(x, y, false, false, false, true)
 		if (type == 'unit') then
 			local unitID = data
-			
+
 			if marketandbounty then
 				MakeUnitContextMenu(unitID,x,y)
 				return
 			end
-			
+
 			local udid = UnitDefs[Spring.GetUnitDefID(unitID)]
-			
+
 			if udid then
 				MakeStatsWindow(udid,x,y, unitID)
 			end
@@ -2118,14 +2118,14 @@ function widget:MousePress(x,y,button)
 			local fd = fdid and FeatureDefs[fdid]
 			local feature_name = fd and fd.name
 			if feature_name then
-				
+
 				local live_name
 				if fd and fd.customParams and fd.customParams.unit then
 					live_name = fd.customParams.unit
 				else
 					live_name = feature_name:gsub('([^_]*).*', '%1')
 				end
-				
+
 				local ud = UnitDefNames[live_name]
 				if ud then
 					MakeStatsWindow(ud,x,y)
@@ -2155,7 +2155,7 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget(widget)
 		return
 	end
-	
+
 	-- setup Chili
 	 Chili = WG.Chili
 	 Button = Chili.Button
@@ -2170,7 +2170,7 @@ function widget:Initialize()
 	 color2incolor = Chili.color2incolor
 
 	widget:ViewResize(Spring.GetViewGeometry())
-	
+
 	WG.MakeStatsWindow = MakeStatsWindow
 end
 

@@ -252,7 +252,7 @@ local function ToggleIfCheatsEnabled(self)
 end
 
 local function GetNoCost() -- hax because there is no relevant Spring callout
-	return UnitDefNames.energysingu.buildTime == 10 -- not 100% reliable but works with /reload
+	return UnitDefNames.armsolar.buildTime == 10 -- not 100% reliable but works with /reload
 end
 
 local function IsCheatingGameSetup()

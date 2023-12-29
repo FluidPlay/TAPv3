@@ -14,7 +14,7 @@ function gadget:GetInfo()
     date      = "8 August 2016",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
-    enabled   = true  --  loaded by default?
+    enabled   = false, --true  --  loaded by default?
  }
 end
 
@@ -77,11 +77,11 @@ local function SumOverlappingAreas(_, data, _, tx, ty, tz, allyTeamID, areaLimit
 	if not overlappingAreas then
 		return
 	end
-	
+
 	if data.allyTeamID and (data.allyTeamID ~= allyTeamID) then
 		return
 	end
-	
+
 	if data.posUpdateFrame or data.removeFrame then
 		local gameFrame = Spring.GetGameFrame()
 		if data.removeFrame and data.removeFrame < gameFrame then
@@ -104,7 +104,7 @@ local function SumOverlappingAreas(_, data, _, tx, ty, tz, allyTeamID, areaLimit
 	local xDiff = tx - data.x
 	local zDiff = tz - data.z
 	local yDiff = ty - data.y
-	
+
 	if xDiff <= OVERLAP_DISTANCE and zDiff <= OVERLAP_DISTANCE and (xDiff*xDiff + yDiff*yDiff + zDiff*zDiff) < OVERLAP_DISTANCE*OVERLAP_DISTANCE then
 		overlappingAreas = overlappingAreas + 1
 		if overlappingAreas >= areaLimit then
@@ -117,9 +117,9 @@ function GG.OverkillPreventionPlaceholder_CheckBlock(unitID, targetID, allyTeamI
 	if not (unitID and targetID and units[unitID]) then
 		return false
 	end
-	
+
 	local _,_,_,_,_,_, x, y, z = Spring.GetUnitPosition(targetID, true, true)
-	
+
 	local targetVisiblityState = Spring.GetUnitLosState(targetID, allyTeamID, true)
 	local targetIdentified = (targetVisiblityState == 15) or (math.floor(targetVisiblityState / 4) % 4 == 3)
 	local shotsRequired
@@ -129,11 +129,11 @@ function GG.OverkillPreventionPlaceholder_CheckBlock(unitID, targetID, allyTeamI
 	else
 		shotsRequired = 2
 	end
-	
+
 	overlappingAreas = 0
 	IterableMap.Apply(projectiles, SumOverlappingAreas, x, y, z, allyTeamID, shotsRequired)
 	local block = not overlappingAreas
-	
+
 	if not block then
 		local gameFrame = Spring.GetGameFrame()
 		local data = {
@@ -144,7 +144,7 @@ function GG.OverkillPreventionPlaceholder_CheckBlock(unitID, targetID, allyTeamI
 			posUpdateFrame = gameFrame + 10,
 			allyTeamID = allyTeamID,
 		}
-		
+
 		IterableMap.Add(projectiles, -unitID, data)
 		return false
 	else
@@ -159,7 +159,7 @@ function GG.OverkillPreventionPlaceholder_CheckBlock(unitID, targetID, allyTeamI
 			spSetUnitTarget(unitID, 0)
 		end
 	end
-	
+
 	return true
 end
 
@@ -167,9 +167,9 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if not handledWeaponDefIDs[weaponDefID] then
 		return
 	end
-	
+
 	local data
-	
+
 	local targetType, targetData = Spring.GetProjectileTarget(proID)
 	if targetType == UNIT then
 		-- aim position
@@ -203,17 +203,17 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			z = targetData[3],
 		}
 	end
-	
+
 	if not data then
 		return
 	end
-	
+
 	local teamID = Spring.GetProjectileTeamID(proID)
 	if teamID then
 		local allyTeamID = select(6, Spring.GetTeamInfo(teamID, false))
 		data.allyTeamID = allyTeamID
 	end
-	
+
 	IterableMap.Add(projectiles, proID, data)
 end
 
@@ -221,10 +221,10 @@ function gadget:ProjectileDestroyed(proID)
 	if not IterableMap.InMap(projectiles, proID) then
 		return
 	end
-	
+
 	local x, y, z = Spring.GetProjectilePosition(proID)
 	local gameFrame = Spring.GetGameFrame()
-	
+
 	local data = IterableMap.Get(projectiles, proID)
 	data.x = x
 	data.y = y
@@ -234,7 +234,7 @@ function gadget:ProjectileDestroyed(proID)
 	data.targetID = nil
 	data.targetType = nil
 	data.posUpdateFrame = nil
-	
+
 	IterableMap.Add(projectiles, IterableMap.GetUnusedKey(projectiles), data)
 	IterableMap.Remove(projectiles, proID)
 end
@@ -257,7 +257,7 @@ local function PreventOverkillToggleCommand(unitID, cmdParams, cmdOptions)
 	if canHandleUnit[unitID] then
 		local state = cmdParams[1]
 		local cmdDescID = spFindUnitCmdDesc(unitID, CMD_PREVENT_OVERKILL)
-		
+
 		if (cmdDescID) then
 			preventOverkillCmdDesc.params[1] = state
 			spEditUnitCmdDesc(unitID, cmdDescID, {params = preventOverkillCmdDesc.params})
@@ -319,7 +319,7 @@ function gadget:Initialize()
 		local teamID = Spring.GetUnitTeam(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
-	
+
 	for w,_ in pairs(handledWeaponDefIDs) do
 		Script.SetWatchProjectile(w, true)
 	end

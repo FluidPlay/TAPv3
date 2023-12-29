@@ -59,7 +59,10 @@ local spAreTeamsAllied      = Spring.AreTeamsAllied
 local spGetProjectileTeamID = Spring.GetProjectileTeamID
 
 local DefensiveManeuverDefs = {
-	[UnitDefNames["energysolar"].id] = true
+	[UnitDefNames["armsolar"].id] = true,
+	[UnitDefNames["corsolar"].id] = true,
+	[UnitDefNames["armadvsol"].id] = true,
+	[UnitDefNames["coradvsol"].id] = true
 }
 
 --------------------------------------------------------------------------------
@@ -119,7 +122,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
 			end
 		end
 	end
-  
+
 	return damage
 end
 

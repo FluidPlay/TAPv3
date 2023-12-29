@@ -22,7 +22,7 @@ end
 --------------------------------------------------------------------------------
 -- CONFIG
 local NoDamageToSelf = {
-	[UnitDefNames["chicken"].id] = true,
+	--[UnitDefNames["chicken"].id] = true,
 }
 
 -------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ local function SpringSpeedToDamage(colliderMass,collideeeMass,relativeSpeed) --I
 	local collideeImpactDmgMult = math.min(collideeRelImpactSpeed * colliderMass * COLLISION_DAMAGE_MULT, MAX_UNIT_SPEED);
 	-- colliderImpactDmgMult = math.modf(colliderImpactDmgMult) --in case fraction need to be removed
 	-- collideeImpactDmgMult = math.modf(collideeImpactDmgMult)
-	
+
 	return colliderImpactDmgMult, collideeImpactDmgMult
 end
 
@@ -159,7 +159,7 @@ local function DoCollisionDamage(unitID, unitDefID, otherID)
 	local myVx, myVy, myVz, mySpeed = Spring.GetUnitVelocity(unitID)
 	local oVx, oVy, oVz, otherSpeed = Spring.GetUnitVelocity(otherID)
 	local relativeSpeed = math.sqrt((oVx - myVx)^2 + (oVy - myVy)^2 + (oVz - myVz)^2)
-	
+
 	local otherUnitDefID = Spring.GetUnitDefID(otherID)
 	local noSelfDamage = false
 	if NoDamageToSelf[unitDefID] and NoDamageToSelf[otherUnitDefID] then
@@ -171,21 +171,21 @@ local function DoCollisionDamage(unitID, unitDefID, otherID)
 		local damageToDeal = math.min(myDamage, otherDamage) * UNIT_UNIT_DAMAGE_FACTOR -- deal the damage of the least massive unit
 		local isUnitAllied = (spGetUnitAllyTeam(unitID) == spGetUnitAllyTeam(otherID))
 		local colliderImmune = false
-		
+
 		local myMass = attributes[unitDefID].mass
 		local otherMass = attributes[otherUnitDefID].mass
 		local myVelFrac = myMass/(myMass + otherMass)
-		
+
 		local aVx = myVx*myVelFrac + oVx*(1 - myVelFrac)
 		local aVy = myVy*myVelFrac + oVy*(1 - myVelFrac)
 		local aVz = myVz*myVelFrac + oVz*(1 - myVelFrac)
-		
+
 		unitWantedVelocity = unitWantedVelocity or {}
 		unitWantedVelocity[#unitWantedVelocity + 1] = {unitID, aVx, aVy, aVz}
 		unitWantedVelocity[#unitWantedVelocity + 1] = {otherID, aVx, aVy, aVz}
 		--GG.AddGadgetImpulseRaw(unitID, aVx - myVx, aVy - myVy, aVz - myVz, true, true)
 		--GG.AddGadgetImpulseRaw(otherID, aVx - oVx, aVy - oVy, aVz - oVz, true, true)
-		
+
 		if unitImmune[unitID] then
 			if unitImmune[unitID] < gameframe then
 				unitImmune[unitID] = nil
@@ -235,12 +235,12 @@ function gadget:UnitPreDamaged_GetWantedWeaponDef()
 end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
-	
+
 	if fallDamageImmunityWeaponID[weaponDefID] then
 		SetUnitFallDamageImmunity(unitID, fallDamageImmunityWeaponID[weaponDefID] + gameframe)
 		SetUnitFallDamageImmunityFeature(unitID, fallDamageImmunityWeaponID[weaponDefID] + gameframe)
 	end
-	
+
 	-- unit or wreck collision
 	if (weaponDefID == -3) and not unitPermanentImmune[unitID] then
 		if attackerID == nil then
@@ -250,7 +250,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 				local damageTotal = DEBRIS_SPRING_DAMAGE_MULTIPLIER*damage -- Why????
 				damageTotal = damageTotal*(collisionDamageMult[unitID] or 1)
 				--spAddUnitDamage(unitID, damageTotal, 0, nil, -7)
-				
+
 				unitWantedVelocity = unitWantedVelocity or {}
 				unitWantedVelocity[#unitWantedVelocity + 1] = {unitID, 0.3}
 				--GG.AddGadgetImpulseRaw(unitID, -1*vx, -1*vy, -1*vz, true, true)
@@ -258,7 +258,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			end
 			return 0
 		end
-		
+
 		-- Unit on unit collision
 		unitAlreadyProcessed = unitAlreadyProcessed or {}
 		if unitAlreadyProcessed[unitID] then
@@ -270,17 +270,17 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		end
 		return 0 -- units bounce but don't damage themselves.
 	end
-	
+
 	-- ground collision
 	if weaponDefID == -2 and attackerID == nil and Spring.ValidUnitID(unitID) and UnitDefs[unitDefID] then
 		-- Unit AI and script workarounds.
 		GG.WaitWaitMoveUnit(unitID)
-			
+
 		local env = Spring.UnitScript.GetScriptEnv(unitID)
 		if env and env.script.StartMoving then
 			Spring.UnitScript.CallAsUnit(unitID, env.script.StartMoving)
 		end
-	
+
 		if unitImmune[unitID] then
 			if unitImmune[unitID] >= gameframe then
 				return 0
@@ -303,21 +303,21 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		local tf = att.friction
 		vx, vy, vz = tx*tf + nx*nf - vx, ty*tf + ny*nf - vy, tz*tf + nz*nf - vz
 		GG.AddGadgetImpulseRaw(unitID, vx, vy, vz, true, true)
-		
+
 		if env and env.script.StopMoving then
 			env.script.StopMoving()
 		end
-		
+
 		local damgeSpeed = math.sqrt((nx + tx*TANGENT_DAMAGE)^2 + (ny + ty*TANGENT_DAMAGE)^2 + (nz + tz*TANGENT_DAMAGE)^2)
 		local damageTotal = LocalSpeedToDamage(unitID, unitDefID, damgeSpeed) + outsideMapDamage(unitID, unitDefID)
 		damageTotal = damageTotal*(collisionDamageMult[unitID] or 1)
 		return damageTotal
 	end
-	
+
 	if weaponDefID == -1 then
 		return 20
 	end
-	
+
 	return damage
 end
 

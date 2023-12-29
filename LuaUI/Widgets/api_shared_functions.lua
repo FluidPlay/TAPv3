@@ -67,7 +67,7 @@ local keywords = {
 --[[
 	raw = print table key-value pairs straight to file (i.e. not as a table)
 	if you use it make sure your keys are valid variable names!
-	
+
 	valid params: {
 		numIndents = int,
 		raw = bool,
@@ -95,23 +95,23 @@ local function WriteTable(concatArray, tab, tabName, params)
 	params = params or {}
 	local processed = {}
 	concatArray = concatArray or {}
-	
+
 	params.numIndents = params.numIndents or 0
 	local isDict = IsDictOrContainsDict(tab)
 	local comma = params.raw and "" or ", "
 	local endLine = params.raw and "\n" or ",\n"
 	local str = ""
-	
+
 	local function NewLine()
 		concatArray[#concatArray + 1] = str
 		str = ""
 	end
-	
+
 	local function ProcessKeyValuePair(i,v, isArray, lastItem)
 		if type(v) == "function" then
 			return
 		end
-	
+
 		local pairEndLine = (lastItem and "") or (isArray and comma) or endLine
 		if isDict then
 			str = str .. WriteIndents(params.numIndents + 1)
@@ -125,7 +125,7 @@ local function WriteTable(concatArray, tab, tabName, params)
 		else
 			str = str .. i .. " = "
 		end
-		
+
 		if type(v) == "table" then
 			local arg = {numIndents = (params.numIndents + 1), endOfFile = false}
 			NewLine()
@@ -146,7 +146,7 @@ local function WriteTable(concatArray, tab, tabName, params)
 		end
 		NewLine()
 	end
-	
+
 	if not params.raw then
 		if params.prefixReturn then
 			str = "return "
@@ -156,7 +156,7 @@ local function WriteTable(concatArray, tab, tabName, params)
 		str = str .. (isDict and "{\n" or "{")
 	end
 	NewLine()
-	
+
 	-- do array component first (ensures order is preserved)
 	for i=0,#tab do
 		local v = tab[i]
@@ -170,7 +170,7 @@ local function WriteTable(concatArray, tab, tabName, params)
 			ProcessKeyValuePair(i,v)
 		end
 	end
-	
+
 	if isDict then
 		str = str .. WriteIndents(params.numIndents)
 	end
@@ -179,7 +179,7 @@ local function WriteTable(concatArray, tab, tabName, params)
 		str = str .. endLine
 	end
 	NewLine()
-	
+
 	return concatArray
 end
 
@@ -225,7 +225,7 @@ local function WritePythonOrJSONDict(dict, dictName, params)
 		else
 			str = str .. i .. separator
 		end
-		
+
 		if type(v) == "table" then
 			local arg = {numIndents =  params.numIndents + 1, endOfFile = false}
 			str = str .. WritePythonDict(v, nil, arg)
@@ -238,20 +238,20 @@ local function WritePythonOrJSONDict(dict, dictName, params)
 			str = str .. v .. endLine
 		end
 	end
-	
+
 	-- get rid of trailing commma
 	local strEnd  = string.sub(str,-3)
 	if strEnd == endLine then -- , \n
 		str = string.sub(str, 1, -4) .. "\n"
 	end
-	
+
 	if not params.raw then
 		str = str ..WriteIndents(params.numIndents) .. "}"
 	end
 	if params.endOfFile == false then
 		str = str .. comma .. "\n"
 	end
-	
+
 	return str
 end
 
@@ -280,7 +280,8 @@ end
 local builderDefs = {}
 for udid, ud in ipairs(UnitDefs) do
 	for i, option in ipairs(ud.buildOptions) do
-		if UnitDefNames.staticmex.id == option then
+		-- Seriously?? >-<
+		if option == UnitDefNames.armmex.id or option == UnitDefNames.cormex.id then
 			builderDefs[udid] = true
 		end
 	end

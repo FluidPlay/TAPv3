@@ -1,5 +1,5 @@
 local terraformOnUnitDestroyed = {
-	[UnitDefNames["shieldscout"].id] = {
+	[UnitDefNames["corvrad"].id] = {
 		posX =
 			           {-8, 0, 8,
 			        -16,-8, 0, 8, 16,

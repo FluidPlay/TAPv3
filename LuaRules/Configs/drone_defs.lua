@@ -6,142 +6,142 @@ local carrierDefs = {}
 
 local carrierDefNames = {
 
-	shipcarrier = {
-		spawnPieces = {"DroneAft", "DroneFore", "DroneLower","DroneUpper"},
-		{
-			drone = UnitDefNames.dronecarry.id,
-			reloadTime = 5,
-			maxDrones = 8,
-			spawnSize = 1,
-			range = 1000,
-			maxChaseRange = 1500,
-			buildTime = 25,
-			maxBuild = 4,
-			offsets = {0, 0, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-		},
-	},
-	--gunshipkrow = { {drone = UnitDefNames.dronelight.id, reloadTime = 15, maxDrones = 6, spawnSize = 2, range = 900, buildTime=3,
-	-- offsets = {0,0,0,colvolMidX=0, colvolMidY=0,colvolMidZ=0,aimX=0,aimY=0,aimZ=0}},
-	nebula = {
-		spawnPieces = {"pad1", "pad2", "pad3", "pad4"},
-		{
-			drone = UnitDefNames.dronefighter.id,
-			reloadTime = 15,
-			maxDrones = 8,
-			spawnSize = 2,
-			range = 1000,
-			maxChaseRange = 1500,
-			buildTime = 3,
-			maxBuild = 4,
-			offsets = {0, 8, 15, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
-		},
-	},
-	pw_garrison = {
-		spawnPieces = {"drone"},
-		{
-			drone = UnitDefNames.dronelight.id,
-			reloadTime = 10,
-			maxDrones = 8,
-			spawnSize = 1,
-			range = 800,
-			maxChaseRange = 1300,
-			buildTime = 5,
-			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-		},
-	},
-	pw_grid = {
-		spawnPieces = {"drone"},
-		{
-			drone = UnitDefNames.droneheavyslow.id,
-			reloadTime = 10,
-			maxDrones = 6,
-			spawnSize = 1,
-			range = 800,
-			maxChaseRange = 1300,
-			buildTime = 5,
-			maxBuild = 1,
-			offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-		},
-	},
-	pw_hq_attacker = {
-		spawnPieces = {"drone"},
-		{
-			drone = UnitDefNames.dronelight.id,
-			reloadTime = 10,
-			maxDrones = 6,
-			spawnSize = 1,
-			range = 500,
-			maxChaseRange = 1200,
-			buildTime = 5,
-			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-		},
-	},
-	pw_hq_defender = {
-		spawnPieces = {"drone"},
-		{
-			drone = UnitDefNames.dronelight.id,
-			reloadTime = 10,
-			maxDrones = 6,
-			spawnSize = 1,
-			range = 600,
-			maxChaseRange = 1200,
-			buildTime = 5,
-			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-		},
-	},
+--	shipcarrier = {
+--		spawnPieces = {"DroneAft", "DroneFore", "DroneLower","DroneUpper"},
+--		{
+--			drone = UnitDefNames.dronecarry.id,
+--			reloadTime = 5,
+--			maxDrones = 8,
+--			spawnSize = 1,
+--			range = 1000,
+--			maxChaseRange = 1500,
+--			buildTime = 25,
+--			maxBuild = 4,
+--			offsets = {0, 0, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--		},
+--	},
+--	--gunshipkrow = { {drone = UnitDefNames.dronelight.id, reloadTime = 15, maxDrones = 6, spawnSize = 2, range = 900, buildTime=3,
+--	-- offsets = {0,0,0,colvolMidX=0, colvolMidY=0,colvolMidZ=0,aimX=0,aimY=0,aimZ=0}},
+--	nebula = {
+--		spawnPieces = {"pad1", "pad2", "pad3", "pad4"},
+--		{
+--			drone = UnitDefNames.dronefighter.id,
+--			reloadTime = 15,
+--			maxDrones = 8,
+--			spawnSize = 2,
+--			range = 1000,
+--			maxChaseRange = 1500,
+--			buildTime = 3,
+--			maxBuild = 4,
+--			offsets = {0, 8, 15, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
+--		},
+--	},
+--	pw_garrison = {
+--		spawnPieces = {"drone"},
+--		{
+--			drone = UnitDefNames.dronelight.id,
+--			reloadTime = 10,
+--			maxDrones = 8,
+--			spawnSize = 1,
+--			range = 800,
+--			maxChaseRange = 1300,
+--			buildTime = 5,
+--			maxBuild = 1,
+--			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--		},
+--	},
+--	pw_grid = {
+--		spawnPieces = {"drone"},
+--		{
+--			drone = UnitDefNames.droneheavyslow.id,
+--			reloadTime = 10,
+--			maxDrones = 6,
+--			spawnSize = 1,
+--			range = 800,
+--			maxChaseRange = 1300,
+--			buildTime = 5,
+--			maxBuild = 1,
+--			offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--		},
+--	},
+--	pw_hq_attacker = {
+--		spawnPieces = {"drone"},
+--		{
+--			drone = UnitDefNames.dronelight.id,
+--			reloadTime = 10,
+--			maxDrones = 6,
+--			spawnSize = 1,
+--			range = 500,
+--			maxChaseRange = 1200,
+--			buildTime = 5,
+--			maxBuild = 1,
+--			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--		},
+--	},
+--	pw_hq_defender = {
+--		spawnPieces = {"drone"},
+--		{
+--			drone = UnitDefNames.dronelight.id,
+--			reloadTime = 10,
+--			maxDrones = 6,
+--			spawnSize = 1,
+--			range = 600,
+--			maxChaseRange = 1200,
+--			buildTime = 5,
+--			maxBuild = 1,
+--			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--		},
+--	},
 }
 
 local presets = {
-	module_companion_drone = {
-		drone = UnitDefNames.dronelight.id,
-		reloadTime = 12,
-		maxDrones = 2,
-		spawnSize = 1,
-		range = 600,
-		maxChaseRange = 1200,
-		buildTime = 6,
-		maxBuild = 1,
-		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-	},
-	module_battle_drone = {
-		drone = UnitDefNames.droneheavyslow.id,
-		reloadTime = 18,
-		maxDrones = 1,
-		spawnSize = 1,
-		range = 600,
-		maxChaseRange = 1200,
-		buildTime = 9,
-		maxBuild = 1,
-		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-	},
+--	module_companion_drone = {
+--		drone = UnitDefNames.dronelight.id,
+--		reloadTime = 12,
+--		maxDrones = 2,
+--		spawnSize = 1,
+--		range = 600,
+--		maxChaseRange = 1200,
+--		buildTime = 6,
+--		maxBuild = 1,
+--		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--	},
+--	module_battle_drone = {
+--		drone = UnitDefNames.droneheavyslow.id,
+--		reloadTime = 18,
+--		maxDrones = 1,
+--		spawnSize = 1,
+--		range = 600,
+--		maxChaseRange = 1200,
+--		buildTime = 9,
+--		maxBuild = 1,
+--		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--	},
 }
 
 local unitRulesCarrierDefs = {
-	drone = {
-		drone = UnitDefNames.dronelight.id,
-		reloadTime = 12,
-		maxDrones = 2,
-		spawnSize = 1,
-		range = 600,
-		maxChaseRange = 1200,
-		buildTime = 10,
-		maxBuild = 1,
-		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-	},
-	droneheavyslow = {
-		drone = UnitDefNames.droneheavyslow.id,
-		reloadTime = 18,
-		maxDrones = 1,
-		spawnSize = 1,
-		range = 600,
-		maxChaseRange = 1200,
-		buildTime = 15,
-		maxBuild = 1,
-		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-	}
+--	drone = {
+--		drone = UnitDefNames.dronelight.id,
+--		reloadTime = 12,
+--		maxDrones = 2,
+--		spawnSize = 1,
+--		range = 600,
+--		maxChaseRange = 1200,
+--		buildTime = 10,
+--		maxBuild = 1,
+--		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--	},
+--	droneheavyslow = {
+--		drone = UnitDefNames.droneheavyslow.id,
+--		reloadTime = 18,
+--		maxDrones = 1,
+--		spawnSize = 1,
+--		range = 600,
+--		maxChaseRange = 1200,
+--		buildTime = 15,
+--		maxBuild = 1,
+--		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+--	}
 }
 
 --[[
@@ -169,10 +169,10 @@ for name, data in pairs(carrierDefNames) do
 end
 
 local thingsWhichAreDrones = {
-	[UnitDefNames.dronecarry.id] = true,
-	[UnitDefNames.dronelight.id] = true,
-	[UnitDefNames.droneheavyslow.id] = true,
-	[UnitDefNames.dronefighter.id] = true
+--	[UnitDefNames.dronecarry.id] = true,
+--	[UnitDefNames.dronelight.id] = true,
+--	[UnitDefNames.droneheavyslow.id] = true,
+--	[UnitDefNames.dronefighter.id] = true
 }
 
 local function ProcessCarrierDef(carrierData)
@@ -181,13 +181,13 @@ local function ProcessCarrierDef(carrierData)
 	local buildUpProgress = 1/(carrierData.buildTime)*(1/30)
 	carrierData.buildStep = buildUpProgress
 	carrierData.buildStepHealth = buildUpProgress*ud.health
-	
+
 	if DRONES_COST_RESOURCES then
 		carrierData.buildCost = ud.metalCost
 		carrierData.buildStepCost = buildUpProgress*carrierData.buildCost
 		carrierData.perSecondCost = carrierData.buildCost/carrierData.buildTime
 	end
-	
+
 	carrierData.colvolTweaked = carrierData.offsets.colvolMidX ~= 0 or carrierData.offsets.colvolMidY ~= 0
 									or carrierData.offsets.colvolMidZ ~= 0 or carrierData.offsets.aimX ~= 0
 										or carrierData.offsets.aimY ~= 0 or carrierData.offsets.aimZ ~= 0

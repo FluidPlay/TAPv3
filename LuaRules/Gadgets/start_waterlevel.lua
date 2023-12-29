@@ -3,7 +3,7 @@ if not gadgetHandler:IsSyncedCode() then return end
 function gadget:GetInfo() return {
 	name    = "Water level modoption",
 	layer   = 1, -- after terraform whence GG.Terraform_RaiseWater comes
-	enabled = true,
+	enabled = false, --true,
 } end
 
 local DRY_WATERLEVEL = -50
@@ -39,7 +39,7 @@ function gadget:Initialize() -- GamePreload causes issues with widgets.
 	end
 
 	Spring.SetGameRulesParam("waterlevel", waterlevel)
-	if waterlevel ~= 0 then
+	if waterlevel ~= 0 and G.Terraform_RaiseWater then
 		GG.Terraform_RaiseWater(waterlevel)
 	end
 end

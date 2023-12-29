@@ -65,7 +65,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local terraunitDefID = UnitDefNames["terraunit"].id
+local terraunitDefID = UnitDefNames["armck"].id
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ function gadget:GameFrame(n)
 	for i=unitsCount, 1,-1 do
 		-- Step backwards as a nil index will be filled by the end index
 		local health,_,_,_,build = spGetUnitHealth(units[i].id)
-			
+
 		if health then -- check if it's a valid unit
 			if build < units[i].lastBuild then
 				spSetUnitHealth(units[i].id, health + (units[i].lastBuild - build)*units[i].maxHealth)

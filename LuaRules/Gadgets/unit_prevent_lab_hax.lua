@@ -38,12 +38,10 @@ local spMoveCtrlGetTag         = Spring.MoveCtrl.GetTag
 local abs = math.abs
 local min = math.min
 
-local terraunitDefID = UnitDefNames["terraunit"].id
-
 local FEATURE_ONLY = {
-	factorygunship = true,
-	staticmissilesilo = true,
-	staticrearm = true,
+--	factorygunship = true,
+--	staticmissilesilo = true,
+--	staticrearm = true,
 }
 
 --------------------------------------------------------------------------------
@@ -69,7 +67,7 @@ local function CheckLabs(checkFeatures, onlyUnstick)
 	local data, units, features
 	for i = 1, labList.count do
 		data = labData[i]
-		
+
 		if data.unstickHelp or (not onlyUnstick) then
 			local clearUnits = data.unitExpulsionParameters
 			if clearUnits then
@@ -83,15 +81,15 @@ local function CheckLabs(checkFeatures, onlyUnstick)
 						if (ally ~= data.ally) or (data.unstickHelp and not ud.isImmobile) then --teleport unit away
 							local ux, _, uz, _,_,_, _, aimY  = spGetUnitPosition(unitID, true, true)
 							local vx, vy, vz = spGetUnitVelocity(unitID)
-							
+
 							if aimY > -18 and aimY >= clearUnits[5] and aimY <= clearUnits[6] then
 								local isAlly = (ally == data.ally)
-								
+
 								local l = abs(ux - clearUnits[1])
 								local t = abs(uz - clearUnits[2])
 								local r = abs(ux - clearUnits[3])
 								local b = abs(uz - clearUnits[4])
-								
+
 								local pushDistance = (data.unstickHelp and 16) or 8
 
 								local side = min(l,r,t,b)
@@ -132,7 +130,7 @@ local function CheckLabs(checkFeatures, onlyUnstick)
 					end
 				end
 			end
-			
+
 			if checkFeatures then
 				local clearFeatures = data.featureExpulsionParameters
 				features = spGetFeaturesInRectangle(clearFeatures[1], clearFeatures[2], clearFeatures[3], clearFeatures[4])
@@ -180,13 +178,13 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 		local zsize = (ud.ysize or ud.zsize)*4
 		local ally = spGetUnitAllyTeam(unitID)
 		local minx, minz, maxx, maxz
-		
+
 		local unstickHelp = ud.customParams.unstick_help
 
 		local _,sizeY,_,_,offsetY = Spring.GetUnitCollisionVolumeData(unitID)
 		local miny = uy + offsetY - sizeY/2 --set the box bottom
 		local maxy = uy + offsetY + 150 --set the box height +200 elmo above the factory midpoint
-		
+
 		if ((face == 0) or (face == 2)) then
 			if xsize%16 == 0 then
 				ux = math.floor((ux+8)/16)*16
@@ -199,7 +197,7 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 			else
 				uz = math.floor(uz/16)*16+8
 			end
-			
+
 			minx = ux - xsize
 			minz = uz - zsize
 			maxx = ux + xsize
@@ -222,7 +220,7 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 			maxx = ux + zsize
 			maxz = uz + xsize
 		end
-		
+
 		local solidFactoryLimit = ud.customParams.solid_factory and tonumber(ud.customParams.solid_factory)
 		local unitExpulsionParameters
 		if not FEATURE_ONLY[ud.name] then
@@ -251,7 +249,7 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 				end
 			end
 		end
-		
+
 		local featureExpulsionParameters = {
 			minx - 0.1,
 			minz - 0.1,
@@ -260,7 +258,7 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 			miny,
 			maxy,
 		}
-		
+
 		labList.count = labList.count + 1
 		labList.data[labList.count] = {
 			unitID = unitID,
@@ -272,9 +270,9 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 			unstickHelp = unstickHelp,
 			preventAllyHax = solidFactoryLimit and true,
 		}
-		
+
 		labs[unitID] = labList.count
-		
+
 		if unstickHelp then
 			local data = labList.data[labList.count]
 			local buffer = (ud.customParams.unstick_help_buffer and tonumber(ud.customParams.unstick_help_buffer)) or 0.5
@@ -282,7 +280,7 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 			data.minBuildZ = (((face == 2) and minz) or (minz*(1 - buffer) + uz*buffer))
 			data.maxBuildX = (((face == 1) and maxx) or (maxx*(1 - buffer) + ux*buffer))
 			data.maxBuildZ = (((face == 0) and maxz) or (maxz*(1 - buffer) + uz*buffer))
-			
+
 			--Spring.MarkerAddLine(data.minBuildX,0,data.minBuildZ,data.maxBuildX,0,data.minBuildZ)
 			--Spring.MarkerAddLine(data.minBuildX,0,data.minBuildZ,data.minBuildX,0,data.maxBuildZ)
 			--Spring.MarkerAddLine(data.maxBuildX,0,data.maxBuildZ,data.maxBuildX,0,data.minBuildZ)
@@ -291,7 +289,7 @@ function gadget:UnitCreated(unitID, unitDefID,teamID)
 
 		--Spring.Echo(xsize)
 		--Spring.Echo(zsize)
-		
+
 		--Spring.MarkerAddLine(unitExpulsionParameters[1],0,unitExpulsionParameters[2],unitExpulsionParameters[3],0,unitExpulsionParameters[2])
 		--Spring.MarkerAddLine(unitExpulsionParameters[1],0,unitExpulsionParameters[2],unitExpulsionParameters[1],0,unitExpulsionParameters[4])
 		--Spring.MarkerAddLine(unitExpulsionParameters[3],0,unitExpulsionParameters[4],unitExpulsionParameters[3],0,unitExpulsionParameters[2])
@@ -319,11 +317,11 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	if cmdID >= 0 and cmdID ~= CMD.INSERT then
 		return true
 	end
-	
+
 	if UnitDefs[unitDefID].isFactory then
 		return true
 	end
-	
+
 	local buildDefID, x, z, face
 	if cmdID == CMD.INSERT then
 		if not cmdParams[2] then
@@ -342,12 +340,12 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 		z = cmdParams[3]
 		face = cmdParams[4]
 	end
-	
+
 	if (not x) or (not z) then
 		-- Sometimes factory construction orders reach here
 		return true
 	end
-	
+
 	local allyTeamID = Spring.GetUnitAllyTeam(unitID)
 	local ud = UnitDefs[buildDefID]
 	if not ud then
@@ -356,16 +354,16 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 
 	local xsize = (ud.xsize)*4 - 8
 	local zsize = (ud.ysize or ud.zsize)*4 - 8
-	
+
 	if ((face == 1) or (face == 3)) then
 		xsize, zsize = zsize, xsize
 	end
-	
+
 	--Spring.MarkerAddLine(x - xsize,0,z - zsize,x + xsize,0,z - zsize)
 	--Spring.MarkerAddLine(x + xsize,0,z - zsize,x + xsize,0,z + zsize)
 	--Spring.MarkerAddLine(x + xsize,0,z + zsize,x - xsize,0,z + zsize)
 	--Spring.MarkerAddLine(x - xsize,0,z + zsize,x - xsize,0,z - zsize)
-	
+
 	--if (not x) or (not z) then
 	--	Spring.Echo("LUA_ERRRUN", "Prevent Lab Hax AllowCommand")
 	--	Spring.Echo("cmdID", cmdID, "ud.name", ud and ud.name)
@@ -374,7 +372,7 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	--	Spring.Echo("x z xsize zsize", x, z, xsize, zsize)
 	--	return true
 	--end
-	
+
 	local labData = labList.data
 	for i = 1, labList.count do
 		local data = labData[i]
