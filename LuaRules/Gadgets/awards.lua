@@ -404,7 +404,7 @@ function gadget:Initialize()
 
 	GG.Awards = GG.Awards or {}
 	GG.Awards.AddAwardPoints = AddAwardPoints
-	
+
 	--_G.resourceInfo = resourceInfo
 
 	local tempTeamList = Spring.GetTeamList()
@@ -481,10 +481,10 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 end
 
 -- wtf, why does each shitty chicken get to have its own award?
-local    chicken_dragonDefID = UnitDefNames.chicken_dragon   .id
-local chickenflyerqueenDefID = UnitDefNames.chickenflyerqueen.id
-local  chickenlandqueenDefID = UnitDefNames.chickenlandqueen .id
-local             roostDefID = UnitDefNames.roost            .id
+--local    chicken_dragonDefID = UnitDefNames.chicken_dragon   .id
+--local chickenflyerqueenDefID = UnitDefNames.chickenflyerqueen.id
+--local  chickenlandqueenDefID = UnitDefNames.chickenlandqueen .id
+--local             roostDefID = UnitDefNames.roost            .id
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	local experience = spGetUnitExperience(unitID)
@@ -511,14 +511,14 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	else
 		if (comms[unitDefID] and (not spAreTeamsAllied(killerTeam, unitTeam))) then
 			AddAwardPoints( 'head', killerTeam, 1 )
-		elseif unitDefID == chicken_dragonDefID then
-			AddAwardPoints( 'dragon', killerTeam, 1 )
-		elseif unitDefID == chickenflyerqueenDefID or unitDefID == chickenlandqueenDefID then
-			for killerFrienz, _ in pairs(awardData['heart']) do --give +1000000000 points for all frienz that kill queen and won
-				AddAwardPoints( 'heart', killerFrienz, awardAbsolutes['heart']) --the extra points is for id purpose. Will deduct later
-			end
-		elseif unitDefID == roostDefID then
-			AddAwardPoints( 'sweeper', killerTeam, 1 )
+--		elseif unitDefID == chicken_dragonDefID then
+--			AddAwardPoints( 'dragon', killerTeam, 1 )
+--		elseif unitDefID == chickenflyerqueenDefID or unitDefID == chickenlandqueenDefID then
+--			for killerFrienz, _ in pairs(awardData['heart']) do --give +1000000000 points for all frienz that kill queen and won
+--				AddAwardPoints( 'heart', killerFrienz, awardAbsolutes['heart']) --the extra points is for id purpose. Will deduct later
+--			end
+--		elseif unitDefID == roostDefID then
+--			AddAwardPoints( 'sweeper', killerTeam, 1 )
 		end
 	end
 end

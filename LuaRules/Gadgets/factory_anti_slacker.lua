@@ -19,40 +19,40 @@ function gadget:GetInfo()
   }
 end
 
-local spGetGameFrame = Spring.GetGameFrame
-local spSetUnitBlocking = Spring.SetUnitBlocking
-local spGetUnitIsDead = Spring.GetUnitIsDead
-
-local noEject = {
-	[UnitDefNames["staticmissilesilo"].id] = true,
-	[UnitDefNames["factoryship"].id] = true,
-	[UnitDefNames["factoryplane"].id] = true,
-	[UnitDefNames["factorygunship"].id] = true,
-	[UnitDefNames["plateship"].id] = true,
-	[UnitDefNames["plateplane"].id] = true,
-	[UnitDefNames["plategunship"].id] = true,
-	[UnitDefNames["pw_dropfac"].id] = true,
-	[UnitDefNames["pw_bomberfac"].id] = true,
-}
-local ghostFrames = 30	--how long the unit will be ethereal
-
-local setBlocking = {} --indexed by gameframe, contains a subtable of unitIDs
-
-function gadget:GameFrame(n)
-	if setBlocking[n] then	--restore blocking
-		for unitID, _ in pairs(setBlocking[n]) do
-			if not spGetUnitIsDead(unitID) then spSetUnitBlocking(unitID, true) end
-		end
-		setBlocking[n] = nil
-	end
-end
-
-function gadget:UnitFromFactory(unitID, unitDefID, teamID, builderID, builderDefID)
-	if not noEject[builderDefID] then
-		--Spring.Echo("Ejecting unit")
-		local frame = spGetGameFrame() + ghostFrames
-		if not setBlocking[frame] then setBlocking[frame] = {} end
-		setBlocking[frame][unitID] = true
-		spSetUnitBlocking(unitID, false)
-	end
-end
+--local spGetGameFrame = Spring.GetGameFrame
+--local spSetUnitBlocking = Spring.SetUnitBlocking
+--local spGetUnitIsDead = Spring.GetUnitIsDead
+--
+--local noEject = {
+--	[UnitDefNames["staticmissilesilo"].id] = true,
+--	[UnitDefNames["factoryship"].id] = true,
+--	[UnitDefNames["factoryplane"].id] = true,
+--	[UnitDefNames["factorygunship"].id] = true,
+--	[UnitDefNames["plateship"].id] = true,
+--	[UnitDefNames["plateplane"].id] = true,
+--	[UnitDefNames["plategunship"].id] = true,
+--	[UnitDefNames["pw_dropfac"].id] = true,
+--	[UnitDefNames["pw_bomberfac"].id] = true,
+--}
+--local ghostFrames = 30	--how long the unit will be ethereal
+--
+--local setBlocking = {} --indexed by gameframe, contains a subtable of unitIDs
+--
+--function gadget:GameFrame(n)
+--	if setBlocking[n] then	--restore blocking
+--		for unitID, _ in pairs(setBlocking[n]) do
+--			if not spGetUnitIsDead(unitID) then spSetUnitBlocking(unitID, true) end
+--		end
+--		setBlocking[n] = nil
+--	end
+--end
+--
+--function gadget:UnitFromFactory(unitID, unitDefID, teamID, builderID, builderDefID)
+--	if not noEject[builderDefID] then
+--		--Spring.Echo("Ejecting unit")
+--		local frame = spGetGameFrame() + ghostFrames
+--		if not setBlocking[frame] then setBlocking[frame] = {} end
+--		setBlocking[frame][unitID] = true
+--		spSetUnitBlocking(unitID, false)
+--	end
+--end
