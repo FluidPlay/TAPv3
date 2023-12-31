@@ -591,7 +591,7 @@ local function GetUnitIcon(unitDefID)
 	if not ud then
 		return
 	end
-	iconTypeCache[unitDefID] = icontypes[(ud and ud.iconType or "default")].bitmap or 'icons/' .. ud.iconType .. iconFormat
+	iconTypeCache[unitDefID] = icontypes[(ud and ud.iconType or "default")].bitmap or 'luaui/icons/' .. ud.iconType .. iconFormat
 	return iconTypeCache[unitDefID]
 end
 

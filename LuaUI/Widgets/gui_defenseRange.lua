@@ -31,6 +31,7 @@ local function istable(x)  return (type(x) == 'table')   end
 
 local unitConfig = {}
 for unitName, conf in pairs({
+	--TODO: Add other ranged structures
 	armrad = {
 		color = {1, 0.56, 0},
 		class = GROUND,
@@ -602,7 +603,7 @@ local function SetupChiliStuff()
 
 	pics.ally  = Image:New { x = 24*1, y = 0, file = 'LuaUI/Images/defense_ranges/defense_ally.png'  }
 	pics.enemy = Image:New { x = 24*2, y = 0, file = 'LuaUI/Images/defense_ranges/defense_enemy.png' }
-	pics.spec  = Image:New { x = 24*3, y = 0, file = 'LuaUI/Images/dynamic_comm_menu/eye.png'        }
+	pics.spec  = Image:New { x = 24*3, y = 0, file = 'LuaUI/Images/global/spectator.png'        }
 
 	for key, pic in pairs(pics) do
 		pic.width = 24

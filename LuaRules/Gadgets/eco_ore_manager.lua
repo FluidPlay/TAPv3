@@ -14,7 +14,7 @@ function gadget:GetInfo()
     }
 end
 
----Invert the system:
+---
 --	- Every time a sprawler is added, check if there's a nearby ore field
 --	- Orefields will store all sprawlers around it { .sprawlers[unitID] }
 --	- 'maxSprawlerlevel', if any, will be updated if a newly assigned sprawler has a higher level (unless it's already maxed out, 'Uber')
