@@ -19,13 +19,13 @@ local color = {
 	darkgreen = {0,0.5,0,1},
 	green = {0,1,0,1},
 	postit = {1,0.9,0.5,1},
-	
+
 	grayred = {0.5,0.4,0.4,1},
 	grayblue = {0.4,0.4,0.45,1},
 	transblack = {0,0,0,0.3},
 	transblack2 = {0,0,0,0.7},
 	transGray = {0.1,0.1,0.1,0.8},
-	
+
 	empty = {0,0,0,0},
 	null = {nil, nil, nil, 1},
 	transnull = {nil, nil, nil, 0.3},
@@ -146,26 +146,26 @@ local imgPath = LUAUI_DIRNAME  .. 'images/'
 confdata.subMenuIcons = {
 	['Settings'] = imgPath..'epicmenu/settings.png',
 	['Help'] = imgPath..'epicmenu/questionmark.png',
-	
+
 	['Settings/Unit Behaviour/Worker AI'] = imgPath..'commands/Bold/build_light.png',
-	['Settings/Interface/Unit Marker']     = imgPath..'epicmenu/marker.png',
+	['Settings/Interface/Unit Marker']     = imgPath..'global/marker.png',
 	['Settings/Unit Behaviour']  = imgPath..'epicmenu/robot2.png',
 	['Hotkeys']         = imgPath..'epicmenu/keyboard.png',
-	
+
 	['Hotkeys/Misc']                = imgPath..'epicmenu/misc.png',
 	['Hotkeys/Camera']              = imgPath..'epicmenu/camera.png',
 	['Hotkeys/Construction']        = imgPath..'factory.png',
 	['Hotkeys/Selection']           = imgPath..'epicmenu/selection.png',
 	['Hotkeys/Commands']            = imgPath..'settings/command.png',
 	['Hotkeys/Grid Hotkeys']       = imgPath..'settings/grid.png',
-	
+
 	['Hotkeys/Commands/Targeted']   = imgPath..'commands/Bold/attack.png',
 	['Hotkeys/Commands/Instant']    = imgPath..'commands/Bold/action.png',
 	['Hotkeys/Commands/State']      = imgPath..'commands/states/move_engage.png',
-	
+
 	['Hotkeys/Camera/Camera Position Hotkeys']     = imgPath..'epicmenu/marker.png',
 	['Hotkeys/Camera/Camera Mode Hotkeys']         = imgPath..'epicmenu/move.png',
-	
+
 	['Settings/Reset Settings']     = imgPath..'epicmenu/undo.png',
 	['Settings/Audio']              = imgPath..'epicmenu/vol.png',
 	['Settings/Camera']             = imgPath..'epicmenu/camera.png',
@@ -176,7 +176,7 @@ confdata.subMenuIcons = {
 	['Settings/Interface']          = imgPath..'epicmenu/robotarm.png',
 	['Settings/Misc']               = imgPath..'epicmenu/misc.png',
 	['Settings/Tips']    = imgPath..'epicmenu/questionmark.png',
-	
+
 	['Settings/Interface/Mouse Cursor']             = imgPath..'settings/mouse_cursor.png', --'epicmenu/input_mouse.png',
 	['Settings/Interface/Map']                      = imgPath..'settings/map.png',
 	['Settings/Interface/Healthbars']               = imgPath..'settings/health.png',
@@ -190,7 +190,7 @@ confdata.subMenuIcons = {
 	['Settings/Interface/Defence and Cloak Ranges'] = imgPath..'settings/ranges.png',
 	['Settings/Interface/Command Visibility']       = imgPath..'settings/cmd_visibility.png',
 	['Settings/Interface/Line Formations']          = imgPath..'settings/formation.png',
-	['Settings/Interface/Hovering Icons']           = imgPath..'epicmenu/halo.png',
+	['Settings/Interface/Hovering Icons']           = imgPath..'global/hover_icons.png',
 	['Settings/Interface/Selection']                = imgPath..'settings/selection.png',
 	['Settings/Interface/Control Groups']           = imgPath..'settings/control_groups.png',
 	['Settings/Interface/Gesture Menu']             = imgPath..'settings/gesture.png',
@@ -199,7 +199,7 @@ confdata.subMenuIcons = {
 	['Settings/Interface/Commands']                 = imgPath..'settings/command.png',
 	['Settings/Interface/Commander Nametags']		= imgPath..'settings/name_tags.png',
 	['Settings/Tips/Clippy Comments']				= imgPath..'settings/docking.png',
-	
+
 	['Settings/HUD Panels/Minimap']                 = imgPath..'settings/map.png',
 	['Settings/HUD Panels/Economy Panel']           = imgPath..'settings/resources.png',	--ibeam
 	['Settings/HUD Panels/Commander Selector']      = imgPath..'epicmenu/corcommander.png',
@@ -288,7 +288,7 @@ local hotkeysMiscPath = 'Hotkeys/Misc'
 	ShButton(hotkeysMiscPath, 'Pause/Unpause', 'pause', nil, nil, imgPath .. 'epicmenu/media_playback_pause.png')
 		ShButton(hotkeysMiscPath, 'Increase Speed', 'speedup')
 		ShButton(hotkeysMiscPath, 'Decrease Speed', 'slowdown')
-		
+
 	--ShLabel(hotkeysMiscPath, '')
 	ShButton(hotkeysMiscPath, 'Choose Commander Type', (function() spSendCommands{"luaui showstartupinfoselector"} end), nil, nil, imgPath..'epicmenu/corcommander.png' )
 	ShButton(hotkeysMiscPath, 'Save Screenshot (PNG)', 'screenshot png', 'Find your screenshots under Spring/screenshots')
@@ -304,7 +304,7 @@ local hotkeysMiscPath = 'Hotkeys/Misc'
 	ShButton(hotkeysMiscPath, 'Game Info', "gameinfo", '', true)
 	--ShButton(hotkeysMiscPath, 'Share Dialog...', 'sharedialog', '', true)
 	--ShButton(hotkeysMiscPath, 'FPS Control', "controlunit", 'Control a unit directly in FPS mode.', true)
-	
+
 	--ShButton(hotkeysMiscPath, 'Constructor Auto Assist', function() spSendCommands{"luaui togglewidget Constructor Auto Assist"} end)
 
 --- CAMERA ---
@@ -357,12 +357,12 @@ local camerHotkeys = 'Hotkeys/Camera'
 	ShButton(camerHotkeys, 'Panning mode','mousestate', 'Note: must be bound to a key for use', true)
 	ShButton(camerHotkeys, 'Fast Camera Movement', 'movefast', "Increased camera speed while this key is held.", nil, nil, nil, true)
 	ShButton(camerHotkeys, 'Slow Camera Movement', 'moveslow', "Decreased camera speed while this key is held.", nil, nil, nil, true)
-	
+
 	ShLabel(camerHotkeys, 'Saving Position and Switching Camera')
 
 local camerTypeZoom = 'Hotkeys/Camera/Camera Position Hotkeys'
 	ShButton(camerTypeZoom, 'Cycle through alerts', 'lastmsgpos') -- Does not allow camtime override
-	
+
 local camerTypeHotkeys = 'Hotkeys/Camera/Camera Mode Hotkeys'
 	AddOption(camerTypeHotkeys,
 	{
@@ -420,7 +420,7 @@ local pathMouse = 'Settings/Interface/Mouse Cursor'
 		springsetting = 'HardwareCursor',
 		OnChange=function(self) spSendCommands{"hardwarecursor " .. (self.value and 1 or 0) } end,
 	})
-	
+
 local pathSelectionShapes = 'Settings/Interface/Selection/Selection Shapes'
 local pathSelectionXrayHalo = 'Settings/Interface/Selection/Selection XRay&Halo'
 local pathSelectionPlatters = 'Settings/Interface/Selection/Team Platters'
@@ -435,7 +435,7 @@ local pathReclaimHighlight = "Settings/Interface/Reclaim Highlight"
 
 local pathGesture = 'Settings/Interface/Gesture Menu'
 	ShButton(pathGesture, 'Toggle gesture menu', function() spSendCommands{"luaui togglewidget Chili Gesture Menu"} end, "Enable/disable gesture build menu.")
-  
+
 --- MISC --- Ungrouped. If some of the settings here can be grouped together, make a new subsection or its own section.
 local pathMisc = 'Settings/Misc'
 	--ShButton( 'Exit Game...', "exitwindow", '', false ) --this breaks the exitwindow, fixme
@@ -484,7 +484,7 @@ local pathMisc = 'Settings/Misc'
 
 --- GRAPHICS --- We might define section as containing anything graphical that has a significant impact on performance and isn't necessary for gameplay
 local pathGraphicsMap = 'Settings/Graphics/Map Detail'
-	
+
 	ShRadio( pathGraphicsMap,
 		'Water rendering', {
 			{name = 'Basic',key='0', desc='A simple plane.', icon=imgPath..'epicmenu/water.png'},
@@ -562,7 +562,7 @@ local pathGraphicsMap = 'Settings/Graphics/Map Detail'
 		OnChange=function(self) spSendCommands{"grounddecals " .. (self.value and 1 or 0) } end,
 		noHotkey = true,
 	} )
-	
+
 	--ShButton(pathGraphicsMap, 'Toggle ROAM Rendering', function() spSendCommands{"roam"} end, "Toggle between legacy map rendering and (the new) ROAM map rendering." )
 
 local pathGraphicsExtras = 'Settings/Graphics/Effects'
@@ -583,7 +583,7 @@ local pathGraphicsExtras = 'Settings/Graphics/Effects'
 	ShButton(pathGraphicsExtras, 'Toggle Nightvision', function() spSendCommands{'luaui togglewidget Nightvision Shader'} end, 'Applies a nightvision filter to screen')
 	ShButton(pathGraphicsExtras, 'Toggle Night View', function() spSendCommands{'luaui togglewidget Night'} end, 'Adds a day/night cycle effect' )
 
-	
+
 local pathUnitVisiblity = 'Settings/Graphics/Unit Visibility'
 	ShLabel(pathUnitVisiblity, 'Unit Visibility Options')
 	AddOption(pathUnitVisiblity,
@@ -657,7 +657,7 @@ local pathUnitVisiblity = 'Settings/Graphics/Unit Visibility'
 			SetWidgetEnableState("UnitShapes", self.value)
 		end,
 	} )
-	
+
 	--local pathSpotter = 'Settings/Graphics/Unit Visibility/Spotter'
 	--	ShButton(pathSpotter, 'Toggle Unit Spotter', function() spSendCommands{"luaui togglewidget Spotter"} end, "Puts team-coloured blob below units")
 	--local pathPlatter = 'Settings/Graphics/Unit Visibility/Platter'
@@ -791,7 +791,7 @@ local pathHelp = 'Help'
 		type='label',
 		name='Unit Lists and Concepts',
 	})
-	
+
 --- TIPS ---
 local pathTips = 'Settings/Tips'
 	ShButton(pathHelp,'Tip Dispenser', function() spSendCommands{"luaui togglewidget Automatic Tip Dispenser"} end, 'An advisor which gives you tips as you play' )

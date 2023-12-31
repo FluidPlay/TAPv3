@@ -1,4 +1,4 @@
-   
+
 -- $Id: ModOptions.lua 4642 2009-05-22 05:32:36Z carrepairer $
 
 
@@ -485,7 +485,7 @@ local options = {
     desc = "Set each player's starting metal. -1 for default.",
     type = "number",
     section= 'startconds',
-    def = -1,
+    def = 10000, -- -1
     min = -1,
     step = 1,
     max = 500,
@@ -496,7 +496,7 @@ local options = {
     desc = "Set each player's starting energy. -1 for default.",
     type = "number",
     section= 'startconds',
-    def = -1,
+    def = 10000,  -- -1
     min = -1,
     step = 1,
     max = 500,
@@ -767,7 +767,7 @@ local options = {
   --  --  }
   --  },
   --},
-  
+
   --{
   --  key    = 'chicken',
   --  name   = 'Chicken',
