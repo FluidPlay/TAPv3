@@ -34,9 +34,10 @@ local function GetMexSpotsFromGameRules()
 		WG.metalSpotsByPos = false
 		return
 	end
-	
+	--Spring.Echo("Total spots: "..(mexCount or "nil"))
+
 	local metalSpots = {}
-	
+
 	for i = 1, mexCount do
 		metalSpots[i] = {
 			x = spGetGameRulesParam("mex_x" .. i),
@@ -45,14 +46,14 @@ local function GetMexSpotsFromGameRules()
 			metal = spGetGameRulesParam("mex_metal" .. i),
 		}
 	end
-	
+
 	local metalSpotsByPos = GetSpotsByPos(metalSpots)
-	
+
 	WG.metalSpots = metalSpots
 	WG.metalSpotsByPos = metalSpotsByPos
 end
 
 function widget:Initialize()
-	Spring.Echo("Mexspot Fetcher fetching")
+	Spring.Echo("Mexspot Fetcher fetching.")
 	GetMexSpotsFromGameRules()
 end

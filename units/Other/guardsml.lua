@@ -1,5 +1,5 @@
 return {
-	pandoreguard = {
+	guardsml = {
 		acceleration = 0,
 		activatewhenbuilt = true,
 		autoheal = 0,
@@ -14,7 +14,7 @@ return {
 		collisionvolumeoffsets = "0 0 0",
 		collisionvolumescales = "1 1 1",
 		collisionvolumetype = "sphere",
-		description = "Sneakily spots the enemy for you",
+		description = "Sneakily guards the fields",
 		explodeas = "",
 		footprintx = 1,
 		footprintz = 1,
@@ -25,9 +25,9 @@ return {
 		mass = 1,
 		maxdamage = 2,
 		maxvelocity = 0,
-		name = "spotter",
+		name = "Pandore Guardian",
 		noautofire = false,
-		objectname = "Units/Other/meteorite.s3o",
+		objectname = "Units/Other/pandoreguard_sml.s3o",
 		radardistance = 600,
 		seismicsignature = 4,
 		selfdestructas = "",
@@ -37,7 +37,7 @@ return {
 		turninplaceanglelimit = 140,
 		turninplacespeedlimit = 0,
 		turnrate = 0,
-		unitname = "spotter",
+		unitname = "Small Guardian",
 		upright = true,
 		waterline = 0,
 		workertime = 0,
