@@ -60,8 +60,9 @@ local ignoreweapon, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_
 local confdata = VFS.Include(LUAUI_DIRNAME .. "Configs/epicmenu_conf.lua", nil, VFSMODE)
 local color = confdata.color
 
-local iconTypesPath = LUAUI_DIRNAME.."Configs/icontypes.lua"
-local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
+local iconsPath = LUAUI_DIRNAME..'icons/'
+--local iconTypesPath = LUAUI_DIRNAME.."Configs/icontypes.lua"
+--local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 
 local emptyTable = {}
 
@@ -1407,9 +1408,13 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		},
 	}
 	if ud.iconType ~= 'default' then
+		local iconType = "default"
+		if ud and ud.iconType then
+			iconType = ud.iconType
+		end
 		icons[#icons + 1] = Image:New{
-			file=icontypes and icontypes[(ud and ud.iconType or "default")].bitmap
-				or 'icons/'.. ud.iconType ..iconFormat,
+			--file=icontypes and icontypes[iconType].bitmap --- Legacy format
+			file=iconsPath.. ud.iconType ..iconFormat,
 			x = 0,
 			y = 2,
 			height=32,

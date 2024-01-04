@@ -126,6 +126,8 @@ local tierSizeMult = {
     [4]=2,
 }
 
+local iconsPath = "LuaUI/Icons/"
+
 local iconTypes = {}
 function addUnitIcon(name, path, size)
     if (path) then
@@ -134,21 +136,6 @@ function addUnitIcon(name, path, size)
 end
 
 function loadUnitIcons()
-    --local root = 'icons/'
-    --for id, unit in ipairs(UnitDefs) do
-    --    local name = unit.name
-    --    local icon = units[name]
-    --    if icon then
-    --        local path = root..icon[1]
-    --        local size = icon[2]
-    --        spFreeUnitIcon(name) --Free the icon so it can be used
-    --        addUnitIcon(name, path, size * iconScale) -- Create the icon in the engine
-    --        spSetUnitDefIcon(id, name)  -- Set the unit icon
-    --    else
-    --        Spring.Echo("No icon for: " ..name)
-    --    end
-    --end
-
     local function tryLoad(fileName, iconName, size)
         if VFS.LoadFile(fileName) then
             addUnitIcon(iconName, fileName, size)
@@ -156,10 +143,11 @@ function loadUnitIcons()
             Spring.Echo("Icon file not found: "..fileName)
         end
     end
+
     for iconid, baseSize in pairs(unitIconTable) do
         for tier = 0, 4 do  -- eg.: veh_tank_1.png (for a tier 1 tank)
             local calcSize = baseSize * tierSizeMult[tier]
-            local fileName = "LuaUI/Icons/"..iconid..".png"
+            local fileName = iconsPath..iconid..".png"
             tryLoad(fileName, iconid.."_"..tier, calcSize )
             --if VFS.LoadFile(fileName) then
             --  Spring.AddUnitIcon(iconid.."_"..tier, fileName, calcSize)
