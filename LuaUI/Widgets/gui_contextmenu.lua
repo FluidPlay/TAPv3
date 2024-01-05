@@ -56,11 +56,11 @@ local strFormat 				= string.format
 local echo = Spring.Echo
 
 local VFSMODE      = VFS.RAW_FIRST
-local ignoreweapon, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" , nil, VFSMODE)
+local ignoreweapon, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" , nil, VFSMODE)	-- .png
 local confdata = VFS.Include(LUAUI_DIRNAME .. "Configs/epicmenu_conf.lua", nil, VFSMODE)
 local color = confdata.color
 
-local iconsPath = LUAUI_DIRNAME..'icons/'
+local iconsPath = LUAUI_DIRNAME..'Icons/'
 --local iconTypesPath = LUAUI_DIRNAME.."Configs/icontypes.lua"
 --local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 

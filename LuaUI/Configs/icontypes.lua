@@ -1,9 +1,8 @@
--- $Id: icontypes.lua 4585 2009-05-09 11:15:01Z google frog $
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
 --  file:    icontypes.lua
---  brief:   icontypes definitions
+--  brief:   icontypes definitions, used in unit_customicons.lua
 --
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -13,8 +12,7 @@
 --------------------------------------------------------------------------------
 
 local iconsPath = "LuaUI/Icons/"
-
-
+local format = ".png"
 
 --- iconID, baseIconSize
 ---- Eg: commanders
@@ -23,6 +21,7 @@ local iconsPath = "LuaUI/Icons/"
 --  	size=1.9,
 -- 		distance=1.0,
 --	},
+
 local unitIconTable = {
 	air_generic=1.25,
 	air_radar=1.1,
@@ -107,21 +106,26 @@ local tierSizeMult = {
 	[4]=2,
 }
 
-local iconTypes = {
-	default = {
-		size = 1.0,
-		radiusadjust = 1,
-	},
-	none = {
-		size = 0,
-		radiusadjust = 0,
-	},
-	Initialize = function () --loadUnitIcons
+-- 'Default' and 'None' standard iconType entries
+local default = {
+	size = 1.0,
+	radiusadjust = 1,
+}
+local none = {
+	size = 0,
+	radiusadjust = 0,
+}
+
+-- iconTypes Processor, takes an 'iconTypes' table and initializes it (and found unit icons too)
+local iconTypesProc = {
+	Initialize = function (iconTypes) --loadUnitIcons
 		local function addUnitIcon(name, path, size)
 			if (path) then
 				Spring.AddUnitIcon(name, path, size) end
-			--iconTypes[name] = path
-			name = path
+			iconTypes[name] = {
+				bitmap = path,
+				size = size,
+			}
 		end
 		local function tryLoad(fileName, iconName, size)
 			if VFS.LoadFile(fileName) then
@@ -130,7 +134,8 @@ local iconTypes = {
 				Spring.Echo("Icon file not found: "..fileName)
 			end
 		end
-
+		iconTypes.default = default
+		iconTypes.none = none
 		for iconid, baseSize in pairs(unitIconTable) do
 			for tier = 0, 4 do  -- eg.: veh_tank_1.png (for a tier 1 tank)
 				local calcSize = baseSize * tierSizeMult[tier]
@@ -169,12 +174,12 @@ local iconTypes = {
 				--      -- Icontag defined
 				--      --Spring.Echo("Unit name for icon: "..ud.name)
 				if iconTag then
-					Spring.SetUnitDefIcon(udid, iconTag.."_"..tier)
 					--Spring.Echo("Set icon: "..iconTag.."_"..tier)
+					Spring.SetUnitDefIcon(udid, iconTag.."_"..tier)
 
-					-- #################
-					-- Exceptional Cases
-					-- #################
+				-- #################
+				-- Exceptional Cases
+				-- #################
 				elseif (ud.name=="roost") or (ud.name=="meteor") then
 					Spring.SetUnitDefIcon(udid, "star.user")
 				elseif string.sub(ud.name, 0, 7) == "critter" then
@@ -210,7 +215,7 @@ local iconTypes = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-return iconTypes
+return iconTypesProc
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

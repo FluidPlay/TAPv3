@@ -106,7 +106,8 @@ local CURSOR_DRAW_NAME = "map_draw"
 local NO_TOOLTIP = "NONE"
 
 local iconTypesPath = LUAUI_DIRNAME .. "Configs/icontypes.lua"
-local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
+local iconTypes = {}
+local iconTypesProc = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 local _, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" , nil, VFS.ZIP)
 local UNIT_BURST_DAMAGES = VFS.Include(LUAUI_DIRNAME .. "Configs/burst_damages.lua" , nil, VFS.ZIP)
 
@@ -591,7 +592,7 @@ local function GetUnitIcon(unitDefID)
 	if not ud then
 		return
 	end
-	iconTypeCache[unitDefID] = icontypes[(ud and ud.iconType or "default")].bitmap or 'luaui/icons/' .. ud.iconType .. iconFormat
+	iconTypeCache[unitDefID] = iconTypes[(ud and ud.iconType or "default")].bitmap or 'luaui/icons/' .. ud.iconType .. iconFormat
 	return iconTypeCache[unitDefID]
 end
 
@@ -2658,6 +2659,8 @@ end
 function widget:Initialize()
 	Chili = WG.Chili
 	screen0 = Chili.Screen0
+
+	iconTypesProc.Initialize(iconTypes)
 
 	Spring.AssignMouseCursor(CURSOR_ERASE_NAME, CURSOR_ERASE, true, false) -- Hotspot center.
 	Spring.AssignMouseCursor(CURSOR_POINT_NAME, CURSOR_POINT, true, true)

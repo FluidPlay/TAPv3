@@ -81,8 +81,10 @@ local GL_GREATER = GL.GREATER
 --
 
 include("keysym.lua")
+local iconsPath = "LuaUI/Icons/"
 local iconTypesPath = LUAUI_DIRNAME .. "Configs/icontypes.lua"
-local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
+local iconTypes = {}
+local iconTypesProc = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 local _, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" , nil, VFS.ZIP)
 
 renderAtPos = {
@@ -211,12 +213,12 @@ function UpdateDynamic()
 	elseif cs.name == "ta" then
 		testHeight = cs.height - gy
 	end
-	
+
 	-- Leave a one update gap between enabling engine icons and disabling widget drawing.
 	if showing_icons and drawIcons then
 		drawIcons = false
 	end
-	
+
 	if showing_icons and testHeight < options.icontransitiontop.value - tolerance then
 		spSendCommands("disticon " .. 100000)
 		showing_icons = false
@@ -244,8 +246,8 @@ local function addUnitIcon(unitID, unitDefID)
 	local teamcolor = team and {spGetTeamColor(team)}
 	if not unitDefsToRender[unitDefID] then
 		local ud = UnitDefs[unitDefID]
-		local texture = icontypes[(ud and ud.iconType or "default")].bitmap or 'icons/' .. ud.iconType .. iconFormat
-		local size = icontypes[(ud and ud.iconType or "default")].size or 1.8
+		local texture = iconTypes[(ud and ud.iconType or "default")].bitmap or iconsPath .. ud.iconType .. iconFormat
+		local size = iconTypes[(ud and ud.iconType or "default")].size or 1.8
 		local render_order
 		local midPos
 		if ud and ud.isFactory then
@@ -316,7 +318,7 @@ local function DrawWorldFunc()
 	if (not drawIcons) or (testHeight < options.icontransitionbottom.value) then
 		return
 	end
-	
+
 	local scale, opacity
 	scale = options.icontransitionminsize.value + (options.icontransitionmaxsize.value - options.icontransitionminsize.value) * (testHeight - options.icontransitionbottom.value) / (options.icontransitiontop.value - options.icontransitionbottom.value)
 	opacity = options.icontransitionminopacity.value + (options.icontransitionmaxopacity.value - options.icontransitionminopacity.value) * (testHeight - options.icontransitionbottom.value) / (options.icontransitiontop.value - options.icontransitionbottom.value)
@@ -326,7 +328,7 @@ local function DrawWorldFunc()
 	glDepthMask(true)
 	glDepthTest(false)
 	glAlphaTest(GL_GREATER, 0.001)
-	
+
 	-- this is probably faster than spIsUnitInView() for all the units
 	-- but that's probably worth testing to confirm
 	local unitsInView = spGetVisibleUnits(-1, nil, true)
@@ -334,11 +336,11 @@ local function DrawWorldFunc()
 	for k, v in pairs(unitsInView) do
 		unitIsInView[v] = true
 	end
-	
+
 	if scale > options.icontransitionmaxsize.value then
 		scale = options.icontransitionmaxsize.value
 	end
-	
+
 	for i, unitDefIDs in ipairs(renderOrders) do
 		for unitDefID, iconDef in pairs(unitDefIDs) do
 			if iconDef then
@@ -360,7 +362,7 @@ local function DrawWorldFunc()
 			end
 		end
 	end
-	
+
 	glTexture(false)
 	glAlphaTest(false)
 	glDepthTest(false)
@@ -379,6 +381,8 @@ function widget:Initialize()
 	current_mode = "Dynamic"
 	UpdateDynamic()
 
+	iconTypesProc.Initialize(iconTypes)
+
 	local allUnits = spGetAllUnits()
 	for _,unitID in pairs (allUnits) do
 		local unitDefID = spGetUnitDefID(unitID)
@@ -393,15 +397,15 @@ function widget:Shutdown()
 end
 
 function widget:Update()
-	
+
 	if not waiting_on_double and current_mode ~= "Dynamic" then
 		-- We're not waiting, so there wasn't an earlier single keypress, so don't switch modes
 		-- And the current mode isn't dynamic, so don't check camera height
 		return
 	end
-	
+
 	-- We're either waiting, or in dynamic mode, or both
-	
+
 	-- If we're waiting, check to see if the time is up, and if so, then act on the earlier single keypress,
 	-- which means changing the mode to either On or Off (depending on the state when the key was pressed)
 	if waiting_on_double then
@@ -422,7 +426,7 @@ function widget:Update()
 			drawIcons = false
 		end
 	end
-	
+
 	-- If the current mode (potentially after toggling to On or Off above) is dynamic,
 	-- check and set the current height so the draw functions have the right height, and
 	-- check to see if disticon should be changed because of the height
