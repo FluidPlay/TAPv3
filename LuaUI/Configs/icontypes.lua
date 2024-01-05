@@ -45,7 +45,6 @@ local unitIconTable = {
 	def_missile=1.4,
 	def_plasma=1.5,
 	def_nuke=1.6,
-	generic_unit=0.5, --1
 	bot_artillery=1.1,
 	bot_assault=1,
 	bot_builder=1.1,
@@ -96,6 +95,9 @@ local unitIconTable = {
 	sub_builder = 0.9,
 	sub_rezz = 0.95,
 	sub_cannon = 0.9,
+	--
+	generic_unit=0.5, --1
+	standard=1,
 }
 
 local tierSizeMult = {
