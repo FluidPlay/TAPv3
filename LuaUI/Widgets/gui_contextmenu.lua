@@ -5,7 +5,7 @@ function widget:GetInfo()
     author    = "CarRepairer",
     date      = "2009-06-02",
     license   = "GNU GPL, v2 or later",
-    layer     = 0,
+    layer     = 1,	-- after chili_selections_and_cursortip
     enabled   = true,
   }
 end
@@ -65,6 +65,7 @@ local iconsPath = LUAUI_DIRNAME..'Icons/'
 --local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 
 local emptyTable = {}
+local iconTypes = {}
 
 local moduleDefs, chassisDefs, upgradeUtilities = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 
@@ -1401,25 +1402,29 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			file2 = (WG.GetBuildIconFrame)and(WG.GetBuildIconFrame(ud)),
 			file = "#" .. ud.id,
 			keepAspect = false;
-			x = 32,
+			x = 52,	--32
 			y = 0,
-			height  = 88*(4/5);
-			width   = 88;
+			height  = 66; --88*(4/5);
+			width   = 66; --88
 		},
 	}
-	if ud.iconType ~= 'default' then
-		local iconType = "default"
-		if ud and ud.iconType then
-			iconType = ud.iconType
+	Spring.Echo("iconType: "..(ud.iconType or "nil"))
+	--iconTypes[iconName] = {
+	--	bitmap = path,
+	if ud and ud.iconType then
+		local iconType = ud.iconType
+		if iconTypes[iconType] then --ud.iconType ~= 'default' then
+			--local iconType = "default"
+			local path = iconTypes[iconType].bitmap
+			icons[#icons + 1] = Image:New{
+				--file=icontypes and icontypes[iconType].bitmap --- Legacy format
+				file=path, --iconsPath.. ud.iconType ..iconFormat,
+				x = 0,
+				y = 2,
+				height=32,
+				width=32,
+			}
 		end
-		icons[#icons + 1] = Image:New{
-			--file=icontypes and icontypes[iconType].bitmap --- Legacy format
-			file=iconsPath.. ud.iconType ..iconFormat,
-			x = 0,
-			y = 2,
-			height=32,
-			width=32,
-		}
 	end
 
 	if behaviourPath[ud.id] then
@@ -1447,7 +1452,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	local statschildren = {}
 
-	local isCommander = (unitID and Spring.GetUnitRulesParam(unitID, "comm_level"))
+	local isCommander = ud.customParams.iscommander --(unitID and Spring.GetUnitRulesParam(unitID, "comm_level"))
 
 	local cost = numformat(ud.metalCost)
 	local health = numformat(ud.health)
@@ -1455,54 +1460,54 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	local mass = numformat(ud.mass)
 
 	-- stuff for modular commanders
-	local legacyModules, legacyCommCost
-	if ud.customParams.commtype and not isCommander then	-- old style pregenerated commander (still used in missions etc.)
-		legacyModules = WG.ModularCommAPI and WG.ModularCommAPI.GetLegacyModulesForComm(ud.id)
-		legacyCommCost = ud.customParams.cost -- or (WG.GetCommUnitInfo and WG.GetCommUnitInfo(ud.id) and WG.GetCommUnitInfo(ud.id).cost)
-	end
+	--local legacyModules, legacyCommCost
+	--if ud.customParams.commtype and not isCommander then	-- old style pregenerated commander (still used in missions etc.)
+	--	legacyModules = WG.ModularCommAPI and WG.ModularCommAPI.GetLegacyModulesForComm(ud.id)
+	--	legacyCommCost = ud.customParams.cost -- or (WG.GetCommUnitInfo and WG.GetCommUnitInfo(ud.id) and WG.GetCommUnitInfo(ud.id).cost)
+	--end
 
 	-- dynamic comms get special treatment
-	if isCommander then
-		cost = Spring.GetUnitRulesParam(unitID, "comm_cost") or 1200
-		health = select(2, Spring.GetUnitHealth(unitID))
-		speed = numformat(ud.speed * (Spring.GetUnitRulesParam(unitID, "upgradesSpeedMult") or 1))
-		mass = numformat(Spring.GetUnitRulesParam(unitID, "massOverride") or ud.mass)
-
-		statschildren[#statschildren+1] = Label:New{ caption = "COMMANDER", textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption = 'Level: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = Spring.GetUnitRulesParam(unitID, "comm_level")+1, textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = 'Chassis: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = chassisDefs[Spring.GetUnitRulesParam(unitID, "comm_chassis")].humanName, textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-
-		statschildren[#statschildren+1] = Label:New{ caption = 'MODULES', textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
-
-		local modules = Spring.GetUnitRulesParam(unitID, "comm_module_count")
-
-		if modules > 0 then
-			local module_instances = {}
-			for i = 1, modules do
-				local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
-				module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
-			end
-			for moduleID, moduleCount in pairs(module_instances) do
-				local moduleStr = moduleDefs[moduleID].humanName
-				if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
-				statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
-				statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-			end
-		end
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-	end
+	--if isCommander then
+	--	cost = Spring.GetUnitRulesParam(unitID, "comm_cost") or 1200
+	--	health = select(2, Spring.GetUnitHealth(unitID))
+	--	speed = numformat(ud.speed * (Spring.GetUnitRulesParam(unitID, "upgradesSpeedMult") or 1))
+	--	mass = numformat(Spring.GetUnitRulesParam(unitID, "massOverride") or ud.mass)
+	--
+	--	statschildren[#statschildren+1] = Label:New{ caption = "COMMANDER", textColor = color.stats_header, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = 'Level: ', textColor = color.stats_fg, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = Spring.GetUnitRulesParam(unitID, "comm_level")+1, textColor = color.stats_fg, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = 'Chassis: ', textColor = color.stats_fg, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = chassisDefs[Spring.GetUnitRulesParam(unitID, "comm_chassis")].humanName, textColor = color.stats_fg, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
+	--	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
+	--
+	--	statschildren[#statschildren+1] = Label:New{ caption = 'MODULES', textColor = color.stats_header, }
+	--	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
+	--
+	--	local modules = Spring.GetUnitRulesParam(unitID, "comm_module_count")
+	--
+	--	if modules > 0 then
+	--		local module_instances = {}
+	--		for i = 1, modules do
+	--			local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+	--			module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
+	--		end
+	--		for moduleID, moduleCount in pairs(module_instances) do
+	--			local moduleStr = moduleDefs[moduleID].humanName
+	--			if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
+	--			statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
+	--			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+	--		end
+	--	end
+	--	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
+	--	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
+	--end
 
 	local costStr = cost .. " M"
-	if (legacyCommCost) then
-		costStr = costStr .. "(" .. legacyCommCost .. " M)"
-	end
+	--if (legacyCommCost) then
+	--	costStr = costStr .. "(" .. legacyCommCost .. " M)"
+	--end
 
 	statschildren[#statschildren+1] = Label:New{ caption = 'STATS', textColor = color.stats_header, }
 	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
@@ -2160,6 +2165,8 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget(widget)
 		return
 	end
+
+	iconTypes = WG.iconTypes
 
 	-- setup Chili
 	 Chili = WG.Chili

@@ -9,8 +9,8 @@ function widget:GetInfo()
 		date      = "7 February 2016",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
-		enabled   = true,
-		alwaysStart = true,
+		enabled   = false, --true,
+		alwaysStart = false, --true,
 	}
 end
 

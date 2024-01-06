@@ -84,6 +84,8 @@ local PIC_HEIGHT = LEFT_WIDTH*4/5 + 1
 local RIGHT_WIDTH = 235
 local GROUP_STATS_WIDTH = 150
 
+local iconsPath = 'luaui/icons/'
+
 local IMAGE = {
 	HEALTH = 'LuaUI/images/commands/bold/health.png',
 	SHIELD = 'LuaUI/Images/commands/Bold/guard.png',
@@ -92,7 +94,7 @@ local IMAGE = {
 	TIME = 'LuaUI/images/clock.png',
 	METAL = 'LuaUI/images/metalplus.png',
 	ENERGY = 'LuaUI/images/energyplus.png',
-	METAL_RECLAIM = 'LuaUI/images/ibeamReclaim.png',
+	METAL_RECLAIM = 'LuaUI/images/metalReclaim.png',
 	ENERGY_RECLAIM = 'LuaUI/images/energyReclaim.png',
 }
 
@@ -592,7 +594,7 @@ local function GetUnitIcon(unitDefID)
 	if not ud then
 		return
 	end
-	iconTypeCache[unitDefID] = iconTypes[(ud and ud.iconType or "default")].bitmap or 'luaui/icons/' .. ud.iconType .. iconFormat
+	iconTypeCache[unitDefID] = iconTypes[(ud and ud.iconType or "default")].bitmap or iconsPath .. ud.iconType .. iconFormat
 	return iconTypeCache[unitDefID]
 end
 
@@ -1828,7 +1830,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		y = 0,
 		right = 0,
 		height = PIC_HEIGHT,
-		keepAspect = false,
+		keepAspect = true,
 		file = imageFile,
 		parent = leftPanel,
 	}
@@ -2661,6 +2663,7 @@ function widget:Initialize()
 	screen0 = Chili.Screen0
 
 	iconTypesProc.Initialize(iconTypes)
+	WG.iconTypes = iconTypes	-- Make it available to all the widget space
 
 	Spring.AssignMouseCursor(CURSOR_ERASE_NAME, CURSOR_ERASE, true, false) -- Hotspot center.
 	Spring.AssignMouseCursor(CURSOR_POINT_NAME, CURSOR_POINT, true, true)

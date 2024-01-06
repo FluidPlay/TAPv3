@@ -121,15 +121,15 @@ local none = {
 -- iconTypes Processor, takes an 'iconTypes' table and initializes it (and found unit icons too)
 local iconTypesProc = {
 	Initialize = function (iconTypes) --loadUnitIcons
-		local function addUnitIcon(name, path, size)
+		local function addUnitIcon(iconName, path, size)
 			if (path) then
-				Spring.AddUnitIcon(name, path, size) end
-			iconTypes[name] = {
+				Spring.AddUnitIcon(iconName, path, size) end
+			iconTypes[iconName] = {
 				bitmap = path,
 				size = size,
 			}
 		end
-		local function tryLoad(fileName, iconName, size)
+		local function tryAddUnitIcon(iconName, fileName, size)
 			if VFS.LoadFile(fileName) then
 				addUnitIcon(iconName, fileName, size)
 			else
@@ -142,23 +142,23 @@ local iconTypesProc = {
 			for tier = 0, 4 do  -- eg.: veh_tank_1.png (for a tier 1 tank)
 				local calcSize = baseSize * tierSizeMult[tier]
 				local fileName = iconsPath..iconid..".png"
-				tryLoad(fileName, iconid.."_"..tier, calcSize )
+				tryAddUnitIcon(iconid.."_"..tier, fileName, calcSize )
 			end
 		end
-		-- Tech Centers
+		-- Tech Centers (don't change size, just different images)
 		local fileName = iconsPath.."structure_techcenter"
 		for tier = 0, 4 do  -- eg.: veh_tank_1.png (for a tier 1 tank)
 			local fileName = fileName..tier..".png"
-			tryLoad(fileName, "structure_techcenter"..tier, 1.9 )
+			tryAddUnitIcon("structure_techcenter"..tier, fileName, 1.9 )
 		end
-		-- Outposts
+		-- Outposts (don't change size, just different images)
 		fileName = iconsPath.."structure_outpost"
-		tryLoad(fileName..".png", "structure_outpost", 1.6 )
-		tryLoad(fileName.."2.png", "structure_outpost2", 1.7 )
-		tryLoad(fileName.."3.png", "structure_outpost3", 1.8 )
-		tryLoad(fileName.."4.png", "structure_outpost4", 1.9 )
+		tryAddUnitIcon("structure_outpost", fileName..".png", 1.6 )
+		tryAddUnitIcon( "structure_outpost2", fileName.."2.png", 1.7 )
+		tryAddUnitIcon( "structure_outpost3", fileName.."3.png", 1.8 )
+		tryAddUnitIcon( "structure_outpost4", fileName.."4.png", 1.9 )
 
-		-- Commanders et al
+		-- Commanders et al (fixed sizes)
 		addUnitIcon("armcom.user", "LuaUI/Icons/armcom.png",2)
 		addUnitIcon("corcom.user", "LuaUI/Icons/corcom.png",2)
 		addUnitIcon("krogoth.user", "LuaUI/Icons/krogoth.png",3.3)
