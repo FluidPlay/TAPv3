@@ -1847,7 +1847,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				WG.MakeStatsWindow(ud, x, y, selectedUnitID)
 				return true
 			end
-			local x,y,z = Spring.GetUnitPosition(selectedUnitID)
+			local x,y,z = spGetUnitPosition(selectedUnitID)
 			SetCameraTarget(x, y, z, 1)
 			return true
 		end
