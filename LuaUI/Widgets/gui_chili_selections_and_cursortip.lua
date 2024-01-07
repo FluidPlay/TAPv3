@@ -1540,6 +1540,7 @@ local function GetSelectionStatsDisplay(parentControl)
 
 					if ud.buildSpeed ~= 0 then
 						local _, unhandicappedSpeed = GetUnitBuildSpeed(unitID, unitDefID)
+						--Spring.Echo("build speed: "..(unhandicappedSpeed or "nil"))
 						total_usedbp = total_usedbp + (GetCurrentBuildSpeed(unitID, unhandicappedSpeed) or 0)
 					end
 				end

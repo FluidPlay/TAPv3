@@ -3,7 +3,7 @@ if not gadgetHandler:IsSyncedCode() then return end
 function gadget:GetInfo() return {
 	name    = "Water level modoption",
 	layer   = 1, -- after terraform whence GG.Terraform_RaiseWater comes
-	enabled = false, --true,
+	enabled = true,
 } end
 
 local DRY_WATERLEVEL = -50

@@ -15,7 +15,7 @@ local spIsCheatingEnabled = Spring.IsCheatingEnabled
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local gaiaTeamID = Spring.GetGaiaTeamID()
 function gadget:AllowResourceTransfer(oldTeam, newTeam, resource_type, amount)
-	if ((amount < 0) or (not spAreTeamsAllied(oldTeam, newTeam))) then
+	if (amount < 0) or (not spAreTeamsAllied(oldTeam, newTeam)) then
 		return false
 	end
 	return true
