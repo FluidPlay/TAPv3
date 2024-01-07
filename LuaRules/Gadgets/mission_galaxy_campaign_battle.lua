@@ -8,7 +8,7 @@ function gadget:GetInfo()
 		date = "6 February 2017",
 		license = "GNU GPL, v2 or later",
 		layer = 0, -- Before game_over.lua for the purpose of setting vitalUnit
-		enabled = true
+		enabled = false, --true
 	}
 end
 
@@ -151,7 +151,7 @@ local function SanitizeBuildPositon(x, z, ud, facing)
 	end
 	local oddX = (xSize % 4 == 2)
 	local oddZ = (zSize % 4 == 2)
-	
+
 	if oddX then
 		x = math.floor((x + 8)/BUILD_RESOLUTION)*BUILD_RESOLUTION - 8
 	else
@@ -169,19 +169,19 @@ local function GetExtraStartUnits(teamID, customKeys)
 	if initialUnitDataTable[teamID] then
 		return initialUnitDataTable[teamID]
 	end
-	
+
 	local prefix
 	if Spring.GetGaiaTeamID() == teamID then
 		prefix = "neutralstartunits_"
 	else
 		prefix =  "extrastartunits_"
 	end
-	
+
 	if not (customKeys and customKeys[prefix .. "1"]) then
 		return
 	end
 	local startUnits = {}
-	
+
 	local block = 1
 	while customKeys[prefix .. block] do
 		local blockUnits = CustomKeyToUsefulTable(customKeys[prefix .. block])
@@ -257,7 +257,7 @@ local function AddVictoryAtLocationUnit(unitID, location, allyTeamID)
 		radiusSq = location.radius*location.radius,
 		allyTeamID = allyTeamID
 	}
-	
+
 	if location.mapMarker then
 		SendToUnsynced("AddMarker", math.floor(location.x) .. math.floor(location.z), location.x, location.z, location.mapMarker.text, location.mapMarker.color)
 	end
@@ -328,10 +328,10 @@ end
 local function CompleteBonusObjective(bonusObjectiveID, success)
 	local objectiveData = bonusObjectiveList[bonusObjectiveID]
 	SetGameRulesParamHax("bonusObjectiveSuccess_" .. bonusObjectiveID, (success and 1) or 0)
-	
+
 	objectiveData.success = success
 	objectiveData.terminated = true
-	
+
 	if completeAllBonusObjectiveID and bonusObjectiveID ~= completeAllBonusObjectiveID then
 		if success then
 			if AllOtherObjectivesSucceeded(completeAllBonusObjectiveID) then
@@ -346,16 +346,16 @@ end
 local function CheckBonusObjective(bonusObjectiveID, gameSeconds, victory)
 	local objectiveData = bonusObjectiveList[bonusObjectiveID]
 	gameSeconds = gameSeconds or math.floor(Spring.GetGameFrame()/30)
-	
+
 	-- Cbeck whether the objective is open
 	if objectiveData.terminated then
 		return
 	end
-	
+
 	if objectiveData.completeAllBonusObjectives then
 		return -- Not handled here
 	end
-	
+
 	-- Check for victory timer
 	if objectiveData.victoryByTime then
 		if victory then
@@ -365,7 +365,7 @@ local function CheckBonusObjective(bonusObjectiveID, gameSeconds, victory)
 		end
 		return
 	end
-	
+
 	-- Check whether the objective is in the right timeframe and whether it passes/fails
 	-- Times: satisfyAtTime, satisfyByTime, satisfyUntilTime, satisfyAfterTime, satisfyForeverAfterFirstSatisfied, satisfyOnce or satisfyForever
 	if objectiveData.satisfyByTime and (objectiveData.satisfyByTime < gameSeconds) then
@@ -382,13 +382,13 @@ local function CheckBonusObjective(bonusObjectiveID, gameSeconds, victory)
 	if objectiveData.satisfyAtTime and (objectiveData.satisfyAtTime ~= gameSeconds) then
 		return
 	end
-	
+
 	-- Objective may have succeeded if the game ends.
 	if gameIsOver and (objectiveData.satisfyForever or objectiveData.satisfyUntilTime or objectiveData.satisfyAfterTime or objectiveData.satisfyForever) then
 		CompleteBonusObjective(bonusObjectiveID, true)
 		return
 	end
-	
+
 	-- Check satisfaction
 	local unitCount = SumUnits(objectiveData.units, objectiveData.targetNumber + 1) + (objectiveData.removedUnits or 0)
 	if objectiveData.onlyCountRemovedUnits then
@@ -543,11 +543,11 @@ local function CheckInitialUnitDestroyed(unitID)
 	if not initialUnitData[unitID] then
 		return
 	end
-	
+
 	if initialUnitData[unitID].mapMarker then
 		SendToUnsynced("RemoveMarker", unitID)
 	end
-	
+
 	victoryAtLocation[unitID] = nil
 	initialUnitData[unitID] = nil
 end
@@ -577,7 +577,7 @@ end
 
 local function SetupInitialUnitParameters(unitID, unitData)
 	AddInitialUnitObjectiveParameters(unitID, unitData)
-	
+
 	if unitData.invincible then
 		GG.SetUnitInvincible(unitID, true)
 		Spring.SetUnitNeutral(unitID, true)
@@ -588,7 +588,7 @@ local function SetupInitialUnitParameters(unitID, unitData)
 		Spring.SetUnitRulesParam(unitID, "ignoredByAI", 1, publicTrueTable)
 		Spring.SetUnitRulesParam(unitID, "avoidAttackingNeutral", 1)
 	end
-	
+
 	if unitData.noControl then
 		local teamID = Spring.GetUnitTeam(unitID)
 		if teamID then
@@ -598,7 +598,7 @@ local function SetupInitialUnitParameters(unitID, unitData)
 			disableAiUnitControl[teamID] = unitList
 		end
 	end
-	
+
 	if unitData.mapMarker then
 		local ux, _, uz = Spring.GetUnitPosition(unitID)
 		if ux then
@@ -614,7 +614,7 @@ local function GetClearPlacement(unitDefID, centerX, centerZ, spawnRadius, depth
 		z = centerZ + 2*math.random()*spawnRadius - spawnRadius
 	end
 	local y = Spring.GetGroundHeight(x,z)
-	
+
 	spawnRadius = spawnRadius or 100
 	local tries = 1
 	while not (y > depth and Spring.TestMoveOrder(unitDefID, x, y, z, 0, 0, 0, true, true, false)) do
@@ -629,7 +629,7 @@ local function GetClearPlacement(unitDefID, centerX, centerZ, spawnRadius, depth
 		y = Spring.GetGroundHeight(x,z)
 		tries = tries + 1
 	end
-	
+
 	return x, z
 end
 
@@ -648,17 +648,17 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 		Spring.Echo("Missing unit placement", name)
 		return
 	end
-	
+
 	local x, z, facing, xSize, zSize = unitData.x, unitData.z, unitData.facing
-	
+
 	if findClearPlacement then
 		x, z = GetClearPlacement(ud.id, x, z, unitData.spawnRadius, -ud.maxWaterDepth)
 	end
-	
+
 	if ud.isImmobile then
 		x, z, xSize, zSize = SanitizeBuildPositon(x, z, ud, facing)
 	end
-	
+
 	local build = (unitData.buildProgress and unitData.buildProgress < 1) or false
 	local wantLevel = ud.isImmobile and ud.levelGround
 	local unitID
@@ -667,13 +667,13 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 	else
 		unitID = Spring.CreateUnit(ud.id, x, Spring.GetGroundHeight(x,z), z, facing, teamID, build, doLevelGround and wantLevel)
 	end
-	
+
 	if unitData.stunTime then
 		local _, maxHealth = Spring.GetUnitHealth(unitID)
 		local paraFactor = 1 + unitData.stunTime/40
 		Spring.SetUnitHealth(unitID, {paralyze = maxHealth * paraFactor})
 	end
-	
+
 	if CAMPAIGN_SPAWN_DEBUG then
 		if unitData.difficultyAtLeast then
 			if unitData.difficultyAtMost then
@@ -684,11 +684,11 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 		elseif unitData.difficultyAtMost then
 			Spring.Utilities.UnitEcho(unitID, "At most " .. unitData.difficultyAtMost)
 		end
-		
+
 		Spring.SetUnitRulesParam(unitID, "fulldisable", 1)
 		GG.UpdateUnitAttributes(unitID)
 	end
-	
+
 	if (not doLevelGround) and wantLevel then
 		wantLevelGround = wantLevelGround or {}
 		wantLevelGround[#wantLevelGround + 1] = {
@@ -697,16 +697,16 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 			zSize = zSize,
 		}
 	end
-	
+
 	if not unitID then
 		Spring.MarkerAddPoint(x, 0, z, "Error creating unit " .. (((ud or {}).humanName) or "???"))
 		return
 	end
-	
+
 	if unitData.shieldFactor and ud.customParams.shield_power then
 		Spring.SetUnitShieldState(unitID, -1, true, unitData.shieldFactor*tonumber(ud.customParams.shield_power))
 	end
-	
+
 	if unitData.commands then
 		local commands = unitData.commands
 		commandsToGive = commandsToGive or {}
@@ -722,7 +722,7 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 				pos = patrolRoute[1]
 			}
 		}
-		
+
 		for i = 2, #patrolRoute do
 			patrolCommands[#patrolCommands + 1] = {
 				cmdID = CMD.PATROL,
@@ -730,7 +730,7 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 				options = {"shift"}
 			}
 		end
-		
+
 		commandsToGive = commandsToGive or {}
 		commandsToGive[#commandsToGive + 1] = {
 			unitID = unitID,
@@ -741,21 +741,21 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 		local vz = mapCenterZ - z
 		local cx = x + vx*25/math.abs(vx)
 		local cz = z + vz*25/math.abs(vz)
-		
+
 		local patrolCommands = {
 			[1] = {
 				cmdID = CMD.PATROL,
 				pos = {cx, cz}
 			}
 		}
-		
+
 		commandsToGive = commandsToGive or {}
 		commandsToGive[#commandsToGive + 1] = {
 			unitID = unitID,
 			commands = patrolCommands,
 		}
 	end
-	
+
 	if unitData.movestate then
 		commandsToGive = commandsToGive or {}
 		if commandsToGive[#commandsToGive] and commandsToGive[#commandsToGive].unitID == unitID then
@@ -768,9 +768,9 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 			}
 		end
 	end
-	
+
 	SetupInitialUnitParameters(unitID, unitData, x, z)
-	
+
 	if build then
 		local _, maxHealth = Spring.GetUnitHealth(unitID)
 		Spring.SetUnitHealth(unitID, {build = unitData.buildProgress, health = maxHealth*unitData.buildProgress})
@@ -791,7 +791,7 @@ local function AddMidgameUnit(unitData, teamID, gameFrame, spawnFrameOverride)
 	if unitData.difficultyAtMost and (unitData.difficultyAtMost < missionDifficulty) then
 		return
 	end
-	
+
 	local unitList = midgamePlacement[n] or {}
 	unitList[#unitList + 1] = {
 		unitData = unitData,
@@ -816,18 +816,18 @@ local function AddUnitTerraform(unitData)
 	if not unitData.terraformHeight then
 		return
 	end
-	
+
 	local ud = UnitDefNames[unitData.name]
 	if not (ud and ud.id) then
 		return
 	end
-	
+
 	local x, z, facing = unitData.x, unitData.z, unitData.facing
-	
+
 	if ud.isImmobile then
 		x, z = SanitizeBuildPositon(x, z, ud, facing)
 	end
-	
+
 	local xsize, zsize
 	if (facing == 0) or (facing == 2) then
 		xsize = ud.xsize*4
@@ -836,7 +836,7 @@ local function AddUnitTerraform(unitData)
 		xsize = (ud.zsize or ud.ysize)*4
 		zsize = ud.xsize*4
 	end
-	
+
 	local unitTerra = {
 		terraformShape = 1, -- Rectangle
 		terraformType = 1, -- Level
@@ -848,7 +848,7 @@ local function AddUnitTerraform(unitData)
 		},
 		height = unitData.terraformHeight,
 	}
-	
+
 	return unitTerra
 end
 
@@ -859,19 +859,19 @@ local function PlaceFeature(featureData, teamID)
 	if featureData.difficultyAtMost and (featureData.difficultyAtMost < missionDifficulty) then
 		return
 	end
-	
+
 	local name = featureData.name
 	local fd = FeatureDefNames[name]
 	if not (fd and fd.id) then
 		Spring.Echo("Missing feature placement", name)
 		return
 	end
-	
+
 	local x, z, facing = featureData.x, featureData.z, featureData.facing
 	if not facing then
 		facing = math.random()*4
 	end
-	
+
 	local unitDefName
 	if string.find(name, "_dead") then
 		unitDefName = string.gsub(name, "_dead", "")
@@ -880,7 +880,7 @@ local function PlaceFeature(featureData, teamID)
 			x, z = SanitizeBuildPositon(x, z, ud, facing)
 		end
 	end
-	
+
 	local featureID = Spring.CreateFeature(fd.id, x, Spring.GetGroundHeight(x,z), z, facing*FACING_TO_HEADING, teamID)
 	if unitDefName then
 		Spring.SetFeatureResurrect(featureID, unitDefName, math.floor(facing + 0.5)%4)
@@ -893,7 +893,7 @@ local function PlaceRetinueUnit(retinueID, range, unitDefName, spawnX, spawnZ, f
 	if not unitDefID then
 		return
 	end
-	
+
 	local validPlacement = false
 	local x, z
 	local tries = 0
@@ -907,7 +907,7 @@ local function PlaceRetinueUnit(retinueID, range, unitDefName, spawnX, spawnZ, f
 			x, z =  spawnX + math.random()*2 - 1, spawnZ + math.random()*2 - 1
 		end
 	end
-	
+
 	local retinueUnitID = Spring.CreateUnit(unitDefID, x, Spring.GetGroundHeight(x,z), z, facing, teamID)
 	Spring.SetUnitRulesParam(retinueUnitID, "retinueID", retinueID, {ally = true})
 	Spring.SetUnitExperience(retinueUnitID, experience)
@@ -938,9 +938,9 @@ local function ProcessUnitCommand(unitID, command)
 			return
 		end
 	end
-	
+
 	local team = Spring.GetUnitTeam(unitID)
-	
+
 	if command.pos then
 		local x, z = command.pos[1], command.pos[2]
 		local y = CallAsTeam(team,
@@ -948,11 +948,11 @@ local function ProcessUnitCommand(unitID, command)
 				return Spring.GetGroundHeight(x, z)
 			end
 		)
-		
+
 		Spring.GiveOrderToUnit(unitID, command.cmdID, {x, y, z, command.facing or command.radius}, command.options or 0)
 		return
 	end
-	
+
 	if command.atPosition then
 		local p = command.atPosition
 		local units = Spring.GetUnitsInRectangle(p[1] - BUILD_RESOLUTION, p[2] - BUILD_RESOLUTION, p[1] + BUILD_RESOLUTION, p[2] + BUILD_RESOLUTION)
@@ -961,7 +961,7 @@ local function ProcessUnitCommand(unitID, command)
 		end
 		return
 	end
-	
+
 	local params = {}
 	if command.params then
 		for i = 1, #command.params do -- Somehow tables lose their order
@@ -1064,14 +1064,14 @@ local function LineageUnitCreated(unitID, unitDefID, teamID, builderID)
 	if ud.customParams.dynamic_comm then
 		HandleCommanderCreation(unitID, teamID)
 	end
-	
+
 	if builderID and unitLineage[builderID] then
 		unitLineage[unitID] = unitLineage[builderID]
 	else
 		unitLineage[unitID] = teamID
 	end
 	SetBuildOptions(unitID, unitDefID, teamID)
-	
+
 	if CAMPAIGN_SPAWN_DEBUG then
 		Spring.SetUnitRulesParam(unitID, "fulldisable", 1)
 		GG.UpdateUnitAttributes(unitID)
@@ -1139,7 +1139,7 @@ local function PlaceTeamUnits(teamID, customKeys, alliedToPlayer)
 	if not initialUnits then
 		return
 	end
-	
+
 	for i = 1, #initialUnits do
 		PlaceUnit(initialUnits[i], teamID, alliedToPlayer)
 	end
@@ -1166,7 +1166,7 @@ local function InitializeUnlocks()
 	else
 		SetGameRulesParamHax("terraformRequiresUnlock", 1)
 	end
-	
+
 	local teamList = Spring.GetTeamList()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
@@ -1201,7 +1201,7 @@ local function CheckDisableControlAiMessage()
 	if not disableAiUnitControl then
 		return
 	end
-	
+
 	for teamID, data in pairs(disableAiUnitControl) do
 		local dis_msg = "DISABLE_CONTROL:"
 		for i = 1, #data do
@@ -1210,7 +1210,7 @@ local function CheckDisableControlAiMessage()
 		end
 		SendToUnsynced("SendAIEvent", teamID, dis_msg)
 	end
-	
+
 	disableAiUnitControl = nil
 end
 
@@ -1222,14 +1222,14 @@ local function PlaceMidgameUnits(unitList, gameFrame)
 			AddMidgameUnit(data.unitData, data.teamID, gameFrame, gameFrame + data.unitData.repeatDelay)
 		end
 	end
-	
+
 	if commandsToGive then
 		for i = 1, #commandsToGive do
 			GiveCommandsToUnit(commandsToGive[i].unitID, commandsToGive[i].commands)
 		end
 		commandsToGive = nil
 	end
-	
+
 	CheckDisableControlAiMessage()
 end
 
@@ -1238,7 +1238,7 @@ local function InitializeMidgameUnits(gameFrame)
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID, customKeys = Spring.GetTeamInfo(teamID, true)
-		
+
 		local midgameUnits = CustomKeyToUsefulTable(customKeys and customKeys.midgameunits)
 		if midgameUnits then
 			for j = 1, #midgameUnits do
@@ -1255,26 +1255,26 @@ local function DoInitialUnitPlacement()
 		local _,_,_,_,_,allyTeamID, customKeys = Spring.GetTeamInfo(teamID, true)
 		PlaceTeamUnits(teamID, customKeys, allyTeamID == PLAYER_ALLY_TEAM_ID)
 	end
-	
+
 	local featuresToSpawn = CustomKeyToUsefulTable(Spring.GetModOptions().featurestospawn) or false
 	if featuresToSpawn then
 		PlaceFeatures(featuresToSpawn)
 	end
-	
+
 	if commandsToGive then
 		for i = 1, #commandsToGive do
 			GiveCommandsToUnit(commandsToGive[i].unitID, commandsToGive[i].commands)
 		end
 		commandsToGive = nil
 	end
-	
+
 	CheckDisableControlAiMessage()
 end
 
 local function DoInitialTerraform(noBuildings)
 	local terraformList = CustomKeyToUsefulTable(Spring.GetModOptions().initalterraform) or {}
 	local gaiaTeamID = Spring.GetGaiaTeamID()
-	
+
 	if not noBuildings then
 		-- Add terraform for structures
 		local teamList = Spring.GetTeamList()
@@ -1303,11 +1303,11 @@ local function DoInitialTerraform(noBuildings)
 			end
 		end
 	end
-	
+
 	if #terraformList == 0 then
 		return
 	end
-	
+
 	-- Create terraforms
 	for i = 1, #terraformList do
 		local terraform = terraformList[i]
@@ -1450,9 +1450,9 @@ function gadget:Initialize()
 	InitializeVictoryConditions()
 	InitializeBonusObjectives()
 	InitializeTypeVictoryLocation()
-	
+
 	GG.MissionGameOver = MissionGameOver
-	
+
 	local allUnits = Spring.GetAllUnits()
 	for _, unitID in pairs(allUnits) do
 		local unitDefID = Spring.GetUnitDefID(unitID)
@@ -1464,7 +1464,7 @@ function gadget:Initialize()
 			end
 		end
 	end
-	
+
 	GG.Unlocks = Unlocks
 	GG.GalaxyCampaignHandler = GalaxyCampaignHandler
 end
@@ -1496,12 +1496,12 @@ function gadget:GameFrame(n)
 			DoInitialTerraform(true)
 		end
 	end
-	
+
 	if midgamePlacement[n] then
 		PlaceMidgameUnits(midgamePlacement[n], n)
 		midgamePlacement[n] = nil
 	end
-	
+
 	-- Check objectives
 	if n%30 == 0 and not gameIsOver then
 		VictoryAtLocationUpdate()
@@ -1538,7 +1538,7 @@ function gadget:Load(zip)
 		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Galaxy campaign mission failed to access save/load API")
 		return
 	end
-	
+
 	local loadData = GG.SaveLoad.ReadFile(zip, "Galaxy Campaign Battle Handler", SAVE_FILE) or {}
 	loadGameFrame = Spring.GetGameRulesParam("lastSaveGameFrame") or 0
 
@@ -1549,7 +1549,7 @@ function gadget:Load(zip)
 		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Galaxy campaign mission load file corrupted")
 		return
 	end
-	
+
 	loaded = true
 
 	-- Unit Lineage. Reset because nonsense would be in it from UnitCreated.
@@ -1561,7 +1561,7 @@ function gadget:Load(zip)
 			SetBuildOptions(unitID, unitDefID, Spring.GetUnitTeam(unitID))
 		end
 	end
-	
+
 	for i = 1, #loadData.bonusObjectiveList do
 		bonusObjectiveList[i] = loadData.bonusObjectiveList[i]
 		local oldUnits = loadData.bonusObjectiveList[i].units
@@ -1575,11 +1575,11 @@ function gadget:Load(zip)
 			end
 		end
 	end
-	
+
 	-- Clear the commanders out of victoryAtLocation
 	victoryAtLocation = {}
 	initialUnitData = {}
-	
+
 	-- Put the units back in the objectives
 	for oldUnitID, data in pairs(loadData.initialUnitData) do
 		local unitID = GG.SaveLoad.GetNewUnitID(oldUnitID)
@@ -1587,7 +1587,7 @@ function gadget:Load(zip)
 			SetupInitialUnitParameters(unitID, data)
 		end
 	end
-	
+
 	-- restore victoryAtLocation units
 	-- needed for any units that weren't created at start; e.g. Dantes on planet 21 (Vis Ragstrom)
 	local units = Spring.GetAllUnits()
@@ -1600,7 +1600,7 @@ function gadget:Load(zip)
 			gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		end
 	end
-	
+
 	UpdateSaveReferences()
 end
 

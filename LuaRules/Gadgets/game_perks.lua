@@ -136,7 +136,7 @@ end
 local function InitUnsafe()
 --[[
 	local noUnlocks = true
-	
+
 	for index, id in pairs(Spring.GetPlayerList())
 		local customKeys = select(10, Spring.GetPlayerInfo(id))
 		if customKeys and customKeys.unlocks then
@@ -144,14 +144,14 @@ local function InitUnsafe()
 			break
 		end
 	end
-	
+
 	if noUnlocks then
 		--nobody has unlocks, don't bother
 		gadgetHandler:RemoveGadget()
 		return
 	end
 ]]--
-	
+
 	-- for name, id in pairs(playerIDsByName) do
 	for index, id in pairs(Spring.GetPlayerList()) do
 		-- copied from PlanetWars
@@ -189,7 +189,7 @@ local function InitUnsafe()
 		end
 	end
 
-	
+
 	-- /luarules reload compatibility
 	local units = Spring.GetAllUnits()
 	for i=1,#units do
@@ -210,7 +210,7 @@ function gadget:Initialize()
 			luaTeam[teamID] = true
 		end
 	end
-	
+
 	InitUnsafe()
 	local allUnits = Spring.GetAllUnits()
 	for _, unitID in pairs(allUnits) do

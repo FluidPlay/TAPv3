@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date     = "January 10, 2017",
 		license  = "GNU GPL, v2 or later",
 		layer    = -10,
-		enabled  = true
+		enabled  = false, --true
 	}
 end
 
@@ -40,7 +40,7 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
 		unitLastZ[builderID] = z
 		return true
 	end
-	
+
 	-- If you insert many build orders at the start of a construction queue, in range of the constructor,
 	-- then AllowUnitCreation seems to call as if it were AllowCommand. However, all of these calls have the
 	-- x,y,z,facing of the first structure in the queue so this check can be used to let them through.
