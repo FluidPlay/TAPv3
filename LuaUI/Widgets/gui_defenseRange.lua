@@ -34,11 +34,19 @@ for unitName, conf in pairs({
 	--TODO: Add other ranged structures
 	armrad = {
 		color = {1, 0.56, 0},
-		class = GROUND,
+		class = RADAR,
 	},
 	corrad = {
 		color = {1, 0.56, 0},
-		class = GROUND,
+		class = RADAR,
+	},
+	armarad = {
+		color = {1, 0.36, 0},
+		class = RADAR,
+	},
+	corarad = {
+		color = {1, 0.36, 0},
+		class = RADAR,
 	},
 
 	--staticantinuke = {
@@ -140,7 +148,7 @@ for unitName, conf in pairs({
 }) do
 	local unitDef = UnitDefNames[unitName]
 	if not unitDef or not (type(unitDef.weapons) == "table") or not (type(conf) == "table") or not (conf.weaponDef)  then
-		Spring.Echo("unit undefined: "..unitName)
+		Spring.Echo("gui_defenseRange -- unit undefined: "..unitName)
 	else
 		local weaponDef
 		if conf.class ~= RADAR then
