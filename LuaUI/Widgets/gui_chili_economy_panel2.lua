@@ -796,7 +796,7 @@ function widget:GameFrame(n)
 	local teamTotalEnergyCapacity = 0
 	for i = 1, #teams do
 		local mCurr, mStor, mPull, mInco, mExpe, mShar, mSent, mReci = spGetTeamResources(teams[i], "metal")
-		Spring.Echo("Current mStor: "..mStor)
+		--Spring.Echo("Current mStor: "..mStor)
 		mStor = math.max(mStor, MIN_STORAGE) -- mStor - HIDDEN_STORAGE
 		teamMInco = teamMInco + mInco
 		teamMSpent = teamMSpent + mExpe
