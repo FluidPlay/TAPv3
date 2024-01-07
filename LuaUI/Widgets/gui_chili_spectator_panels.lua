@@ -453,7 +453,7 @@ local function UpdateResourceWindowPanel(sideID)
 		local mCurr, mStor, mPull, mInco, mExpe, mShar, mSent, mReci = spGetTeamResources(teams[i], "metal")
 		metalIncome = metalIncome + (mInco or 0)
 		metalStorage = metalStorage + (mCurr or 0)
-		metalStorageMax = metalStorageMax + (mStor or 0) - HIDDEN_STORAGE
+		metalStorageMax = metalStorageMax + (mStor or 0) 		-- - HIDDEN_STORAGE
 		
 		metalSpent = metalSpent + (mExpe or 0)
 		
@@ -468,8 +468,8 @@ local function UpdateResourceWindowPanel(sideID)
 		
 		energyReclaim = energyReclaim + (eInco or 0) - math.max(0, energyChange)
 		
-		energyStorage = energyStorage + math.min((eCurr or 0), (eStor or 0) - HIDDEN_STORAGE)
-		energyStorageMax = energyStorageMax + (eStor or 0) - HIDDEN_STORAGE
+		energyStorage = energyStorage + math.min((eCurr or 0), (eStor or 0))		-- (eStor or 0) - HIDDEN_STORAGE
+		energyStorageMax = energyStorageMax + (eStor or 0) 						-- - HIDDEN_STORAGE
 	end
 	
 	energyReclaim = math.max(0, energyReclaim)

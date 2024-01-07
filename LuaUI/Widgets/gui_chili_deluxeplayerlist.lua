@@ -543,11 +543,11 @@ local function GetPlayerTeamStats(teamID)
 	end
 	
 	if mStor then
-		mStor = mStor - HIDDEN_STORAGE
+		mStor = mStor 	--  - HIDDEN_STORAGE
 	end
 	if eStor then
-		eStor = eStor - HIDDEN_STORAGE					-- eStor has a "hidden 10k" to account for
-		if eStor > 50000 then eStor = 1000 end	-- fix for weirdness where sometimes storage is reported as huge, assume it should be 1000
+		eStor = eStor 	--  - HIDDEN_STORAGE					-- eStor has a "hidden 10k" to account for
+		--if eStor > 50000 then eStor = 1000 end	-- fix for weirdness where sometimes storage is reported as huge, assume it should be 1000
 	end
 	-- guard against dividing by zero later, when the fill bar percentage is calculated
 	-- these probably aren't ever going to be zero, but better safe than sorry

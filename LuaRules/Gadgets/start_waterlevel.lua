@@ -39,7 +39,7 @@ function gadget:Initialize() -- GamePreload causes issues with widgets.
 	end
 
 	Spring.SetGameRulesParam("waterlevel", waterlevel)
-	if waterlevel ~= 0 and G.Terraform_RaiseWater then
+	if waterlevel ~= 0 and GG.Terraform_RaiseWater then
 		GG.Terraform_RaiseWater(waterlevel)
 	end
 end

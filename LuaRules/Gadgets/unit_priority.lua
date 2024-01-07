@@ -446,8 +446,8 @@ function gadget:GameFrame(n)
 			
 			eincome = eincome + (spGetTeamRulesParam(teamID, "OD_energyIncome") or 0)
 			
-			effectiveTeamMetalReserved[teamID] = math.min(mStor - HIDDEN_STORAGE, TeamMetalReserved[teamID] or 0)
-			effectiveTeamEnergyReserved[teamID] = math.min(eStor - HIDDEN_STORAGE, TeamEnergyReserved[teamID] or 0)
+			effectiveTeamMetalReserved[teamID] = math.min(mStor, TeamMetalReserved[teamID] or 0)		-- mStor - HIDDEN_STORAGE
+			effectiveTeamEnergyReserved[teamID] = math.min(eStor, TeamEnergyReserved[teamID] or 0)	-- eStor - HIDDEN_STORAGE
 			
 			-- Take away the constant income which was gained this frame (innate, reclaim)
 			-- This is to ensure that level + total income is exactly what will be gained in the next second (if nothing is spent).

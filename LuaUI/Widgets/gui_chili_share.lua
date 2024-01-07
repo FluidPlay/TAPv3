@@ -261,8 +261,8 @@ local function getEcoInfo(teamID)
 	-- Waste energy is reported as the equal fault of all players.
 	
 	-- reduce by hidden storage
-	mStor = math.max(mStor - HIDDEN_STORAGE, MIN_STORAGE)
-	eStor = math.max(eStor - HIDDEN_STORAGE, MIN_STORAGE)
+	mStor = math.max(mStor, MIN_STORAGE)	-- mStor - HIDDEN_STORAGE
+	eStor = math.max(eStor, MIN_STORAGE)	-- eStor - HIDDEN_STORAGE
 
 	-- cap by storage
 	if eCurr > eStor then

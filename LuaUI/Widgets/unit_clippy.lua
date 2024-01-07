@@ -298,8 +298,8 @@ local function ProcessCommand(unitID, command)
 	eExpe = eExpe + extraChange
 	ePull = ePull + extraEnergyPull + extraChange - cp.team_energyWaste/cp.allies
 
-	eStor = eStor - HIDDEN_STORAGE
-	mStor = mStor - HIDDEN_STORAGE
+	eStor = eStor 	-- - HIDDEN_STORAGE
+	mStor = mStor 	-- - HIDDEN_STORAGE
 
 	if energy[-command] then
 		if tips.energy_excess.lastUsed > gameframe - tips.energy_excess.cooldown*30 then

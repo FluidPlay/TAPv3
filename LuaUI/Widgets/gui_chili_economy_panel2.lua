@@ -606,7 +606,7 @@ function UpdateCustomParamResourceData()
 	-- Players have the resource bar keep track of reserve locally.
 	if (not reserveSentTimer) or Spring.GetSpectatingState() then
 		local teamID = Spring.GetLocalTeamID()
-		local mStor = select(2, spGetTeamResources(teamID, "metal")) - HIDDEN_STORAGE
+		local mStor = select(2, spGetTeamResources(teamID, "metal")) --   - HIDDEN_STORAGE
 		cp.metalStorageReserve = Spring.GetTeamRulesParam(teamID, "metalReserve") or 0
 		if mStor <= 0 and bar_reserve_metal.bars[1].percent ~= 0 then
 			bar_reserve_metal.bars[1].percent = 0
@@ -616,7 +616,7 @@ function UpdateCustomParamResourceData()
 			bar_reserve_metal:Invalidate()
 		end
 
-		local eStor = select(2, spGetTeamResources(teamID, "energy")) - HIDDEN_STORAGE
+		local eStor = select(2, spGetTeamResources(teamID, "energy")) --   - HIDDEN_STORAGE
 		cp.energyStorageReserve = Spring.GetTeamRulesParam(teamID, "energyReserve") or 0
 		if eStor <= 0 and bar_reserve_energy.bars[1].percent ~= 0 then
 			bar_reserve_energy.bars[1].percent = 0
@@ -642,18 +642,18 @@ local function UpdateReserveBars(metal, energy, value, overrideOption, localOnly
 		if metal then
 			local _, mStor = spGetTeamResources(spGetMyTeamID(), "metal")
 			if not localOnly then
-				Spring.SendLuaRulesMsg("mreserve:"..value*(mStor - HIDDEN_STORAGE))
+				Spring.SendLuaRulesMsg("mreserve:"..value*mStor)	-- (mStor - HIDDEN_STORAGE)
 			end
-			cp.metalStorageReserve = value*(mStor - HIDDEN_STORAGE)
+			cp.metalStorageReserve = value*mStor --mStor - HIDDEN_STORAGE
 			bar_reserve_metal.bars[1].percent = value
 			bar_reserve_metal:Invalidate()
 		end
 		if energy then
 			local _, eStor = spGetTeamResources(spGetMyTeamID(), "energy")
 			if not localOnly then
-				Spring.SendLuaRulesMsg("ereserve:"..value*(eStor - HIDDEN_STORAGE))
+				Spring.SendLuaRulesMsg("ereserve:"..value*eStor)	--(eStor - HIDDEN_STORAGE)
 			end
-			cp.energyStorageReserve = value*(eStor - HIDDEN_STORAGE)
+			cp.energyStorageReserve = value*eStor	-- (eStor - HIDDEN_STORAGE)
 			bar_reserve_energy.bars[1].percent = value
 			bar_reserve_energy:Invalidate()
 		end
@@ -796,7 +796,8 @@ function widget:GameFrame(n)
 	local teamTotalEnergyCapacity = 0
 	for i = 1, #teams do
 		local mCurr, mStor, mPull, mInco, mExpe, mShar, mSent, mReci = spGetTeamResources(teams[i], "metal")
-		mStor = math.max(mStor - HIDDEN_STORAGE, MIN_STORAGE)
+		Spring.Echo("Current mStor: "..mStor)
+		mStor = math.max(mStor, MIN_STORAGE) -- mStor - HIDDEN_STORAGE
 		teamMInco = teamMInco + mInco
 		teamMSpent = teamMSpent + mExpe
 		teamFreeStorage = teamFreeStorage + mStor - mCurr
@@ -807,7 +808,7 @@ function widget:GameFrame(n)
 		teamMPull = teamMPull + mPull + extraMetalPull
 
 		local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = spGetTeamResources(teams[i], "energy")
-		eStor = math.max(eStor - HIDDEN_STORAGE, MIN_STORAGE)
+		eStor = math.max(eStor, MIN_STORAGE)	-- eStor - HIDDEN_STORAGE
 		local extraEnergyPull = spGetTeamRulesParam(teams[i], "extraEnergyPull") or 0
 
 		local energyOverdrive = spGetTeamRulesParam(teams[i], "OD_energyOverdrive") or 0
@@ -843,8 +844,8 @@ function widget:GameFrame(n)
 	-- Waste energy is reported as the equal fault of all players.
 
 	-- reduce by hidden storage
-	mStor = math.max(mStor - HIDDEN_STORAGE, MIN_STORAGE)
-	eStor = math.max(eStor - HIDDEN_STORAGE, MIN_STORAGE)
+	mStor = math.max(mStor , MIN_STORAGE) -- mStor - HIDDEN_STORAGE
+	eStor = math.max(eStor, MIN_STORAGE)  -- eStor - HIDDEN_STORAGE
 
 	-- Waste
 	local teamMetalWaste = math.min(0, teamTotalMetalCapacity - teamTotalMetalStored)

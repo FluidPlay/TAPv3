@@ -292,14 +292,14 @@ end
 function widget:GameFrame(n)
 	if n%UPDATE_PERIOD_RESOURCES == 0 then
 		local mlevel, mstore,mpull,mincome = spGetTeamRes(myTeam, "metal")
-		mstore = mstore - HIDDEN_STORAGE
+		mstore = mstore 	-- - HIDDEN_STORAGE
 		mIncome = mincome	-- global = our local
 		if mstore > 0 and mlevel/mstore >= 0.95 and (not metalMap) and lastMExcessEvent + RESOURCE_WARNING_PERIOD < n then
 			AddEvent("Excessing metal", nil, colorYellow, "excessMetal")
 			lastMExcessEvent = n
 		end
 		local elevel,estore,epull,eincome = spGetTeamRes(myTeam, "energy")
-		estore = estore - HIDDEN_STORAGE
+		estore = estore 	-- - HIDDEN_STORAGE
 		if estore > 0 and  elevel/estore <= 0.2 and lastEStallEvent + RESOURCE_WARNING_PERIOD < n  then
 			AddEvent("Stalling energy", nil, colorOrange, "stallingEnergy")
 			lastEStallEvent = n

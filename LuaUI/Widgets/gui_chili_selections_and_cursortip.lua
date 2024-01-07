@@ -31,6 +31,7 @@ local spGetUnitCurrentBuildPower = Spring.GetUnitCurrentBuildPower
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spScaledGetMouseState = Spring.ScaledGetMouseState
 local spGetUnitShieldState = Spring.GetUnitShieldState
+local spGetUnitPosition = Spring.GetUnitPosition
 
 local GetUnitBuildSpeed = Spring.Utilities.GetUnitBuildSpeed
 local GetHumanName = Spring.Utilities.GetHumanName

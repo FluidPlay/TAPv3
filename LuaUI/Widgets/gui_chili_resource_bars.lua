@@ -157,14 +157,14 @@ local function updateReserveBars(metal, energy, value, overrideOption)
 		if value > 1 then value = 1 end
 		if metal then
 			local _, mStor = GetTeamResources(GetMyTeamID(), "metal")
-			Spring.SendLuaRulesMsg("mreserve:"..value*(mStor - HIDDEN_STORAGE))
-			WG.metalStorageReserve = value*(mStor - HIDDEN_STORAGE)
+			Spring.SendLuaRulesMsg("mreserve:"..value*mStor)		--  - HIDDEN_STORAGE
+			WG.metalStorageReserve = value*mStor							-- - HIDDEN_STORAGE
 			bar_metal_reserve_overlay:SetValue(value)
 		end
 		if energy then
 			local _, eStor = GetTeamResources(GetMyTeamID(), "energy")
-			Spring.SendLuaRulesMsg("ereserve:"..value*(eStor - HIDDEN_STORAGE))
-			WG.energyStorageReserve = value*(eStor - HIDDEN_STORAGE)
+			Spring.SendLuaRulesMsg("ereserve:"..value*eStor)		--  - HIDDEN_STORAGE
+			WG.energyStorageReserve = value*eStor							--  - HIDDEN_STORAGE
 			bar_energy_reserve_overlay:SetValue(value)
 		end
 	end
@@ -259,8 +259,8 @@ function widget:GameFrame(n)
 		teamMInco = teamMInco + mInco
 		teamMSpent = teamMSpent + mExpe
 		teamFreeStorage = teamFreeStorage + mStor - mCurr
-		teamTotalMetalStored = teamTotalMetalStored + math.min(mCurr, mStor - HIDDEN_STORAGE)
-		teamTotalMetalCapacity = teamTotalMetalCapacity + mStor - HIDDEN_STORAGE
+		teamTotalMetalStored = teamTotalMetalStored + math.min(mCurr, mStor)		--  - HIDDEN_STORAGE
+		teamTotalMetalCapacity = teamTotalMetalCapacity + mStor		--  - HIDDEN_STORAGE
 		
 		local extraMetalPull = spGetTeamRulesParam(teams[i], "extraMetalPull") or 0
 		teamMPull = teamMPull + mPull + extraMetalPull
@@ -276,8 +276,8 @@ function widget:GameFrame(n)
 		teamEnergyExp = teamEnergyExp + eExpe + extraChange
 		teamEnergyReclaim = teamEnergyReclaim + eInco - math.max(0, energyChange)
 		
-		teamTotalEnergyStored = teamTotalEnergyStored + math.min(eCurr, eStor - HIDDEN_STORAGE)
-		teamTotalEnergyCapacity = teamTotalEnergyCapacity + eStor - HIDDEN_STORAGE
+		teamTotalEnergyStored = teamTotalEnergyStored + math.min(eCurr, eStor)		--  - HIDDEN_STORAGE
+		teamTotalEnergyCapacity = teamTotalEnergyCapacity + eStor 		--  - HIDDEN_STORAGE
 	end
 
 	local teamEnergyIncome = teamEnergyReclaim + cp.team_energyIncome
@@ -297,8 +297,8 @@ function widget:GameFrame(n)
 	
 	ePull = ePull + extraEnergyPull - math.min(0, cp.energyOverdrive)
 	
-	mStor = mStor - HIDDEN_STORAGE -- reduce by hidden storage
-	eStor = eStor - HIDDEN_STORAGE -- reduce by hidden storage
+	mStor = mStor		--  - HIDDEN_STORAGE
+	eStor = eStor		--  - HIDDEN_STORAGE
 	if eCurr > eStor then
 		eCurr = eStor -- cap by storage
 	end
