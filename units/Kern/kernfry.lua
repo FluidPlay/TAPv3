@@ -1,5 +1,5 @@
 return {
-	armfast = {
+	kernfry = {
 		acceleration = 0.36,
 		brakerate = 1.125,
 		buildcostenergy = 4700,

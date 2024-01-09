@@ -1,5 +1,5 @@
 return {
-	corfast = {
+	bowscrow = {
 		acceleration = 0.2,
 		brakerate = 1.5,
 		buildcostenergy = 3800,
@@ -32,7 +32,7 @@ return {
 		metalstorage = 100,
 		movementclass = "KBOT2",
 		name = "Freaker",
-		objectname = "Units/Kern/CORFAST",
+		objectname = "Units/Bow/bowscrow.s3o",
 		seismicsignature = 0,
 		selfdestructas = "smallbuilderSelfd",
 		sightdistance = 520,
