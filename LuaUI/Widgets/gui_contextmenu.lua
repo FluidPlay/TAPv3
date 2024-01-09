@@ -38,6 +38,7 @@ stats_hide_projectile_speed
 include("keysym.lua")
 VFS.Include("LuaRules/Utilities/numberfunctions.lua")
 VFS.Include("LuaRules/Utilities/versionCompare.lua")
+local weaponDmgTypes = VFS.Include("gamedata/configs/weapondamagetypes.lua")
 
 local spSendLuaRulesMsg			= Spring.SendLuaRulesMsg
 local spGetCurrentTooltip		= Spring.GetCurrentTooltip
@@ -66,6 +67,7 @@ local iconsPath = LUAUI_DIRNAME..'Icons/'
 
 local emptyTable = {}
 local iconTypes = {}
+local armorTypes = Game.armorTypes	--speedup Cache
 
 local moduleDefs, chassisDefs, upgradeUtilities = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 
@@ -725,6 +727,12 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ''
 		end
 
+		-- New for TAP
+		if ws.damage_type then
+			cells[#cells+1] = ' - Dmg type:'
+			cells[#cells+1] = ws.damage_type
+		end
+
 		--[[ Unimportant stuff, maybe make togglable with some option later
 		if (wd.type == "MissileLauncher") then
 			if ((wd.startvelocity < wd.projectilespeed) and (wd.weaponAcceleration > 0)) then
@@ -1302,6 +1310,7 @@ local function printWeapons(unitDef, unitID)
 			end
 
 			if (not isDuplicate) and not weaponDef.customParams.fake_weapon then
+				local weapDmgType = weaponDmgTypes[unitDef.name] and weaponDmgTypes[unitDef.name][weaponDef.description] or "Not found"
 				local wsTemp = {
 					weaponID = weaponID,
 					count = 1,
@@ -1312,7 +1321,8 @@ local function printWeapons(unitDef, unitID)
 					free_stockpile = ucp.freestockpile,
 					stockpile_time = ucp.stockpiletime,
 					stockpile_cost = ucp.stockpilecost,
-					firing_arc = weapon.maxAngleDif
+					firing_arc = weapon.maxAngleDif,
+					damage_type = weapDmgType		-- new for TAP
 				}
 
 				-- dual wielding comms
@@ -1408,9 +1418,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			width   = 66; --88
 		},
 	}
-	Spring.Echo("iconType: "..(ud.iconType or "nil"))
-	--iconTypes[iconName] = {
-	--	bitmap = path,
+	--Spring.Echo("iconType: "..(ud.iconType or "nil"))
 	if ud and ud.iconType then
 		local iconType = ud.iconType
 		if iconTypes[iconType] then --ud.iconType ~= 'default' then
@@ -1456,6 +1464,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	local cost = numformat(ud.metalCost)
 	local health = numformat(ud.health)
+	local armor = armorTypes[ud.armorType or 0] or '???'
 	local speed = numformat(ud.speed)
 	local mass = numformat(ud.mass)
 
@@ -1517,6 +1526,9 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	statschildren[#statschildren+1] = Label:New{ caption = 'Health: ', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = health, textColor = color.stats_fg, }
+
+	statschildren[#statschildren+1] = Label:New{ caption = 'Armor: ', textColor = color.stats_fg, }
+	statschildren[#statschildren+1] = Label:New{ caption = armor, textColor = color.stats_fg, }
 
 	statschildren[#statschildren+1] = Label:New{ caption = 'Mass: ', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = mass, textColor = color.stats_fg, }
@@ -1759,7 +1771,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		autoArrangeV  = false,
 		autoArrangeH  = false,
 		centerItems  = false,
-		right = 128,
+		right = 28,
 		x = 0,
 		--width = 200,
 		--height = '100%',
