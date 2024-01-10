@@ -25,7 +25,7 @@ local last
 local start, damage
 local attackerUnitDefID
 
-function gadget:UnitDamaged(unitID, unitDefID,  unitTeam, unitDamage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, unitDamage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeam)
 	local wd = WeaponDefs[weaponID]
 	--if wd then
 	--	local aoe = wd.damageAreaOfEffect

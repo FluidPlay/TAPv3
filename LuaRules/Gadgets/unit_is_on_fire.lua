@@ -142,8 +142,8 @@ function gadget:UnitLeftWater(unitID, unitDefID, unitTeam)
 	inWater[unitID] = nil
 end
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID,
-                            attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, projectileID,
+							attackerID, attackerDefID, attackerTeam)
 	if inGameFrame then
 		-- ignore own AddUnitDamage calls
 		-- FIXME: just toggle the callin in GameFrame

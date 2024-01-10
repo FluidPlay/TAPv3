@@ -1522,30 +1522,40 @@ function gadgetHandler:UnitPreDamaged(unitID, unitDefID, unitTeam,
 end
 
 
-local UnitDamaged_first = true
-local UnitDamaged_count = 0
-local UnitDamaged_gadgets = {}
+--local UnitDamaged_first = true
+--local UnitDamaged_count = 0
+--local UnitDamaged_gadgets = {}
 
-function gadgetHandler:UnitDamaged(unitID, unitDefID, unitTeam,
-                                   damage, paralyzer, weaponID, projectileID,
-                                   attackerID, attackerDefID, attackerTeam)
+--function gadgetHandler:UnitDamaged(unitID, unitDefID, unitTeam,
+--                                   damage, paralyzer, weaponID, projectileID,
+--                                   attackerID, attackerDefID, attackerTeam)
+--
+--	if UnitDamaged_first then
+--		for _,g in r_ipairs(self.UnitDamagedList) do
+--			UnitDamaged_count = UnitDamaged_count + 1
+--			UnitDamaged_gadgets[UnitDamaged_count] = g
+--		end
+--		UnitDamaged_first = false
+--	end
+--
+--	if gadgetHandler.GG._AddUnitDamage_teamID then
+--		attackerTeam = gadgetHandler.GG._AddUnitDamage_teamID
+--	end
+--
+--	local g
+--	for i = 1, UnitDamaged_count do
+--		g = UnitDamaged_gadgets[i]
+--		g:UnitDamaged(unitID, unitDefID, unitTeam,
+--				damage, paralyzer, weaponID,
+--				attackerID, attackerDefID, attackerTeam, projectileID)
+--	end
+--	return
+--end
 
-	if UnitDamaged_first then
-		for _,g in r_ipairs(self.UnitDamagedList) do
-			UnitDamaged_count = UnitDamaged_count + 1
-			UnitDamaged_gadgets[UnitDamaged_count] = g
-		end
-		UnitDamaged_first = false
+function gadgetHandler:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	for _, g in ipairs(self.UnitDamagedList) do
+		g:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	end
-
-	local g
-	for i = 1, UnitDamaged_count do
-		g = UnitDamaged_gadgets[i]
-		g:UnitDamaged(unitID, unitDefID, unitTeam,
-				damage, paralyzer, weaponID,
-				attackerID, attackerDefID, attackerTeam)
-	end
-	return
 end
 
 

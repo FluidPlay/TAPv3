@@ -139,8 +139,7 @@ function gadget:UnitFinished(unitID, unitDefID, teamID)
     end
 end
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
-                            weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
     if (oreGuardians[attackerID]) then
         return
     end

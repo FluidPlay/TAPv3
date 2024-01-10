@@ -119,7 +119,8 @@ end
 GG.mod_stats_AddFactoryPlop = AddFactoryPlop
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
+
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, projectileID,
                             weaponID, attackerID, attackerDefID, attackerTeam)
 
 	if unitTeam == gaiaTeamID then

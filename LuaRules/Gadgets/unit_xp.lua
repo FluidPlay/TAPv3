@@ -21,7 +21,7 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitLosState = Spring.GetUnitLosState
 local allyTeamByTeam = {}
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeam)
 
 	if not attackerID or not spValidUnitID(attackerID)
 	or spAreTeamsAllied(unitTeam, attackerTeam)

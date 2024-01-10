@@ -142,7 +142,7 @@ if gadgetHandler:IsSyncedCode() then
 
     function gadget:GameFrame(frame)
         -- Add all supported game-start spawned units (aka. commanders)
-        if not init0 and frame > 0 then
+        if frame == 0 then
             local allUnits = spGetAllUnits()
             for _, unitID in ipairs(allUnits) do
                 local unitDefID = spGetUnitDefID(unitID)
@@ -152,13 +152,11 @@ if gadgetHandler:IsSyncedCode() then
                     spawnBuilders(unitID, teamID, unitDef)
                 end
             end
-            init0 = true
         end
-        if not init2 and frame > 2 then
+        if frame == 2 then
             for unitID, unitDef in pairs(moveUnitNextFrame) do
                 moveTowardsNearestOre(unitID, unitDef)
             end
-            init2 = true
         end
     end
 

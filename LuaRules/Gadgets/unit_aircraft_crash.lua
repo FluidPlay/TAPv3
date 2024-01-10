@@ -54,7 +54,7 @@ function gadget:GameFrame(n)
 	end
 end
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage)
 	if not aircraftDefIDs[unitDefID] then
 		return
 	end

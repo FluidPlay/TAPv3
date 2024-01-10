@@ -125,7 +125,7 @@ local damageMultipliers = {
     --,
 
     harvest = { 	robot = 0, vehicle = 0, air = 0, ship = 0, armorbot = 0, armorveh = 0, armorair = 0, armorship = 0,
-                structure = 0, defense = 0, armordefense = 0, commander = 0, shield = 0, superunit = 0, ore = 0.08, guardian = 0.1, },
+                structure = 0, defense = 0, armordefense = 0, commander = 0, shield = 0, superunit = 0, ore = 0.016, guardian = 0.1, },
 
     none={ 		robot = 0.1,  vehicle = 0.1, air = 0.1, ship = 0.1, armorbot = 0.1, armorveh = 0.1, armorair = 0.1, armorship = 0.1,
                   structure = 0.1, defense = 0.1, armordefense = 0.1, commander = 0.1, shield = 0.1, superunit = 0.1, ore = 0, guardian = 0, },

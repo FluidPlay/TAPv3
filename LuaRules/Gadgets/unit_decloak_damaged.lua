@@ -149,8 +149,8 @@ end
 
 GG.PokeDecloakUnit = PokeDecloakUnit
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
-                            weaponID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, projectileID,
+							attackerID, attackerDefID, attackerTeam)
 	if  (damage > 0 or spIsWeaponPureStatusEffect(weaponID)) and
 		not (attackerTeam and
 		weaponID and

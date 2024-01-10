@@ -523,7 +523,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	end
 end
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID,
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, projectileID,
 		attackerID, attackerDefID, attackerTeam)
 	if (unitTeam == gaiaTeamID) then return end
 	local hp, maxHP = spGetUnitHealth(unitID)
