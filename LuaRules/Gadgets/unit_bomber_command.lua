@@ -810,7 +810,7 @@ function gadget:DefaultCommand(type, targetID)
 		for i = 1, #selUnits do
 			unitID    = selUnits[i]
 			unitDefID = spGetUnitDefID(unitID)
-			if airDefs[unitDefID] and not airDefs[unitDefID].builder then
+			if airDefs[unitDefID] and not airDefs[unitDefID].isBuilder then
 				return CMD_REARM
 			end
 		end

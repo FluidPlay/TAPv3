@@ -23,7 +23,7 @@ if gadgetHandler:IsSyncedCode() then
 
 	VFS.Include("gamedata/taptools.lua")
 
-	local localDebug = false --true --|| Enables text state debug messages
+	local localDebug = true --|| Enables text state debug messages
 
 	local CHECK_FREQ = 30 --4
 
@@ -81,8 +81,9 @@ if gadgetHandler:IsSyncedCode() then
 	--- returns nil (not a harvester or current amount not initialized) or a given amount from 0 to max
 	local function getUnitHarvestStorage(unitID)
 		local harvestStorageEntry = harvesterStorage[unitID]
+		Spring.Echo("Harvester storage for "..unitID..": "..(harvestStorageEntry and harvestStorageEntry.cur or "N/A"))
 		if not harvestStorageEntry then
-			return nil
+			return 0
 		end
 		local cur = harvestStorageEntry.cur
 		return cur
@@ -209,44 +210,6 @@ if gadgetHandler:IsSyncedCode() then
 		return false
 	end
 
-	----- Fires up any time a feature is being reclaimed, so we use to store the current Harvest Storage
-	----- which is later processed in gameFrame, so the reclaim is instantaneous as in non-harvest units
-	--function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part)
-	--	--Spring.Echo("damager: "..builderID.." damage: "..part.." isharvester: "..( harvesters[builderID] and "true" or "false"))
-	--	if not IsValidUnit(builderID) or not harvesterStorage[builderID] then
-	--		return true end
-	--	if part < 0 then    -- it's a reclaim
-	--		-- Can't reclaim if the harvester is fully loaded, sorry
-	--		--if loadedHarvesters[builderID] then
-	--		--    return false
-	--		--end
-	--		previousHarvestStorage[builderID] = getUnitHarvestStorage(builderID) or 0
-	--		spEcho("Previous harvestStorage: "..(getUnitHarvestStorage(builderID) or 0))
-	--	end
-	--
-	--	--if part < 0 then
-	--	--    local curStorage = spGetUnitHarvestStorage(builderID) or 0
-	--	--    -- Can't reclaim if the harvester is fully loaded, sorry
-	--	--    if loadedHarvesters[builderID] then
-	--	--        return false
-	--	--    end
-	--	--    local reclaimPerc = -part
-	--	--    local harvesterTeam = spGetUnitTeam(builderID)
-	--	--    local remMetal, maxMetal, remEnergy, maxEnergy, reclaimLeft, reclaimTime = Spring.GetFeatureResources(featureID)
-	--	--    local step = 1 + reclaimPerc - reclaimLeft
-	--	--    local reclaimedMetal = math.min(remMetal, maxMetal*step)-- eg: remMetal = 20, partMetal = 30  =>  20
-	--	--
-	--	--    --" curStorg: "..(curStorage or "nil")..
-	--	--    Spring.Echo("step: "..(step or "nil").." remMetal, maxMetal: "..(remMetal or "nil")
-	--	--            ..", "..(maxMetal or "nil")
-	--	--            .." reclaimLeft: "..(reclaimLeft or "nil").." reclaimTime: "..(reclaimTime or "nil")
-	--	--            .." part: "..(reclaimPerc or "nil")
-	--	--            .." | recMetal: "..(reclaimedMetal or "nil"))
-	--	--    spSetUnitHarvestStorage (builderID, math.max(curStorage - reclaimedMetal, 0))
-	--	--end
-	--	return true
-	--end
-
 	--- Returns: deliveryAmount, maxStorage
 	local function getHarvesterInfo(harvesterID)
 		if not IsValidUnit(harvesterID) then
@@ -265,7 +228,7 @@ if gadgetHandler:IsSyncedCode() then
 		--Spring.Echo("Harvest weapon: "..(harvestWeaponDef.name or "nil"))
 
 		--Spring.Echo("Amount: "..(harvestWeaponDef.damages[0] or "nil"))
-		local curStorage = getUnitHarvestStorage(harvesterID) or 0
+		local curStorage = getUnitHarvestStorage(harvesterID)
 		local deliveryAmount, maxStorage = getHarvesterInfo(harvesterID)
 		--local deliveryAmount = harvestWeaponDef and harvestWeaponDef.damages[0] or defaultDeliveryAmount
 		--local maxStorage = harvesterDef and tonumber(harvesterDef.customParams.maxorestorage) or defaultMaxStorage
@@ -289,11 +252,10 @@ if gadgetHandler:IsSyncedCode() then
 	---must set states on the builder_brain (use spSetUnitRuleParams)
 	---must continuously check if an oretower is available, if is loaded
 
+	--function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, harvesterID, harvesterDefID, attackerTeam)
 	-- attackerID => harvesterID, for legibility purposes
 	function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, harvesterID, harvesterDefID, attackerTeam)
 		Spring.Echo("Damage: "..(damage or "nil").." from: "..(harvesterID or "nil"))
-		if not IsValidUnit(harvesterID) or loadedHarvesters[harvesterID] then
-			return end
 		local harvesterDef = UnitDefs[harvesterDefID]
 		if not harvesterDef or not canharvest[harvesterDef.name] then
 			return end
@@ -304,7 +266,7 @@ if gadgetHandler:IsSyncedCode() then
 
 		harvestersInAction[unitID] = true
 
-		--Spring.Echo("unitDamaged: storage cur/max="..(curStorage or "nil").."/"..maxStorage..", damage="..damage)
+		Spring.Echo("unitDamaged: storage cur/max="..(curStorage or "nil").."/"..maxStorage..", damage="..damage)
 		if not isnumber(curStorage) then
 			return end
 		if curStorage < maxStorage then
@@ -361,7 +323,7 @@ if gadgetHandler:IsSyncedCode() then
 				local unitDefID = spGetUnitDefID(unitID)
 				local uDef = UnitDefs[unitDefID]
 				local maxStorage = uDef and (tonumber(uDef.customParams.maxorestorage) or defaultMaxStorage)
-				local curStorage = getUnitHarvestStorage(unitID) or 0
+				local curStorage = getUnitHarvestStorage(unitID)
 				spEcho("harv id "..(unitID or "nil").." curStorage: "..curStorage.." maxStorage: "..maxStorage)
 				if (curStorage < maxStorage) then --< maxStorage
 					loadedHarvesters[unitID] = nil

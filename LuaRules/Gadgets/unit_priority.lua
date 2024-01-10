@@ -35,6 +35,7 @@ end
 
 include("LuaRules/Configs/customcmds.h.lua")
 include("LuaRules/Configs/constants.lua")
+VFS.Include("LuaRules/Utilities/tobool.lua")
 
 local TooltipsA = {
 	' Low.',
@@ -318,11 +319,13 @@ function gadget:AllowUnitBuildStep(builderID, teamID, unitID, unitDefID, step)
 	end
 	
 	if checkOnlyEnergy then
+		local unitDef = UnitDefs[unitDefID]
+		local repairRate = 	tobool(unitDef.isBuilder) and unitDef.workertime or nil
 		local _,_,inBuild = spGetUnitIsStunned(unitID)
 		if inBuild then
 			UnitOnlyEnergy[builderID] = false
 		else
-			UnitOnlyEnergy[builderID] = GG.unitRepairRate[unitID] or 1
+			UnitOnlyEnergy[builderID] = repairRate or 1	--GG.unitRepairRate[unitID]
 		end
 	end
 	

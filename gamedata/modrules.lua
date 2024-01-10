@@ -114,7 +114,7 @@ local modrules  = {
 
   system = {
 	--pathFinderSystem = (Spring.GetModOptions() and (Spring.GetModOptions().pathfinder == "qtpfs") and 1) or 0, -- QTPFS causes desync https://springrts.com/mantis/view.php?id=5936
-	pathFinderSystem = 0,
+	pathFinderSystem = 1,	--0
 	pathFinderUpdateRate = 0.005,   -- default 0.007, higher means more updates -- ZK: 0.0000001,
 	pathFinderRawDistMult = 1.25, -- ZK: 100000,
 	allowTake = true,	-- Enables and disables the /take UI command.
@@ -126,7 +126,7 @@ local modrules  = {
     transportAir    = 1;  -- defaults to 0
     transportShip   = 0;  -- defaults to 0
     transportHover  = 1;   -- defaults to 0
-	targetableTransportedUnits = true; -- Can transported units be targeted by weapons? true allows both manual and automatic targeting.
+	targetableTransportedUnits = false; -- Can transported units be targeted by weapons? true allows both manual and automatic targeting.
   },
 
 }
