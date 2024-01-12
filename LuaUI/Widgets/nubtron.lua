@@ -51,7 +51,7 @@ local glDepthTest		= gl.DepthTest
 local glDrawGroundCircle	= gl.DrawGroundCircle
 
 
-local GetActiveCmdDescs	= Spring.GetActiveCmdDescs
+--local GetActiveCmdDescs	= Spring.GetActiveCmdDescs
 local GetActiveCommand	= Spring.GetActiveCommand
 local GetAllUnits	= Spring.GetAllUnits
 local GetCurrentTooltip = Spring.GetCurrentTooltip
@@ -389,7 +389,9 @@ local function CheckAllUnits()
 	if classesByUnit[buildUnitName] then
 		setCondition('selbuild' .. classesByUnit[buildUnitName] )
 	end
-	local cmddesc = GetActiveCmdDescs()
+
+	--local cmddesc = GetActiveCmdDescs()
+
 	--Spring.Echo ("active cmd", unitName)
 	--Spring.Echo ("active cmddesc", cmddesc[1][1])
 	CheckState()

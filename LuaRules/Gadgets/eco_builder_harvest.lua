@@ -270,7 +270,7 @@ if gadgetHandler:IsSyncedCode() then
 
 		harvestersInAction[unitID] = true
 
-		Spring.Echo("unitDamaged: storage cur/max="..(curStorage or "nil").."/"..maxStorage..", damage="..damage)
+		--Spring.Echo("unitDamaged: storage cur/max="..(curStorage or "nil").."/"..maxStorage..", damage="..damage)
 		if not isnumber(curStorage) then
 			return end
 		if curStorage < maxStorage then
