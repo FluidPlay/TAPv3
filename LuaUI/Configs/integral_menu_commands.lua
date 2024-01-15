@@ -113,18 +113,18 @@ local unitTypes = {
 -- Add build options to be shown in integral menu here
 local factoryUnitPosDef = {
 	armvp = {
-		armfav = unitTypes.RIOT,
-		armflash =unitTypes.RAIDER,
-		armstump = unitTypes.HEAVY_SOMETHING,
-		armsam = unitTypes.ANTI_AIR,
-		armmart = unitTypes.ARTILLERY,
-		armlatnk = unitTypes.RIOT,
-		armbull = unitTypes.HEAVY_SOMETHING,
-		armyork = unitTypes.SKIRMISHER,
-		armmanni   = unitTypes.SPECIAL,
-		armmerl  = unitTypes.ARTILLERY,
-		armintr  = unitTypes.RAIDER,
-		armjam  = unitTypes.UTILITY,
+		armfav 		= unitTypes.RIOT,
+		armflash 	= unitTypes.RAIDER,
+		armstump 	= unitTypes.HEAVY_SOMETHING,
+		armsam 		= unitTypes.ANTI_AIR,
+		armmart 	= unitTypes.ARTILLERY,
+		armlatnk 	= unitTypes.RIOT,
+		armbull 	= unitTypes.HEAVY_SOMETHING,
+		armyork 	= unitTypes.SKIRMISHER,
+		armmanni   	= unitTypes.SPECIAL,
+		armmerl  	= unitTypes.ARTILLERY,
+		armintr  	= unitTypes.RAIDER,
+		armjam  	= unitTypes.UTILITY,
 	},
 	factorycloak = {
 		cloakcon          = unitTypes.CONSTRUCTOR,
@@ -293,6 +293,7 @@ factoryUnitPosDef.plateship    = Spring.Utilities.CopyTable(factoryUnitPosDef.fa
 -- These positions must be distinct
 
 local factory_commands = {
+	-- KERNHQ
 	corck		= {order = 1, row = 1, col = 1},
 	corcv		= {order = 2, row = 1, col = 2},
 	corca		= {order = 3, row = 1, col = 3},
@@ -302,6 +303,23 @@ local factory_commands = {
 	coraca		= {order = 7, row = 2, col = 1},
 	armconsul	= {order = 8, row = 2, col = 2},
 	kerndaemon	= {order = 9, row = 2, col = 3},
+	-- ARMVP
+	armfav 		= {order = 1, row = 1, col = 1},
+	armflash 	= {order = 2, row = 1, col = 2},
+	armstump 	= {order = 3, row = 1, col = 3},
+	armsam 		= {order = 4, row = 1, col = 4},
+	armmart		= {order = 5, row = 1, col = 5},
+	armlatnk	= {order = 6, row = 1, col = 6},
+	armbull		= {order = 7, row = 2, col = 1},
+	armyork		= {order = 8, row = 2, col = 2},
+	armmanni	= {order = 9, row = 2, col = 3},
+	armmerl		= {order = 7, row = 2, col = 4},
+	armintr		= {order = 8, row = 2, col = 5},
+	armjam		= {order = 9, row = 2, col = 6},
+	-- ARMMSTOR
+	armck		= {order = 1, row = 1, col = 1},
+	armcv		= {order = 2, row = 1, col = 2},
+	armfark		= {order = 3, row = 1, col = 3},
 	--factorycloak      = {order = 1, row = 1, col = 1},
 	--factoryshield     = {order = 2, row = 1, col = 2},
 	--factoryveh        = {order = 3, row = 1, col = 3},
