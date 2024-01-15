@@ -26,7 +26,7 @@ function gadget:GetInfo()
 		-- Must start before unit_morph.lua gadget to register GG.AddMiscPriority() first.
 		-- Must be before mex_overdrive
 		layer     = -5,
-		enabled   = true
+		enabled   = false, --true
   }
 end
 

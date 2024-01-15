@@ -148,43 +148,43 @@ for unitName, conf in pairs({
 }) do
 	local unitDef = UnitDefNames[unitName]
 	if not unitDef or not (type(unitDef.weapons) == "table") or not (type(conf) == "table") or not (conf.weaponDef)  then
-		Spring.Echo("gui_defenseRange -- unit undefined: "..unitName)
-	else
-		local weaponDef
-		if conf.class ~= RADAR then
-			if istable(unitDef.weapons) and istable(unitDef.weapons[1]) then
-				weaponDef = WeaponDefs[unitDef.weapons[1].weaponDef]
-			end
+		--Spring.Echo("gui_defenseRange -- no weapon on unit: "..unitName)
+		break end
+
+	local weaponDef
+	if conf.class ~= RADAR then
+		if istable(unitDef.weapons) and istable(unitDef.weapons[1]) then
+			weaponDef = WeaponDefs[unitDef.weapons[1].weaponDef]
 		end
-		if weaponDef then
-			if conf.class == ANTI then
-				conf.weaponDef = CYLINDER_HEIGHTMOD
-				conf.radius = weaponDef.customParams.nuke_coverage
-			elseif conf.class == RADAR then
-				conf.weaponDef = CYLINDER_HEIGHTMOD
-				conf.radius = unitDef.radarRadius
-			elseif conf.class == SHIELD then
-				conf.weaponDef = SPHERE_HEIGHTMOD
-				conf.radius = weaponDef.shieldRadius
-			else
-				conf.weaponDef = weaponDef
-				conf.radius = weaponDef.range
-			end
-
-			if not conf.lineWidth then
-				conf.lineWidth = 1.0
-			end
-
-			conf.color[4] = alphaValue
-			if conf.colorInBuild then
-				conf.colorInBuild[4] = alphaValue
-			end
-			if conf.color2 then
-				conf.color2[4] = alphaValue
-			end
-
-			unitConfig[unitDef.id] = conf
+	end
+	if weaponDef then
+		if conf.class == ANTI then
+			conf.weaponDef = CYLINDER_HEIGHTMOD
+			conf.radius = weaponDef.customParams.nuke_coverage
+		elseif conf.class == RADAR then
+			conf.weaponDef = CYLINDER_HEIGHTMOD
+			conf.radius = unitDef.radarRadius
+		elseif conf.class == SHIELD then
+			conf.weaponDef = SPHERE_HEIGHTMOD
+			conf.radius = weaponDef.shieldRadius
+		else
+			conf.weaponDef = weaponDef
+			conf.radius = weaponDef.range
 		end
+
+		if not conf.lineWidth then
+			conf.lineWidth = 1.0
+		end
+
+		conf.color[4] = alphaValue
+		if conf.colorInBuild then
+			conf.colorInBuild[4] = alphaValue
+		end
+		if conf.color2 then
+			conf.color2[4] = alphaValue
+		end
+
+		unitConfig[unitDef.id] = conf
 	end
 end
 
