@@ -23,14 +23,14 @@ local cmdPosDef = {
 	[CMD_JUMP]          = {pos = 1, priority = 6},
 	[CMD_AREA_GUARD]    = {pos = 1, priority = 10},
 	[CMD.AREA_ATTACK]   = {pos = 1, priority = 11},
-	
+
 	[CMD_UPGRADE_UNIT]  = {pos = 7, priority = -8},
 	[CMD_UPGRADE_STOP]  = {pos = 7, priority = -7},
 	[CMD_MORPH]         = {pos = 7, priority = -6},
-	
+
 	[CMD_STOP_NEWTON_FIREZONE] = {pos = 7, priority = -4},
 	[CMD_NEWTON_FIREZONE]      = {pos = 7, priority = -3},
-	
+
 	[CMD.MANUALFIRE]      = {pos = 7, priority = 0.1},
 	[CMD_PLACE_BEACON]    = {pos = 7, priority = 0.2},
 	[CMD_ONECLICK_WEAPON] = {pos = 7, priority = 0.24},
@@ -38,7 +38,7 @@ local cmdPosDef = {
 	[CMD_ABANDON_PW]      = {pos = 7, priority = 0.3},
 	[CMD_GBCANCEL]        = {pos = 7, priority = 0.4},
 	[CMD_STOP_PRODUCTION] = {pos = 7, priority = 0.7},
-	
+
 	[CMD_BUILD]         = {pos = 7, priority = 0.8},
 	[CMD_AREA_MEX]      = {pos = 7, priority = 1},
 	[CMD.REPAIR]        = {pos = 7, priority = 2},
@@ -46,11 +46,11 @@ local cmdPosDef = {
 	[CMD.RESURRECT]     = {pos = 7, priority = 4},
 	[CMD.WAIT]          = {pos = 7, priority = 5},
 	[CMD_FIND_PAD]      = {pos = 7, priority = 6},
-	
+
 	[CMD.LOAD_UNITS]    = {pos = 7, priority = 7},
 	[CMD.UNLOAD_UNITS]  = {pos = 7, priority = 8},
 	[CMD_RECALL_DRONES] = {pos = 7, priority = 10},
-	
+
 	[CMD_AREA_TERRA_MEX]= {pos = 13, priority = 1},
 	[CMD_UNIT_SET_TARGET_CIRCLE] = {pos = 13, priority = 2},
 	[CMD_UNIT_CANCEL_TARGET]     = {pos = 13, priority = 3},
@@ -61,13 +61,13 @@ local cmdPosDef = {
 	-- States
 	[CMD.REPEAT]              = {pos = 1, priority = 1},
 	[CMD_RETREAT]             = {pos = 1, priority = 2},
-	
+
 	[CMD.MOVE_STATE]          = {pos = 6, posSimple = 5, priority = 1},
 	[CMD.FIRE_STATE]          = {pos = 6, posSimple = 5, priority = 2},
 	[CMD_FACTORY_GUARD]       = {pos = 6, posSimple = 5, priority = 3},
-	
+
 	[CMD_SELECTION_RANK]      = {pos = 6, posSimple = 1, priority = 1.5},
-	
+
 	[CMD_PRIORITY]            = {pos = 1, priority = 10},
 	[CMD_MISC_PRIORITY]       = {pos = 1, priority = 11},
 	[CMD_CLOAK_SHIELD]        = {pos = 1, priority = 11.5},
@@ -112,6 +112,33 @@ local unitTypes = {
 
 -- Add build options to be shown in integral menu here
 local factoryUnitPosDef = {
+	armoutpost = {
+		armrectr	=unitTypes.RIOT,
+		armca		=unitTypes.RAIDER,
+		armcs		=unitTypes.HEAVY_SOMETHING,
+		armmex		=unitTypes.ANTI_AIR,
+		armtech		=unitTypes.ARTILLERY,
+		armmstor	=unitTypes.RIOT,
+		armestor	=unitTypes.HEAVY_SOMETHING,
+		armsolar	=unitTypes.SKIRMISHER,
+		armwin		=unitTypes.SPECIAL,
+		armmakr		=unitTypes.ARTILLERY,
+		armrad		=unitTypes.RAIDER,
+		armdrag		=unitTypes.UTILITY,
+		armllt		=unitTypes.RIOT,
+		armrl		=unitTypes.RAIDER,
+		armpb		=unitTypes.HEAVY_SOMETHING,
+		armguard	=unitTypes.ANTI_AIR,
+		armptl		=unitTypes.ARTILLERY,
+		armsy 		=unitTypes.RIOT,
+		armlab		=unitTypes.HEAVY_SOMETHING,
+		armvp 		=unitTypes.SKIRMISHER,
+		armap		=unitTypes.SPECIAL,
+		armpad		=unitTypes.ARTILLERY,
+		armtide		=unitTypes.RAIDER,
+		armuwmex	=unitTypes.UTILITY,
+		armmls		=unitTypes.UTILITY,
+	},
 	armvp = {
 		armfav 		= unitTypes.RIOT,
 		armflash 	= unitTypes.RAIDER,
