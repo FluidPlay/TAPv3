@@ -62,7 +62,7 @@ local screen0
 
 local MIN_HEIGHT = 80
 local MIN_WIDTH = 200
-local commandSectionWidth = 74 -- percent
+local commandSectionWidth = 67 --74 -- percent (relative to the panel width)
 local stateSectionWidth = 26 -- percent
 
 local bigStateWidth, bigStateHeight = 4, 3

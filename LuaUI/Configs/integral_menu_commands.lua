@@ -305,17 +305,16 @@ local factory_commands = {
 	kerndaemon	= {order = 9, row = 2, col = 3},
 	-- ARMVP
 	armfav 		= {order = 1, row = 1, col = 1},
-	armflash 	= {order = 2, row = 1, col = 2},
-	armstump 	= {order = 3, row = 1, col = 3},
-	armsam 		= {order = 4, row = 1, col = 4},
-	armmart		= {order = 5, row = 1, col = 5},
-	armlatnk	= {order = 6, row = 1, col = 6},
-	armbull		= {order = 7, row = 2, col = 1},
-	armyork		= {order = 8, row = 2, col = 2},
-	armmanni	= {order = 9, row = 2, col = 3},
-	armmerl		= {order = 7, row = 2, col = 4},
-	armintr		= {order = 8, row = 2, col = 5},
-	armjam		= {order = 9, row = 2, col = 6},
+	armflash 	= {order = 3, row = 1, col = 2},
+	armstump 	= {order = 5, row = 1, col = 3},
+	armsam 		= {order = 7, row = 1, col = 4},
+	armmart		= {order = 9, row = 1, col = 5},
+	-- CORVP
+	corlevlr 		= {order = 2, row = 1, col = 1},
+	corgator 		= {order = 4, row = 1, col = 2},
+	corraid 		= {order = 6, row = 1, col = 3},
+	cormist 		= {order = 8, row = 1, col = 4},
+	corvrad 		= {order = 10, row = 1, col = 5},
 	-- ARMMSTOR
 	armck		= {order = 1, row = 1, col = 1},
 	armcv		= {order = 2, row = 1, col = 2},
@@ -370,14 +369,23 @@ local defense_commands = {
 }
 
 local special_commands = {
-	---TAP
+	--- ARMAVP
 	armlatnk		= {order = 1, row = 1, col = 1},
-	armbull			= {order = 1, row = 1, col = 2},
-	armyork			= {order = 1, row = 1, col = 3},
-	armmanni		= {order = 1, row = 1, col = 4},
-	armmerl			= {order = 2, row = 1, col = 1},
-	armintr			= {order = 2, row = 1, col = 1},
-	armjam			= {order = 2, row = 1, col = 1},
+	armbull			= {order = 2, row = 1, col = 2},
+	armyork			= {order = 3, row = 1, col = 3},
+	armmanni		= {order = 4, row = 1, col = 4},
+	armmerl			= {order = 5, row = 1, col = 5},
+	armintr			= {order = 6, row = 1, col = 6},
+	armjam			= {order = 7, row = 2, col = 1},
+	--- CORAVP
+	correap 		= {order = 1, row = 1, col = 1},
+	corsent 		= {order = 2, row = 1, col = 2},
+	corgol 			= {order = 3, row = 1, col = 3},
+	corban 			= {order = 4, row = 1, col = 4},
+	corst 			= {order = 5, row = 1, col = 5},
+	cortrem 		= {order = 6, row = 1, col = 6},
+	cormabm 		= {order = 7, row = 2, col = 1},
+
 	--
 	--staticradar       = {order = 10, row = 1, col = 1},
 	--staticjammer      = {order = 12, row = 1, col = 2},
@@ -400,6 +408,7 @@ local special_commands = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+-- Commands, units types on factory, factory tab unit,
 return cmdPosDef, factoryUnitPosDef, factory_commands, econ_commands, defense_commands, special_commands
 
 --------------------------------------------------------------------------------
