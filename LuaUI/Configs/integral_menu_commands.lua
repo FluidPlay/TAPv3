@@ -333,6 +333,22 @@ local factory_commands = {
 	armck		= {order = 1, row = 1, col = 1},
 	armcv		= {order = 2, row = 1, col = 2},
 	armfark		= {order = 3, row = 1, col = 3},
+	-- ARMAP
+	armkam		= {order = 1, row = 1, col = 1},
+	armfig		= {order = 2, row = 1, col = 2},
+	armthund	= {order = 3, row = 1, col = 3},
+	armanac		= {order = 4, row = 1, col = 4},
+	armbrawl	= {order = 5, row = 1, col = 5},
+	armkameyes	= {order = 6, row = 1, col = 6},
+	armatlas	= {order = 7, row = 2, col = 1},
+	-- CORAP
+	corbw		= {order = 1, row = 1, col = 1},
+	corveng		= {order = 2, row = 1, col = 2},
+	corshad		= {order = 3, row = 1, col = 3},
+	corsnap		= {order = 4, row = 1, col = 4},
+	corape		= {order = 5, row = 1, col = 5},
+	corkameyes	= {order = 6, row = 1, col = 6},
+	corvalk		= {order = 7, row = 2, col = 1},
 	--factorycloak      = {order = 1, row = 1, col = 1},
 	--factoryshield     = {order = 2, row = 1, col = 2},
 	--factoryveh        = {order = 3, row = 1, col = 3},
@@ -441,6 +457,23 @@ local special_commands = {
 	armamb			= {order = 5, row = 1, col = 5},
 	armemp			= {order = 6, row = 1, col = 6},
 	armshltx_stub	= {order = 7, row = 2, col = 1},
+	--- ARMAAP
+	armhawk			= {order = 1, row = 1, col = 1},
+	armpnix			= {order = 2, row = 1, col = 2},
+	armblade		= {order = 3, row = 1, col = 3},
+	armawac			= {order = 4, row = 1, col = 4},
+	armdfly			= {order = 5, row = 1, col = 5},
+	armliche		= {order = 6, row = 1, col = 6},
+	--- CORAAP
+	-- CORAAP
+	corvamp		= {order = 1, row = 1, col = 1},
+	corhurc		= {order = 2, row = 1, col = 2},
+	corawac		= {order = 3, row = 1, col = 3},
+	corcrw		= {order = 4, row = 1, col = 4},
+	corstil		= {order = 5, row = 1, col = 5},
+	corseah		= {order = 6, row = 1, col = 6},
+
+
 
 	--
 	--staticradar       = {order = 10, row = 1, col = 1},
