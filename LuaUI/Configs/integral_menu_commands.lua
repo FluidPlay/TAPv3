@@ -307,16 +307,26 @@ factoryUnitPosDef.plateship    = Spring.Utilities.CopyTable(factoryUnitPosDef.fa
 -- These positions must be distinct
 
 local factory_commands = {
+	--ARMLAB
+    armpw		= {order = 1, row = 1, col = 1},
+    armrock		= {order = 2, row = 1, col = 2},
+    armham		= {order = 3, row = 1, col = 3},
+    armwar		= {order = 4, row = 1, col = 4},
+    armmark		= {order = 5, row = 2, col = 1},
+	--CORLAB
+    corak		= {order = 1, row = 1, col = 1},
+    corstorm	= {order = 2, row = 1, col = 2},
+    corthud		= {order = 3, row = 1, col = 3},
+    corpyro		= {order = 4, row = 1, col = 4},
+    cormort		= {order = 5, row = 2, col = 1},
+
+	--BOWHQ
 	-- KERNHQ
 	corck		= {order = 1, row = 1, col = 1},
 	corcv		= {order = 2, row = 1, col = 2},
 	corca		= {order = 3, row = 1, col = 3},
 	cormuskrat	= {order = 4, row = 1, col = 4},
-	corack		= {order = 5, row = 1, col = 5},
-	coracv		= {order = 6, row = 1, col = 6},
-	coraca		= {order = 7, row = 2, col = 1},
-	armconsul	= {order = 8, row = 2, col = 2},
-	kerndaemon	= {order = 9, row = 2, col = 3},
+	kerndaemon	= {order = 5, row = 2, col = 1},
 	-- ARMVP
 	armfav 		= {order = 1, row = 1, col = 1},
 	armflash 	= {order = 3, row = 1, col = 2},
@@ -433,45 +443,58 @@ local defense_commands = {
 }
 
 local special_commands = {
+	--- ARMALAB
+	armmav		= {order = 1, row = 1, col = 1},
+	armaak		= {order = 2, row = 1, col = 2},
+	armfboy		= {order = 3, row = 1, col = 3},
+	armsptk		= {order = 4, row = 1, col = 4},
+	armsnipe	= {order = 5, row = 2, col = 1},
+	armscab		= {order = 6, row = 2, col = 2},
+	--- CORALAB
+	cormando	= {order = 1, row = 1, col = 1},
+	coraak		= {order = 2, row = 1, col = 2},
+	corcan		= {order = 3, row = 1, col = 3},
+	corsktl		= {order = 4, row = 1, col = 4},
+	cordefiler	= {order = 5, row = 2, col = 1},
 	--- ARMAVP
 	armlatnk		= {order = 1, row = 1, col = 1},
 	armbull			= {order = 2, row = 1, col = 2},
 	armyork			= {order = 3, row = 1, col = 3},
 	armmanni		= {order = 4, row = 1, col = 4},
-	armmerl			= {order = 5, row = 1, col = 5},
-	armintr			= {order = 6, row = 1, col = 6},
-	armjam			= {order = 7, row = 2, col = 1},
+	armmerl			= {order = 5, row = 2, col = 1},
+	armintr			= {order = 6, row = 2, col = 2},
+	armjam			= {order = 7, row = 2, col = 3},
 	--- CORAVP
 	correap 		= {order = 1, row = 1, col = 1},
 	corsent 		= {order = 2, row = 1, col = 2},
 	corgol 			= {order = 3, row = 1, col = 3},
 	corban 			= {order = 4, row = 1, col = 4},
-	corst 			= {order = 5, row = 1, col = 5},
-	cortrem 		= {order = 6, row = 1, col = 6},
-	cormabm 		= {order = 7, row = 2, col = 1},
+	corst 			= {order = 5, row = 2, col = 1},
+	cortrem 		= {order = 6, row = 2, col = 2},
+	cormabm 		= {order = 7, row = 2, col = 3},
 	--- OUTPOST
 	armamd			= {order = 1, row = 1, col = 1},
 	armsilo_stub	= {order = 2, row = 1, col = 2},
 	armgate			= {order = 3, row = 1, col = 3},
 	armasp			= {order = 4, row = 1, col = 4},
-	armamb			= {order = 5, row = 1, col = 5},
-	armemp			= {order = 6, row = 1, col = 6},
-	armshltx_stub	= {order = 7, row = 2, col = 1},
+	armamb			= {order = 5, row = 2, col = 1},
+	armemp			= {order = 6, row = 2, col = 2},
+	armshltx_stub	= {order = 7, row = 2, col = 3},
 	--- ARMAAP
 	armhawk			= {order = 1, row = 1, col = 1},
 	armpnix			= {order = 2, row = 1, col = 2},
 	armblade		= {order = 3, row = 1, col = 3},
 	armawac			= {order = 4, row = 1, col = 4},
-	armdfly			= {order = 5, row = 1, col = 5},
-	armliche		= {order = 6, row = 1, col = 6},
+	armdfly			= {order = 5, row = 2, col = 1},
+	armliche		= {order = 6, row = 2, col = 2},
 	--- CORAAP
 	-- CORAAP
 	corvamp		= {order = 1, row = 1, col = 1},
 	corhurc		= {order = 2, row = 1, col = 2},
 	corawac		= {order = 3, row = 1, col = 3},
 	corcrw		= {order = 4, row = 1, col = 4},
-	corstil		= {order = 5, row = 1, col = 5},
-	corseah		= {order = 6, row = 1, col = 6},
+	corstil		= {order = 5, row = 2, col = 1},
+	corseah		= {order = 6, row = 2, col = 2},
 
 
 
