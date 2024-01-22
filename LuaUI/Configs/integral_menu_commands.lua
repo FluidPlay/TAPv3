@@ -507,9 +507,8 @@ local special_commands = {
 	--- TODO
 	corarad		= {order = 10, row = 3, col = 1},
 	corfort		= {order = 11, row = 3, col = 2},
-	coraca		= {order = 12, row = 3, col = 3},
-	coracsub	= {order = 13, row = 3, col = 4},
-	cortech2	= {order = 13, row = 3, col = 1},
+	coracsub	= {order = 12, row = 3, col = 3},
+	cortech2	= {order = 13, row = 3, col = 4},
 	--[CMD_RAMP]        = {order = 16, row = 3, col = 1},
 	--[CMD_LEVEL]       = {order = 17, row = 3, col = 2},
 	--[CMD_RAISE]       = {order = 18, row = 3, col = 3},

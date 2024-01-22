@@ -212,6 +212,34 @@ local resources = {
 	},
 }
 
+local VFSUtils = VFS.Include('gamedata/VFSUtils.lua')
+
+local function AutoAdd(subDir, map, filter)
+	local dirList = RecursiveFileSearch("bitmaps/" .. subDir)
+	for _, fullPath in ipairs(dirList) do
+		local path, key, ext = fullPath:match("bitmaps/(.*/(.*)%.(.*))")
+		if not fullPath:match("/%.svn") then
+			local subTable = resources["graphics"][subDir] or {}
+			resources["graphics"][subDir] = subTable
+			if not filter or filter == ext then
+				if not map then
+					table.insert(subTable, path)
+				else -- a mapped subtable
+					subTable[key] = path
+				end
+			end
+		end
+	end
+end
+
+-- Add default caustics, smoke and scars
+AutoAdd("caustics", false)
+AutoAdd("smoke", false, "tga")
+AutoAdd("scars", false)
+-- Add mod groundfx and projectiletextures
+AutoAdd("groundfx", true)
+AutoAdd("projectiletextures", true)
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 

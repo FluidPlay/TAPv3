@@ -13,6 +13,7 @@
 	"tacnuke_vertical" : "Seismic and Tacnuke vertical",
 	"clear_factory_queue" : "Clear factory queue",
 	"space_click_show_stats" : "Space+click: Show unit stats",
+  	"requires" : "Requires: ",
 	"hold_space_for_help" : "Hold Spacebar for help",
 	"fac_modifier_keys_instruction" : "Shift+click: x5 multiplier.\nCtrl+click: x20 multiplier.\nAlt+click: Add units to front of queue.\nRightclick: remove units from queue.\n",
 	"evac_ready" : "Evacuation ready",

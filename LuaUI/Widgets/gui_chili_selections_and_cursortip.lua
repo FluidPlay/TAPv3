@@ -52,6 +52,7 @@ local selectionTooltip = "\n" .. green .. WG.Translate("interface", "lmb") .. ":
 		green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
 		green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
 		green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
+		--green .. WG.Translate("interface", "requires") .. "\n" ..
 		green .. WG.Translate("interface", "space_click_show_stats")
 
 local singleSelectionTooltip = "\n" .. green .. WG.Translate("interface", "lmb") .. ": " .. "Center view" .. "\n" .. green .. WG.Translate("interface", "space_click_show_stats")
@@ -1877,7 +1878,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	local metalInfo
 	local energyInfo
 
-	local spaceClickLabel, shieldBarUpdate, buildBarUpdate, costInfo, playerNameLabel
+	local spaceClickLabel, shieldBarUpdate, buildBarUpdate, costInfo, playerNameLabel, requireLabel
 	if isTooltipVersion then
 		playerNameLabel = Chili.Label:New{
 			name = "playerNameLabel",
@@ -1888,6 +1889,17 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			objectOverrideFont = WG.GetFont(IMAGE_FONT),
 			parent = rightPanel,
 		}
+		--green .. WG.Translate("interface", "requires") .. "\n" ..
+		--requireLabel = Chili.Label:New{
+		--	name = "requireLabel",
+		--	x = 4,
+		--	y = PIC_HEIGHT + 44,
+		--	right = 0,
+		--	height = BAR_FONT,
+		--	objectOverrideFont = WG.GetFont(IMAGE_FONT),
+		--	caption = white .. WG.Translate("interface", "requires"),
+		--	parent = rightPanel,
+		--}
 		spaceClickLabel = Chili.Label:New{
 			name = "spaceClickLabel",
 			x = 4,

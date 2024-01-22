@@ -19,195 +19,195 @@ end
 -- Beheriths notes
 
 -- Bins / separate VAO and IBO :
-	-- Flags (drawpass):
-		-- forward opaque + reflections
-		-- deferred opaque, all units
-		-- shadows. Now all units need their vertex displacement for efficient shadows, so better to bind a separate shader for this
-	-- Shaders / shaderconfig via bitoptions uniform:
-		-- Features
-			-- simplefeatures: metallic nonwrecks
-			-- treepbr: Real Trees with proper tex2
-			-- tree: Shitty Trees
-			-- wrecks: BAR wrecks
-		-- Units
-			-- tanks : -- these are units actually
-			-- barunits :
-			-- raptors
-			-- scavengers
-			--
+-- Flags (drawpass):
+-- forward opaque + reflections
+-- deferred opaque, all units
+-- shadows. Now all units need their vertex displacement for efficient shadows, so better to bind a separate shader for this
+-- Shaders / shaderconfig via bitoptions uniform:
+-- Features
+-- simplefeatures: metallic nonwrecks
+-- treepbr: Real Trees with proper tex2
+-- tree: Shitty Trees
+-- wrecks: BAR wrecks
+-- Units
+-- tanks : -- these are units actually
+-- barunits :
+-- raptors
+-- scavengers
+--
 
-		-- Cloakedunits for alpha
-		-- Underconstructionunits
+-- Cloakedunits for alpha
+-- Underconstructionunits
 
 
-	-- Textures:
-		-- arm/cor
-		-- 10x raptorsets
-		-- 5x featuresets
-		-- scavengers?
-	-- Objects (the VAO)
-		-- 8x 8x 16x -> 8192 different VAOs? damn thats horrible
-	-- Note that Units and Features cant share a VAO!
+-- Textures:
+-- arm/cor
+-- 10x raptorsets
+-- 5x featuresets
+-- scavengers?
+-- Objects (the VAO)
+-- 8x 8x 16x -> 8192 different VAOs? damn thats horrible
+-- Note that Units and Features cant share a VAO!
 
-	-- Can we assume that all BAR units wont have transparency?
-		-- if yes then we can say that forward and deferred can share!
-	-- https://stackoverflow.com/questions/8923174/opengl-vao-best-practices
-	-- Some shader optimization info: https://community.khronos.org/t/profiling-optimizing-a-fragment-shader-in-linux/105144/3
+-- Can we assume that all BAR units wont have transparency?
+-- if yes then we can say that forward and deferred can share!
+-- https://stackoverflow.com/questions/8923174/opengl-vao-best-practices
+-- Some shader optimization info: https://community.khronos.org/t/profiling-optimizing-a-fragment-shader-in-linux/105144/3
 
 
 
 -- TODO:
-	-- Under construction shader via uniform
-		-- (READ THE ONE FROM HEALTHBARS!)
-	-- DONE treadoffset unitUniform
-	-- DONE: BITOPTIONS UNIFOOOOORM!
-	-- normalmapping
-	-- raptors
-	-- tanktracks
-	-- Reflection camera
-	-- refraction camera
-	-- texture LOD bias of -0.5, maybe adaptive for others
-	-- still extremely perf heavy
-		-- 1440p, Red Comet, fullscreen zoomed onto a corvp, SSAO on, Bloom On
-			-- 110 FPS on corvp with oldcus
-			-- 180 FPS without disablecus
-		-- 1440p, Red Comet, fullscreen zoomed onto a corvp, SSAO off, Bloom off
-			-- 130 fps oldcus
-			-- 256 fps disablecus
+-- Under construction shader via uniform
+-- (READ THE ONE FROM HEALTHBARS!)
+-- DONE treadoffset unitUniform
+-- DONE: BITOPTIONS UNIFOOOOORM!
+-- normalmapping
+-- raptors
+-- tanktracks
+-- Reflection camera
+-- refraction camera
+-- texture LOD bias of -0.5, maybe adaptive for others
+-- still extremely perf heavy
+-- 1440p, Red Comet, fullscreen zoomed onto a corvp, SSAO on, Bloom On
+-- 110 FPS on corvp with oldcus
+-- 180 FPS without disablecus
+-- 1440p, Red Comet, fullscreen zoomed onto a corvp, SSAO off, Bloom off
+-- 130 fps oldcus
+-- 256 fps disablecus
 
-	-- separate VAO and IBO for each 'bin' for less heavy updates
-	-- Do alpha units also get drawn into deferred pass? Seems like no, because only flag == 1 is draw into that
-	-- DONE: dynamically size IBOS instead of using the max of 8192!
-		-- Starts from 32
-	-- DONE  new engine callins needed:
-		-- get the number of drawflaggable units (this is kind of gettable already from the API anyway)
-		-- get the number of changed drawFlags
-		-- if the number of changed drawflags > log(numdrawflags) then do a full rebuild instead of push-popping
-		-- e.g if there are 100 units of a bin in view, then a change of ~ 8 units will trigger a full rebuild?
-			-- cant know ahead of time how many per-bin changes this will trigger though
+-- separate VAO and IBO for each 'bin' for less heavy updates
+-- Do alpha units also get drawn into deferred pass? Seems like no, because only flag == 1 is draw into that
+-- DONE: dynamically size IBOS instead of using the max of 8192!
+-- Starts from 32
+-- DONE  new engine callins needed:
+-- get the number of drawflaggable units (this is kind of gettable already from the API anyway)
+-- get the number of changed drawFlags
+-- if the number of changed drawflags > log(numdrawflags) then do a full rebuild instead of push-popping
+-- e.g if there are 100 units of a bin in view, then a change of ~ 8 units will trigger a full rebuild?
+-- cant know ahead of time how many per-bin changes this will trigger though
 
-	-- DONE: write an engine callin that, instead of the full list of unitdrawflags, only returns the list of units whos drawflags have changed!
-		-- reset this 'hashmap' when reading it
-		-- also a problem is handling units that died, what 'drawflag' should they get?
-			-- probably 0
+-- DONE: write an engine callin that, instead of the full list of unitdrawflags, only returns the list of units whos drawflags have changed!
+-- reset this 'hashmap' when reading it
+-- also a problem is handling units that died, what 'drawflag' should they get?
+-- probably 0
 
-	-- TODO: handle fast rebuilds of the IBO's when large-magnitude changes happen
-		-- this is made difficult by the negative featureID crap
-
-
-	-- TODO: faster bitops maybe?
-	-- DONE: we dont handle shaderOptions yet for batches, where we are to keep the same shader, but only change its relevant options uniform
-
-	-- NOTE: It seems that we are generally, and heavily fragment shader limited in most synthetic tests with large numbers of units spreading into full view
-		-- in this case, the perf of oldcus and gl4cus is actually similar, (similar FS), but vanilla still outperforms
-
-	-- DONE: Too many varyings are passed from VS to FS.
-		-- Specify some as flat, to avoid interpolation (e.g. teamcolor and selfillummod and maybe even fogfactor
-		-- reduce total number of these varyings
-		-- we can save a varying here and there, but mostly done
-
-	-- Done: GetTextures() is not the best implementation at the moment
-
-	-- NOTE: in general, a function call is about 10x faster than a table lookup....
-
-	-- DONE: how to handle units under construction? They cant be their own completely separate shit, cause of textures...
-		-- might still make sense to do so
-		-- they are handled by completely ignoring them
-
-	-- DONE: fully blank normal map for non-normal mapped units (or else risk having to write a shader for that bin, which wont even get used
-
-	-- DONE: alpha cloaked unitses :/
-		-- also handled by completely leaving them out
-
-	-- Done: feature drawing bits too
-
-	-- TODO: rewrite treewave
-
-	-- DONE: feature override metalness/roughness via uniforms
-
-	-- TODO: fix flashlights to be piece-unique
-
-	-- DONE: AVOID DISCARD in FS AT ALL COST!
-		-- 500 armcom fullview is 82 vs 108 fps with nodiscard!
-		-- Even if discard is in a never-called dynamically uniform!
-		-- only transparent features need discard
-
-	-- DONE:
-		-- only ever use discard in deferred pass, dont use it in forward refl or shadow though
-		-- DEFERRED FEATURE TREE DRAW IS WRONG
-
-	-- TODO: investigate why/how refraction pass doesnt ever seem to get called
-		-- kill the entire pass with fire (by ignoring its existence)
-
-	-- TODO: reduce the amount of deferred buffers being used from 6 to 4
-
-	-- TODO: check if LuaShader UniformLocations are cached
-
-	-- DONE: add a wreck texture to raptors! It uses lavadistortion texture, its fine
-
-	-- TODO: Use a 3d texture lookup instead of perlin implementation for damage shading
-
-	-- TODO: separate out damaged units for better perf, damage shading is not free! (as damage is not dynamically uniform across all shader invocations)
-		-- very difficult, unsure if worth anything in the long run
-
-	-- TODO: Also add alpha units to deferred pass somehow?
-
-	-- TODO: engine side: optimize shadow camera as it massively overdraws
-
-	-- Done: reflection camera is also totally fucked up
-		-- It seems that aircraft get removed from reflection pass if water depth is < -70
-		-- hovers randomly do and dont get reflections based on water depth
-		-- fixed in-engine, seems like a reasonably good fix too, though could be better
-			-- is checking 5 groundheights within drawradius better than some minor overdraw cause of not-too-high above water ground shit?
-
-	-- DONE: increase bumpwaterreflectcubetex size
-	-- TODO: make lava disable drawing reflections!
-
-	-- TODO: shared bins for deferred and forward and maybe even reflection?
-		-- The sharing could be done on the uniformbin level, and this is quite elegant in general too, as tables are shared by reference....
-		-- DONE: shared deferred and forward via ultimate cleverness!
-
-	-- DONE: Specular highlights should also bloom, not just emissive!
-
-	-- DONE: Cleaner Shutdown and reloadcusgl4 and disablecusgl4
-
-	-- TODO: Get BRDFLUT from API_PBR_ENABLER (OR build your own float16 texture)
-
-	-- TODO: WE ARE DRAWING ALL IN THE UNITS PASS INSTEAD OF BOTH FEATURE AND UNITS PASS! (can that bite us in the ass?)
+-- TODO: handle fast rebuilds of the IBO's when large-magnitude changes happen
+-- this is made difficult by the negative featureID crap
 
 
-	-- TODO: Reimplement featureFade, as it can kill perf on heavily forested maps and potatos
+-- TODO: faster bitops maybe?
+-- DONE: we dont handle shaderOptions yet for batches, where we are to keep the same shader, but only change its relevant options uniform
 
-	-- DONE: GetTexturesKey is probably slow too!
+-- NOTE: It seems that we are generally, and heavily fragment shader limited in most synthetic tests with large numbers of units spreading into full view
+-- in this case, the perf of oldcus and gl4cus is actually similar, (similar FS), but vanilla still outperforms
 
-	-- TODO: Shadows are 1 drawframe late, maybe update lists in DrawGenesis instead of DrawWorldPreUnit
-	-- TODO: we need to update things earlier, to get the shadow stuff in on time
+-- DONE: Too many varyings are passed from VS to FS.
+-- Specify some as flat, to avoid interpolation (e.g. teamcolor and selfillummod and maybe even fogfactor
+-- reduce total number of these varyings
+-- we can save a varying here and there, but mostly done
 
-	-- Done: GetTextures :
-		-- should return array table instead of hash table
-			-- fill in unused stuff with 'false' for contiguous array table
-			-- index -1
-			-- oddly enough, accessing array tables instead of hash tables is only 25% faster, so the overhead of -1 might not even result in any perf gains
+-- Done: GetTextures() is not the best implementation at the moment
 
-		-- Should also get the normalmaps for each unit!
-		-- PBR textures:
-			-- uniform sampler2D brdfLUT;			//9
-			-- uniform sampler2D envLUT;			//10
-			-- uniform samplerCube reflectTex; 		// 7
+-- NOTE: in general, a function call is about 10x faster than a table lookup....
 
-			-- uniform sampler2D losMapTex;	//8 for features out of los maybe?
+-- DONE: how to handle units under construction? They cant be their own completely separate shit, cause of textures...
+-- might still make sense to do so
+-- they are handled by completely ignoring them
 
-		-- We also need the skybox cubemap for PBR (samplerCube reflectTex)
-		-- We also need wrecktex for damaged units!
+-- DONE: fully blank normal map for non-normal mapped units (or else risk having to write a shader for that bin, which wont even get used
 
-	-- Create a default 'wrecktex' for features too?
+-- DONE: alpha cloaked unitses :/
+-- also handled by completely leaving them out
 
-	-- TODO: Check the double-calls that happens when a unit is destroyed and fucks with out flags on update too
+-- Done: feature drawing bits too
+
+-- TODO: rewrite treewave
+
+-- DONE: feature override metalness/roughness via uniforms
+
+-- TODO: fix flashlights to be piece-unique
+
+-- DONE: AVOID DISCARD in FS AT ALL COST!
+-- 500 armcom fullview is 82 vs 108 fps with nodiscard!
+-- Even if discard is in a never-called dynamically uniform!
+-- only transparent features need discard
 
 -- DONE:
-	-- unit uniforms
+-- only ever use discard in deferred pass, dont use it in forward refl or shadow though
+-- DEFERRED FEATURE TREE DRAW IS WRONG
+
+-- TODO: investigate why/how refraction pass doesnt ever seem to get called
+-- kill the entire pass with fire (by ignoring its existence)
+
+-- TODO: reduce the amount of deferred buffers being used from 6 to 4
+
+-- TODO: check if LuaShader UniformLocations are cached
+
+-- DONE: add a wreck texture to raptors! It uses lavadistortion texture, its fine
+
+-- TODO: Use a 3d texture lookup instead of perlin implementation for damage shading
+
+-- TODO: separate out damaged units for better perf, damage shading is not free! (as damage is not dynamically uniform across all shader invocations)
+-- very difficult, unsure if worth anything in the long run
+
+-- TODO: Also add alpha units to deferred pass somehow?
+
+-- TODO: engine side: optimize shadow camera as it massively overdraws
+
+-- Done: reflection camera is also totally fucked up
+-- It seems that aircraft get removed from reflection pass if water depth is < -70
+-- hovers randomly do and dont get reflections based on water depth
+-- fixed in-engine, seems like a reasonably good fix too, though could be better
+-- is checking 5 groundheights within drawradius better than some minor overdraw cause of not-too-high above water ground shit?
+
+-- DONE: increase bumpwaterreflectcubetex size
+-- TODO: make lava disable drawing reflections!
+
+-- TODO: shared bins for deferred and forward and maybe even reflection?
+-- The sharing could be done on the uniformbin level, and this is quite elegant in general too, as tables are shared by reference....
+-- DONE: shared deferred and forward via ultimate cleverness!
+
+-- DONE: Specular highlights should also bloom, not just emissive!
+
+-- DONE: Cleaner Shutdown and reloadcusgl4 and disablecusgl4
+
+-- TODO: Get BRDFLUT from API_PBR_ENABLER (OR build your own float16 texture)
+
+-- TODO: WE ARE DRAWING ALL IN THE UNITS PASS INSTEAD OF BOTH FEATURE AND UNITS PASS! (can that bite us in the ass?)
+
+
+-- TODO: Reimplement featureFade, as it can kill perf on heavily forested maps and potatos
+
+-- DONE: GetTexturesKey is probably slow too!
+
+-- TODO: Shadows are 1 drawframe late, maybe update lists in DrawGenesis instead of DrawWorldPreUnit
+-- TODO: we need to update things earlier, to get the shadow stuff in on time
+
+-- Done: GetTextures :
+-- should return array table instead of hash table
+-- fill in unused stuff with 'false' for contiguous array table
+-- index -1
+-- oddly enough, accessing array tables instead of hash tables is only 25% faster, so the overhead of -1 might not even result in any perf gains
+
+-- Should also get the normalmaps for each unit!
+-- PBR textures:
+-- uniform sampler2D brdfLUT;			//9
+-- uniform sampler2D envLUT;			//10
+-- uniform samplerCube reflectTex; 		// 7
+
+-- uniform sampler2D losMapTex;	//8 for features out of los maybe?
+
+-- We also need the skybox cubemap for PBR (samplerCube reflectTex)
+-- We also need wrecktex for damaged units!
+
+-- Create a default 'wrecktex' for features too?
+
+-- TODO: Check the double-calls that happens when a unit is destroyed and fucks with out flags on update too
+
+-- DONE:
+-- unit uniforms
 -- KNOWN BUGS:
-	-- Unitdestroyed doesnt trigger removal?
+-- Unitdestroyed doesnt trigger removal?
 
 --inputs
 
@@ -268,12 +268,12 @@ do --save a ton of locals
 		armunit = {
 			bitOptions = defaultBitShaderOptions + OPTION_FLASHLIGHTS + OPTION_THREADS_ARM + OPTION_HEALTH_TEXTURING + OPTION_HEALTH_DISPLACE,  --OPTION_VERTEX_AO +
 			baseVertexDisplacement = 0.0,
-			brightnessFactor = 1.25, --1.5
+			brightnessFactor = 1.0,  --1.5
 		},
 		corunit = {
 			bitOptions = defaultBitShaderOptions + OPTION_FLASHLIGHTS + OPTION_THREADS_CORE + OPTION_HEALTH_TEXTURING + OPTION_HEALTH_DISPLACE,  --OPTION_VERTEX_AO +
 			baseVertexDisplacement = 0.0,
-			brightnessFactor = 1.0,	--1
+			brightnessFactor = 0.9,		--1.0
 		},
 		--armscavenger = {
 		--	bitOptions = defaultBitShaderOptions + OPTION_VERTEX_AO + OPTION_FLASHLIGHTS + OPTION_THREADS_ARM + OPTION_HEALTH_TEXTURING + OPTION_HEALTH_DISPLACE,
@@ -293,7 +293,7 @@ do --save a ton of locals
 		otherunit = {
 			bitOptions = defaultBitShaderOptions,
 			baseVertexDisplacement = 0.0,
-			brightnessFactor = 1.5,
+			brightnessFactor = 1.0, --5,
 		},
 		feature = {
 			bitOptions = defaultBitShaderOptions + OPTION_PBROVERRIDE,
@@ -303,24 +303,24 @@ do --save a ton of locals
 		featurepbr = {
 			bitOptions = defaultBitShaderOptions,
 			baseVertexDisplacement = 0.0,
-			brightnessFactor = 1.3,
+			brightnessFactor = 1.1, --1.3,
 		},
 		treepbr = {
 			bitOptions = defaultBitShaderOptions + OPTION_TREEWIND + OPTION_PBROVERRIDE,
 			baseVertexDisplacement = 0.0,
 			hasAlphaShadows = 1.0,
-			brightnessFactor = 1.3,
+			brightnessFactor = 1.1, --1.3,
 		},
 		tree = {
 			bitOptions = defaultBitShaderOptions + OPTION_TREEWIND + OPTION_PBROVERRIDE,
 			baseVertexDisplacement = 0.0,
 			hasAlphaShadows = 1.0,
-			brightnessFactor = 1.3,
+			brightnessFactor = 1.1, --1.3,
 		},
 		wreck = {
 			bitOptions = defaultBitShaderOptions,
 			baseVertexDisplacement = 0.0,
-			brightnessFactor = 1.3,
+			brightnessFactor = 1.0, --1.3,
 		},
 	} -- maps uniformbins to a table of uniform names/values
 end
@@ -368,24 +368,24 @@ local overriddenFeatures = {} -- this remains positive
 -- This is the main table of all the unit drawbins:
 -- It is organized like so:
 -- unitDrawBins[drawFlag][shaderID][textureKey] = {
-	-- textures = {
-	   -- 0 = %586:1 -- in this example, its just texture 1
-	-- },
-	-- objects = {
-	   -- 31357 = true
-	   -- 20174 = true
-	   -- 29714 = true
-	   -- 3024 = true
-	   -- 24268 = true
-	   -- 5584 = true
-	   -- 5374 = true
-	   -- 26687 = true
-	-- },
-	-- VAO = vao,
-	-- IBO = ibo,
-	-- objectsArray = {}, -- {index: objectID}
-	-- objectsIndex = {}, -- {objectID : index} (this is needed for efficient removal of items, as RemoveFromSubmission takes an index as arg)
-	-- numobjects = 0,  -- a 'pointer to the end'
+-- textures = {
+-- 0 = %586:1 -- in this example, its just texture 1
+-- },
+-- objects = {
+-- 31357 = true
+-- 20174 = true
+-- 29714 = true
+-- 3024 = true
+-- 24268 = true
+-- 5584 = true
+-- 5374 = true
+-- 26687 = true
+-- },
+-- VAO = vao,
+-- IBO = ibo,
+-- objectsArray = {}, -- {index: objectID}
+-- objectsIndex = {}, -- {objectID : index} (this is needed for efficient removal of items, as RemoveFromSubmission takes an index as arg)
+-- numobjects = 0,  -- a 'pointer to the end'
 -- }
 
 local unitDrawBins = nil -- this also controls wether cusgl4 is on at all!
@@ -514,18 +514,18 @@ local featuresNormalMapTemplate
 local treesNormalMapTemplate
 
 function deepcopy(orig)
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        copy = {}
-        for orig_key, orig_value in next, orig, nil do
-            copy[deepcopy(orig_key)] = deepcopy(orig_value)
-        end
-        setmetatable(copy, deepcopy(getmetatable(orig)))
-    else -- number, string, boolean, etc
-        copy = orig
-    end
-    return copy
+	local orig_type = type(orig)
+	local copy
+	if orig_type == 'table' then
+		copy = {}
+		for orig_key, orig_value in next, orig, nil do
+			copy[deepcopy(orig_key)] = deepcopy(orig_value)
+		end
+		setmetatable(copy, deepcopy(getmetatable(orig)))
+	else -- number, string, boolean, etc
+		copy = orig
+	end
+	return copy
 end
 
 local function appendShaderDefinitionsToTemplate(template, alldefinitions)
@@ -701,21 +701,21 @@ local function compileMaterialShader(template, name)
 end
 
 -- Order of textures in shader:
-	-- uniform sampler2D texture1;			//0
-	-- uniform sampler2D texture2;			//1
-	-- uniform sampler2D normalTex;		//2
+-- uniform sampler2D texture1;			//0
+-- uniform sampler2D texture2;			//1
+-- uniform sampler2D normalTex;		//2
 
-	-- uniform sampler2D texture1w;		//3
-	-- uniform sampler2D texture2w;		//4
-	-- uniform sampler2D normalTexw;		//5
+-- uniform sampler2D texture1w;		//3
+-- uniform sampler2D texture2w;		//4
+-- uniform sampler2D normalTexw;		//5
 
-	-- uniform sampler2DShadow shadowTex;	//6
-	-- uniform samplerCube reflectTex;		//7
+-- uniform sampler2DShadow shadowTex;	//6
+-- uniform samplerCube reflectTex;		//7
 
-	-- uniform sampler2D losMapTex;	//8
+-- uniform sampler2D losMapTex;	//8
 
-	-- uniform sampler2D brdfLUT;			//9
-	-- uniform sampler2D envLUT;			//10
+-- uniform sampler2D brdfLUT;			//9
+-- uniform sampler2D envLUT;			//10
 
 local textureKeytoSet = {} -- table of {TextureKey : {textureTable}}
 
@@ -767,7 +767,8 @@ local wreckAtlases = {
 		"unittextures/cor_color_wreck_normal.dds",
 	},
 	["raptor"] = {
-		"luaui/images/lavadistortion.png",
+		"unittextures/tap_wreck_1.dds",
+		--"luaui/images/lavadistortion.png",
 	}
 }
 
@@ -780,7 +781,7 @@ local function GetNormal(unitDef, featureDef)
 	local normalMap = blankNormalMap
 
 	if unitDef and unitDef.customParams and unitDef.customParams.normaltex and
-		(existingfilecache[unitDef.customParams.normaltex] or VFS.FileExists(unitDef.customParams.normaltex)) then
+			(existingfilecache[unitDef.customParams.normaltex] or VFS.FileExists(unitDef.customParams.normaltex)) then
 
 		existingfilecache[unitDef.customParams.normaltex] = true
 		return unitDef.customParams.normaltex
@@ -791,7 +792,7 @@ local function GetNormal(unitDef, featureDef)
 		local tex2 = featureDef.model.textures.tex2 or "DOESNTEXIST.PNG"
 
 		if featureDef.customParams and featureDef.customParams.normaltex and
-			(existingfilecache[featureDef.customParams.normaltex] or VFS.FileExists(featureDef.customParams.normaltex)) then
+				(existingfilecache[featureDef.customParams.normaltex] or VFS.FileExists(featureDef.customParams.normaltex)) then
 
 			existingfilecache[featureDef.customParams.normaltex] = true
 			return featureDef.customParams.normaltex
@@ -799,7 +800,7 @@ local function GetNormal(unitDef, featureDef)
 
 		local unittexttures = "unittextures/"
 		if  (existingfilecache[unittexttures .. tex1] or VFS.FileExists(unittexttures .. tex1)) and
-			(existingfilecache[unittexttures .. tex2] or VFS.FileExists(unittexttures .. tex2)) then
+				(existingfilecache[unittexttures .. tex2] or VFS.FileExists(unittexttures .. tex2)) then
 
 			existingfilecache[unittexttures .. tex1] = true
 			existingfilecache[unittexttures .. tex2] = true
@@ -827,9 +828,9 @@ local function initBinsAndTextures()
 	for unitDefID, unitDef in pairs(UnitDefs) do
 		if unitDef.model then
 			objectDefToUniformBin[unitDefID] = "otherunit"
-			if unitDef.name:sub(1,3) == 'arm' then
+			if unitDef.name:sub(1,3) == 'arm' or unitDef.name:sub(1,3) == 'bow' then
 				objectDefToUniformBin[unitDefID] = 'armunit'
-			elseif 	unitDef.name:sub(1,3) == 'cor' then
+			elseif 	unitDef.name:sub(1,3) == 'cor' or unitDef.name:sub(1,4) == 'kern' then
 				objectDefToUniformBin[unitDefID] = 'corunit'
 			elseif 	unitDef.name:sub(1,3) == 'leg' then
 				objectDefToUniformBin[unitDefID] = 'armunit'
@@ -851,16 +852,28 @@ local function initBinsAndTextures()
 				--[10] = envLUT,
 			}
 
-			local lowercasetex1 = string.lower(unitDef.model.textures.tex1 or "")
-			local lowercasetex2 = string.lower(unitDef.model.textures.tex2 or "")
-			local lowercasenormaltex = string.lower(normalTex or "")
+			local lctex1 = string.lower(unitDef.model.textures.tex1 or "")
+			local lctex2 = string.lower(unitDef.model.textures.tex2 or "")
+			local lcnormaltex = string.lower(normalTex or "")
 
-			local wreckTex1 = (lowercasetex1:find("arm_color", nil, true) and "unittextures/Arm_wreck_color.dds") or
-								(lowercasetex1:find("cor_color", nil, true) and "unittextures/Cor_color_wreck.dds")  or false
-			local wreckTex2 = (lowercasetex2:find("arm_other", nil, true) and "unittextures/Arm_wreck_other.dds") or
-								(lowercasetex2:find("cor_other", nil, true) and "unittextures/Cor_other_wreck.dds")  or false
-			local wreckNormalTex = (lowercasenormaltex:find("arm_normal") and "unittextures/Arm_wreck_color_normal.dds") or
-					(lowercasenormaltex:find("cor_normal") and "unittextures/Cor_color_wreck_normal.dds") or false
+			--local wreckTex1 = (lowercasetex1:find("arm_color", nil, true) and "unittextures/Arm_wreck_color.dds") or
+			--					(lowercasetex1:find("cor_color", nil, true) and "unittextures/Cor_color_wreck.dds")  or false
+			--local wreckTex2 = (lowercasetex2:find("arm_other", nil, true) and "unittextures/Arm_wreck_other.dds") or
+			--					(lowercasetex2:find("cor_other", nil, true) and "unittextures/Cor_other_wreck.dds")  or false
+			--local wreckNormalTex = (lowercasenormaltex:find("arm_normal") and "unittextures/Arm_wreck_color_normal.dds") or
+			--		(lowercasenormaltex:find("cor_normal") and "unittextures/Cor_color_wreck_normal.dds") or false
+
+			---TODO: Add bots textures + normal
+			local wreckTex1 = (lctex1:find("tap_texture1", nil, true) and "unittextures/tap_wreck_1.dds") or
+					(lctex1:find("tap_texture2", nil, true) and "unittextures/tap_wreck_2.dds") or
+					(lctex1:find("bow_bot_texture1.dds", nil, true) and "unittextures/bow_bot_wreck1.dds") or
+					(lctex1:find("kern_bot_texture1.dds", nil, true) and "unittextures/bow_bot_wreck1.dds") or
+					false
+			local wreckTex2 = (lctex2:find("tap_texture3", nil, true) and "unittextures/tap_wreck_3.dds") or
+					(lctex2:find("bow_bot_texture2.dds", nil, true) and "unittextures/bow_bot_wreck2.dds")  or
+					false
+			local wreckNormalTex = (lcnormaltex:find("tap_normal") and "unittextures/tap_wreck_normal.png") or
+					(lcnormaltex:find("cor_normal") and "unittextures/Cor_color_wreck_normal.dds") or false
 
 			if unitDef.name:find("_scav", nil, true) then -- it better be a scavenger unit, or ill kill you
 				textureTable[3] = wreckTex1
@@ -913,13 +926,13 @@ local function initBinsAndTextures()
 				objectDefToUniformBin[-1 * featureDefID] = 'wreck'
 				--featuresDefsWithAlpha[-1 * featureDefID] = "yes"
 			elseif (featureDef.customParams and featureDef.customParams.treeshader == 'yes')
-				or knowntrees[featureDef.name] then
+					or knowntrees[featureDef.name] then
 				objectDefToUniformBin[-1 * featureDefID] = 'tree'
 				featuresDefsWithAlpha[-1 * featureDefID] = "yes"
 			elseif featureDef.name:find("_dead", nil, true) or featureDef.name:find("_heap", nil, true) then
 				objectDefToUniformBin[-1 * featureDefID] = 'wreck'
 			elseif featureDef.name:find("pilha_crystal", nil, true) or (featureDef.customParams and featureDef.customParams.cuspbr) then
-				objectDefToUniformBin[-1 * featureDefID] = 'featurepbr'	
+				objectDefToUniformBin[-1 * featureDefID] = 'featurepbr'
 			end
 			--Spring.Echo("Assigned normal map to", featureDef.name, normalTex)
 
@@ -939,9 +952,9 @@ local function PreloadTextures()
 	gl.Texture(0, "unittextures/tap_texture1.dds")
 	gl.Texture(0, "unittextures/tap_texture2.dds")
 	gl.Texture(0, "unittextures/tap_texture3.dds")
-	gl.Texture(0, "unittextures/tap_wreck1.dds")
-	gl.Texture(0, "unittextures/tap_wreck2.dds")
-	gl.Texture(0, "unittextures/tap_wreck3.dds")
+	gl.Texture(0, "unittextures/tap_wreck_1.dds")
+	gl.Texture(0, "unittextures/tap_wreck_2.dds")
+	gl.Texture(0, "unittextures/tap_wreck_3.dds")
 	gl.Texture(0, "unittextures/tap_wreck_normal.png")
 	gl.Texture(0, "unittextures/corota_tex1.dds")
 	gl.Texture(0, "unittextures/corota_tex2.dds")
@@ -1198,7 +1211,7 @@ local function AddObject(objectID, drawFlag, reason)
 		local flag = drawBinKeys[k]
 		if HasAllBits(drawFlag, flag) then
 			if overrideDrawFlagsCombined[flag] then
-								 --objectID, objectDefID, flag, shader, textures, texKey, uniformBinID, calledfrom
+				--objectID, objectDefID, flag, shader, textures, texKey, uniformBinID, calledfrom
 				AsssignObjectToBin(objectID, objectDefID, flag, nil,	nil,	  nil,	  nil, 			"addobject")
 			end
 		end
@@ -1695,7 +1708,7 @@ local function DumpCUSGL4(optName, line, words, playerID)
 			for uniformbinid, texandobjset in pairs(uniformbin) do
 				Spring.Echo(string.format("    %s = { -- uniformbin",uniformbinid))
 				for texturekey, minibin in pairs(texandobjset) do
-				Spring.Echo(string.format("      %i = { -- textureset",texturekey))
+					Spring.Echo(string.format("      %i = { -- textureset",texturekey))
 					for minibinattr, minibinvalue in pairs(minibin) do
 						if type( minibinvalue ) == "table" then
 							Spring.Echo(string.format("        %s = {",minibinattr))
@@ -1753,11 +1766,11 @@ local function MarkBinCUSGL4(optName, line, words, playerID)
 						end
 						if px then
 							Spring.MarkerAddPoint(px,py,pz,
-								tostring(drawPass) .. "/" ..
-								tostring(shadername) .. "/" ..
-								tostring(uniformbinid) .. "/" ..
-								tostring(texturekey) .. "/" ..
-								tostring(objectID))
+									tostring(drawPass) .. "/" ..
+											tostring(shadername) .. "/" ..
+											tostring(uniformbinid) .. "/" ..
+											tostring(texturekey) .. "/" ..
+											tostring(objectID))
 							count = count + 1
 						end
 					end
@@ -1900,7 +1913,7 @@ end
 
 local firstDraw = false
 function gadget:DrawWorldPreUnit()
---function gadget:DrawGenesis() -- nope, shadow flags still a frame late https://github.com/beyond-all-reason/spring/issues/264
+	--function gadget:DrawGenesis() -- nope, shadow flags still a frame late https://github.com/beyond-all-reason/spring/issues/264
 	if unitDrawBins == nil then return end
 
 	updateframe = (updateframe + 1) % updaterate
@@ -1928,7 +1941,7 @@ function gadget:DrawWorldPreUnit()
 		end
 
 		if numdestroyedFeatures > 0 then
-			
+
 			ProcessFeatures(destroyedFeatureIDs, destroyedFeatureDrawFlags, "destroyed")
 			for i=numdestroyedFeatures,1,-1 do
 				destroyedFeatureIDs[i] = nil
@@ -1936,30 +1949,30 @@ function gadget:DrawWorldPreUnit()
 			end
 			numdestroyedFeatures = 0
 		end
-		if firstDraw then 
+		if firstDraw then
 			local firstfeatures = Spring.GetVisibleFeatures()
 			local firstdrawFlagsFeatures = {}
 			local validFirstFeatures = {}
 			local numfirstfeatures = 0
-			for i, featureID in ipairs(firstfeatures) do 
+			for i, featureID in ipairs(firstfeatures) do
 				local flag = Spring.GetFeatureDrawFlag(featureID)
-				if flag and flag > 0 then 
-					numfirstfeatures = numfirstfeatures + 1 
+				if flag and flag > 0 then
+					numfirstfeatures = numfirstfeatures + 1
 					validFirstFeatures[numfirstfeatures] = featureID
 					firstdrawFlagsFeatures[numfirstfeatures] = flag
 				end
-					
-			end 
+
+			end
 			ProcessFeatures(validFirstFeatures, firstdrawFlagsFeatures, "firstDraw")
-			
+
 			local firstunits = Spring.GetVisibleUnits()
 			local firstdrawFlagsUnits = {}
-			for i, unitID in ipairs(firstunits) do firstdrawFlagsUnits[i] = 1 + 4 + 16 end 
+			for i, unitID in ipairs(firstunits) do firstdrawFlagsUnits[i] = 1 + 4 + 16 end
 			ProcessUnits(firstunits, firstdrawFlagsUnits, "firstDraw")
-			
+
 			firstDraw = false
 		end
-		
+
 
 		ProcessUnits(units, drawFlagsUnits, "changed")
 		ProcessFeatures(features, drawFlagsFeatures, "changed")
@@ -1970,38 +1983,38 @@ function gadget:DrawWorldPreUnit()
 			local usecperobjectchange = (1000* deltat)  / (totalobjects)
 			Spring.Echo("[CUS GL4] [",Spring.GetDrawFrame(),"]",totalobjects," Update time 2 < ", deltat, string.format("ms, per object change: %.2fus ", usecperobjectchange),  totalobjects , 'objs')
 			-- PERF CONCULUSION:
-				-- Additions of units are about 30 uS
-				-- Removals of units is about 50 uS
+			-- Additions of units are about 30 uS
+			-- Removals of units is about 50 uS
 			-- After faster texture key lookups, this has dropped significantly:
-				-- Additions of units are about 7 uS
-				-- Removals of units is about 10 uS
+			-- Additions of units are about 7 uS
+			-- Removals of units is about 10 uS
 			-- Using shared deferred and forward bin perf is now even closer:
-				-- Addition 6 us
-				-- Removal 7 us
+			-- Addition 6 us
+			-- Removal 7 us
 			-- Further optimizations:
-				-- addition is 2.2us per unit
-				-- removal is 3.2us per unit
+			-- addition is 2.2us per unit
+			-- removal is 3.2us per unit
 			-- After only handling fw, refl and shadow:
-				-- Addition is 1.98us per unit
-				-- removal is 2.40 us per unit
+			-- Addition is 1.98us per unit
+			-- removal is 2.40 us per unit
 		end
 	end
 end
 
 local nightFactorBins = {tree = 1.3, feature = 1.3, featurepbr = 1.3, treepbr = 1.3}
-local lastSunChanged = -1 
+local lastSunChanged = -1
 function gadget:SunChanged() -- Note that map_nightmode.lua gadget has to change sun twice in a single draw frame to update all
 	local df = Spring.GetDrawFrame()
 	if df == lastSunChanged then return end
 	lastSunChanged = df
 	local nightFactor = 1.0
-	if GG['NightFactor'] then 
+	if GG['NightFactor'] then
 		local altitudefactor = 1.0 --+ (1.0 - WG['NightFactor'].altitude) * 0.5
 		nightFactor = (GG['NightFactor'].red + GG['NightFactor'].green + GG['NightFactor'].blue) * 0.33
 	end
-	for uniformBinName, defaultBrightnessFactor in pairs(nightFactorBins) do 
+	for uniformBinName, defaultBrightnessFactor in pairs(nightFactorBins) do
 		uniformBins[uniformBinName].brightnessFactor = defaultBrightnessFactor * nightFactor
-	end 
+	end
 end
 
 local function drawPassBitsToNumber(opaquePass, deferredPass, drawReflection, drawRefraction)
