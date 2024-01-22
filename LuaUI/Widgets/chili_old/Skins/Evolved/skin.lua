@@ -33,16 +33,17 @@ skin.icons = {
   imageplaceholder = ":cn:placeholder.png",
 }
 
+-- Main button colors
 skin.button = {
   TileImageBK = ":cn:tech_button_bright_small_bk.png",
   TileImageFG = ":cn:tech_button_bright_small_fg.png",
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.20, 0.38, 0.46, 0.95},
-  focusColor  = {0.20, 0.42, 0.50, 0.9},
-  borderColor = {0.20, 0.42, 0.50, 0.15},
-  pressBackgroundColor = {0.14, 0.365, 0.42, 0.85},
+  backgroundColor = {0.46, 0.38, 0.20, 0.95},
+  focusColor  = {0.50, 0.42, 0.20, 0.9},
+  borderColor = {0.50, 0.42, 0.20, 0.15},
+  pressBackgroundColor = {0.42, 0.365, 0.14, 0.85},
 
   DrawControl = DrawButton,
 }
