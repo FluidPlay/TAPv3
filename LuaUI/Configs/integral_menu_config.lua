@@ -454,6 +454,22 @@ local commandPanels = {
 		buttonLayoutConfig = buttonLayoutConfig.command,
 	},
 	{
+		humanName = "Build",	--Factory
+		name = "factory",
+		inclusionFunction = function(cmdID)
+			local position = buildCmdFactory[cmdID]
+			return position and true or false, position
+		end,
+		isBuild = true,
+		isStructure = true,
+		notBuildRow = 3,
+		gridHotkeys = true,
+		returnOnClick = "orders",
+		optionName = "tab_factory",
+		buttonLayoutConfig = buttonLayoutConfig.build,
+		buttonLayoutOverride = factoryButtonLayoutOverride,
+	},
+	{
 		humanName = "Econ",
 		name = "economy",
 		inclusionFunction = function(cmdID)
@@ -496,22 +512,6 @@ local commandPanels = {
 		optionName = "tab_special",
 		buttonLayoutConfig = buttonLayoutConfig.build,
 		buttonLayoutOverride = specialButtonLayoutOverride,
-	},
-	{
-		humanName = "Factory",
-		name = "factory",
-		inclusionFunction = function(cmdID)
-			local position = buildCmdFactory[cmdID]
-			return position and true or false, position
-		end,
-		isBuild = true,
-		isStructure = true,
-		notBuildRow = 3,
-		gridHotkeys = true,
-		returnOnClick = "orders",
-		optionName = "tab_factory",
-		buttonLayoutConfig = buttonLayoutConfig.build,
-		buttonLayoutOverride = factoryButtonLayoutOverride,
 	},
 	{
 		humanName = "Units",
