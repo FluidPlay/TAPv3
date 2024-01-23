@@ -37,7 +37,9 @@ skin.icons = {
 skin.button = {
   TileImageBK = ":cn:tech_button_bright_small_bk.png",
   TileImageFG = ":cn:tech_button_bright_small_fg.png",
-  tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  --tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
+  --tiles = {254, 156, 254, 123},
+  tiles = {127, 78, 127, 62},
   padding = {5, 5, 5, 5},
 
   backgroundColor = {0.46, 0.38, 0.20, 0.95},
