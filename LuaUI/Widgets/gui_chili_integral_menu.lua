@@ -102,8 +102,8 @@ if modOptions.campaign_debug_units ~= "1" then
 	if modOptions.integral_disable_economy == "1" then
 		disabledTabs.economy = true
 	end
-	if modOptions.integral_disable_defence == "1" then
-		disabledTabs.defence = true
+	if modOptions.integral_disable_defense == "1" then
+		disabledTabs.defense = true
 	end
 	if modOptions.integral_disable_special == "1" then
 		disabledTabs.special = true
@@ -136,7 +136,7 @@ options_order = {
 	'simple_mode', 'enable_return_fire', 'enable_roam',
 	'background_opacity', 'keyboardType2',  'selectionClosesTab', 'selectionClosesTabOnSelect', 'altInsertBehind',
 	'unitsHotkeys2', 'ctrlDisableGrid', 'hide_when_spectating', 'applyCustomGrid', 'label_apply',
-	'label_tab', 'tab_economy', 'tab_defence', 'tab_special', 'tab_factory', 'tab_units',
+	'label_tab', 'tab_economy', 'tab_defense', 'tab_special', 'tab_factory', 'tab_units',
 	'tabFontSize', 'leftPadding', 'rightPadding', 'flushLeft', 'fancySkinning',
 	'helpwindow', 'commands_reset_default', 'commands_enable_all', 'commands_disable_all', 'states_enable_all', 'states_disable_all',
 }
@@ -289,7 +289,7 @@ options = {
 		type = 'button',
 		path = commandPanelPath,
 	},
-	tab_defence = {
+	tab_defense = {
 		name = "Defense Tab",
 		desc = "Switches to defense tab.",
 		type = 'button',
@@ -468,7 +468,7 @@ local function AddCustomGridOptions()
 	-- Needed now for epicmenu loading
 	local hotkeyTabNames = {
 		{"economy", "Economy"},
-		{"defence", "Defence"},
+		{"defense", "Defense"},
 		{"special", "Special"},
 		{"factory", "Factory"},
 		{"economy", "Economy"},
@@ -2386,7 +2386,7 @@ function options.tab_economy.OnChange()
 end
 
 local function HotkeyTabDefence()
-	local tab = commandPanelMap.defence.tabButton
+	local tab = commandPanelMap.defense.tabButton
 	if tab.IsTabPresent() and CheckTabHotkeyAllowed() then
 		tab.DoClick()
 	end
@@ -2426,7 +2426,7 @@ local function HotkeyTabUnits()
 	end
 end
 
-options.tab_defence.OnChange = HotkeyTabDefence
+options.tab_defense.OnChange = HotkeyTabDefence
 options.tab_special.OnChange = HotkeyTabSpecial
 options.tab_factory.OnChange = HotkeyTabFactory
 options.tab_units.OnChange   = HotkeyTabUnits

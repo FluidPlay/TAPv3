@@ -62,7 +62,7 @@
 	"cloakbomb" : {
 		"name" : "Imp",
 		"description" : "All Terrain EMP Bomb (Burrows)",
-		"helptext" : "The Imp relies on its speed and small size to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Reavers or Glaives can then eliminate the helpless enemies without risk. Counter with defences or single cheap units to set off a premature detonation. This unit cloaks when otherwise idle."
+		"helptext" : "The Imp relies on its speed and small size to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Reavers or Glaives can then eliminate the helpless enemies without risk. Counter with defenses or single cheap units to set off a premature detonation. This unit cloaks when otherwise idle."
 	},
 	"shieldriot" : {
 		"name" : "Outlaw",
@@ -87,7 +87,7 @@
 	"chicken_digger" : {
 		"name" : "Digger",
 		"description" : "Burrowing Scout/Raider",
-		"helptext" : "The Digger's strong claws can scoop through the hardest rock like gravy. As such, it can undetectably travel underground and appear anyplace it can cause mayhem. Protect your valuables directly, as Diggers can bypass your main defence lines."
+		"helptext" : "The Digger's strong claws can scoop through the hardest rock like gravy. As such, it can undetectably travel underground and appear anyplace it can cause mayhem. Protect your valuables directly, as Diggers can bypass your main defense lines."
 	},
 	"chicken_leaper" : {
 		"name" : "Leaper",
@@ -97,12 +97,12 @@
 	"chickenr" : {
 		"name" : "Lobber",
 		"description" : "Artillery",
-		"helptext" : "A form of organic artillery, the Lobber hurls balls of venom at a high trajectory over long distances. It proves a problem for those who rely excessively on static defences, but is practically helpless when attacked directly."
+		"helptext" : "A form of organic artillery, the Lobber hurls balls of venom at a high trajectory over long distances. It proves a problem for those who rely excessively on static defenses, but is practically helpless when attacked directly."
 	},
 	"turrettorp" : {
 		"name" : "Urchin",
 		"description" : "Torpedo Launcher (Anti-Sub)",
-		"helptext" : "This Torpedo Launcher provides defence against both surface and submerged vessels."
+		"helptext" : "This Torpedo Launcher provides defense against both surface and submerged vessels."
 	},
 	"tankheavyassault" : {
 		"name" : "Cyclops",
@@ -167,12 +167,12 @@
 	"cloakarty" : {
 		"name" : "Sling",
 		"description" : "Light Artillery Bot",
-		"helptext" : "The Sling has a long range plasma cannon that allows indirect fire over obstacles, and outranges static defences up to heavy laser towers. Although effective versus mobile units, it should be guarded in order to prevent raiders and other fast units from closing range."
+		"helptext" : "The Sling has a long range plasma cannon that allows indirect fire over obstacles, and outranges static defenses up to heavy laser towers. Although effective versus mobile units, it should be guarded in order to prevent raiders and other fast units from closing range."
 	},
 	"chickend" : {
 		"name" : "Chicken Tube",
 		"description" : "Defence and energy source",
-		"helptext" : "The Tube is the chickens' only defence structure, firing deadly spores at air and ground targets alike."
+		"helptext" : "The Tube is the chickens' only defense structure, firing deadly spores at air and ground targets alike."
 	},
 	"rocksink" : {
 		"name" : "Rocking Damage Sink thing",
@@ -192,7 +192,7 @@
 	"spidercrabe" : {
 		"name" : "Crab",
 		"description" : "Heavy Riot/Skirmish Spider - Curls into Armored Form When Stationary",
-		"helptext" : "The Crab's huge shells obliterate large swarms of cheap units, and can also outrange basic defences. When it stops walking, Crab curls up into armored form reducing incoming damage to a third. The Crab's main weakness is its lack of mobility."
+		"helptext" : "The Crab's huge shells obliterate large swarms of cheap units, and can also outrange basic defenses. When it stops walking, Crab curls up into armored form reducing incoming damage to a third. The Crab's main weakness is its lack of mobility."
 	},
 	"subscout" : {
 		"name" : "Lancelet",
@@ -287,7 +287,7 @@
 	"shieldskirm" : {
 		"name" : "Rogue",
 		"description" : "Skirmisher Bot (Indirect Fire)",
-		"helptext" : "The Rogue's arcing rockets have a low rate of fire, but do a lot of damage, making it very good at dodging in and out of range of enemy units or defence, or in a powerful initial salvo. Counter them by attacking them with fast units, or crawling bombs when massed."
+		"helptext" : "The Rogue's arcing rockets have a low rate of fire, but do a lot of damage, making it very good at dodging in and out of range of enemy units or defense, or in a powerful initial salvo. Counter them by attacking them with fast units, or crawling bombs when massed."
 	},
 	"dronelight" : {
 		"name" : "Firefly",
@@ -307,7 +307,7 @@
 	"staticcon" : {
 		"name" : "Caretaker",
 		"description" : "Construction Assistant",
-		"helptext" : "The most cost-effective source of buildpower, the Caretaker is ideal for increasing the output of factories or automatically repairing nearby defences. It cannot start any construction projects itself, however."
+		"helptext" : "The most cost-effective source of buildpower, the Caretaker is ideal for increasing the output of factories or automatically repairing nearby defenses. It cannot start any construction projects itself, however."
 	},
 	"terraunit" : {
 		"name" : "Terraform",
@@ -322,7 +322,7 @@
 	"energypylon" : {
 		"name" : "Energy Pylon",
 		"description" : "Extends overdrive grid",
-		"helptext" : "Energy Transmission Pylons help extend energy grids and connect more Extractors or energy sources. This in turn helps Extractors overdrive, producing more metal. Pylons can also provide a fast way to power defences that rely on the energy grid. Note that over short distances or in low-energy situations using energy producers like solar collectors to connect grids can be a more cost efficient alternative."
+		"helptext" : "Energy Transmission Pylons help extend energy grids and connect more Extractors or energy sources. This in turn helps Extractors overdrive, producing more metal. Pylons can also provide a fast way to power defenses that rely on the energy grid. Note that over short distances or in low-energy situations using energy producers like solar collectors to connect grids can be a more cost efficient alternative."
 	},
 	"bomberprec" : {
 		"name" : "Raven",
@@ -352,7 +352,7 @@
 	"chickenwurm" : {
 		"name" : "Wurm",
 		"description" : "Burrowing Flamer (Assault/Riot)",
-		"helptext" : "The Wurm \"burrows\" under the surface of the ground, revealing itself to hurl a ball of fire that immolates a large swathe of terrain. It can climb cliffs and surprise defence turrets, but is weak to assaults."
+		"helptext" : "The Wurm \"burrows\" under the surface of the ground, revealing itself to hurl a ball of fire that immolates a large swathe of terrain. It can climb cliffs and surprise defense turrets, but is weak to assaults."
 	},
 	"dronefighter" : {
 		"name" : "Spicula",
@@ -512,7 +512,7 @@
 	"veharty" : {
 		"name" : "Badger",
 		"description" : "Artillery Minelayer Rover",
-		"helptext" : "The Badger lays mines which are fairly effective but have a limited lifespan from a distance (rather haphazardly). The Badger outranges most defences comfortably, but is lightly armored and cannot flee easily so keep it screened with friendly units, possibly assisted by your own mines."
+		"helptext" : "The Badger lays mines which are fairly effective but have a limited lifespan from a distance (rather haphazardly). The Badger outranges most defenses comfortably, but is lightly armored and cannot flee easily so keep it screened with friendly units, possibly assisted by your own mines."
 	},
 	"striderantiheavy" : {
 		"name" : "Ultimatum",
@@ -552,7 +552,7 @@
 	"spidercon" : {
 		"name" : "Weaver",
 		"description" : "Construction Spider",
-		"helptext" : "The Weaver is a constructor that can climb over any obstacle and build defences on high ground. It is also equipped with a short range radar."
+		"helptext" : "The Weaver is a constructor that can climb over any obstacle and build defenses on high ground. It is also equipped with a short range radar."
 	},
 	"hoverdepthcharge" : {
 		"name" : "Claymore",
@@ -562,7 +562,7 @@
 	"gunshipkrow" : {
 		"name" : "Krow",
 		"description" : "Flying Fortress",
-		"helptext" : "The Krow may be expensive and ponderous, but its incredible armor allows it to fly into all but the thickest anti-air defences and engage enemies with its three laser cannons. Best of all, it can unleash a deluge of carpet bombs to devastate anything underneath it."
+		"helptext" : "The Krow may be expensive and ponderous, but its incredible armor allows it to fly into all but the thickest anti-air defenses and engage enemies with its three laser cannons. Best of all, it can unleash a deluge of carpet bombs to devastate anything underneath it."
 	},
 	"neebcomm" : {
 		"name" : "Neeb Comm",

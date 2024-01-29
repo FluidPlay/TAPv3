@@ -24,7 +24,7 @@ conJobNames = {
 	["factory"] = "factory",
 	["reclaim"] = "reclaim",
 	["mex"] 	= "mex",
-	["defence"] = "defence",
+	["defense"] = "defense",
 	["energy"]	= "energy",
 }
 

@@ -217,7 +217,7 @@ local RedoUnitList
 local spectating = Spring.GetSpectatingState()
 local myPlayerID = Spring.GetLocalPlayerID()
 
-local defences = {}
+local defenses = {}
 local needRedraw = false
 local defenseRangeDrawList
 
@@ -352,10 +352,10 @@ local defNeedingBuildingChecks = {}
 local function RemoveUnit(unitID)
 	defNeedingLosChecks[unitID] = nil
 	defNeedingBuildingChecks[unitID] = nil
-	local def = defences[unitID]
+	local def = defenses[unitID]
 	if not def then return end
 	glDeleteList(def.drawList)
-	defences[unitID] = nil
+	defenses[unitID] = nil
 end
 
 local function UnitDetected(unitID, unitDefID, isAlly, alwaysUpdate)
@@ -377,16 +377,16 @@ local function UnitDetected(unitID, unitDefID, isAlly, alwaysUpdate)
 
 	local _,_,inBuild = Spring.GetUnitIsStunned(unitID)
 
-	local defenceData = defences[unitID]
-	if defenceData then
-		if not alwaysUpdate and not configData.colorInBuild or inBuild == defenceData.isBuild then
+	local defenseData = defenses[unitID]
+	if defenseData then
+		if not alwaysUpdate and not configData.colorInBuild or inBuild == defenseData.isBuild then
 			return
 		end
 		RemoveUnit(unitID)
 	end
 
 	local x, y, z = spGetUnitPosition(unitID)
-	defences[unitID] = {
+	defenses[unitID] = {
 		drawList = glCreateList(CreateDrawList, configData, inBuild, x, y, z),
 		x = x, y = y, z = z,
 		inBuild = inBuild,
@@ -451,7 +451,7 @@ function widget:UnitTaken(unitID, unitDefID)
 end
 
 function widget:UnitDestroyed(unitID)
-	local def = defences[unitID]
+	local def = defenses[unitID]
 	if not def then
 		return
 	end
@@ -461,16 +461,16 @@ function widget:UnitDestroyed(unitID)
 end
 
 function widget:UnitEnteredLos(unitID, unitTeam)
-	local def = defences[unitID]
+	local def = defenses[unitID]
 	if def then
-		-- if this is defence we knew about, we don't need to poll the position for los anymore
+		-- if this is defense we knew about, we don't need to poll the position for los anymore
 		defNeedingLosChecks[unitID] = nil
 	end
 	UnitDetected(unitID, Spring.GetUnitDefID(unitID), false)
 end
 
 function widget:UnitLeftLos(unitID, unitTeam)
-	local def = defences[unitID]
+	local def = defenses[unitID]
 	if def then
 		-- slow poll this defence's position to see if the position entered los, but the unit didn't, meaning it was destroyed out of los
 		defNeedingLosChecks[unitID] = true
@@ -480,7 +480,7 @@ function widget:UnitLeftLos(unitID, unitTeam)
 end
 
 local function RedrawDrawRanges()
-	for _, def in pairs(defences) do
+	for _, def in pairs(defenses) do
 		local configData = unitConfig[def.unitDefID]
 		if spectating and configData.wantedSpec
 		or not spectating and ((def.isAlly and configData.wantedAlly) or (not def.isAlly and configData.wantedEnemy))
@@ -502,7 +502,7 @@ function widget:Update(dt)
 end
 
 local function DoFullUnitReload()
-	for unitID,def in pairs(defences) do
+	for unitID,def in pairs(defenses) do
 		RemoveUnit(unitID)
 	end
 	local myAllyTeam = Spring.GetMyAllyTeamID()
@@ -528,7 +528,7 @@ function widget:GameFrame(n)
 
 	for unitID in pairs(defNeedingLosChecks) do -- TODO: rarely updated but constantly iterated, consider IndexableArray
 		if not spGetUnitDefID(unitID) then
-			local def = defences[unitID]
+			local def = defenses[unitID]
 			local _, inLos = spGetPositionLosState(def.x, def.y, def.z)
 			if inLos then
 				RemoveUnit(unitID)
@@ -685,7 +685,7 @@ function widget:Initialize()
 end
 
 function widget:Shutdown()
-	for unitID,def in pairs(defences) do
+	for unitID,def in pairs(defenses) do
 		glDeleteList(def.drawList)
 	end
 	glDeleteList(defenseRangeDrawList)

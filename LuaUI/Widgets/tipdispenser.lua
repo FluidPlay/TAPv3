@@ -270,7 +270,7 @@ local function GetTipsList()
 			AddTipOnce("Assault units are generally good all-rounders, but they particularly excel at punching through defencive lines.", 1, 3)
 		end
 		if CountMy(skirm) >= 1 then
-			AddTipOnce("Skirmishers are medium-ranged units, ideal for picking off riot units and some defences from afar. They are vulnerable to raider charges.", 1, 3)
+			AddTipOnce("Skirmishers are medium-ranged units, ideal for picking off riot units and some defenses from afar. They are vulnerable to raider charges.", 1, 3)
 		end
 		if CountMy(riot) >= 1 then
 			AddTipOnce("Riot units are slow, short-ranged, and extremely deadly. Use them to counter raiders, but do not attack defences head-on with them.", 1, 3)

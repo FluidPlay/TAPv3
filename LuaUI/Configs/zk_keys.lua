@@ -179,7 +179,7 @@ return {
 		{	"select Visible+_InPrevSel+_ClearSelection_SelectAll+",	"ctrl+x",},
 		{	"select AllMap+_InPrevSel+_ClearSelection_SelectAll+",	"ctrl+z",},
 		{	"epic_chili_integral_menu_tab_economy",	"any+x",},
-		{	"epic_chili_integral_menu_tab_defence",	"any+c",},
+		{	"epic_chili_integral_menu_tab_defense",	"any+c",},
 		{	"epic_chili_integral_menu_tab_special",	"any+v",},
 		{	"epic_chili_integral_menu_tab_factory",	"any+b",},
 		{	"epic_chili_integral_menu_tab_units",	"any+n",},

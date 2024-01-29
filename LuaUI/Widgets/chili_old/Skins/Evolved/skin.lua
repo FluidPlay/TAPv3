@@ -26,6 +26,7 @@ skin.general = {
   },
 
   padding         = {7, 10, 7, 7}, --// padding: left, top, right, bottom
+  --padding         = {14, 20, 14, 14}, --// padding: left, top, right, bottom
 }
 
 
@@ -40,7 +41,10 @@ skin.button = {
   --tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   --tiles = {254, 156, 254, 123},
   tiles = {127, 78, 127, 62},
-  padding = {5, 5, 5, 5},
+  padding = {15, 15, 15, 15},
+
+	--local skHorScale, skVertScale = unpack2(obj.tileScale)
+  	--tileScale = {0.2, 0.2},
 
   --backgroundColor = {0.46, 0.38, 0.20, 0.95},
   --focusColor  = {0.50, 0.42, 0.20, 0.9},
@@ -59,7 +63,7 @@ skin.button = {
 skin.button_tiny = {
   TileImageBK = ":cn:tech_button_bright_tiny_bk.png",
   TileImageFG = ":cn:tech_button_bright_tiny_fg.png",
-  tiles = {6, 6, 6, 6}, --// tile widths: left,top,right,bottom
+  tiles = {130, 136, 123, 88},		--{6, 6, 6, 6}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
   backgroundColor = {0.20, 0.38, 0.46, 0.95},

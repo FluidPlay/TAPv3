@@ -494,7 +494,7 @@ local commandPanels = {
 		isStructure = true,
 		gridHotkeys = true,
 		returnOnClick = "orders",
-		optionName = "tab_defence",
+		optionName = "tab_defense",
 		buttonLayoutConfig = buttonLayoutConfig.build,
 	},
 	{
