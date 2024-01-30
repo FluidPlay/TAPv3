@@ -1425,7 +1425,7 @@ local function GetButton(parent, name, selectionIndex, x, y, xStr, yStr, width, 
 			SetText(textConfig.bottomRightLarge.name, command.name)
 		end
 
-		isStateCommand = command and (command.type == CMDTYPE.ICON_MODE and #command.params > 1)
+		isStateCommand = command and (command.type and (command.type == CMDTYPE.ICON_MODE and #command.params > 1))
 		local state = isStateCommand and (((WG.GetOverriddenState and WG.GetOverriddenState(newCmdID)) or command.params[1]) + 1)
 		if cmdID == newCmdID then
 			if isStateCommand then
@@ -2180,7 +2180,7 @@ local function InitializeControls()
 	-- Set the size for the default settings.
 	local screenWidth, screenHeight = spGetViewGeometry()
 	local width = math.max(350, math.min(450, screenWidth*screenHeight*0.0004))
-	local height = math.min(screenHeight/4.5, 200*width/450)  + 8
+	local height = math.min(screenHeight/4.5, 200*width/450) + 8
 
 	gridKeyMap, gridMap, gridCustomOverrides = GenerateGridKeyMap(options.keyboardType2.value)
 

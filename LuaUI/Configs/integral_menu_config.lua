@@ -5,6 +5,7 @@ local buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildC
 -- Tooltips
 
 local imageDir = 'LuaUI/Images/commands/'
+local CMD_MORPH = 31410
 
 local tooltips = {
 	WANT_ONOFF = "Activation (_STATE_)\n  Toggles unit abilities such as radar, shield charge, and radar jamming.",
@@ -50,6 +51,7 @@ local commandDisplayConfig = {
 	[CMD.STOP] = { texture = imageDir .. 'Bold/stop.png', tooltip = "Stop: Halt the unit and clear its command queue."}, --cancel
 	[CMD.FIGHT] = { texture = imageDir .. 'Bold/fight.png', tooltip = "Attack Move: Move to a position engaging targets along the way."},
 	[CMD.GUARD] = { texture = imageDir .. 'Bold/guard.png'},
+	[CMD_MORPH] = { texture = imageDir .. 'Bold/guard.png', tooltip = "Morph: Morphs unit into its advanced version."},
 	[CMD.MOVE] = { texture = imageDir .. 'Bold/move.png'},
 	[CMD_RAW_MOVE] = { texture = imageDir .. 'Bold/move.png'},
 	[CMD.PATROL] = { texture = imageDir .. 'Bold/patrol.png', tooltip = "Patrol: Attack Move back and forth between one or more waypoints."},
@@ -573,6 +575,7 @@ local instantCommands = {
 	[CMD_STOP_NEWTON_FIREZONE] = true,
 	[CMD_RECALL_DRONES] = true,
 	[CMD_MORPH_UPGRADE_INTERNAL] = true,
+	[CMD_MORPH] = true,
 	[CMD_UPGRADE_STOP] = true,
 	[CMD_STOP_PRODUCTION] = true,
 	[CMD_RESETFIRE] = true,
@@ -590,7 +593,7 @@ local widgetSpaceHidden = {
 }
 
 local factoryPlates = {
-	"bowhq", "kernhq"
+	"bowhq", "kernhq",
 	--"platecloak",
 	--"plateshield",
 	--"plateveh",

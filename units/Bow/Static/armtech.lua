@@ -11,6 +11,7 @@ return {
 		buildinggrounddecalsizey = 6,
 		buildinggrounddecaltype = "armtarg_aoplane.dds",
 		buildpic = "ARMTARG.DDS",
+		buildoptions = {},
 		buildtime = 8707,
 		category = "ALL NOTLAND NOTSUB NOWEAPON NOTSHIP NOTAIR SURFACE",
 		corpse = "DEAD",
