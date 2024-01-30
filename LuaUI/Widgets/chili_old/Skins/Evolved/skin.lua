@@ -112,9 +112,9 @@ skin.button_square = {
   tiles = {11, 11, 11, 11}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0, 0, 0, 0.7},
-  focusColor  = {0.94, 0.50, 0.23, 0.4},
-  borderColor = {1,1,1,0},
+  backgroundColor = 	defBackgroundColor, -- {0, 0, 0, 0.7},
+  focusColor  = 		defFocusColor, -- {0.94, 0.50, 0.23, 0.7},
+  borderColor = 		defBorderColor, -- {1,1,1,0},
 
   DrawControl = DrawButton,
 }
@@ -128,8 +128,10 @@ skin.button_tab = {
   -- since it's color multiplication, it's easier to control white color (1, 1, 1) than black color (0, 0, 0) to get desired results
   backgroundColor = {0, 0, 0, 1.0},
   -- actually kill this anyway
-  borderColor     = {0.46, 0.54, 0.68, 0.4},
-  focusColor      = {0.46, 0.54, 0.68, 1.0},
+  --borderColor     = {0.46, 0.54, 0.68, 0.4},
+  --focusColor      = {0.46, 0.54, 0.68, 1.0},
+  focusColor  = 		defFocusColor,
+  borderColor = 		defBorderColor,
 
   DrawControl = DrawButton,
 }
@@ -140,9 +142,9 @@ skin.button_large = {
   tiles = {60, 30, 60, 30}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0, 0, 0, 0.7},
-  focusColor  = {0.94, 0.50, 0.23, 0.7},
-  borderColor = {1,1,1,0},
+  backgroundColor = 	defBackgroundColor, -- {0, 0, 0, 0.7},
+  focusColor  = 		defFocusColor, -- {0.94, 0.50, 0.23, 0.7},
+  borderColor = 		defBorderColor, -- {1,1,1,0},
 
   DrawControl = DrawButton,
 }
@@ -153,9 +155,13 @@ skin.button_highlight = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.2, 0.25, 0.35, 0.7},
-  focusColor  = {0.3, 0.375, 0.525, 0.5},
-  borderColor = {1,1,1,0},
+  --backgroundColor = {0.2, 0.25, 0.35, 0.7},
+  --focusColor  = {0.3, 0.375, 0.525, 0.5},
+  --borderColor = {1,1,1,0},
+
+  backgroundColor = 	defBackgroundColor,
+  focusColor  = 		defFocusColor,
+  borderColor = 		defBorderColor,
 
   DrawControl = DrawButton,
 }
@@ -166,9 +172,12 @@ skin.button_square = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0, 0, 0, 0.7},
-  focusColor  = {0.94, 0.50, 0.23, 0.4},
-  borderColor = {1,1,1,0},
+  --backgroundColor = {0, 0, 0, 0.7},
+  --focusColor  = {0.94, 0.50, 0.23, 0.4},
+  --borderColor = {1,1,1,0},
+  backgroundColor = 	defBackgroundColor,
+  focusColor  = 		defFocusColor,
+  borderColor = 		defBorderColor,
 
   DrawControl = DrawButton,
 }
@@ -179,9 +188,12 @@ skin.action_button = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.98, 0.48, 0.26, 0.65},
-  focusColor  = {0.98, 0.48, 0.26, 0.9},
-  borderColor = {0.98, 0.48, 0.26, 0.15},
+  --backgroundColor = {0.98, 0.48, 0.26, 0.65},
+  --focusColor  = {0.98, 0.48, 0.26, 0.9},
+  --borderColor = {0.98, 0.48, 0.26, 0.15},
+  backgroundColor = 	defBackgroundColor,
+  focusColor  = 		defFocusColor,
+  borderColor = 		defBorderColor,
 
   DrawControl = DrawButton,
 }
@@ -192,12 +204,23 @@ skin.option_button = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.21, 0.53, 0.60, 0.65},
-  focusColor  = {0.21, 0.53, 0.60, 0.9},
-  borderColor = {0.21, 0.53, 0.60, 0.15},
+  --backgroundColor = {0.21, 0.53, 0.60, 0.65},
+  --focusColor  = {0.21, 0.53, 0.60, 0.9},
+  --borderColor = {0.21, 0.53, 0.60, 0.15},
+  backgroundColor = 	defBackgroundColor,
+  focusColor  = 		defFocusColor,
+  borderColor = 		defBorderColor,
 
   DrawControl = DrawButton,
 }
+
+local negBackgroundColor = {0.85, 0.05, 0.25, 0.65}
+local negFocusColor  = {0.85, 0.05, 0.25, 0.9}
+local negBorderColor = {0.85, 0.05, 0.25, 0.15}
+
+local disBackgroundColor = {0.2, 0.2, 0.2, 0.65}
+local disFocusColor  = {0, 0, 0, 0}
+local disBorderColor = {0.2, 0.2, 0.2, 0.15}
 
 skin.negative_button = {
   TileImageBK = ":cn:tech_button_bright_small_bk.png",
@@ -205,9 +228,12 @@ skin.negative_button = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.85, 0.05, 0.25, 0.65},
-  focusColor  = {0.85, 0.05, 0.25, 0.9},
-  borderColor = {0.85, 0.05, 0.25, 0.15},
+  --backgroundColor = {0.85, 0.05, 0.25, 0.65},
+  --focusColor  = {0.85, 0.05, 0.25, 0.9},
+  --borderColor = {0.85, 0.05, 0.25, 0.15},
+  backgroundColor = 	negBackgroundColor,
+  focusColor  = 		negFocusColor,
+  borderColor = 		negBorderColor,
 
   DrawControl = DrawButton,
 }
@@ -218,9 +244,12 @@ skin.button_disabled = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.2, 0.2, 0.2, 0.65},
-  focusColor  = {0, 0, 0, 0},
-  borderColor = {0.2, 0.2, 0.2, 0.15},
+  --backgroundColor = {0.2, 0.2, 0.2, 0.65},
+  --focusColor  = {0, 0, 0, 0},
+  --borderColor = {0.2, 0.2, 0.2, 0.15},
+  backgroundColor = 	disBackgroundColor,
+  focusColor  = 		disFocusColor,
+  borderColor = 		disBorderColor,
 
   DrawControl = DrawButton,
 }
@@ -232,8 +261,10 @@ skin.combobox = {
 	tiles   = {11, 11, 24, 11},
 	padding = {5, 5, 12, 5},
 
-	backgroundColor = {1, 1, 1, 0.7},
-	borderColor = {1,1,1,0},
+	--backgroundColor = {1, 1, 1, 0.7},
+	--borderColor = {1,1,1,0},
+	backgroundColor = 	disBackgroundColor,
+	borderColor = 		disBorderColor,
 
 	DrawControl = DrawComboBox,
 }
@@ -357,7 +388,7 @@ skin.panel = {
 }
 
 skin.panel_internal = {
-  TileImageBK = ":cn:tech_overlaywindow.png",
+  TileImageBK = ":cn:tech_button_bright_tiny_bk.png",	--tech_overlaywindow.png
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
   tileScale = {0.2, 0.2},
@@ -373,9 +404,9 @@ skin.panel_button = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0.2, 0.25, 0.35, 0.7},
-  focusColor  = {0.3, 0.375, 0.525, 0.5},
-  borderColor = {1,1,1,0},
+  backgroundColor = defBackgroundColor, --{0.2, 0.25, 0.35, 0.7},
+  focusColor  = 	defFocusColor, 		 --{0.3, 0.375, 0.525, 0.5},
+  borderColor = 	defBorderColor,		 --{1,1,1,0},
 
   DrawControl = DrawPanel,
 }
