@@ -4,7 +4,7 @@ VFS.Include("LuaRules/Configs/customcmds.h.lua")
 --------------------------------------------------------------------------------
 -- Order and State Panel Positions
 
--- Commands are placed in their position, with conflicts resolved by pushng those
+-- Commands are placed in their position, with conflicts resolved by pushing those
 -- with less priority (higher number = less priority) along the positions if
 -- two or more commands want the same position.
 -- The command panel is propagated left to right, top to bottom.
@@ -320,8 +320,8 @@ local factory_commands = {
     armfark		= {order = 4, row = 1, col = 4},
 	bowdaemon	= {order = 5, row = 2, col = 1},
 	-- BUILDER EXCLUSIVE
-	armoutpost	= {order = 1, row = 1, col = 1},
-	coroutpost	= {order = 1, row = 1, col = 1},
+	armoutpost	= {order = 1, row = 2, col = 4},
+	coroutpost	= {order = 1, row = 2, col = 4},
 	--ARMOUTPOST
 	armlab		= {order = 1, row = 1, col = 1},
 	armvp 		= {order = 2, row = 1, col = 2},
@@ -330,6 +330,7 @@ local factory_commands = {
 	armtech 	= {order = 5, row = 2, col = 1},
 	armrad		= {order = 6, row = 2, col = 2},
 	armpad		= {order = 7, row = 2, col = 3},
+	---armoutpost	= {order = 1, row = 2, col = 4},	--Outpost2
 	--ARMLAB
     armpw		= {order = 1, row = 1, col = 1},
     armrock		= {order = 2, row = 1, col = 2},
@@ -419,8 +420,10 @@ local special_commands = {
 	armavp		= {order = 2, row = 1, col = 2},
 	armaap		= {order = 3, row = 1, col = 3},
 	armasy		= {order = 4, row = 1, col = 4},
-	corgant		= {order = 5, row = 2, col = 1},
-	armasp		= {order = 6, row = 2, col = 1},
+	armtech2 	= {order = 5, row = 2, col = 1},
+	armarad		= {order = 6, row = 2, col = 2},
+	armasp		= {order = 7, row = 2, col = 3},
+	corgant		= {order = 8, row = 2, col = 4},
 	--- BOWHQ4
 	armack     	= {order = 1, row = 1, col = 1},
 	armacv     	= {order = 2, row = 1, col = 2},
@@ -526,15 +529,15 @@ local econ_commands = {
 	armestor 		= {order = 6,  row = 1, col = 6},
 
 	armmoho			= {order = 1,  row = 2, col = 1},
-	armmmkr			= {order = 3,  row = 2, col = 3},
-	armuwadves		= {order = 4,  row = 2, col = 4},
-	armuwadvms		= {order = 5,  row = 2, col = 5},
-	armfus			= {order = 6,  row = 3, col = 6},
-	armawin			= {order = 7,  row = 3, col = 1},
-	armarad			= {order = 8,  row = 3, col = 2},
-	armfort			= {order = 9,  row = 3, col = 3},
-	armtide			= {order = 10, row = 3, col = 4},
-	armuwmex		= {order = 11, row = 3, col = 5},
+	armfus			= {order = 2,  row = 2, col = 2},
+	armmmkr			= {order = 3,  row = 2, col = 4},
+	armuwadves		= {order = 4,  row = 2, col = 5},
+	armuwadvms		= {order = 5,  row = 2, col = 6},
+
+	armawin			= {order = 6,  row = 3, col = 1},
+	armfort			= {order = 8,  row = 3, col = 3},
+	armtide			= {order = 9, row = 3, col = 4},
+	armuwmex		= {order = 10, row = 3, col = 5},
 
 	cormex		= {order = 1,  row = 1, col = 1},
 	corsolar	= {order = 2,  row = 1, col = 2},
