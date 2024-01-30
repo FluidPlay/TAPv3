@@ -12,9 +12,15 @@ local skin = {
 --//=============================================================================
 --//
 
+
+local defBackgroundColor = {0.66, 0.58, 0.20, 0.95}
+local defFocusColor  = {0.70, 0.62, 0.20, 0.9}
+local defBorderColor = {0.70, 0.62, 0.20, 0.15}
+local defPressBackgroundColor = {0.62, 0.565, 0.14, 0.85}
+
 skin.general = {
-  focusColor  = {0.94, 0.50, 0.23, 1},
-  borderColor = {1.0, 1.0, 1.0, 1.0},
+  focusColor  = defFocusColor, --{0.94, 0.50, 0.23, 1},
+  borderColor = defBorderColor, --{1.0, 1.0, 1.0, 1.0},
 
   font = {
 	font    = SKINDIR .. "fonts/GeogrotesqueCompMedium.otf", --n019003l.pfb",
@@ -51,25 +57,25 @@ skin.button = {
   --borderColor = {0.50, 0.42, 0.20, 0.15},
   --pressBackgroundColor = {0.42, 0.365, 0.14, 0.85},
 
-  backgroundColor = {0.66, 0.58, 0.20, 0.95},
-  focusColor  = {0.70, 0.62, 0.20, 0.9},
-  borderColor = {0.70, 0.62, 0.20, 0.15},
-  pressBackgroundColor = {0.62, 0.565, 0.14, 0.85},
-
+  backgroundColor = 		defBackgroundColor, 		--{0.66, 0.58, 0.20, 0.95},
+  focusColor  = 			defFocusColor, 				--{0.70, 0.62, 0.20, 0.9},
+  borderColor = 			defBorderColor, 			--{0.70, 0.62, 0.20, 0.15},
+  pressBackgroundColor = 	defPressBackgroundColor, 	--{0.62, 0.565, 0.14, 0.85},
 
   DrawControl = DrawButton,
 }
 
+
 skin.button_tiny = {
   TileImageBK = ":cn:tech_button_bright_tiny_bk.png",
   TileImageFG = ":cn:tech_button_bright_tiny_fg.png",
-  tiles = {130, 136, 123, 88},		--{6, 6, 6, 6}, --// tile widths: left,top,right,bottom
-  padding = {5, 5, 5, 5},
+  tiles = {65, 68, 62, 44},		--{6, 6, 6, 6}, --// tile widths: left,top,right,bottom
+  padding = {10, 10, 10, 10},
 
-  backgroundColor = {0.20, 0.38, 0.46, 0.95},
-  focusColor  = {0.20, 0.42, 0.50, 0.9},
-  borderColor = {0.20, 0.42, 0.50, 0.15},
-  pressBackgroundColor = {0.14, 0.365, 0.42, 0.85},
+  backgroundColor = 		defBackgroundColor,
+  focusColor  = 			defFocusColor,
+  borderColor = 			defBorderColor,
+  pressBackgroundColor = 	defPressBackgroundColor,
 
   DrawControl = DrawButton,
 }
@@ -80,9 +86,9 @@ skin.overlay_button = {
   tiles = {10, 7, 10, 7}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0, 0, 0, 0.7},
-  focusColor  = {0.94, 0.50, 0.23, 0.7},
-  borderColor = {1,1,1,0},
+  backgroundColor =	defBackgroundColor, -- {0, 0, 0, 0.7},
+  focusColor  = 	defFocusColor, -- {0.94, 0.50, 0.23, 0.7},
+  borderColor = 	defBorderColor, -- {1,1,1,0},
 
   DrawControl = DrawButton,
 }
@@ -93,9 +99,9 @@ skin.overlay_button_tiny = {
   tiles = {6, 6, 6, 6}, --// tile widths: left,top,right,bottom
   padding = {5, 5, 5, 5},
 
-  backgroundColor = {0, 0, 0, 0.7},
-  focusColor  = {0.94, 0.50, 0.23, 0.7},
-  borderColor = {1,1,1,0},
+  backgroundColor =	defBackgroundColor, -- {0, 0, 0, 0.7},
+  focusColor  = 	defFocusColor, -- {0.94, 0.50, 0.23, 0.7},
+  borderColor = 	defBorderColor, -- {1,1,1,0},
 
   DrawControl = DrawButton,
 }
