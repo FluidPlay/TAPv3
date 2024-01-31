@@ -488,7 +488,7 @@ local options = {
     def = 10000, -- -1
     min = -1,
     step = 1,
-    max = 500,
+    max = 10000,
   },
   {
     key = "startenergy",
@@ -499,7 +499,7 @@ local options = {
     def = 10000,  -- -1
     min = -1,
     step = 1,
-    max = 500,
+    max = 10000,
   },
   {
     key = "startresdelta",
