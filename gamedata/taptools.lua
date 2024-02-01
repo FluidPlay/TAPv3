@@ -185,7 +185,7 @@ end
 
 -- Debug table keys and values, up to three nested levels
 ---TODO: Fix for iPairs, not really working (tested with weaponDef / damages itable)
-local function DebugTable(tbl)
+function DebugTable(tbl)
 	for k, v in pairsByKeys(tbl) do
 		local str = ""
 		if type(v) == "table" then

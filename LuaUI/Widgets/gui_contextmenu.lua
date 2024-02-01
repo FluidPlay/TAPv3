@@ -38,6 +38,7 @@ stats_hide_projectile_speed
 include("keysym.lua")
 VFS.Include("LuaRules/Utilities/numberfunctions.lua")
 VFS.Include("LuaRules/Utilities/versionCompare.lua")
+VFS.Include("gamedata/taptools.lua")
 local weaponDmgTypes = VFS.Include("gamedata/configs/weapondamagetypes.lua")
 
 local spSendLuaRulesMsg			= Spring.SendLuaRulesMsg
@@ -679,6 +680,11 @@ local function weapons2Table(cells, ws, unitID)
 			end
 		end
 
+		--if ws.damage then
+			cells[#cells+1] = ' - Base Damage:'
+			cells[#cells+1] = ws.damage or "nil"
+		--end
+
 		if cp.post_capture_reload then
 			cells[#cells+1] = ' - Reloadtime:'
 			cells[#cells+1] = numformat (tonumber(cp.post_capture_reload)/30,2) .. 's'
@@ -1282,6 +1288,18 @@ local function printWeapons(unitDef, unitID)
 
 	local ucp = unitDef.customParams
 
+	local wepTable = unitDef.weapons
+	wepTable.n = nil
+	for index, weapon in pairs(wepTable) do
+		local weaponDef = WeaponDefs[weapon.weaponDef]
+		Spring.Echo("has damage table: "..(type(weaponDef.damages) == "table" and "yes!" or "nein.."))
+		Spring.Echo("Damage keys:")
+		DebugTableKeys(weaponDef.damages)
+		--if weaponDef.type == "StarburstLauncher" then
+		--	starBLaunchers[index] = true
+		--end
+	end
+
 	for i=1, #unitDef.weapons do
 		if not unitID or -- filter out commander weapons not in current loadout
 		(  i == Spring.GetUnitRulesParam(unitID, "comm_weapon_num_1")
@@ -1311,6 +1329,7 @@ local function printWeapons(unitDef, unitID)
 
 			if (not isDuplicate) and not weaponDef.customParams.fake_weapon then
 				local weapDmgType = weaponDmgTypes[unitDef.name] and weaponDmgTypes[unitDef.name][weaponDef.description] or "Not found"
+
 				local wsTemp = {
 					weaponID = weaponID,
 					count = 1,
@@ -1322,7 +1341,8 @@ local function printWeapons(unitDef, unitID)
 					stockpile_time = ucp.stockpiletime,
 					stockpile_cost = ucp.stockpilecost,
 					firing_arc = weapon.maxAngleDif,
-					damage_type = weapDmgType		-- new for TAP
+					damage_type = weapDmgType,		-- new for TAP
+					damage = weaponDef.damages and (weaponDef.damages.default and weaponDef.damages.default or 0) or nil	-- new for TAP
 				}
 
 				-- dual wielding comms

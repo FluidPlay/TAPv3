@@ -6,7 +6,7 @@ function gadget:GetInfo()
 		date      = "2008-2010",
 		license   = "GNU GPL, v2 or later",
 		layer     = -1, -- Before terraforming gadget (for facplop terraforming)
-		enabled   = true  --  loaded by default?
+		enabled   = false -- true  --  loaded by default?
 	}
 end
 
@@ -43,10 +43,9 @@ local modInnateMetal = INNATE_INC_METAL
 local modInnateEnergy = INNATE_INC_ENERGY
 
 local storageUnits = {
-	{
-		unitDefID = UnitDefNames["armmstor"].id,	--staticstorage
-		storeAmount = UnitDefNames["armmstor"].metalStorage	--staticstorage
-	},
+	{	unitDefID = UnitDefNames["armcom"].id, storeAmount = UnitDefNames["armcom"].metalStorage },	--staticstorage
+	{	unitDefID = UnitDefNames["corcom"].id, storeAmount = UnitDefNames["corcom"].metalStorage },	--staticstorage
+	{	unitDefID = UnitDefNames["armmstor"].id, storeAmount = UnitDefNames["armmstor"].metalStorage },	--staticstorage
 	{	unitDefID = UnitDefNames["cormstor"].id, storeAmount = UnitDefNames["cormstor"].metalStorage	},
 	{	unitDefID = UnitDefNames["armuwadvms"].id, storeAmount = UnitDefNames["armuwadvms"].metalStorage	},
 	{	unitDefID = UnitDefNames["coruwadvms"].id, storeAmount = UnitDefNames["coruwadvms"].metalStorage	},
@@ -391,15 +390,6 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		end
 
 		-- add facplop
-		local teamLuaAI = Spring.GetTeamLuaAI(teamID)
-		local udef = UnitDefs[Spring.GetUnitDefID(unitID)]
-
-		local metal, metalStore = Spring.GetTeamResources(teamID, "metal")
-		local energy, energyStore = Spring.GetTeamResources(teamID, "energy")
-
-		Spring.SetTeamResource(teamID, "energy", teamInfo.start_energy or (modStartEnergy + energy))
-		Spring.SetTeamResource(teamID, "metal", teamInfo.start_metal or (modStartMetal + metal))
-
 		if GG.Overdrive then
 			GG.Overdrive.AddInnateIncome(allyTeamID, modInnateMetal, modInnateEnergy)
 		end
@@ -535,67 +525,67 @@ function gadget:GameStart()
 	end
 
 	-- spawn units
-	for teamNum,team in ipairs(Spring.GetTeamList()) do
+	for teamIdx, teamID in ipairs(Spring.GetTeamList()) do
 
 		-- clear resources
 		-- actual resources are set depending on spawned unit and setup
 		if not loadGame then
-			local pregameUnitStorage = (campaignBattleID and GetPregameUnitStorage(team)) or 0
-			Spring.SetTeamResource(team, "es", pregameUnitStorage) -- + HIDDEN_STORAGE
-			Spring.SetTeamResource(team, "ms", pregameUnitStorage)	-- + HIDDEN_STORAGE
-			Spring.SetTeamResource(team, "energy", 0)
-			Spring.SetTeamResource(team, "metal", 0)
+			local pregameUnitStorage = (campaignBattleID and GetPregameUnitStorage(teamID)) or 0
+			Spring.SetTeamResource(teamID, "es", pregameUnitStorage) 	-- + HIDDEN_STORAGE
+			Spring.SetTeamResource(teamID, "ms", pregameUnitStorage) -- + HIDDEN_STORAGE
+			Spring.SetTeamResource(teamID, "energy", 0) -- 0
+			Spring.SetTeamResource(teamID, "metal", 0) -- 0
 		end
 
 		--check if player resigned before game started
-		local _,playerID,_,isAI = spGetTeamInfo(team, false)
-		local deadPlayer = (not isAI) and IsTeamResigned(team)
+		local _,playerID,_,isAI = spGetTeamInfo(teamID, false)
+		local deadPlayer = (not isAI) and IsTeamResigned(teamID)
 
-		if team ~= gaiateam and not deadPlayer then
-			local luaAI = Spring.GetTeamLuaAI(team)
+		if teamID ~= gaiateam and not deadPlayer then
+			local luaAI = Spring.GetTeamLuaAI(teamID)
 			if DELAYED_AFK_SPAWN then
 				if not (luaAI and string.find(string.lower(luaAI), "chicken")) then
-					waitingForComm[team] = true
+					waitingForComm[teamID] = true
 				end
 			end
 			if COOP_MODE then
 				-- 1 start unit per player
-				local playerlist = Spring.GetPlayerList(team, true)
-				playerlist = workAroundSpecsInTeamZero(playerlist, team)
+				local playerlist = Spring.GetPlayerList(teamID, true)
+				playerlist = workAroundSpecsInTeamZero(playerlist, teamID)
 				if playerlist and (#playerlist > 0) then
 					for i=1,#playerlist do
 						local _,_,spec = spGetPlayerInfo(playerlist[i], false)
 						if (not spec) then
-							SpawnStartUnit(team, playerlist[i])
+							SpawnStartUnit(teamID, playerlist[i])
 						end
 					end
 				else
 					-- AI etc.
-					SpawnStartUnit(team, nil, true)
+					SpawnStartUnit(teamID, nil, true)
 				end
 			else -- no COOP_MODE
 				if (playerID) then
 					local _,_,spec,teamID = spGetPlayerInfo(playerID, false)
-					if (teamID == team and not spec) then
+					if (teamID == teamID and not spec) then
 						isAI = false
 					else
 						playerID = nil
 					end
 				end
 
-				SpawnStartUnit(team, playerID, isAI)
+				SpawnStartUnit(teamID, playerID, isAI)
 			end
 
 			-- extra comms
-			local playerlist = Spring.GetPlayerList(team, true)
-			playerlist = workAroundSpecsInTeamZero(playerlist, team)
+			local playerlist = Spring.GetPlayerList(teamID, true)
+			playerlist = workAroundSpecsInTeamZero(playerlist, teamID)
 			if playerlist then
 				for i = 1, #playerlist do
 					local customKeys = select(10, Spring.GetPlayerInfo(playerlist[i]))
 					if customKeys and customKeys.extracomm then
 						for j = 1, tonumber(customKeys.extracomm) do
 							Spring.Echo("Spawing a commander")
-							SpawnStartUnit(team, playerlist[i], false, true)
+							SpawnStartUnit(teamID, playerlist[i], false, true)
 						end
 					end
 				end
