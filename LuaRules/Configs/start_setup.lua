@@ -13,13 +13,13 @@ end
 -- starting and innate resources may be overridden by modoptions in start_unit_setup.lua
 
 -- starting resources
-START_METAL   = 10000 -- 325
-START_ENERGY  = 10000 --325
+START_METAL   = 1000 -- 325
+START_ENERGY  = 1000 --325
 
 INNATE_INC_METAL   = 0 --2
 INNATE_INC_ENERGY  = 0 --2
 
-START_STORAGE = 0
+START_STORAGE = 3000	--0
 
 COMM_SELECT_TIMEOUT = 30 * 15 -- 15 seconds
 

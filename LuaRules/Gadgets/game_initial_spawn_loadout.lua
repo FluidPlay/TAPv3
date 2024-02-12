@@ -166,9 +166,9 @@ if gadgetHandler:IsSyncedCode() then
 			if (modOptions and type(modOptions.startingenergy) == "number") then
 				startingenergy = modOptions.startingenergy end
 			for idx, teamID in ipairs(Spring.GetTeamList()) do
-				--Spring.SetTeamResource(teamID, "ms", startingmetal)
+				--Spring.SetTeamResource(teamID, "ms", 1000)
 				Spring.SetTeamResource(teamID, "m", startingmetal)
-				--Spring.SetTeamResource(teamID, "es", startingenergy)
+				--Spring.SetTeamResource(teamID, "es", 1000)
 				Spring.SetTeamResource(teamID, "e", startingenergy)
 			end
         end

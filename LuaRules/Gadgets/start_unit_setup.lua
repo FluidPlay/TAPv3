@@ -6,7 +6,7 @@ function gadget:GetInfo()
 		date      = "2008-2010",
 		license   = "GNU GPL, v2 or later",
 		layer     = -1, -- Before terraforming gadget (for facplop terraforming)
-		enabled   = false -- true  --  loaded by default?
+		enabled   = true  --  loaded by default?
 	}
 end
 
@@ -45,6 +45,8 @@ local modInnateEnergy = INNATE_INC_ENERGY
 local storageUnits = {
 	{	unitDefID = UnitDefNames["armcom"].id, storeAmount = UnitDefNames["armcom"].metalStorage },	--staticstorage
 	{	unitDefID = UnitDefNames["corcom"].id, storeAmount = UnitDefNames["corcom"].metalStorage },	--staticstorage
+	{	unitDefID = UnitDefNames["bowdaemon"].id, storeAmount = UnitDefNames["bowdaemon"].metalStorage },	--staticstorage
+	{	unitDefID = UnitDefNames["kerndaemon"].id, storeAmount = UnitDefNames["kerndaemon"].metalStorage },	--staticstorage
 	{	unitDefID = UnitDefNames["armmstor"].id, storeAmount = UnitDefNames["armmstor"].metalStorage },	--staticstorage
 	{	unitDefID = UnitDefNames["cormstor"].id, storeAmount = UnitDefNames["cormstor"].metalStorage	},
 	{	unitDefID = UnitDefNames["armuwadvms"].id, storeAmount = UnitDefNames["armuwadvms"].metalStorage	},
@@ -527,7 +529,8 @@ function gadget:GameStart()
 	-- spawn units
 	for teamIdx, teamID in ipairs(Spring.GetTeamList()) do
 
-		-- clear resources
+		-- clear resources (MaDD: otherwise they jump to 1 MILLION. Some engine nonsense).
+		-- MaDD: Check game_initial_spawn_loadout.lua!
 		-- actual resources are set depending on spawned unit and setup
 		if not loadGame then
 			local pregameUnitStorage = (campaignBattleID and GetPregameUnitStorage(teamID)) or 0
