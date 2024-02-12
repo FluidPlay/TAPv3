@@ -158,17 +158,17 @@ if gadgetHandler:IsSyncedCode() then
                 moveTowardsNearestOre(unitID, unitDef)
             end
 			-- HACK, figure out what's really going on (@start_unit_setup, apparently)
-			local startingmetal = 10000
-			local startingenergy = 10000
+			local startingmetal = 1000
+			local startingenergy = 1000
 			local modOptions = Spring.GetModOptions()
 			if (modOptions and type(modOptions.startingmetal) == "number") then
 				startingmetal = modOptions.startingmetal end
 			if (modOptions and type(modOptions.startingenergy) == "number") then
 				startingenergy = modOptions.startingenergy end
 			for idx, teamID in ipairs(Spring.GetTeamList()) do
-				Spring.SetTeamResource(teamID, "ms", startingmetal)
+				--Spring.SetTeamResource(teamID, "ms", startingmetal)
 				Spring.SetTeamResource(teamID, "m", startingmetal)
-				Spring.SetTeamResource(teamID, "es", startingenergy)
+				--Spring.SetTeamResource(teamID, "es", startingenergy)
 				Spring.SetTeamResource(teamID, "e", startingenergy)
 			end
         end
