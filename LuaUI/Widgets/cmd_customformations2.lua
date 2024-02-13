@@ -110,7 +110,7 @@ options = {
 		name = "RMB can issue line formation",
 		desc = "When enabled you can also issue the line formation command with dragging rmb, clicking rmb without moving still cancels.",
 		type = "bool",
-		value = false,
+		value = true, --false
 		path = 'Settings/Interface/Commands',
 	},
 }
