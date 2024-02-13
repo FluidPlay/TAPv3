@@ -324,7 +324,7 @@ function widget:DrawWorld()
 		end
 		gl.PolygonMode(GL.FRONT_AND_BACK, GL.FILL)
 	end
-	
+
 	for _, teamID in ipairs(Spring.GetTeamList()) do
 		local x, y, z = Spring.GetTeamStartPosition(teamID)
 		if ValidStartpos(x,y,z) then
@@ -409,7 +409,7 @@ function widget:DrawInMiniMap(minimapX, minimapY)
 	gl.LineWidth(3)
 	gl.Translate(0, minimapY, 0)
 	gl.Scale(minimapX/mapX, -minimapY/mapZ, 1)
-	
+
 	for _, teamID in ipairs(Spring.GetTeamList()) do
 		local x, y, z = Spring.GetTeamStartPosition(teamID)
 		if ValidStartpos(x, y, z) then

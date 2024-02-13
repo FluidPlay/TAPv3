@@ -265,7 +265,7 @@ local function getMiddleOfStartBox(teamID)
 	local x = Game.mapSizeX / 2
 	local z = Game.mapSizeZ / 2
 
-	local boxID = Spring.GetTeamRulesParam(teamID, "start_box_id")
+	local boxID = Spring.GetTeamRulesParam(teamID, "ystart_box_id")
 	if boxID then
 		local startposList = GG.startBoxConfig[boxID] and GG.startBoxConfig[boxID].startpoints
 		if startposList then
