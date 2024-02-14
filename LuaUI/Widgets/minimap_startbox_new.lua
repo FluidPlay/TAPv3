@@ -1,5 +1,5 @@
 function widget:GetInfo() return {
-	name      = "Start Boxes",
+	name      = "Start Boxes ZK",
 	desc      = "Shows start-boxes during placement",
 	author    = "trepan, jK, Rafal, Sprung",
 	date      = "2007-2015",
