@@ -6,15 +6,15 @@ function widget:GetInfo()
 		date      = "16 November 2016",
 		license   = "GNU GPL, v2 or later",
 		layer     = -11,
-		enabled   = false,
+		enabled   = true,
 	}
 end
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
-local BUTTON_Y = 0
+local BUTTON_Y = 6	-- 0
 local BUTTON_SIZE = 25
-local BUTTON_PLACE_SPACE = 27
+local BUTTON_PLACE_SPACE = 40 --27
 
 local mainWindow
 local contentHolder
@@ -435,16 +435,16 @@ local function InitializeControls()
 		x         = 0,
 		y         = 0,
 		width     = 370,
-		height    = 50,
+		height    = 75, --50,
 		minWidth  = 200,
-		minHeight = 32,
+		minHeight = 57, --32,
 		dockable  = true,
 		draggable = false,
 		resizable = false,
 		tweakDraggable = true,
 		tweakResizable = true,
 		noFont = true,
-		padding = {0, -1, 0, 0},
+		padding = {0, 0, 0, 0},
 		color = {0, 0, 0, 0},
 		parent = screen0,
 	}
@@ -456,7 +456,7 @@ local function InitializeControls()
 		classname = options.fancySkinning.value,
 		x = 0,
 		y = 0,
-		right = 0,
+		right = 10,
 		bottom = 0,
 		draggable = false,
 		resizable = false,
@@ -474,7 +474,7 @@ local function InitializeControls()
 	}
 
 	-- Overlay related buttons
-	local offset = 1
+	local offset = 1.2 --1
 
 	mapOverlay = MakeDropdownButtons(contentHolder, offset, overlayConfig)
 	mapOverlay.UpdateOverlayImage()

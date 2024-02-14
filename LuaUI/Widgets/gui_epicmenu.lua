@@ -115,7 +115,7 @@ local explodeSearchTerm = {text = "", terms = {}} -- store exploded "filterUserI
 --------------------------------------------------------------------------------
 -- Misc
 local B_HEIGHT = 26
-local B_HEIGHT_MAIN = 26
+local B_HEIGHT_MAIN = 50 --26
 local B_WIDTH_TOMAINMENU = 80
 local C_HEIGHT = 16
 
@@ -2290,7 +2290,7 @@ local function GetMainPanel(parent, width, height)
 		sliderWidth = width - 276
 	end
 
-	if height < 45 then
+	if true then --height < 45 -- We don't change stacking layout in TAP, when the panel is too tall
 		if width > 435 then
 			stackChildren[#stackChildren + 1] = StackPanel:New{
 				orientation = 'horizontal',
@@ -2299,7 +2299,7 @@ local function GetMainPanel(parent, width, height)
 				resizeItems = false,
 				autoArrangeV = false,
 				autoArrangeH = false,
-				padding = {0, 2, 0, 0},
+				padding = {0, 15, 0, 0},
 				itemMargin = {1, 0, 0, 0},
 				children = {
 					Image:New{file = LUAUI_DIRNAME .. 'Images/clock.png', width = 20, height = 26},
@@ -2316,7 +2316,7 @@ local function GetMainPanel(parent, width, height)
 			resizeItems = false,
 			autoArrangeV = false,
 			autoArrangeH = false,
-			padding = {0, 2, 0, 0},
+			padding = {0, 15, 0, 0},
 			itemMargin = {1, 0, 0, 0},
 			children = {
 				Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/gametime.png', width = 20, height = 26},  --game.png
@@ -2392,110 +2392,112 @@ local function GetMainPanel(parent, width, height)
 		--}
 
 		holderWidth = holderWidth + sliderWidth + 2
-	else
-		stackChildren[#stackChildren + 1] = Grid:New{
-			orientation = 'horizontal',
-			columns = 1,
-			rows = 2,
-			width = 80,
-			height = '100%',
-			--height = 40,
-			resizeItems = true,
-			autoArrangeV = true,
-			autoArrangeH = true,
-			padding = {0, 0, 0, 0},
-			itemPadding = {0, 0, 0, 0},
-			itemMargin = {0, 0, 0, 0},
 
-			children = {
-				StackPanel:New{
-					orientation = 'horizontal',
-					width = 70,
-					height = '100%',
-					resizeItems = false,
-					autoArrangeV = false,
-					autoArrangeH = false,
-					padding = {0, 1, 0, 0},
-					itemMargin = {2, 0, 0, 0},
-					children = {
-						Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/gametime.png', width = 20, height = 20}, --game.png
-						lbl_gtime,
-					},
-				},
-				StackPanel:New{
-					orientation = 'horizontal',
-					width = 80,
-					height = '100%',
-					resizeItems = false,
-					autoArrangeV = false,
-					autoArrangeH = false,
-					padding = {0, 0, 0, 0},
-					itemMargin = {2, 0, 0, 0},
-					children = {
-						Image:New{file = LUAUI_DIRNAME .. 'Images/clock.png', width = 20, height = 20},
-						lbl_clock,
-					},
-				},
-			},
-		}
-
-		holderWidth = holderWidth + 82
-
-		stackChildren[#stackChildren + 1] = Grid:New{
-			height = '100%',
-			width = sliderWidth,
-			columns = 2,
-			rows = 2,
-			resizeItems = false,
-			margin = {0, 0, 0, 0},
-			padding = {0, 0, 0, 0},
-			itemPadding = {1, 1, 1, 1},
-			itemMargin = {1, 1, 1, 1},
-
-			children = {
-				--Label:New{caption = 'Vol', width = 20, objectOverrideFont = WG.GetSpecialFont(13, "epic_main_fg", {color = color.main_fg}) },
-				Image:New{tooltip = 'Volume', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol.png', width = 18, height = 18},
-				Trackbar:New{
-					tooltip = 'Volume',
-					height = 15,
-					width = sliderWidth - 25,
-					trackColor = color.main_fg,
-					value = spGetConfigInt("snd_volmaster", 50),
-					OnChange = {
-						function(self)
-							WG.crude.SetMasterVolume(self.value, true)
-							if WG.ttsNotify then
-								WG.ttsNotify()
-							end
-						end
-					},
-				},
-
-				Image:New{tooltip = 'Music', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol_music.png', width = 18, height = 18},
-				Trackbar:New{
-					tooltip = 'Music',
-					height = 15,
-					width = sliderWidth - 25,
-					min = 0,
-					max = 1,
-					step = 0.01,
-					trackColor = color.main_fg,
-					value = settings.config["epic_Settings/Audio_Music_Volume"] or 0.5,
-					OnChange = {
-						function(self)
-							if WG.crude and WG.crude.SetMusicVolume then
-								WG.crude.SetMusicVolume(self.value, true)
-							end
-						end
-					},
-				},
-			},
-		}
-		masterVolumeTrackbar = stackChildren[#stackChildren].children[2]
-		musicTrackbar = stackChildren[#stackChildren].children[4]
-
-		holderWidth = holderWidth + sliderWidth + 2
 	end
+	--else
+	--	stackChildren[#stackChildren + 1] = Grid:New{
+	--		orientation = 'horizontal',
+	--		columns = 1,
+	--		rows = 2,
+	--		width = 80,
+	--		height = '100%',
+	--		--height = 40,
+	--		resizeItems = true,
+	--		autoArrangeV = true,
+	--		autoArrangeH = true,
+	--		padding = {0, 0, 0, 0},
+	--		itemPadding = {0, 0, 0, 0},
+	--		itemMargin = {0, 0, 0, 0},
+	--
+	--		children = {
+	--			StackPanel:New{
+	--				orientation = 'horizontal',
+	--				width = 70,
+	--				height = '100%',
+	--				resizeItems = false,
+	--				autoArrangeV = false,
+	--				autoArrangeH = false,
+	--				padding = {0, 1, 0, 0},
+	--				itemMargin = {2, 0, 0, 0},
+	--				children = {
+	--					Image:New{file = LUAUI_DIRNAME .. 'Images/epicmenu/gametime.png', width = 20, height = 20}, --game.png
+	--					lbl_gtime,
+	--				},
+	--			},
+	--			StackPanel:New{
+	--				orientation = 'horizontal',
+	--				width = 80,
+	--				height = '100%',
+	--				resizeItems = false,
+	--				autoArrangeV = false,
+	--				autoArrangeH = false,
+	--				padding = {0, 0, 0, 0},
+	--				itemMargin = {2, 0, 0, 0},
+	--				children = {
+	--					Image:New{file = LUAUI_DIRNAME .. 'Images/clock.png', width = 20, height = 20},
+	--					lbl_clock,
+	--				},
+	--			},
+	--		},
+	--	}
+	--
+	--	holderWidth = holderWidth + 82
+	--
+	--	stackChildren[#stackChildren + 1] = Grid:New{
+	--		height = '100%',
+	--		width = sliderWidth,
+	--		columns = 2,
+	--		rows = 2,
+	--		resizeItems = false,
+	--		margin = {0, 0, 0, 0},
+	--		padding = {0, 0, 0, 0},
+	--		itemPadding = {1, 1, 1, 1},
+	--		itemMargin = {1, 1, 1, 1},
+	--
+	--		children = {
+	--			--Label:New{caption = 'Vol', width = 20, objectOverrideFont = WG.GetSpecialFont(13, "epic_main_fg", {color = color.main_fg}) },
+	--			Image:New{tooltip = 'Volume', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol.png', width = 18, height = 18},
+	--			Trackbar:New{
+	--				tooltip = 'Volume',
+	--				height = 15,
+	--				width = sliderWidth - 25,
+	--				trackColor = color.main_fg,
+	--				value = spGetConfigInt("snd_volmaster", 50),
+	--				OnChange = {
+	--					function(self)
+	--						WG.crude.SetMasterVolume(self.value, true)
+	--						if WG.ttsNotify then
+	--							WG.ttsNotify()
+	--						end
+	--					end
+	--				},
+	--			},
+	--
+	--			Image:New{tooltip = 'Music', file = LUAUI_DIRNAME .. 'Images/epicmenu/vol_music.png', width = 18, height = 18},
+	--			Trackbar:New{
+	--				tooltip = 'Music',
+	--				height = 15,
+	--				width = sliderWidth - 25,
+	--				min = 0,
+	--				max = 1,
+	--				step = 0.01,
+	--				trackColor = color.main_fg,
+	--				value = settings.config["epic_Settings/Audio_Music_Volume"] or 0.5,
+	--				OnChange = {
+	--					function(self)
+	--						if WG.crude and WG.crude.SetMusicVolume then
+	--							WG.crude.SetMusicVolume(self.value, true)
+	--						end
+	--					end
+	--				},
+	--			},
+	--		},
+	--	}
+	--	masterVolumeTrackbar = stackChildren[#stackChildren].children[2]
+	--	musicTrackbar = stackChildren[#stackChildren].children[4]
+	--
+	--	holderWidth = holderWidth + sliderWidth + 2
+	--end
 
 	stackChildren[#stackChildren + 1] = img_flag
 	holderWidth = holderWidth + 26
@@ -2504,11 +2506,11 @@ local function GetMainPanel(parent, width, height)
 		name = 'subMenuButton',
 		OnClick = {function() ActionSubmenu(nil, '') end},
 		objectOverrideFont = WG.GetSpecialFont(13, "epic_game_fg", {color = color.game_fg}),
-		height = height - 9,
-		width = B_WIDTH_TOMAINMENU + 1,
+		height = height - 25, -- -9,
+		width = B_WIDTH_TOMAINMENU -5, --+ 1,
 		caption = "Menu (\255\0\255\0"..WG.crude.GetHotkey("crudesubmenu").."\008)",
 		padding = btn_padding,
-		margin = btn_margin,
+		margin = {0,0,7,0}, --btn_margin,
 		tooltip = '',
 		children = {
 			--Image:New{file = title_image, height = B_HEIGHT-2, width = B_HEIGHT-2, x = 2, y = 4},

@@ -94,7 +94,7 @@ if gadgetHandler:IsSyncedCode() then
         --moveTowardsNearestOre(unitID, unitDef)
     end
 
-    local function spawnBuilders(unitID, teamID, unitDef)
+    local function spawnStartingUnits(unitID, teamID, unitDef)
         --if not GeoNearby(x,y,z) then
             -- Spring.GetGroundHeight(x, z)
         local x,y,z = spGetUnitPosition(unitID)
@@ -122,10 +122,10 @@ if gadgetHandler:IsSyncedCode() then
 
         --spCreateUnit(commanderID, x, y, z-50, 0, teamID)
         --spCreateUnit(daemonID, x, y, z+50, 0, teamID)
-        spCreateUnit(commanderID, x-40, y, z-100, 0, teamID)
-        spawnBuilder(builderID, x+40, y, z-100, teamID, unitDef)
-        spCreateUnit(daemonID, x+40, y, z+100, 0, teamID)
-        spawnBuilder(builderID, x-40, y, z+100, teamID, unitDef)
+        spCreateUnit(commanderID, x-50, y, z-120, 0, teamID)
+        spawnBuilder(builderID, x+50, y, z-120, teamID, unitDef)
+        spCreateUnit(daemonID, x+50, y, z+120, 0, teamID)
+        spawnBuilder(builderID, x-50, y, z+120, teamID, unitDef)
 
         local piecemap = Spring.GetUnitPieceMap(unitID)
         local pieceID = piecemap["plugBL"]
@@ -149,15 +149,15 @@ if gadgetHandler:IsSyncedCode() then
                 local unitDef = unitDefID and UnitDefs[unitDefID] or nil
                 if unitDef and unitDef.customParams and unitDef.customParams.ishq then
                     local teamID = spGetUnitTeam(unitID)
-                    spawnBuilders(unitID, teamID, unitDef)
+                    spawnStartingUnits(unitID, teamID, unitDef)
                 end
             end
         end
-        if frame == 2 then
+        if frame == 1 then
             for unitID, unitDef in pairs(moveUnitNextFrame) do
                 moveTowardsNearestOre(unitID, unitDef)
             end
-			-- HACK, figure out what's really going on (@start_unit_setup, apparently)
+			-- We push final resources here
 			local startingmetal = 1000
 			local startingenergy = 1000
 			local modOptions = Spring.GetModOptions()
