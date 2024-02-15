@@ -477,6 +477,8 @@ local special_commands = {
 	corap		= {order = 3,  row = 1, col = 3},
 	coraap		= {order = 4,  row = 1, col = 4},
 	corasy		= {order = 5,  row = 2, col = 1},
+	corgant		= {order = 6,  row = 2, col = 2},
+	corgant_stub= {order = 6,  row = 2, col = 2},
 	--- CORALAB
 	cormando	= {order = 1, row = 1, col = 1},
 	coraak		= {order = 2, row = 1, col = 2},
