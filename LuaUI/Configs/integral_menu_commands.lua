@@ -45,7 +45,8 @@ local cmdPosDef = {
 	[CMD.RECLAIM]       = {pos = 7, priority = 3},
 	[CMD.RESURRECT]     = {pos = 7, priority = 4},
 	[CMD.WAIT]          = {pos = 7, priority = 5},
-	[CMD_FIND_PAD]      = {pos = 7, priority = 6},
+	[CMD.CAPTURE]       = {pos = 7, priority = 6},
+	[CMD_FIND_PAD]      = {pos = 7, priority = 7},
 
 	[CMD.LOAD_UNITS]    = {pos = 7, priority = 7},
 	[CMD.UNLOAD_UNITS]  = {pos = 7, priority = 8},

@@ -644,7 +644,7 @@ Complete Overhead/Free Camera has six actions:
 		name = "Activate Trackmode",
 		desc = "Track the selected unit (mouse midclick to exit mode)",
 		type = 'button',
-        hotkey = {key='t', mod='alt+'},
+        hotkey = {key='t', mod='ctrl+alt+'},
 		path = cameraFollowPath,
 		OnChange = function(self)
 			if thirdperson_trackunit then --turn off 3rd person tracking if it is.

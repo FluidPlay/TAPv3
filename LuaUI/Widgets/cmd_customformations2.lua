@@ -42,7 +42,7 @@ options = {
 		type = 'radioButton',
 		value = 'move',
 		items={
-			{key='never', name='Disabled', desc='Units spread themselves along the line minimising order distance without any regard for unit type clumping.'},
+			{key='never', name='Disabled', desc='Units spread themselves along the line minimizing order distance without any regard for unit type clumping.'},
 			{key='move', name='For movement orders', desc='As below, excluding commands that do not cause units to walk to the line (such as Force Fire).'},
 			{key='all', name='For all orders', desc='Units of the same type recieve orders spread evenly along the line. Order distance is still minimised within each type.'},
 		},
@@ -110,7 +110,7 @@ options = {
 		name = "RMB can issue line formation",
 		desc = "When enabled you can also issue the line formation command with dragging rmb, clicking rmb without moving still cancels.",
 		type = "bool",
-		value = true, --false
+		value = false,
 		path = 'Settings/Interface/Commands',
 	},
 }

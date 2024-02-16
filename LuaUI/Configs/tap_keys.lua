@@ -2,12 +2,12 @@ return {
 	-- Used by: gui_selectkeys.lua
 
 	-- yyyymmdd
-	-- if newer than user's, overwrite ALL zir zk_keys
+	-- if newer than user's, overwrite ALL zir tap_keys
 	-- else just add any that are missing from local config
 	["date"] = 20130630,
 
 
-	-- all default ZK keybinds.
+	-- all default TAP keybinds.
 	["keybinds"] = {
 		{	"togglecammode",	"Ctrl+backspace",},
 		{	"togglecammode",	"Shift+backspace",},
@@ -39,6 +39,7 @@ return {
 		{	"exitwindow",	"shift+esc",},
 		{	"quitforce",	"Ctrl+Shift+esc",},
 		{	"edit_escape",	"Any+escape",},
+		{	"capture",	";",},
 		{	"speedup",	{ "Any++","Any+=","Any+numpad+"}, },
 		{	"prevmenu",	",",},
 		{	"decguiopacity",	"Shift+,",},
@@ -166,6 +167,7 @@ return {
 		{	"screenshot png",	"f12",},
 		{	"screenshot jpg", "ctrl+f12"},
 		{	"settargetcircle",	"t",},
+		{	"canceltarget",	"Alt+t",},	-- Ctrl+Alt+T: COFC cam tracking toggle
 		{	"morph",	"m",},
 		{	"resurrect",	"t",},
 		{	"jump",	"j",},
@@ -176,7 +178,7 @@ return {
 		{	"select AllMap+_NameContain_Raptor+_ClearSelection_SelectAll+",	"ctrl+g",},
 		{	"select PrevSelection+_Idle+_ClearSelection_SelectAll+",	"ctrl+i",},
 		{	"select AllMap+_Not_Builder_Not_Building_Not_Transport_Aircraft_Radar+_ClearSelection_SelectAll+",	"ctrl+s",},
-		{	"select AllMap+_Not_Builder_Not_Building_Transport_Aircraft+_ClearSelection_SelectAll+",	"ctrl+t",},
+		--{	"select AllMap+_Not_Builder_Not_Building_Transport_Aircraft+_ClearSelection_SelectAll+",	"ctrl+t",},
 		{	"selectidlecon", "alt+z",},	  --z
 		{	"select Visible+_InPrevSel+_ClearSelection_SelectAll+",	"ctrl+x",},
 		{	"select AllMap+_InPrevSel+_ClearSelection_SelectAll+",	"ctrl+z",},

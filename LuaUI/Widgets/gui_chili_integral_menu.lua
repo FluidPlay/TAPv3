@@ -229,7 +229,7 @@ options = {
 		name = 'Construction Closes Tab',
 		desc = "When enabled, issuing or cancelling a construction command will switch back to the Orders tab (except for build options in the factory queue tab).",
 		type = 'bool',
-		value = true,
+		value = false, --true,
 		noHotkey = true,
 	},
 	selectionClosesTabOnSelect = {
@@ -2273,7 +2273,6 @@ local function InitializeControls()
 		if data.returnOnClick then
 			data.onClick = ReturnToOrders
 		end
-
 
 		data.holder = commandHolder
 		data.buttons = GetButtonPanel(commandHolder, data.name, 3, 6,  false, data.buttonLayoutConfig, data.isStructure, data.onClick, data.buttonLayoutOverride)

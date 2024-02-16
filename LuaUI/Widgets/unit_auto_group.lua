@@ -74,7 +74,7 @@ options = {
 		name = 'Immediate Mode',
 		desc = 'Units built/resurrected/received are added to autogroups immediately instead of waiting them to be idle.',
 		type = 'bool',
-		value = false,
+		value = true, --false,
 		noHotkey = true,
 	},
 	groupnumbers = {
@@ -112,7 +112,7 @@ options = {
 }
 
 -- Hidden until working
-for i = 0, 9 do
+--for i = 0, 9 do
 	--options["autogroup_" .. i] = {
 	--	name = 'Autogroup ' .. i,
 	--	type = 'button',
@@ -122,7 +122,7 @@ for i = 0, 9 do
 	--	path = hotkeyPath,
 	--}
 	--options_order[#options_order + 1] = "autogroup_" .. i
-end
+--end
 
 local finiGroup = {}
 local myTeam
