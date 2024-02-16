@@ -19,7 +19,7 @@ end
 
 Note:
 
-The selection actions in this file must match those in luaui/configs/zk_keys.lua
+The selection actions in this file must match those in luaui/configs/tap_keys.lua
 
 Please keep them up to date.
 

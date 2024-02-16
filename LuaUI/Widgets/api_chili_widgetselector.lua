@@ -22,7 +22,7 @@ options =
 	widgetlist_2 = {
 		name = 'Widget List',
 		type = 'button',
-		--hotkey = {key='f11', mod='A'}, -- In zk_keys.lua
+		--hotkey = {key='f11', mod='A'}, -- In tap_keys.lua
 		advanced = true,
 		OnChange = function(self)
 			if window_widgetlist then

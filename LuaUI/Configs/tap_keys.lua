@@ -1,4 +1,5 @@
 return {
+	-- Used by: gui_selectkeys.lua
 
 	-- yyyymmdd
 	-- if newer than user's, overwrite ALL zir zk_keys
@@ -33,7 +34,7 @@ return {
 		{
 			"edit_return", 			{"Any+enter", "Any+numpad_enter"},
 		},
-		{	"pause",	"pause",},
+		{	"pause",	{"pause","Ctrl+p",},},
 		{	"crudemenu",	"esc",},
 		{	"exitwindow",	"shift+esc",},
 		{	"quitforce",	"Ctrl+Shift+esc",},
@@ -122,8 +123,8 @@ return {
 		{	"areaterramex",	"alt+w",},
 		{	"wantonoff",	"o",},
 		{	"pushpull",	"o",},
-		{	"buildspacing dec",	"Any+x",},
-		{	"buildspacing inc",	"Any+z",},
+		{	"buildspacing dec",	"Any+,",}, --Any+x
+		{	"buildspacing inc",	"Any+.",}, --Any+z
 		{	"edit_delete",	"Any+delete",},
 		{	"edit_prev_line",	"Any+up",},
 		{	"moveforward",	"Any+up",},
@@ -165,6 +166,7 @@ return {
 		{	"screenshot png",	"f12",},
 		{	"screenshot jpg", "ctrl+f12"},
 		{	"settargetcircle",	"t",},
+		{	"morph",	"m",},
 		{	"resurrect",	"t",},
 		{	"jump",	"j",},
 		{	"select AllMap++_ClearSelection_SelectAll+",	"ctrl+a",},
@@ -175,14 +177,14 @@ return {
 		{	"select PrevSelection+_Idle+_ClearSelection_SelectAll+",	"ctrl+i",},
 		{	"select AllMap+_Not_Builder_Not_Building_Not_Transport_Aircraft_Radar+_ClearSelection_SelectAll+",	"ctrl+s",},
 		{	"select AllMap+_Not_Builder_Not_Building_Transport_Aircraft+_ClearSelection_SelectAll+",	"ctrl+t",},
-		{	"selectidlecon",	"z",},
+		{	"selectidlecon", "alt+z",},	  --z
 		{	"select Visible+_InPrevSel+_ClearSelection_SelectAll+",	"ctrl+x",},
 		{	"select AllMap+_InPrevSel+_ClearSelection_SelectAll+",	"ctrl+z",},
+		{	"epic_chili_integral_menu_tab_units",	"any+z",},  --any+n
 		{	"epic_chili_integral_menu_tab_economy",	"any+x",},
 		{	"epic_chili_integral_menu_tab_defense",	"any+c",},
 		{	"epic_chili_integral_menu_tab_special",	"any+v",},
 		{	"epic_chili_integral_menu_tab_factory",	"any+b",},
-		{	"epic_chili_integral_menu_tab_units",	"any+n",},
 		{	"exitwindow",	"s+escape",},
 		{	"crudesubmenu",	"f10"},
 		{	"epic_chili_pro_console_enableconsole", "f8"},

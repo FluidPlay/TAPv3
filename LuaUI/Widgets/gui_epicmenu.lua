@@ -46,7 +46,7 @@ do
 	confdata = VFS.Include(file, nil, VFS.RAW_FIRST)
 	--assign keybind file:
 	keybind_dir = LUAUI_DIRNAME .. 'Configs/'
-	keybind_file = 'zk_keys.lua'
+	keybind_file = 'tap_keys.lua'
 	if isMission then
 		--FIXME: find modname instead of using hardcoded mission_keybinds_file name
 		keybind_file = (confdata.mission_keybinds_file and confdata.mission_keybinds_file) or keybind_file --example: singleplayer_keys.lua
@@ -157,11 +157,11 @@ local languages, flagByLang, langByFlag = VFS.Include("LuaUI/Headers/languages.l
 --------------------------------------------------------------------------------
 -- Key bindings
 -- KEY BINDINGS AND YOU:
--- First, Epic Menu checks for a keybind bound to the action in LuaUI/Configs/zk_keys.lua.
+-- First, Epic Menu checks for a keybind bound to the action in LuaUI/Configs/tap_keys.lua.
 --     If the local copy has a lower date value than the one in the mod,
 --     it overwrites ALL conflicting keybinds in the local config.
 --    Else it just adds any action-key pairs that are missing from the local config.
---    zk_keys.lua is written to at the end of loading LuaUI and on LuaUI shutdown.
+--    tap_keys.lua is written to at the end of loading LuaUI and on LuaUI shutdown.
 -- Next, if it's a widget command, it checks if the widget specified a default keybind.
 --    If so, it uses that command.
 -- Lastly, it checks uikeys.txt (read-only).

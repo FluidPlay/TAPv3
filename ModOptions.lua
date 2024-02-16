@@ -150,6 +150,27 @@ local options = {
   --  def = false,
   --},
   {
+	  key="deathmode",
+	  name="Game End Mode",
+	  desc="What it takes to eliminate a team",
+	  type="list",
+	  def="com",
+	  section="startconds",
+	  items={
+		  {key="neverend", name="None", desc="Teams are never eliminated"},
+		  {key="com", name="Kill all enemy Commanders", desc="When a team has no Commanders left, it loses"},
+		  {key="killall", name="Kill everything", desc="Every last unit must be eliminated, no exceptions!"},
+	  }
+  },
+  {
+	  key    = "ffa_mode",
+	  name   = "FFA Mode",
+	  desc   = "Units with no player control are removed/destroyed \nUse FFA spawning mode",
+	  type   = "bool",
+	  def    = false,
+	  section= "startconds",
+  },
+  {
     key = "max_com_level",
     name = "Commander level limit",
     desc = "Choose the commander level limit. 0 for unlimited.",

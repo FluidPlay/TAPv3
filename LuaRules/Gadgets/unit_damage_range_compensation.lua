@@ -96,7 +96,6 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		return damage, 1 end
 	-- If damage was caused by a harvester, bypass unit
 	local maxorestorage = tonumber(unitDef.customParams.maxorestorage)
-	--spEcho("finished unit harvestStorage: "..(maxorestorage or "nil")) --maxorestorage
 	if maxorestorage and maxorestorage > 0 then
 		return damage, 1 end
     -- If damage was not caused by another unit, do nothing; defenses are also buildings, will be bypassed too
