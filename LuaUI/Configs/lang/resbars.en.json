@@ -10,7 +10,7 @@
 	"resbar_overdrive" : "Overdrive",
 	"resbar_overdrive_efficiency" : "Overdrive Efficiency",
 	"resbar_economy_advice" : "Advice",
-	"advie_add_metal" : "Build more Metal Extractors to increase overdrive efficiency",
+	"advie_add_metal" : "Build sprawlers on top of ore spots, to support more harvesting units",
 	"advice_add_energy" : "Increase energy production by building Power Plants",
 	"advice_expand_both" : "Build Metal Extractors and Power Plants",
 	"resbar_reclaim" : "Reclaim",
@@ -38,6 +38,6 @@
 	"resbar_energy_bar_tooltip" : "Represents your storage capacity. Filled portion is used storage.\nFlashes if maximum storage is reached and you start wasting energy.",
 	"resbar_metal_expense_tooltip" : "Your metal demand. Construction and morph demand metal.",
 	"resbar_energy_expense_tooltip" : "This is this total energy demand of your economy and abilities which require energy upkeep.",
-	"metal_excess_warning" : "Build/use more constructors to spend your metal.",
-	"energy_stall_warning" : "Build more powerplants to prevent energy stall."
+	"metal_excess_warning" : "Build/use more builders to spend your metal.",
+	"energy_stall_warning" : "Build more solar plants or wind generators to prevent energy stall."
 }

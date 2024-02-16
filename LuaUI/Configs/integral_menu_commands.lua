@@ -141,7 +141,6 @@ local factoryUnitPosDef = {
 		armintr  	= unitTypes.RAIDER,
 		armjam  	= unitTypes.UTILITY,
 	},
-
 	factorycloak = {
 		cloakcon          = unitTypes.CONSTRUCTOR,
 		cloakraid         = unitTypes.RAIDER,
@@ -321,6 +320,7 @@ local factory_commands = {
 	bowdaemon	= {order = 6, row = 2, col = 1},
 	-- BUILDER EXCLUSIVE
 	armoutpost	= {order = 1, row = 2, col = 4},
+	armsonar	= {order = 1, row = 2, col = 5},
 	--ARMOUTPOST
 	armlab		= {order = 1, row = 1, col = 1},
 	armvp 		= {order = 2, row = 1, col = 2},
