@@ -25,6 +25,7 @@ local echo = Spring.Echo
 include("keysym.lua")
 local factory_commands,econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
 local _, _, overrides = include("Configs/integral_menu_config.lua", nil, VFS.RAW_FIRST)
+local function istable(x)  return (type(x) == 'table')   end
 
 -- "marking menu" is not the best name, but it's also used by
 -- other similar widgets and also people may have already
@@ -845,7 +846,7 @@ end
 --sorts commands into categories
 local function ProcessCommand(cmd)
 	if not cmd.hidden and cmd.id ~= CMD.PAGES then
-		if (cmd.type == CMDTYPE.ICON_MODE and cmd.params ~= nil and #cmd.params > 1) then
+		if (cmd.type == CMDTYPE.ICON_MODE and istable(cmd.params) and #cmd.params > 1) then
 			curCommands[#curCommands+1] = cmd
 		elseif special_commands[cmd.id] then --curently terraform
 			curCommands[#curCommands+1] = cmd

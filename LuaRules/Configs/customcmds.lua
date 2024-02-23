@@ -1,7 +1,6 @@
---[[ WARNING!! Only BASE VANILLA ZK commands belong here!
-     If you are a modder adding custom commands, MAKE YOUR OWN FILE.
+--[[ If you are a modder adding custom commands, MAKE YOUR OWN FILE.
      By overriding this file you're SETTING YOURSELF UP FOR FAILURE
-     when ZK adds something to this file (your override won't have
+     when base repo adds something to this file (your override won't have
      the new addition) and making things confusing for other modders
      who might want to use your code (with your own file it will be
      obvious where the extra commands are coming from). ]]

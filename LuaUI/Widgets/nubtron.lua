@@ -14,7 +14,7 @@ function widget:GetInfo()
     layer     = 1,
 --[[before enabling, read commit message 5482]]
     --enabled   = (rank and rank == 1) or true,
-    enabled   = true
+    enabled   = false, --true
   }
 end
 

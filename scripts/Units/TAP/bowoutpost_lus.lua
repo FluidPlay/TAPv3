@@ -163,7 +163,7 @@ end
 
 local function Stop()
   Spring.UnitScript.Signal(SIG_STATECHG)
-  Spring.UnitScript.SetSignalMask(SIG_STATECHG)
+  --Spring.UnitScript.SetSignalMask(SIG_STATECHG)
     --Spring.Echo("armoutpost_lus: Stopping")
 	SetUnitValue(COB.INBUILDSTANCE, 0)	--set INBUILDSTANCE to 0
 	--DisableTowers() :: Removed to prevent 'bouncing towers' after building etc
