@@ -53,8 +53,14 @@ return {
 	AUTO_CALL_TRANSPORT = 31206, --unit_transport_ai_button.lua
 	MORPH_UPGRADE_INTERNAL = 31207,
 	UPGRADE_STOP = 31208,
-	MORPH = 31210, -- up to 32209
-	MORPH_STOP = 32210, -- up to 33209
+	--MORPH = 31210, -- up to 32209
+	--MORPH_STOP = 32210, -- up to 33209
+
+	MORPH = 31410,
+	MORPH_STOP = 32410,
+	MORPH_PAUSE = 33410,
+	MORPH_QUEUE = 34410	,
+
 	REARM = 33410, -- bomber control
 	FIND_PAD = 33411, -- bomber control
 	UNIT_FLOAT_STATE = 33412,

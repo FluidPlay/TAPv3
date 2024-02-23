@@ -5,7 +5,10 @@ local buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildC
 -- Tooltips
 
 local imageDir = 'LuaUI/Images/commands/'
-local CMD_MORPH = 31410
+--local CMD_MORPH = 31410
+--local CMD_MORPH_STOP = 32410
+--local CMD_MORPH_PAUSE = 33410
+--local CMD_MORPH_QUEUE = 34410
 
 local tooltips = {
 	WANT_ONOFF = "Activation (_STATE_)\n  Toggles unit abilities such as radar, shield charge, and radar jamming.",
@@ -46,12 +49,16 @@ local tooltipsAlternate = {
 	FIRE_STATE = "Fire State (_STATE_)\n  Sets when a unit will automatically shoot.",
 }
 
+--- IMPORTANT: All custom/new commands should get a displayConfig here, to prevent error spam in gui_chili_integral_menu
 local commandDisplayConfig = {
 	[CMD.ATTACK] = { texture = imageDir .. 'Bold/attack.png', tooltip = "Force Fire: Shoot at a particular target. Units will move to find a clear shot."},
 	[CMD.STOP] = { texture = imageDir .. 'Bold/stop.png', tooltip = "Stop: Halt the unit and clear its command queue."}, --cancel
 	[CMD.FIGHT] = { texture = imageDir .. 'Bold/fight.png', tooltip = "Attack Move: Move to a position engaging targets along the way."},
 	[CMD.GUARD] = { texture = imageDir .. 'Bold/guard.png'},
-	[CMD_MORPH] = { texture = imageDir .. 'Bold/guard.png', tooltip = "Morph: Morphs unit into its advanced version."},
+	[CMD_MORPH] = { texture = imageDir .. 'Bold/morph.png', tooltip = "Morph: Morphs unit into its advanced version."},
+	[CMD_MORPH_STOP] = { texture = imageDir .. 'Bold/morphstop.png', tooltip = "Morph Stop: Stops an ongoing morph, returns some resources."},
+	[CMD_MORPH_PAUSE] = { texture = imageDir .. 'Bold/morphpause.png', tooltip = "Morph Pause: Pauses the ongoing morph."},
+	[CMD_MORPH_QUEUE] = { texture = imageDir .. 'Bold/morphqueue.png', tooltip = "Morph Queue: Queues up morphs across selected units."},
 	[CMD.MOVE] = { texture = imageDir .. 'Bold/move.png'},
 	[CMD_RAW_MOVE] = { texture = imageDir .. 'Bold/move.png'},
 	[CMD.PATROL] = { texture = imageDir .. 'Bold/patrol.png', tooltip = "Patrol: Attack Move back and forth between one or more waypoints."},

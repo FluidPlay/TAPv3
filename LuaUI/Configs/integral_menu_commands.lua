@@ -24,9 +24,12 @@ local cmdPosDef = {
 	[CMD_AREA_GUARD]    = {pos = 1, priority = 10},
 	[CMD.AREA_ATTACK]   = {pos = 1, priority = 11},
 
-	[CMD_UPGRADE_UNIT]  = {pos = 7, priority = -8},
-	[CMD_UPGRADE_STOP]  = {pos = 7, priority = -7},
-	[CMD_MORPH]         = {pos = 7, priority = -6},
+	[CMD_MORPH]        	= {pos = 13, priority = 1},
+	[CMD_MORPH_STOP] 	= {pos = 13, priority = 2},
+	[CMD_MORPH_QUEUE] 	= {pos = 13, priority = 3},
+	[CMD_MORPH_PAUSE] 	= {pos = 13, priority = 4},
+	[CMD_UPGRADE_UNIT] 	= {pos = 13, priority = 5},
+	[CMD_UPGRADE_STOP] 	= {pos = 13, priority = 6},
 
 	[CMD_STOP_NEWTON_FIREZONE] = {pos = 7, priority = -4},
 	[CMD_NEWTON_FIREZONE]      = {pos = 7, priority = -3},

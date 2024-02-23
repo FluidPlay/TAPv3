@@ -521,7 +521,10 @@ function makePanel()
 		resizeItems = true,
 		weightedResize = true,
 	}
-	graphPanel = Chili.Panel:New {
+	graphPanel = Chili.Panel:New { --.Panel
+		TileImageBK = ":cn:LuaUI/Widgets/chili_old/Skins/Evolved/tech_overlaywindow.png",	--tech_overlaywindow.png
+		tiles = {1, 1, 1, 1},
+		tileScale = {0.2, 0.2},
 		parent = window0,
 		x = selW + 4,
 		right = 40,
