@@ -22,7 +22,7 @@ end
 if not gadgetHandler:IsSyncedCode() then
 	return end
 
-local debugMode = true
+local debugMode = false -- true
 
 GG.AggroedGuardians = {}
 
@@ -103,7 +103,7 @@ local fsmBehaviors = {
 					isAway = distance(ax,ay,az, ip.x,ip.y,ip.z) > (guardRadius/2)
 				end
 				--Spring.Echo("hasTarget: "..tostring(hasTarget).." isAway: "..tostring(isAway))
-				return ((not hasTarget) or isAway) -- and fsm.state ~= "idle"	--and (not aggroedGuardians[ud.unitID]) 
+				return ((not hasTarget) or isAway) -- and fsm.state ~= "idle"	--and (not aggroedGuardians[ud.unitID])
 			end,
 			action = function(ud)       -- What to do when entering this state, if condition is satisfied
 				--print("Activated state "..stateIDs[1]) --.." for: "..ud.unitID)
@@ -159,7 +159,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
 	if (not IsValidUnit(attackerID)) or not (IsValidUnit(guardianID)) then
 		return end
 
-	spEcho("Attacked guardianID: "..(tostring(guardianID) or "nil"))
+	--spEcho("Attacked guardianID: "..(tostring(guardianID) or "nil"))
 	--local dist = spGetUnitSeparation(attackerID, guardianID, true, false)
 	local ax,ay,az = spGetUnitPosition(unitID)
 	local ip = data.idlePos
@@ -201,7 +201,7 @@ function gadget:GameFrame(f)
 		if IsValidUnit(guardianID) and guardianData and (not aggroedGuardians[guardianID]) then
 			local ip = guardianData.idlePos
 			local unitsAround = spGetUnitsInCylinder(ip.x, ip.z, guardRadius)
-			spEcho("Number of units around the guardian: "..tostring(#unitsAround))
+			--spEcho("Number of units around the guardian: "..tostring(#unitsAround))
 			for i, unitID in ipairs(unitsAround) do
 				for attackerID, attackerPower in pairs(attackers) do
 					if unitID == attackerID then

@@ -44,7 +44,7 @@ options = {
 		desc = 'How thick the outline appears around objects',
 		type = 'number',
 		min = 1, max = 16, step = 1,
-		value = 10,
+		value = 2,
     },
   
 	blur = {
@@ -52,7 +52,7 @@ options = {
 		desc = 'How smooth the outlines appear',
 		type = 'number',
 		min = 2, max = 16, step = 1,
-		value = 16,
+		value = 12,
 	},
 }
 

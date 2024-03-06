@@ -1290,15 +1290,17 @@ local function printWeapons(unitDef, unitID)
 
 	local wepTable = unitDef.weapons
 	wepTable.n = nil
-	for index, weapon in pairs(wepTable) do
-		local weaponDef = WeaponDefs[weapon.weaponDef]
-		Spring.Echo("has damage table: "..(type(weaponDef.damages) == "table" and "yes!" or "nein.."))
-		Spring.Echo("Damage keys:")
-		DebugTableKeys(weaponDef.damages)
-		--if weaponDef.type == "StarburstLauncher" then
-		--	starBLaunchers[index] = true
-		--end
-	end
+	--for index, weapon in pairs(wepTable) do
+	--	local weaponDef = WeaponDefs[weapon.weaponDef]
+	--	---DEBUG WIP
+	--	--Spring.Echo("has damage table: "..(type(weaponDef.damages) == "table" and "yes!" or "nein.."))
+	--	--Spring.Echo("Damage keys:")
+	--	--DebugTableKeys(weaponDef.damages)
+	--
+	--	--if weaponDef.type == "StarburstLauncher" then
+	--	--	starBLaunchers[index] = true
+	--	--end
+	--end
 
 	for i=1, #unitDef.weapons do
 		if not unitID or -- filter out commander weapons not in current loadout

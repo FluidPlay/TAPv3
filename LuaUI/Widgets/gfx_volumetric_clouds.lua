@@ -24,6 +24,8 @@ local enabled = true --false
 
 --local mapcfg = VFS.Include("mapinfo.lua")
 
+local spGetGameFrame = Spring.GetGameFrame
+
 local noiseTex = ":l:LuaUI/Images/rgbnoise.png"
 local mapcfg = {
 	custom = {
@@ -414,6 +416,8 @@ end
 ]]--
 
 function widget:DrawWorld()
+	if spGetGameFrame() < 1 then
+		return	end
 	DrawClouds()
 end
 
