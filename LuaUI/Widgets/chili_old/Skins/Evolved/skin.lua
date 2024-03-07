@@ -18,6 +18,8 @@ local defFocusColor  = {0.70, 0.62, 0.20, 0.9}
 local defBorderColor = {0.70, 0.62, 0.20, 0.15}
 local defPressBackgroundColor = {0.62, 0.565, 0.14, 0.85}
 
+local defTileScale = {0.1, 0.1}
+
 skin.general = {
   focusColor  = defFocusColor, --{0.94, 0.50, 0.23, 1},
   borderColor = defBorderColor, --{1.0, 1.0, 1.0, 1.0},
@@ -350,7 +352,7 @@ skin.imagelistview = {
   imageBK  = ":cn:node_selected_bw.png",
   imageFG  = ":cn:node_selected.png",
   tiles    = {4.5, 4.5, 4.5, 4.5},
-  tileScale = {0.2, 0.2},
+  tileScale = defTileScale,
 
   DrawItemBackground = DrawItemBkGnd,
 }
@@ -380,8 +382,8 @@ skin.panel = {
 
   TileImageBK = ":cn:panel_bow_small.png", --":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
-  tiles = {1, 1, 1, 1},
-  tileScale = {0.2, 0.2},
+  tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+  tileScale = defTileScale,
   backgroundColor = {1, 1, 1, 0.7},
 
   DrawControl = DrawPanel,
@@ -391,7 +393,7 @@ skin.panel_internal = {
   TileImageBK = ":cn:tech_button_bright_tiny_bk.png",	--tech_overlaywindow.png
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
-  tileScale = {0.2, 0.2},
+  tileScale = defTileScale, --{0.2, 0.2},
 
   backgroundColor = {1, 1, 1, 0.6},
 
@@ -428,7 +430,7 @@ skin.panelSmall = {
   TileImageBK = ":cn:tech_button.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1},
-  tileScale = {0.2, 0.2},
+  tileScale = defTileScale, --{0.2, 0.2},
 
   DrawControl = DrawPanel,
 }
@@ -437,7 +439,7 @@ skin.overlay_panel = {
   TileImageBK = ":cn:tech_overlaywindow.png",
   TileImageFG = ":cn:empty.png",
   tiles = {1, 1, 1, 1}, --// tile widths: left,top,right,bottom
-  tileScale = {0.2, 0.2},
+  tileScale = defTileScale, -- {0.2, 0.2},
   backgroundColor = {1, 1, 1, 0.7},
 
   DrawControl = DrawPanel,
@@ -448,6 +450,7 @@ local fancyBase = {
   TileImageFG = ":cn:empty.png",
   tiles = {16, 16, 16, 16}, --// tile widths: left,top,right,bottom
   tileSize = {0.2,0.2},
+  tileScale = defTileScale, -- {0.2, 0.2},
   DrawControl = DrawPanel,
   backgroundColor = {1,1,1,1},
 }
@@ -641,9 +644,11 @@ skin.treeview = {
 }
 
 skin.window = {
-  TileImage = ":cn:tech_overlaywindow.png",
-  tiles = {2, 2, 2, 2}, --// tile widths: left,top,right,bottom
-  tileScale = {0.2, 0.2},
+  TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
+  tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+  --TileImage = ":cn:tech_overlaywindow.png",
+  --tiles = {2, 2, 2, 2}, --// tile widths: left,top,right,bottom
+  tileScale = {0.1, 0.1},
   padding = {13, 13, 13, 13},
   hitpadding = {4, 4, 4, 4},
 
@@ -691,8 +696,10 @@ skin.main_window_small = {
 }
 
 skin.main_window_small_tall = {
-  TileImage = ":cn:tech_mainwindow_small_tall.png",
-  tiles = {40, 40, 40, 40}, --// tile widths: left,top,right,bottom
+	TileImage = ":cn:panel_bow_tall.png", --":cn:tech_mainwindow.png",
+	tiles = {209, 435, 209, 437}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
+  --TileImage = ":cn:tech_mainwindow_small_tall.png",
+  --tiles = {40, 40, 40, 40}, --// tile widths: left,top,right,bottom
   tileScale = {0.2, 0.2},
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
@@ -717,7 +724,7 @@ skin.main_window_small_tall = {
 skin.main_window_small_flat = {
 	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
-	tileScale = {0.2, 0.2},
+	tileScale = {0.1, 0.1},
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
 
@@ -742,7 +749,7 @@ skin.main_window_small_flat = {
 skin.main_window_small_very_flat = {
 	TileImage = ":cn:panel_bow_small.png", --":cn:tech_mainwindow.png",
 	tiles = {550, 420, 547, 424}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
-	tileScale = {0.2, 0.2},
+	tileScale = {0.1, 0.1},
 	padding = {60, 62, 60, 54},
 	hitpadding = {4, 4, 4, 4},
 
@@ -765,9 +772,9 @@ skin.main_window_small_very_flat = {
 }
 
 skin.main_window_tall = {
-  TileImage = ":cn:tech_mainwindow_tall.png",
-  tiles = {76, 40, 76, 40}, --// tile widths: left,top,right,bottom
-  tileScale = {0.2, 0.2},
+	TileImage = ":cn:panel_bow_tall.png",
+	tiles = {209, 435, 209, 437}, --// tile widths: left,top,right,bottom
+  tileScale = {0.1, 0.1},
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
 

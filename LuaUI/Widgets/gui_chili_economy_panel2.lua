@@ -1539,7 +1539,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
-		tileScale = {0.2, 0.2},		-- That's where the outer frame size is set (@MaDDoX)
+		tileScale = {0.1, 0.1},		-- That's where the outer frame size is set (@MaDDoX)
 
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()
@@ -1695,7 +1695,7 @@ function CreateWindow(oldX, oldY, oldW, oldH)
 		dockable = false;
 		draggable = false,
 		resizable = false,
-		tileScale = {0.2, 0.2},
+		tileScale = {0.1, 0.1},
 
 		OnMouseDown={ function(self) --OnClick don't work here, probably because its children can steal click
 			local alt, ctrl, meta, shift = Spring.GetModKeyState()

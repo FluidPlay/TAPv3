@@ -523,7 +523,7 @@ function makePanel()
 	}
 	graphPanel = Chili.Panel:New { --.Panel
 		TileImageBK = ":cn:LuaUI/Widgets/chili_old/Skins/Evolved/tech_overlaywindow.png",	--tech_overlaywindow.png
-		tiles = {1, 1, 1, 1},
+		--tiles = {1, 1, 1, 1},
 		tileScale = {0.2, 0.2},
 		parent = window0,
 		x = selW + 4,
@@ -561,6 +561,9 @@ function makePanel()
 	local gb_i = 1
 	for i = 1, #buttongroups do
 		local grouppanel = Chili.Panel:New {
+			--TileImageBK = ":cn:LuaUI/Widgets/chili_old/Skins/Evolved/tech_overlaywindow.png",	--tech_overlaywindow.png
+			TileImageBK = ":cn:LuaUI/Widgets/chili_old/Skins/Evolved/panel_bow_small.png", --":cn:tech_overlaywindow.png",
+			TileImageFG = ":cn:empty.png",
 			parent = graphSelect,
 			weight = #buttongroups[i][2] + 0.7,
 			padding = {1,1,1,1},
