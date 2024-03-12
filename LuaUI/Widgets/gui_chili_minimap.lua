@@ -62,7 +62,7 @@ local usingNewEngine = (#{Spring.GetLosViewColors()} == 5) -- newer engine has r
 WG.MinimapDraggingCamera = false --Boolean, false if selection through minimap is possible
 
 local vsx,vsy --Spring.GetViewSizes()
-local cs
+local cs	--camera state
 
 local fogBrightnessMin = 0
 local fogBrightnessMax = 1
@@ -555,7 +555,7 @@ options = {
 			--map_panel.backgroundColor = newClass.backgroundColor
 			map_panel.TileImageBK = newClass.TileImageBK
 			if newClass.padding then
-				map_panel.padding = newClass.padding
+				map_panel.padding = {7,7,7,7} --newClass.padding --MaDDoX
 				map_panel:UpdateClientArea()
 			end
 			map_panel:Invalidate()
@@ -781,7 +781,7 @@ MakeMinimapWindow = function()
 		
 		noFont = true,
 		margin = {0,0,0,0},
-		padding = {8,8,8,8},
+		padding = {0,0,0,0},
 		backgroundColor = bgColor_panel,
 	}
 
