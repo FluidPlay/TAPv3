@@ -596,9 +596,9 @@ local defense_commands = {
 	armsilo			= {order = 12, row = 2, col = 5},
 	armamb			= {order = 13, row = 2, col = 6},
 	armemp			= {order = 14, row = 3, col = 1},
-	armshltx_stub	= {order = 15, row = 3, col = 2},
-	armshltx		= {order = 15, row = 3, col = 2},
-	armgate			= {order = 16, row = 3, col = 3},
+	--armshltx_stub	= {order = 15, row = 3, col = 2},
+	--armshltx		= {order = 15, row = 3, col = 2},
+	armgate			= {order = 15, row = 3, col = 2},
 --
 	--- KERN
 	corllt		= {order = 1, row = 1, col = 1},
