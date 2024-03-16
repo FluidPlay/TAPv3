@@ -37,7 +37,21 @@ if gadgetHandler:IsSyncedCode() then
     -----------------
     ---- SYNCED
     -----------------
-    local spGetUnitHealth   = Spring.GetUnitHealth
+	local _, _, oreTypes, sprawlerTypes = VFS.Include("common/include/harvestsystemtypes.lua")
+	--local oreTypes = { 	["sml"] = { id = UnitDefNames["oresml"].id},   --TODO: add minSpawnDistance, per type
+    --              		["lrg"] = {id = UnitDefNames["orelrg"].id},
+	--				   	["moho"] = {id = UnitDefNames["oremoho"].id},
+	--				   	["uber"] = {id = UnitDefNames["oreuber"].id} }
+    --local sprawlerTypes = {[UnitDefNames["armmex"].id] = { kind = "sml", multiplier = 1.5 },   --1.125
+    --                    	[UnitDefNames["armamex"].id] = { kind = "lrg", multiplier = 1.2 },
+	--						[UnitDefNames["armmoho"].id] = { kind = "moho", multiplier = 1.25 },
+	--						[UnitDefNames["armuber"].id] = { kind = "uber", multiplier = 1.3 },
+	--
+	--						[UnitDefNames["cormex"].id] = { kind = "sml", multiplier = 1.5 }, --1.125
+    --                    	[UnitDefNames["corexp"].id] = { kind = "lrg", multiplier = 1.2 },
+	--						[UnitDefNames["cormoho"].id] = { kind = "moho", multiplier = 1.25 },
+	--						[UnitDefNames["coruber"].id] = { kind = "uber", multiplier = 1.3 },
+    --						}
 
     --harvest_eco = 1 --(tonumber(Spring.GetModOptions().harvest_eco)) or 1
     local updateRate = 120 * 30 -- 2 mins
@@ -88,6 +102,7 @@ if gadgetHandler:IsSyncedCode() then
     --local oreValue = { sml = 240, lrg = 360, moho = 720, mantle = 2160 } --calculating 4s for a drop cycle (reclaim/drop)
 
     local spGetUnitPosition = Spring.GetUnitPosition
+    local spGetUnitHealth   = Spring.GetUnitHealth
     local spCreateUnit = Spring.CreateUnit
     local spSetUnitNeutral = Spring.SetUnitNeutral
     local spSetUnitRotation = Spring.SetUnitRotation
@@ -110,20 +125,6 @@ if gadgetHandler:IsSyncedCode() then
             Spring.Echo("gadget|eco_ore_mgr:: "..string) end
     end
 
-    local ore = { ["sml"] = {id = UnitDefNames["oresml"].id},   --TODO: add minSpawnDistance, per type
-                  ["lrg"] = {id = UnitDefNames["orelrg"].id},
-                  ["moho"] = {id = UnitDefNames["oremoho"].id},
-                  ["uber"] = {id = UnitDefNames["oreuber"].id} }
-    local sprawlers = { [UnitDefNames["armmex"].id] = { kind = "sml", multiplier = 1.5 },   --1.125
-                        [UnitDefNames["armamex"].id] = { kind = "lrg", multiplier = 1.2 },
-                        [UnitDefNames["armmoho"].id] = { kind = "moho", multiplier = 1.25 },
-                        [UnitDefNames["armuber"].id] = { kind = "uber", multiplier = 1.3 },
-
-                        [UnitDefNames["cormex"].id] = { kind = "sml", multiplier = 1.5 }, --1.125
-                        [UnitDefNames["corexp"].id] = { kind = "lrg", multiplier = 1.2 },
-                        [UnitDefNames["cormoho"].id] = { kind = "moho", multiplier = 1.25 },
-                        [UnitDefNames["coruber"].id] = { kind = "uber", multiplier = 1.3 },
-    }
 
     --local function distance (x1, y1, z1, x2, y2, z2 )
     --    return math.sqrt(sqr(x2-x1) + sqr(y2-y1) + sqr(z2-z1))
@@ -137,7 +138,7 @@ if gadgetHandler:IsSyncedCode() then
         local multiplier = 1
         for _,unitID in ipairs(unitsNearSpot) do
             local unitDefID = spGetUnitDefID(unitID)
-            local sprawler = sprawlers[unitDefID]
+            local sprawler = sprawlerTypes[unitDefID]
             if sprawler then
                 local health,maxHealth,paralyzeDamage,captureProgress,buildProgress=spGetUnitHealth(unitID)
                 local done = buildProgress and buildProgress >= 1
@@ -234,7 +235,7 @@ if gadgetHandler:IsSyncedCode() then
             --Spring.Echo("ID: "..(ore[tostring(kind)] and (ore[tostring(kind)]).id or "nil"))
             --local unitID = spCreateUnit((UnitDefs[(ore["lrg"]).id]).id, x, cy+spawnHeight, z, math_random(0, 3), gaiaTeamID)
             --nudgeNearbyUnits(x,cy,z)
-            local unitID = spCreateUnit((UnitDefs[ore[kind]]).id, x, cy+spawnHeight, z, math_random(0, 3), gaiaTeamID) --cy+spawnHeight
+            local unitID = spCreateUnit((UnitDefs[oreTypes[kind]]).id, x, cy+spawnHeight, z, math_random(0, 3), gaiaTeamID) --cy+spawnHeight
             if unitID then
                 --Spring.MoveCtrl.Enable(unitID)
                 --Spring.MoveCtrl.SetGravity(unitID, 0.1)
@@ -266,7 +267,7 @@ if gadgetHandler:IsSyncedCode() then
         --if not harvest_eco == 1 then
         --    gadgetHandler:RemoveGadget(self)
         --end
-        ore = { sml = UnitDefNames["oresml"].id, lrg = UnitDefNames["orelrg"].id, moho = UnitDefNames["oremoho"].id, uber = UnitDefNames["oreuber"].id }
+        oreTypes = { sml = UnitDefNames["oresml"].id, lrg = UnitDefNames["orelrg"].id, moho = UnitDefNames["oremoho"].id, uber = UnitDefNames["oreuber"].id }
         oreSpots = GG.metalSpots  -- Set by mex_spot_finder.lua
         if testMode then
             updateRate = testModeUpdateRate * 30

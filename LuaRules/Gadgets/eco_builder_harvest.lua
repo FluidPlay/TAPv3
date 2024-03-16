@@ -35,6 +35,16 @@ if gadgetHandler:IsSyncedCode() then
 	-----------------
 
 	VFS.Include("gamedata/taptools.lua")
+	local isOreTower, isHarvester = VFS.Include("common/include/harvestsystemtypes.lua")
+	--local isOreTower = {
+	--	armmstor = true, cormstor = true, armuwadvms = true, coruwadvms = true,
+	--	bowhq = true, bowhq2 = true, bowhq3 = true, bowhq4 = true, bowhq5 = true, bowhq6 = true,
+	--	kernhq = true, kernhq2 = true, kernhq3 = true, kernhq4 = true, kernhq5 = true, kernhq6 = true,
+	--}
+	--local isHarvester = {
+	--	armck = true, corck = true, armck2 = true, corck2 = true, armcv = true, corcv = true, armca = true, corca = true, armcs = true, corcs = true,
+	--	armack = true, corack = true, armacv = true, coracv = true, armaca = true, coraca = true, armacsub = true, coracsub = true,
+	--}
 
 	local localDebug = false --|| Enables text state debug messages
 
@@ -72,15 +82,6 @@ if gadgetHandler:IsSyncedCode() then
 	local distBuffer = 40 -- distance buffer, units get further into the ore tower 'umbrella range' before dropping the load
 	local defaultDeliveryAmount = 20
 
-	local oreTowerDefNames = {
-		armmstor = true, cormstor = true, armuwadvms = true, coruwadvms = true,
-		bowhq = true, bowhq2 = true, bowhq3 = true, bowhq4 = true, bowhq5 = true, bowhq6 = true,
-		kernhq = true, kernhq2 = true, kernhq3 = true, kernhq4 = true, kernhq5 = true, kernhq6 = true,
-	}
-	local canharvest = {
-		armck = true, corck = true, armck2 = true, corck2 = true, armcv = true, corcv = true, armca = true, corca = true, armcs = true, corcs = true,
-		armack = true, corack = true, armacv = true, coracv = true, armaca = true, coraca = true, armacsub = true, coracsub = true,
-	}
 
 	local CMD_STOP = CMD.STOP
 
@@ -138,7 +139,7 @@ if gadgetHandler:IsSyncedCode() then
 		local unitDef = UnitDefs[unitDefID]
 		if unitDef == nil then
 			return end
-		if oreTowerDefNames[unitDef.name] then
+		if isOreTower[unitDef.name] then
 			spEcho("Ore Tower added: "..unitID)
 			oreTowers[unitID] = { range = (unitDef.buildDistance or 330), ally = spGetUnitAllyTeam(unitID) } -- 330 is lvl1 outpost build range
 			spSetUnitRulesParam(unitID, "oretowerrange", (unitDef.buildDistance or defaultOreTowerRange)) --330
@@ -274,7 +275,7 @@ if gadgetHandler:IsSyncedCode() then
 		if not IsValidUnit(harvesterID) or loadedHarvesters[harvesterID] then
 			return end
 		local harvesterDef = UnitDefs[harvesterDefID]
-		if not harvesterDef or not canharvest[harvesterDef.name] then
+		if not harvesterDef or not isHarvester[harvesterDef.name] then
 			return end
 		local curStorage = getUnitHarvestStorage(harvesterID)
 
