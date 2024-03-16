@@ -14,6 +14,19 @@ function gadget:GetInfo()
 	}
 end
 
+--New version TODO: Spring.SetUnitResourcing ( number unitID, string res, number amount )
+--return: nil
+--
+--or
+--
+--Spring.SetUnitResourcing ( number unitID, { res = number amount, ... } )
+--return: nil
+--
+--Possible values for res are: "[u|c][u|m][m|e]"
+--unconditional | conditional
+--use | make
+--metal | energy
+
 VFS.Include("gamedata/tapevents.lua") --"LoadedHarvesterEvent"
 
 if gadgetHandler:IsSyncedCode() then
