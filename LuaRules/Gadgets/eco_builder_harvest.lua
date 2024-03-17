@@ -14,7 +14,7 @@ function gadget:GetInfo()
 	}
 end
 
---New version TODO: Spring.SetUnitResourcing ( number unitID, string res, number amount )
+--New version --- Spring.SetUnitResourcing ( number unitID, string res, number amount )
 --return: nil
 --
 --or
@@ -34,6 +34,8 @@ if gadgetHandler:IsSyncedCode() then
 	---- SYNCED
 	-----------------
 
+	local spSetUnitResourcing = Spring.SetUnitResourcing
+
 	VFS.Include("gamedata/taptools.lua")
 	local isOreTower, isHarvester = VFS.Include("common/include/harvestsystemtypes.lua")
 	--local isOreTower = {
@@ -48,7 +50,8 @@ if gadgetHandler:IsSyncedCode() then
 
 	local localDebug = false --|| Enables text state debug messages
 
-	local CHECK_FREQ = 30 --4
+	local updateRate = 15 --30 --4
+	local recheckDelay = 15
 
 	--local function clamp(low, n, high) return math.min(math.max(n, low), high) end
 	local clamp = math.clamp
@@ -77,15 +80,17 @@ if gadgetHandler:IsSyncedCode() then
 	local featureRemainingMetal = {}
 	local previousHarvestStorage = {}
 	local oreTowers = {}
-	local harvestersInAction = {} -- Harvesters "in action"
+	local workingHarvesters = {} -- Harvesters "in action"
+	local chunksUnderAttack = {}
 
 	local distBuffer = 40 -- distance buffer, units get further into the ore tower 'umbrella range' before dropping the load
 	local defaultDeliveryAmount = 20
 
 
 	local CMD_STOP = CMD.STOP
+	local math_max = math.max
 
-	local ore = { sml = UnitDefNames["oresml"].id, lrg = UnitDefNames["orelrg"].id, moho = UnitDefNames["oremoho"].id, uber = UnitDefNames["oreuber"].id }
+	--local ore = { sml = UnitDefNames["oresml"].id, lrg = UnitDefNames["orelrg"].id, moho = UnitDefNames["oremoho"].id, uber = UnitDefNames["oreuber"].id }
 
 	local function spEcho(string)
 		if localDebug then --and isCom(unitID) and state ~= "deautomated"
@@ -121,7 +126,6 @@ if gadgetHandler:IsSyncedCode() then
 
 	function gadget:Initialize()
 		_G.OreTowers = oreTowers    -- making it available for unsynced access via SYNCED table
-		--_G.HarvesterStorage = harvesterStorage
 
 		--startFrame = Spring.GetGameFrame()
 		--gaiaTeamID = Spring.GetGaiaTeamID()
@@ -159,6 +163,11 @@ if gadgetHandler:IsSyncedCode() then
 	end
 
 	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeam)
+		chunksUnderAttack[unitID] = nil
+		local attackingHarvester = workingHarvesters[chunksUnderAttack[unitID]]
+		if attackingHarvester then
+			attackingHarvester = nil end
+
 		harvesters[unitID] = nil
 		oreTowers[unitID] = nil
 		loadedHarvesters[unitID] = nil
@@ -178,38 +187,6 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:FeatureDestroyed(featureID)
 		featureRemainingMetal[featureID] = nil
 	end
-
-	-----Returns nearestTowerID (or nil if none found within 999 range) & nearestDeployPos
-	--local function getNearestTowerID(harvesterID)
-	--    local nearestDist = 999
-	--    local nearestTowerID = nil
-	--    local nearestTowerRange = 999
-	--    for oreTowerID, data in pairs(oreTowers) do
-	--        local range = data.range
-	--        local thisTowerDist = spGetUnitSeparation ( harvesterID, oreTowerID, true) -- [, bool surfaceDist ]] )
-	--        if (thisTowerDist - range + distBuffer) <= nearestDist then  -- Eg: ttD = 600 - range = 200 => 600-200+40) => 440
-	--            nearestTowerRange = range
-	--            nearestTowerID = oreTowerID
-	--        end
-	--    end
-	--    if nearestTowerRange == 999 then
-	--        return nil
-	--    end
-	--    -- Get nearest point in deliver range of the Ore Tower
-	--    --L = sqrt ((x2-x1)^2 + (y2-y1)^2) --that's already nearestDist
-	--    local p = (nearestTowerRange - distBuffer) / nearestDist	--percentage (radius to discount / length of p1~p2)
-	--    local x1, y1 = spGetUnitPosition(harvesterID)
-	--    local x2, y2 = spGetUnitPosition(nearestTowerID)
-	--    if x1==x2 and y1==y2 then
-	--        return nil
-	--    end
-	--    local nearestDeployPos = { x = x2+p*(x1-x2), y = y2+p*(y1-y2) }
-	--    return nearestTowerID, nearestDeployPos
-	--end
-
-	--local function isHarvesting(unitID)
-	--	return harvestersInAction[unitID]
-	--end
 
 	local function inTowerRange(harvesterID)
 		local harvesterAlly = spGetUnitAllyTeam(harvesterID)
@@ -238,6 +215,17 @@ if gadgetHandler:IsSyncedCode() then
 		return harvesterInfo.delivery, harvesterInfo.max
 	end
 
+	local function isChunk(unitDefID)
+		local uDef = UnitDefs[unitDefID]
+		return uDef.customParams.isorechunk
+	end
+
+	local function setResourcing(uID, amount)
+		if amount == 0 then
+			workingHarvesters[uID] = nil end
+		spSetUnitResourcing ( uID, "umm", amount)
+	end
+
 	local function DeliverResources(harvesterID)
 		if not IsValidUnit(harvesterID) then
 			return end
@@ -254,51 +242,59 @@ if gadgetHandler:IsSyncedCode() then
 	end
 
 	--- Delivers resource straight to the pool (it's in range of a tower)
-	local function DeliverResourcesRaw(harvesterID, amount, maxStorage)
+	local function DeliverResourcesNow(harvesterID, amount, curStorage, maxStorage)
 		--local harvesterDef = UnitDefs[spGetUnitDefID(harvesterID)]
 		--local maxStorage = harvesterDef and tonumber(harvesterDef.customParams.maxorestorage) or defaultMaxStorage
 		local metalToAdd = math_clamp(0, maxStorage, amount)
-		spAddTeamResource (spGetUnitTeam(harvesterID), "metal", metalToAdd ) --(min, max, n)
+		if curStorage > 0 then
+			setUnitHarvestStorage (harvesterID, curStorage - amount)
+		end
+		--spAddTeamResource (spGetUnitTeam(harvesterID), "metal", metalToAdd ) --(min, max, n)
+		setResourcing(harvesterID, metalToAdd)
 	end
 
 	function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-		harvestersInAction[unitID] = nil
+		workingHarvesters[unitID] = nil
 	end
 
-	---can't issue attack if the builder is loaded
-	---must set states on the builder_brain (use spSetUnitRuleParams)
-	---must continuously check if an oretower is available, if is loaded
+	--- 1. Continuously check if an oretower is available, if is loaded
+	--- 2. Sets states on the builder_brain (use spSetUnitRuleParams)
+	--- 3. Blocks attack if the builder is loaded
 
 	-- attackerID => harvesterID, for legibility purposes
-	function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, projectileID, harvesterID, harvesterDefID, attackerTeam)
-		--Spring.Echo("Damage: "..(damage or "nil").." from: "..(harvesterID or "nil"))
+	function gadget:UnitDamaged(targetID, targetDefID, unitTeam, damage, paralyzer, weaponID, projectileID, harvesterID, harvesterDefID, attackerTeam)
+		local harvesterDef = UnitDefs[harvesterDefID]
+		local resourcing = isHarvester[harvesterDef.name]	-- result eg: 1, 1.5, 2 (+metal)
+		if not harvesterDef or not resourcing then	-- attacker is not a harvester, go away
+			return end
 		if not IsValidUnit(harvesterID) or loadedHarvesters[harvesterID] then
 			return end
-		local harvesterDef = UnitDefs[harvesterDefID]
-		if not harvesterDef or not isHarvester[harvesterDef.name] then
+		if not isChunk(targetDefID) then
 			return end
-		local curStorage = getUnitHarvestStorage(harvesterID)
+		--Spring.Echo("Damage: "..(damage or "nil").." from: "..(harvesterID or "nil"))
 
-		-- Block further usage of the unit's harvest weapon while storage is full
+		local curStorage = getUnitHarvestStorage(harvesterID)
 		local maxStorage = harvesterDef and tonumber(harvesterDef.customParams.maxorestorage) or defaultMaxStorage
 
-		harvestersInAction[unitID] = true
+		chunksUnderAttack[targetID] = harvesterID
+		workingHarvesters[harvesterID] = spGetGameFrame() + 1 -- (next frame) recheckDelay	-- nextCheckFrame
 
 		--Spring.Echo("unitDamaged: storage cur/max="..(curStorage or "nil").."/"..maxStorage..", damage="..damage)
 		if not isnumber(curStorage) then
 			return end
 		if curStorage < maxStorage then
 			if inTowerRange(harvesterID) then
-				DeliverResourcesRaw(harvesterID, damage, maxStorage)
+				DeliverResourcesNow(harvesterID, resourcing, curStorage, maxStorage) --was: damage
+				--setResourcing(harvesterID, resourcing)
 			else
-				setUnitHarvestStorage (harvesterID, curStorage + damage)
+				setUnitHarvestStorage (harvesterID, curStorage + resourcing) --was: damage
 			end
 		else
+			--Spring.Echo("unit ".. harvesterID .." is loaded!!")
 			-- Block weapon so it can no longer harvest
 			spCallCOBScript(harvesterID, "BlockWeapon", 0)
-			--Spring.Echo("unit ".. harvesterID .." is loaded!!")
 			loadedHarvesters[harvesterID] = true
-			spSetUnitRulesParam(unitID, "loadedHarvester", 1)
+			spSetUnitRulesParam(harvesterID, "loadedHarvester", 1)
 			--@ unitai_auto_assist: move it to be in range of closest ore tower
 			SendToUnsynced(LoadedHarvesterEvent, attackerTeam, harvesterID)
 		end
@@ -311,19 +307,19 @@ if gadgetHandler:IsSyncedCode() then
 	--	return false, (defPriority or 1.0)
 	--end
 
-	function gadget:GameFrame(gf)
-		--- Since by default harvesters don't deliver reclaimed resources directly, we do it manually
-		---TODO: Remove, obsolete without the usage of the (broken, bonkers) engine harvestStorage.
-		--for harvesterID, previousStorage in pairs(previousHarvestStorage) do
-		--    local curStorage = spGetUnitHarvestStorage(harvesterID) or 0
-		--    spEcho("This harvestStorage: "..(spGetUnitHarvestStorage(harvesterID) or 0))
-		--    spAddTeamResource (spGetUnitTeam(harvesterID), "metal", curStorage)
-		--    spSetUnitHarvestStorage (harvesterID, previousStorage)
-		--    previousHarvestStorage[harvesterID] = nil
-		--end
+	local function setResourcing(uID, amount)
+		if amount == 0 then
+			workingHarvesters[uID] = nil end
+		spSetUnitResourcing ( uID, "umm", amount )	-- unconditional make metal
+	end
 
-		if gf % CHECK_FREQ > 0.001 then
-			return
+	function gadget:GameFrame(frame)
+		if frame % updateRate > 0.001 then
+			return end
+
+		for uID,checkFrame in pairs(workingHarvesters) do
+			if frame >= checkFrame then
+				setResourcing(uID, 0) end 	---- decomission
 		end
 
 		--- If in tower range, deliver resources
@@ -357,8 +353,9 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 else
-	----- UNSYNCED
-	---
+	--- ++++++++++++++
+	--- -- UNSYNCED --
+	--- ++++++++++++++
 
 	-- Currently unused, we handle this in unitai_auto_harvest through GetUnitRulesParam(unitID, "oreLoad")
 	local function handleLoadedHarvesterEvent(cmd, harvesterTeam, unitID, value)

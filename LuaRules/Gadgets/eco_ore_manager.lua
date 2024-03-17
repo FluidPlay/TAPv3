@@ -318,29 +318,31 @@ if gadgetHandler:IsSyncedCode() then
             return end
         SendToUnsynced("chunkDestroyedEvent", gaiaTeamID, unitID) --should be 'gaiaAllyTeam' (irrelevant here)
         --Spring.Echo("Sending message: chunkDestroyed_"..unitID)
-        local chunk = chunks[unitID]
-        if chunk then
-            local spotIdx = chunk.spotIdx
-            if not oreSpots[spotIdx].chunks then
-                oreSpots[spotIdx].chunks = {}
-            end
-            if (oreSpots[spotIdx].chunks)[unitID] then
-                (oreSpots[spotIdx].chunks)[unitID] = nil
-                chunks[unitID] = nil
-                --spSendLuaUIMsg("chunkDestroyed_"..unitID, "allies") --(message, mode)
-                --_G.oreSpots = oreSpots;
-                --Spring.Echo("Sending message: chunkDestroyed_"..unitID)
-            else
-                spEcho("WARNING: Destroyed chunk "..(unitID or "nil").." not found in list of spot# "..spotIdx)
-                if istable(oreSpots[spotIdx].chunks) then
-                    if localDebug then
-                        DebugTable(oreSpots[spotIdx].chunks) end
-                else
-                    spEcho("chunks not found at oreSpot #: "..spotIdx)
-                end
-            end
-        end
-    end
+		local chunk = chunks[unitID]
+		if not chunk then
+			return end
+		-- Chunk destruction management
+		local spotIdx = chunk.spotIdx
+		if not oreSpots[spotIdx].chunks then
+			oreSpots[spotIdx].chunks = {}
+		end
+		if (oreSpots[spotIdx].chunks)[unitID] then
+			(oreSpots[spotIdx].chunks)[unitID] = nil
+			chunks[unitID] = nil
+			--spSendLuaUIMsg("chunkDestroyed_"..unitID, "allies") --(message, mode)
+			--_G.oreSpots = oreSpots;
+			--Spring.Echo("Sending message: chunkDestroyed_"..unitID)
+		else
+			spEcho("WARNING: Destroyed chunk "..(unitID or "nil").." not found in list of spot# "..spotIdx)
+			if istable(oreSpots[spotIdx].chunks) then
+				if localDebug then
+					DebugTable(oreSpots[spotIdx].chunks) end
+			else
+				spEcho("chunks not found at oreSpot #: "..spotIdx)
+			end
+		end
+	end
+    --end
 
     --local timePeriod = 2
     local height = 2

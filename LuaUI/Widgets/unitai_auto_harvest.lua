@@ -42,6 +42,7 @@ end
 VFS.Include("gamedata/tapevents.lua") --"LoadedHarvestEvent"
 VFS.Include("gamedata/taptools.lua")
 VFS.Include("gamedata/unitai_functions.lua")
+local isOreTower = VFS.Include("common/include/harvestsystemtypes.lua")
 
 local localDebug = false --|| Enables text state debug messages
 
@@ -73,7 +74,7 @@ local myTeamID, myAllyTeamID = -1, -1
 local gaiaTeamID = Spring.GetGaiaTeamID()
 
 local startupGracetime = 60 --300        -- Widget won't work at all before those many frames (10s)
-local updateRate = 22               -- Global update "tick rate" (always unsync it from unitai_auto_assist
+local updateRate = 22               -- Global update "tick rate" (always unsync it from unitai_auto_assist)
 
 local recheckLatency = 40 -- Delay until a commanded/idle unit checks for automation again
 local automatedState = {}
@@ -96,10 +97,7 @@ local harvesters = {} -- { unitID = uDef.customParams.maxorestorage, parentOreTo
 
 ---local automatedState = {}   -- This is the automated state. It's always there for automatableUnits, after the initial latency period
 local harvestState = {}     -- Harvest state. // "idle", "attacking", "delivering", "unloading", "returning"
-local oreTowerDefNames = { armmstor = true, cormstor = true, armuwadvms = true, coruwadvms = true,
-                           bowhq = true, bowhq2 = true, bowhq3 = true, bowhq4 = true, bowhq5 = true, bowhq6 = true,
-                           kernhq = true, kernhq2 = true, kernhq3 = true, kernhq4 = true, kernhq5 = true, kernhq6 = true,
-}
+
 local oreTowers = {}        -- { unitID = oreTowerReturnRange, ... }
 
 --- Harvest-cycle state controllers
@@ -218,7 +216,7 @@ function widget:UnitFinished(unitID, unitDefID, unitTeam)
     local unitDef = UnitDefs[unitDefID]
     if not unitDef then
         return end
-    if oreTowerDefNames[unitDef.name] then
+    if isOreTower[unitDef.name] then
         oreTowers[unitID] = getOreTowerRange(nil, unitDef) end
     local maxorestorage = tonumber(unitDef.customParams.maxorestorage)
     if maxorestorage and maxorestorage > 0 then
