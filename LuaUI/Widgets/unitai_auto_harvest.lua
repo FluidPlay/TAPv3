@@ -344,7 +344,7 @@ local automatedFunctions = {
 					return false end
 				--local hasReturned = rp and rp.x and (sqrDistance(ud.pos.x, ud.pos.z, rp.x, rp.z) <= 140)
 				local hasReturned = rp and rp.x and (distance({ud.pos.x, ud.pos.z}, {rp.x, rp.z}) <= returnMinDist * 3)
-				Spring.Echo(spGetGameFrame().." - *** return-stuck dist: "..(distance({ud.pos.x, ud.pos.z}, {rp.x, rp.z}) or "nil").." || pos.x = "..(ud.pos.x or "nil")..", rp.x = "..(rp.x or "nil").." queue#: "..(spGetCommandQueue(ud.unitID, 0) or "nil"))
+				--Spring.Echo(spGetGameFrame().." - *** return-stuck dist: "..(distance({ud.pos.x, ud.pos.z}, {rp.x, rp.z}) or "nil").." || pos.x = "..(ud.pos.x or "nil")..", rp.x = "..(rp.x or "nil").." queue#: "..(spGetCommandQueue(ud.unitID, 0) or "nil"))
 				return (harvestState[ud.unitID] == "returning")
 						and (not hasReturned) and (spGetCommandQueue(ud.unitID, 0) < 1)
             end,
