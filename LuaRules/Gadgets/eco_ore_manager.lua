@@ -199,7 +199,7 @@ if gadgetHandler:IsSyncedCode() then
     --end
 
     local function tooCloseToSpot (x, z, cx, cz)
-        return distance({x=x, z=z}, {x=cx, z=cz}) < deadZone
+        return distance({x, z}, {cx, cz}) < deadZone
     end
 
     --- Returns: Spawned unitID

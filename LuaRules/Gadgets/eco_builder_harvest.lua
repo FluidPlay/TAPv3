@@ -264,6 +264,8 @@ if gadgetHandler:IsSyncedCode() then
 	-- attackerID => harvesterID, for legibility purposes
 	function gadget:UnitDamaged(targetID, targetDefID, unitTeam, damage, paralyzer, weaponID, projectileID, harvesterID, harvesterDefID, attackerTeam)
 		local harvesterDef = UnitDefs[harvesterDefID]
+		if not harvesterDef then
+			return end
 		local resourcing = isHarvester[harvesterDef.name]	-- result eg: 1, 1.5, 2 (+metal)
 		if not harvesterDef or not resourcing then	-- attacker is not a harvester, go away
 			return end
@@ -282,14 +284,15 @@ if gadgetHandler:IsSyncedCode() then
 		--Spring.Echo("unitDamaged: storage cur/max="..(curStorage or "nil").."/"..maxStorage..", damage="..damage)
 		if not isnumber(curStorage) then
 			return end
-		if curStorage < maxStorage then
-			if inTowerRange(harvesterID) then
-				DeliverResourcesNow(harvesterID, resourcing, curStorage, maxStorage) --was: damage
-				--setResourcing(harvesterID, resourcing)
-			else
-				setUnitHarvestStorage (harvesterID, curStorage + resourcing) --was: damage
-			end
+
+		if inTowerRange(harvesterID) then
+			DeliverResourcesNow(harvesterID, resourcing, curStorage, maxStorage) --was: damage
+			--setResourcing(harvesterID, resourcing)
 		else
+			setUnitHarvestStorage (harvesterID, curStorage + damage)	---Remote Harvesting
+		end
+
+		if curStorage >= maxStorage then
 			--Spring.Echo("unit ".. harvesterID .." is loaded!!")
 			-- Block weapon so it can no longer harvest
 			spCallCOBScript(harvesterID, "BlockWeapon", 0)

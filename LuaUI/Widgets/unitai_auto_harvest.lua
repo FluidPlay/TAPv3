@@ -80,12 +80,14 @@ local recheckLatency = 40 -- Delay until a commanded/idle unit checks for automa
 local automatedState = {}
 
 local oretowerShortScanRange = 250 -- Collection-start scan range (not used here, only by auto_assist actually)
-local oretowerLongScanRange = 900 -- Return/devolution scan range
-local harvestLeashMult = 6        -- chunk search range is the harvest range* multiplied by this  (*attack range of weapon eg. "armck_harvest_weapon")
+local oretowerLongScanRange = 900 	-- Return/devolution scan range
+local harvestLeashMult = 6        	-- chunk search range is the harvest range* multiplied by this  (*attack range of weapon eg. "armck_harvest_weapon")
+local returnMinDist = 5				-- minimum distance from return position to be considered "returned" (due to obstacles and such)
 
 local vsx, vsy = gl.GetViewSizes()
 local widgetScale = (0.50 + (vsx*vsy / 5000000))
 local math_random = math.random
+local math_round = math.round
 
 ---=== Harvest-system related
 
@@ -337,10 +339,14 @@ local automatedFunctions = {
     },
     [6] = { id="returningandstuck",
             condition = function(ud)
-                local rp = ud.returnPos
-                local hasReturned = rp and rp.x and (sqrDistance(ud.pos.x, ud.pos.z, rp.x, rp.z) <= 140)
-                return (harvestState[ud.unitID] == "returning")
-                        and (not hasReturned) and (spGetCommandQueue(ud.unitID, 0) < 1)
+				local rp = ud.returnPos
+				if not istable(rp) then
+					return false end
+				--local hasReturned = rp and rp.x and (sqrDistance(ud.pos.x, ud.pos.z, rp.x, rp.z) <= 140)
+				local hasReturned = rp and rp.x and (distance({ud.pos.x, ud.pos.z}, {rp.x, rp.z}) <= returnMinDist * 3)
+				Spring.Echo(spGetGameFrame().." - *** return-stuck dist: "..(distance({ud.pos.x, ud.pos.z}, {rp.x, rp.z}) or "nil").." || pos.x = "..(ud.pos.x or "nil")..", rp.x = "..(rp.x or "nil").." queue#: "..(spGetCommandQueue(ud.unitID, 0) or "nil"))
+				return (harvestState[ud.unitID] == "returning")
+						and (not hasReturned) and (spGetCommandQueue(ud.unitID, 0) < 1)
             end,
             action = function(ud)
                 --spEcho("**4** Return Unstucking Actions")
@@ -348,14 +354,15 @@ local automatedFunctions = {
                 if rp and rp.x then
                     spGiveOrderToUnit(ud.unitID, CMD_MOVE, { rp.x, rp.y, rp.z }, { "" })
                 end
-                return "returning"
+                return "returningandstuck"
             end
     },
     [7] = { id="returned",
             condition = function(ud)
                 local rp = ud.returnPos
-                --Spring.Echo("*** returning dist: "..(sqrDistance(ud.pos.x, ud.pos.z, rp.x, rp.z) or "nil"))
-                local hasReturned = rp and rp.x and (sqrDistance(ud.pos.x, ud.pos.z, rp.x, rp.z) <= 140) --was: 140
+				if not istable(rp) then
+					return false end
+				local hasReturned = rp and rp.x and (distance({ud.pos.x, ud.pos.z}, {rp.x, rp.z}) <= returnMinDist)
                 return (harvestState[ud.unitID] == "returning") and hasReturned  -- distance to returnPos <= 40 (sqr)
             end,
             action = function(ud)
@@ -418,7 +425,7 @@ local automatedFunctions = {
             end,
             action = function(ud)
                 --spEcho("**6** Idle actions")
-                harvesters[ud.unitID].parentOreTowerID = nil
+                --harvesters[ud.unitID].parentOreTowerID = nil		--TODO: Check
                 harvesters[ud.unitID].returnPos = nil
                 if WG.automatedStates[ud.unitID] ~= "idle" then
                     WG.setAutomateState(ud.unitID, "idle", "autoHarvest")
@@ -496,7 +503,7 @@ function widget:GameFrame(f)
                 --local unitDef = UnitDefs[spGetUnitDefID(harvesterID)]
                 automateCheck(harvesterID, "harvesters")
                 -- Queue up the next automation test
-                local randRecheckTime = math_random(1,3) * recheckLatency
+                local randRecheckTime = math_round(math_random(1,1.5) * recheckLatency)
                 harvesters[harvesterID].recheckFrame = spGetGameFrame() + randRecheckTime
             end
         end

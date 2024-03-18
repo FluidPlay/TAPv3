@@ -661,7 +661,7 @@ local function SendEconomyDataToWidget()
 		for i = 1, count do
 			if data[i] then
 				local toSend = data[i].t .. " "
-				for allyTeamID, allyData in spairs(data[i].allyRes) do
+				for allyTeamID, allyData in pairs(data[i].allyRes) do
 					toSend = toSend .. " " .. allyTeamID .. " " ..
 					allyData.metal_income_total .. " " ..
 					allyData.metal_income_base .. " " ..
@@ -690,7 +690,7 @@ local function SendEconomyDataToWidget()
 
 				toSend = data[i].t .. " "
 
-				for teamID, teamData in spairs(data[i].teamRes) do
+				for teamID, teamData in pairs(data[i].teamRes) do
 					toSend = toSend .. " " .. teamID .. " " ..
 					teamData.metal_income_total .. " " ..
 					teamData.metal_income_base .. " " ..
@@ -728,7 +728,7 @@ end
 local function ConvertToRegularTable(stable)
 	local ret = {}
 	local stableLocal = stable
-	for k,v in spairs(stableLocal) do
+	for k,v in pairs(stableLocal) do	--TODO: Fix, was spairs; use pairs instead
 		if type(v) == 'table' then
 			v = ConvertToRegularTable(v)
 		end
