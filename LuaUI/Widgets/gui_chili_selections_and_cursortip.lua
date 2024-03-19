@@ -18,6 +18,8 @@ include("keysym.lua")
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 include("Widgets/COFCTools/ExportUtilities.lua")
 
+function isnumber(x) return (type(x) == 'number')  end
+
 local spGetMouseState = Spring.GetMouseState
 local spTraceScreenRay = Spring.TraceScreenRay
 local spGetUnitDefID = Spring.GetUnitDefID
@@ -1948,7 +1950,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 
 		local healthPos
 		if shieldBarUpdate then
-			if ud and (ud.shieldPower > 0 or ud.level) then
+			if ud and isnumber(ud.shieldPower) and (ud.shieldPower > 0 or ud.level) then
 				local shieldPower = spGetUnitRulesParam(unitID, "comm_shield_max") or ud.shieldPower
 				local _, shieldCurrentPower = spGetUnitShieldState(unitID, -1)
 				if shieldCurrentPower and shieldPower then
