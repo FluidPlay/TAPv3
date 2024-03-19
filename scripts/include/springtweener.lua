@@ -136,17 +136,39 @@ local function getCurrentValue(pieceID, cmd, pieceTween)
 	local targetValue = pieceTween.targetValue --normalizeAngle(
 	local axis = pieceTween.axis
 
-	local posX, posY, posZ = spGetPieceTranslation (pieceID)
 	--Spring.Echo("piece "..pieceID.." current PosY: "..(posY or "null"))
-	local rotX, rotY, rotZ = spGetPieceRotation (pieceID)
-	if not posX or not rotX then
-		Spring.Echo("Tween Error: Piece info couldn't be determined") -- for "..unitID)
-		return
+
+	-- The code below allocates too many tables:
+	--local posX, posY, posZ = spGetPieceTranslation (pieceID)
+	--local rotX, rotY, rotZ = spGetPieceRotation (pieceID)
+	--if not posX or not rotX then
+	--	Spring.Echo("Tween Error: Piece info couldn't be determined") -- for "..unitID)
+	--	return
+	--end
+	--local startPosDir = { ["move"] = {[x_axis] = posX, [y_axis] = posY, [z_axis] = posZ,},
+	--					  ["turn"] = { [x_axis] = rotX, [y_axis] = rotY, [z_axis] = rotZ,},
+	--}
+	--local startValue = startPosDir[cmd][axis]  --normalizeAngle(
+	local startValue = 0
+	if cmd == 'move' then
+		local posX, posY, posZ = spGetPieceTranslation (pieceID)
+		if not posX then
+			Spring.Echo("Tween Error: Cannot GetPieceTranslation for piece", pieceID)
+			return
+		end
+		if axis == 'x_axis' then startValue = posX end
+		if axis == 'y_axis' then startValue = posY end
+		if axis == 'z_axis' then startValue = posZ end
+	else -- 'turn'
+		local rotX, rotY, rotZ = spGetPieceRotation (pieceID)
+		if not rotX then
+			Spring.Echo("Tween Error: Cannot GetPieceRotation for piece", pieceID)
+			return
+		end
+		if axis == 'x_axis' then startValue = rotX end
+		if axis == 'y_axis' then startValue = rotY end
+		if axis == 'z_axis' then startValue = rotZ end
 	end
-	local startPosDir = { ["move"] = {[x_axis] = posX, [y_axis] = posY, [z_axis] = posZ,},
-						  ["turn"] = { [x_axis] = rotX, [y_axis] = rotY, [z_axis] = rotZ,},
-	}
-	local startValue = startPosDir[cmd][axis]  --normalizeAngle(
 
 	--- Gotta normalize the current piece angle, since GetPieceTrans/Rot always it (else it results in not-shortest rotations)
 	local nrmTargetValue = targetValue
@@ -179,20 +201,20 @@ local function tweenPieces(tweenData)
 		if type(pieceID) == "number" then
 			for _, subtween in ipairs(pieceData) do			-- each piece may have multiple tweens
 				local firstFrame = subtween.firstFrame		-- internal tween first frame
-                local lastFrame = subtween.lastFrame		-- internal tween last frame
+				local lastFrame = subtween.lastFrame		-- internal tween last frame
 				local subtweenFrame = tweenFrame - firstFrame   -- eg: tweenFrame 32, firstFrame 28 => subtweenFrame = 2
-                local cmd = subtween.cmd
-                if cmd == "hide" or cmd == "show" then
-                    if (tweenFrame >= firstFrame) then
-                        --Spring.Echo("piece: "..pieceID.." first frame: "..(firstFrame or "nil").." tweenDeltaFrame: "..(tweenDeltaFrame or "nil"))
-                        if cmd == "hide" then
-                            Hide(pieceID)
-                        end
-                        if cmd == "show" then
-                            Show(pieceID)
-                        end
-                    end
-                elseif subtweenFrame >= 0 and tweenFrame <= lastFrame then
+				local cmd = subtween.cmd
+				if cmd == "hide" or cmd == "show" then
+					if (tweenFrame >= firstFrame) then
+						--Spring.Echo("piece: "..pieceID.." first frame: "..(firstFrame or "nil").." tweenDeltaFrame: "..(tweenDeltaFrame or "nil"))
+						if cmd == "hide" then
+							Hide(pieceID)
+						end
+						if cmd == "show" then
+							Show(pieceID)
+						end
+					end
+				elseif subtweenFrame >= 0 and tweenFrame <= lastFrame then
 					--- startValue has to be updated for tweens which started after global-tween-frame zero (to get in-game value)
 					if firstFrame > 0 and not subtween.initialized then
 						subtween.startValue, subtween.valueDelta = getCurrentValue(pieceID, cmd, subtween)
@@ -200,7 +222,7 @@ local function tweenPieces(tweenData)
 						subtween.initialized = true
 						--Spring.Echo("piece "..pieceList[pieceID]..", frame: "..(tweenFrame or "nil").." startValue: "..startValue.." valueDelta: "..valueDelta)
 					end
-				    local durationInS = subtween.durationInS  -- duration in Seconds
+					local durationInS = subtween.durationInS  -- duration in Seconds
 					local axis = subtween.axis
 					local prevValue = subtween.prevValue
 					local valueDelta = subtween.valueDelta
@@ -251,13 +273,13 @@ function initTween (tweenData)
 			--- Each piece may have multiple tweens (start/end frames) in the same full range (defined by veryLastFrame)
 			for _, pieceTween in ipairs(pieceData) do
 				local cmd = pieceTween.cmd
-                if cmd == "move" or cmd == "turn" then  -- hide and show require no initial setup here
+				if cmd == "move" or cmd == "turn" then  -- hide and show require no initial setup here
 					-- This initialization is only good for tweens which start at frame-offset zero
 					pieceTween.startValue, pieceTween.valueDelta = getCurrentValue(pieceID, cmd, pieceTween)
 					pieceTween.prevValue = pieceTween.startValue									-- initialize with startValue
 					pieceTween.durationInS = pieceTween.lastFrame <= pieceTween.firstFrame and 0	-- duration in Seconds
-                            or ((pieceTween.lastFrame - pieceTween.firstFrame) / 30)
-                end
+							or ((pieceTween.lastFrame - pieceTween.firstFrame) / 30)
+				end
 			end
 		end
 	end
