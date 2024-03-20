@@ -312,6 +312,14 @@ local barTypeMap = { -- WHERE SHOULD WE STORE THE FUCKING COLORS?
 		uniformindex = 1, -- if its >20, then its health/maxhealth
 		uvoffset = 0.25, -- the X offset of the icon for this bar
 	},
+	oreload = {
+		mincolor = {0.52, 0.52, 0.64, 1.0},
+		maxcolor = {0.52, 0.52, 0.64, 1.0},
+		bartype = bitShowGlyph + bitUseOverlay + bitPercentage,
+		hidethreshold = 0.99,
+		uniformindex = 3, -- if its >20, then its health/maxhealth
+		uvoffset = 0.0 --0.8125, -- the X offset of the icon for this bar
+	},
 }
 
 --------------------------------------------------------------------------------
@@ -322,12 +330,20 @@ local myTeamID = Spring.GetMyTeamID()
 local myAllyTeamID = Spring.GetMyAllyTeamID()
 local myPlayerID = Spring.GetMyPlayerID()
 local GetUnitWeaponState = Spring.GetUnitWeaponState
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local gl_SetUnitBufferUniforms = gl.SetUnitBufferUniforms
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spValidUnitID = Spring.ValidUnitID
+local spGetUnitIsDead = Spring.GetUnitIsDead
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitDefID = Spring.GetUnitDefID
 
 local chobbyInterface
 
 local unitDefIgnore = {} -- commanders!
 local unitDefhasShield = {} -- value is shield max power
 local unitDefCanStockpile = {} -- 0/1?
+local unitDefCanHarvest = {}	-- value is maxorestorage
 local unitDefReload = {} -- value is max reload time
 local unitDefHeights = {} -- maps unitDefs to height
 local unitDefHideDamage = {}
@@ -337,6 +353,7 @@ local unitBars = {} -- we need this additional table of {[unitID] = {barhealth, 
 local unitEmpWatch = {}
 local unitBeingBuiltWatch = {}
 local unitCaptureWatch = {}
+local unitOreloadWatch = {}
 local unitShieldWatch = {} -- maps unitID to last shield value
 local unitEmpDamagedWatch = {}
 local unitParalyzedWatch = {}
@@ -370,6 +387,10 @@ local luaShaderDir = "LuaUI/Widgets/Include/"
 local LuaShader = VFS.Include(luaShaderDir.."LuaShader.lua")
 VFS.Include(luaShaderDir.."instancevbotable.lua")
 
+VFS.Include("gamedata/taptools.lua")
+harvest_eco = 1 --(tonumber(Spring.GetModOptions().harvest_eco)) or 1
+local harvestEcoEnabled = true		--TODO: not implemented
+
 -------------------- configurables -----------------------
 local additionalheightaboveunit = 24 --16?
 local featureHealthDistMult = 7 -- how many times closer features have to be for their bars to show
@@ -377,7 +398,6 @@ local featureReclaimDistMult = 2 -- how many times closer features have to be fo
 local featureResurrectDistMult = 1 -- how many times closer features have to be for their bars to show
 local glphydistmult = 3.5 -- how much closer than BARFADEEND the bar has to be to start drawing numbers/icons. Numbers closer to 1 will make the glyphs be drawn earlier, high numbers will only shows glyphs when zoomed in hard.
 local glyphdistmultfeatures = 1.8 -- how much closer than BARFADEEND the bar has to be to start drawing numbers/icons
-
 
 local unitDefSizeMultipliers = {} -- table of unitdefID to a size mult (default 1.0) to override sizing of bars per unitdef
 local skipGlyphsNumbers = 0.0  -- 0.0 is draw glyph and number,  1.0 means only numbers, 2.0 means only bars,
@@ -437,13 +457,18 @@ local shaderSourceCache = {
 
 -- Walk through unitdefs for the stuff we need:
 for udefID, unitDef in pairs(UnitDefs) do
-	if unitDef.customParams and unitDef.customParams.nohealthbars then
-		unitDefIgnore[udefID] = true
-	end --ignore debug units
+	if unitDef.customParams then
+		if unitDef.customParams.nohealthbars then
+			unitDefIgnore[udefID] = true end	--ignore debug units
+		if unitDef.customParams.maxorestorage then
+			unitDefCanHarvest[udefID] = unitDef.customParams.maxorestorage
+		end
+	end
 
 	local shieldDefID = unitDef.shieldWeaponDef
 	local shieldPower = ((shieldDefID) and (WeaponDefs[shieldDefID].shieldPower)) or (-1)
-	if shieldPower > 1 then unitDefhasShield[udefID] = shieldPower
+	if shieldPower > 1 then
+		unitDefhasShield[udefID] = shieldPower
 		--Spring.Echo("HAS SHIELD")
 	end
 
@@ -651,7 +676,7 @@ end
 
 local function addBarsForUnit(unitID, unitDefID, unitTeam, unitAllyTeam, reason) -- TODO, actually, we need to check for all of these for stuff entering LOS
 
-	if unitDefID == nil or Spring.ValidUnitID(unitID) == false or Spring.GetUnitIsDead(unitID) == true then
+	if unitDefID == nil or spValidUnitID(unitID) == false or spGetUnitIsDead(unitID) == true then
 		if debugmode then Spring.Echo("Tried to add a bar to a dead or invalid unit", unitID, "at", Spring.GetUnitPosition(unitID), reason) end
 		return
 	end
@@ -660,7 +685,7 @@ local function addBarsForUnit(unitID, unitDefID, unitTeam, unitAllyTeam, reason)
 
 	-- This is optionally passed, and it only important in one edge case:
 	-- If a unit is captured and thus immediately become outside of LOS, then the getunitallyteam is still the old ally team according to getUnitAllyTEam, and not the new allyteam.
-	unitAllyTeam = unitAllyTeam or Spring.GetUnitAllyTeam(unitID)
+	unitAllyTeam = unitAllyTeam or spGetUnitAllyTeam(unitID)
 	local health, maxHealth, paralyzeDamage, capture, build = Spring.GetUnitHealth(unitID)
 	if (fullview or (unitAllyTeam == myAllyTeamID) or (unitDefHideDamage[unitDefID] == nil)) and (unitDefIgnore[unitDefID] == nil ) then
 		if debugmode and health == nil then
@@ -683,17 +708,16 @@ local function addBarsForUnit(unitID, unitDefID, unitTeam, unitAllyTeam, reason)
 			addBarForUnit(unitID, unitDefID, "building", reason)
 			unitBeingBuiltWatch[unitID] = build
 			uniformcache[1] = build
-			gl.SetUnitBufferUniforms(unitID, uniformcache, 0)
+			gl_SetUnitBufferUniforms(unitID, uniformcache, 0)
 		else
 			uniformcache[1] = -1.0 -- mean that the unit has been built, we init it to -1 always
-			gl.SetUnitBufferUniforms(unitID, uniformcache, 0)
+			gl_SetUnitBufferUniforms(unitID, uniformcache, 0)
 		end
 		--Spring.Echo(unitID, unitDefID, unitDefCanStockpile[unitDefID])
 		if debugmode then
 			if unitDefCanStockpile[unitDefID] then
 				Spring.Echo("unitDefCanStockpile", unitAllyTeam, myAllyTeamID, fullview)
 			end
-
 		end
 
 		if unitDefCanStockpile[unitDefID] and ((unitAllyTeam == myAllyTeamID) or fullview) then
@@ -703,14 +727,21 @@ local function addBarsForUnit(unitID, unitDefID, unitTeam, unitAllyTeam, reason)
 		if  capture > 0 then
 			addBarForUnit(unitID, unitDefID, "capture", reason)
 			uniformcache[1] = capture
-			gl.SetUnitBufferUniforms(unitID, uniformcache, 5)
+			gl_SetUnitBufferUniforms(unitID, uniformcache, 5)
 			unitCaptureWatch[unitID] = capture
+		end
+
+		local maxorestorage = unitDefCanHarvest[unitDefID]
+		if maxorestorage then
+			local oreLoad = spGetUnitRulesParam(unitID, "oreLoad")
+			--Spring.Echo("Added ore load watch for: "..unitID)
+			unitOreloadWatch[unitID] = oreLoad
+			addBarForUnit(unitID, unitDefID, "oreload", reason)
 		end
 
 		if paralyzeDamage > 0 then
 			--TODO
-
-			if Spring.GetUnitIsStunned(unitID) then
+			if spGetUnitIsStunned(unitID) then
 				if unitParalyzedWatch[unitID] == nil then  -- already paralyzed
 					unitParalyzedWatch[unitID] = 0.0
 					-- if unit was already empd, remove that bar
@@ -1157,8 +1188,8 @@ function widget:GameFrame(n)
 				uniformcache[1] = build
 				--Spring.Echo("Health", health/maxHealth, build, math.abs(build - health/maxHealth))
 				--if math.abs(build - health/maxHealth) < 0.005 then uniformcache[1] = 1.0 end
-				gl.SetUnitBufferUniforms(unitID,uniformcache, 0)
-				unitBeingBuiltWatch[unitID] = buildProgress
+				gl_SetUnitBufferUniforms(unitID,uniformcache, 0)
+				unitBeingBuiltWatch[unitID] = buildprogress
 				if build == 1 then
 					removeBarFromUnit(unitID, "building", 'unitBeingBuiltWatch')
 					unitBeingBuiltWatch[unitID] = nil
@@ -1177,12 +1208,36 @@ function widget:GameFrame(n)
 			local capture = select(4, Spring.GetUnitHealth(unitID))
 			if capture and capture ~= captureprogress then
 				uniformcache[1] = capture
-				gl.SetUnitBufferUniforms(unitID, uniformcache, 5)
+				gl_SetUnitBufferUniforms(unitID, uniformcache, 5)
 				unitCaptureWatch[unitID] = capture
 			end
 			if capture == 0 or capture == nil then
 				removeBarFromUnit(unitID, 'capture', 'unitCaptureWatch')
 				unitCaptureWatch[unitID] = nil
+			end
+		end
+	end
+
+	-- check oreload progress?
+	if n % 2 < 0.00001 then
+		--Spring.Echo("here - "..Spring.GetGameFrame())
+		for unitID, oreloadprogress in pairs(unitOreloadWatch) do
+			local oreload = spGetUnitRulesParam(unitID, "oreLoad")
+			if oreload and oreload ~= oreloadprogress then
+				--Spring.Echo(" - load: "..oreload)
+				local udefID = spGetUnitDefID(unitID)
+				local maxorestorage = unitDefCanHarvest[udefID]
+
+				local oreloadperc = (oreload / (maxorestorage or 620)) --* 100	-- percentage
+				--oreloadperc = oreloadperc - oreloadperc % 1;	--- same as floor(oreLoadPerc*100), but 10% faster
+
+				uniformcache[1] = oreloadperc
+				gl_SetUnitBufferUniforms(unitID, uniformcache, 3)
+				unitOreloadWatch[unitID] = oreload
+			end
+			if oreload == 0 or oreload == nil then
+				removeBarFromUnit(unitID, 'oreload', 'unitOreloadWatch')
+				unitOreloadWatch[unitID] = nil
 			end
 		end
 	end
@@ -1199,7 +1254,7 @@ function widget:GameFrame(n)
 				uniformcache[1] =  numStockpiled + stockpileBuild -- less hacky
 				--uniformcache[1] =  128*numStockpileQued + numStockpiled + stockpileBuild -- the worlds nastiest hack
 				unitStockPileWatch[unitID] = stockpileBuild
-				gl.SetUnitBufferUniforms(unitID, uniformcache, 2)
+				gl_SetUnitBufferUniforms(unitID, uniformcache, 2)
 			end
 		end
 	end
