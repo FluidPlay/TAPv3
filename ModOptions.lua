@@ -763,31 +763,31 @@ local options = {
   --},
 
   --- TarnishedKnight suggested totally removing this, to assure the new MT one is used
-  --{ -- May causes desyncs [[https://springrts.com/mantis/view.php?id=5936]]
-  --  key		= "pathfinder",
-  --  name	= "Pathfinder type",
-  --  desc	= "Sets the pathfinding system used by units.",
-  --  type	= "list",
-  --  def		= "qtpfs",
-  --  section	= "experimental",
-  --  items  = {
-  --    {
-	--	key  = 'standard',
-	--	name = 'Standard',
-	--	desc = 'Standard pathfinder',
-  --    },
-  --    {
-	--	key  = 'qtpfs',
-	--	name = 'QTPFS',
-	--	desc = 'New Quadtree Pathfinding System (experimental)',
-  --    },
-  --  --  {
-	----	key  = 'classic',
-	----	name = 'Classic',
-	----	desc = 'An older pathfinding system without turninplace or reverse',
-  --  --  }
-  --  },
-  --},
+  { -- May causes desyncs [[https://springrts.com/mantis/view.php?id=5936]]
+    key		= "pathfinder",
+    name	= "Pathfinder type",
+    desc	= "Sets the pathfinding system used by units.",
+    type	= "list",
+    def		= "standard", --qtpfs
+    section	= "experimental",
+    items  = {
+      {
+		key  = 'standard',
+		name = 'Standard',
+		desc = 'Standard pathfinder',
+      },
+      {
+		key  = 'qtpfs',
+		name = 'QTPFS',
+		desc = 'New Quadtree Pathfinding System (experimental)',
+      },
+    --  {
+	--	key  = 'classic',
+	--	name = 'Classic',
+	--	desc = 'An older pathfinding system without turninplace or reverse',
+    --  }
+    },
+  },
 
   --{
   --  key    = 'chicken',

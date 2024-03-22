@@ -571,6 +571,29 @@ function widgetHandler:Initialize()
 	TimeLoad("SaveConfigData")
 end
 
+--function widgetHandler:AddSpadsMessage(contents)
+--	-- The canonical, agreed format is the following:
+--	-- This must be called from an unsynced context, cause it needs playername and playerid and stuff
+--
+--	-- The game sends a lua message, which should be base64'd to prevent wierd character bullshit:
+--	-- Lua Message Format:
+--	-- leetspeek luaspads:base64message
+--	-- lu@$p@d$:ABCEDFGS==
+--	-- Must contain, with triangle bracket literals <playername>[space]<contents>[space]<gameseconds>
+--	-- will get parsed by barmanager, and forwarded to autohostmonitor as:
+--	-- match-event <UnnamedPlayer> <LuaUI\Widgets\test_unitshape_instancing.lua/czE3YEocdDJ8bLoO5++a2A==> <35>
+--	local myPlayerID = Spring.GetMyPlayerID()
+--	local myPlayerName = Spring.GetPlayerInfo(myPlayerID,false)
+--	local gameSeconds = math.max(0,math.round(Spring.GetGameFrame() / 30))
+--	if type(contents) == 'table' then
+--		contents = Json.encode(contents)
+--	end
+--	local rawmessage = string.format("<%s> <%s> <%d>", myPlayerName, contents, gameSeconds)
+--	local b64message = 'lu@$p@d$:' .. string.base64Encode(rawmessage)
+--	--Spring.Echo(rawmessage,b64message)
+--	Spring.SendLuaRulesMsg(b64message)
+--end
+
 local springRestricted = {}
 local restrictedFunctions = {
 	--[[ These are blocked for being unfair because of latency and performance.

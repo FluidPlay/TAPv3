@@ -66,6 +66,7 @@ local Chili
 local screen0
 
 local screenWidth, screenHeight = Spring.GetViewGeometry()
+local function isnumber(v) return (type(v)=="number") end
 
 local tooltipWindow
 local selectionWindow
@@ -844,7 +845,7 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 				local x,z = math.floor(pos[1]/16)*16,  math.floor(pos[3]/16)*16
 				local y = Spring.GetGroundHeight(x,z)
 
-				if y then
+				if isnumber(y) and isnumber(tidalHeight) then
 					if y <= tidalHeight then
 						extraText = ", " .. WG.Translate("interface", "tidal_income") .. " +" .. math.round(income, 1)
 						healthOverride = TIDAL_HEALTH

@@ -21,18 +21,18 @@ local options = {
 		section = "tap_options",
 
 	},
-	{
-		key = "pathfinder",
-		name = "Pathfinder",
-		desc = "Switch Pathfinding System",
-		type = "list",
-		def = "normal", --"qtpfs",
-		section = "tap_others",
-		items = {
-			{ key = "normal", name = "Normal", desc = "Spring vanilla pathfinder" },
-			{ key = "qtpfs", name = "QuadTree", desc = "Experimental quadtree based pathfinder" },
-		},
-	},
+	--{
+	--	key = "pathfinder",
+	--	name = "Pathfinder",
+	--	desc = "Switch Pathfinding System",
+	--	type = "list",
+	--	def = "normal", --"qtpfs",
+	--	section = "tap_others",
+	--	items = {
+	--		{ key = "normal", name = "Normal", desc = "Spring vanilla pathfinder" },
+	--		{ key = "qtpfs", name = "QuadTree", desc = "Experimental quadtree based pathfinder" },
+	--	},
+	--},
 	{
 		key = "startmetal",
 		name = "Starting metal",
