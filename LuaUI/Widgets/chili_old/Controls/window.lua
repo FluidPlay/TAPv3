@@ -9,7 +9,7 @@ Window = Control:Inherit{
   minHeight = 50,
   defaultWidth  = 400,
   defaultHeight = 300,
-  padding         = {7, 7, 7, 7}, --left, top, right, bottom
+  padding       = {7, 7, 7, 7}, --left, top, right, bottom
 }
 
 local this = Window
@@ -53,6 +53,7 @@ function Window:MouseDown(...)
   return inherited.MouseDown(self,...)
 end
 
+--- Caption is set in luaui/widgets/chili/skinutils.lua
 VFS.Include(CHILI_DIRNAME .. "headers/skinutils.lua", nil, VFS.RAW_FIRST)
 
 function Window:TweakDraw()

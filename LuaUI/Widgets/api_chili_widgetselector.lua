@@ -298,8 +298,9 @@ MakeWidgetList = function()
 		parent = screen0,
 		backgroundColor = color.sub_bg,
 		caption = 'Widget List' .. hotkey,
-		minWidth = 300,
-		minHeight = 400,
+		minWidth = 350,
+		minHeight = 450,
+		padding = {15,15,15,20},
 		
 		children = {
 			ScrollPanel:New{

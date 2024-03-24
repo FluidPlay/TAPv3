@@ -700,7 +700,7 @@ skin.main_window_small_tall = {
 	tiles = {209, 435, 209, 437}, --// tile widths: left,top,right,bottom -- Hint: divide pixel size by the inverse of WG.imageScale
   --TileImage = ":cn:tech_mainwindow_small_tall.png",
   --tiles = {40, 40, 40, 40}, --// tile widths: left,top,right,bottom
-  tileScale = {0.2, 0.2},
+  tileScale = {0.1, 0.1},
   padding = {10, 6, 10, 6},
   hitpadding = {4, 4, 4, 4},
 

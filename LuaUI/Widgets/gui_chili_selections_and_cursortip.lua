@@ -2222,7 +2222,8 @@ local function GetTooltipWindow()
 		autosize  = true,
 		minWidth = RIGHT_WIDTH,
 		noFont = true,
-		padding = {6,4,6,2},
+		--padding = {6,4,6,2},
+		padding = {16,14,16,12},
 		color = {1, 1, 1, options.tooltip_opacity.value},
 		parent = screen0
 	}

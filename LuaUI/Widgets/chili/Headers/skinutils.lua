@@ -484,7 +484,7 @@ function DrawWindow(obj)
 	gl.Texture(0, false)
 
 	if (obj.caption) and not obj.noFont then
-		_GetControlFont(obj):Print(obj.caption, w*0.5, 9, "center")
+		_GetControlFont(obj):Print(obj.caption, w*0.5, 29, "center")
 	end
 end
 
@@ -508,7 +508,7 @@ function DrawRepeatingTiledWindow(obj)
 	gl.Texture(0, false)
 
 	if (obj.caption) and not obj.noFont then
-		_GetControlFont(obj):Print(obj.caption, w*0.5, 9, "center")
+		_GetControlFont(obj):Print(obj.caption, w*0.5, 29, "center")
 	end
 end
 
