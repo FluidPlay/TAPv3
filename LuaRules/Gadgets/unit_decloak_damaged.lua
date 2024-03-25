@@ -108,7 +108,7 @@ local function RemoveWaterUnit(unitID)
 	waterUnits[waterUnitCount] = nil
 	waterUnitMap[unitID] = nil
 	waterUnitCount = waterUnitCount - 1
-	
+
 	waterUnitCloakBlocked[unitID] = nil
 end
 
@@ -192,7 +192,7 @@ function gadget:GameFrame(n)
 				recloakUnit[unitID] = frames - UPDATE_FREQUENCY
 			end
 		end
-		
+
 		local i = 1
 		while i <= waterUnitCount do
 			local unitID = waterUnits[i]
@@ -228,36 +228,36 @@ function gadget:AllowUnitCloak(unitID, enemyID)
 		recloakFrame[unitID] = currentFrame + GetProximityDecloakTime(unitID)
 		return false
 	end
-	
+
 	if recloakFrame[unitID] then
 		if recloakFrame[unitID] > currentFrame then
 			return false
 		end
 		recloakFrame[unitID] = nil
 	end
-	
+
 	local stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
 	if stunnedOrInbuild then
 		return false
 	end
-	
+
 	local unitDefID = unitID and Spring.GetUnitDefID(unitID)
 	local ud = unitDefID and UnitDefs[unitDefID]
 	if not ud then
 		return false
 	end
-	
+
 	local areaCloaked = (Spring.GetUnitRulesParam(unitID, "areacloaked") == 1) and ((Spring.GetUnitRulesParam(unitID, "cloak_shield") or 0) == 0)
 	if not areaCloaked then
 		local speed = select(4, Spring.GetUnitVelocity(unitID))
 		local moving = speed and speed > CLOAK_MOVE_THRESHOLD
 		local cost = moving and ud.cloakCostMoving or ud.cloakCost
-		
+
 		if not Spring.UseUnitResource(unitID, "e", cost/2) then -- SlowUpdate happens twice a second.
 			return false
 		end
 	end
-	
+
 	return true
 end
 
@@ -272,13 +272,13 @@ local function SetWantedCloaked(unitID, state)
 	if (not unitID) or spGetUnitIsDead(unitID) then
 		return
 	end
-	
+
 	local wantCloakState = spGetUnitRulesParam(unitID, "wantcloak")
 	local cmdDescID = Spring.FindUnitCmdDesc(unitID, CMD_WANT_CLOAK)
 	if (cmdDescID) then
 		Spring.EditUnitCmdDesc(unitID, cmdDescID, { params = {state, 'Decloaked', 'Cloaked'}})
 	end
-	
+
 	if state == 1 and wantCloakState ~= 1 then
 		local cannotCloak = spGetUnitRulesParam(unitID, "cannotcloak")
 		local areaCloaked = spGetUnitRulesParam(unitID, "areacloaked")

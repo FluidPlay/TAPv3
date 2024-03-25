@@ -2033,6 +2033,7 @@ local function ProcessCommand(command, factoryUnitID, factoryUnitDefID, fakeFact
 			return
 		end
 		local button = statePanel.buttons.GetButton(x, y, selectionIndex)
+		--Spring.Echo("dbg: 2")
 		button.SetCommand(command)
 		return
 	end
