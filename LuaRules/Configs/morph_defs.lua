@@ -1,292 +1,261 @@
--- $Id: morph_defs.lua 4643 2009-05-22 05:52:27Z carrepairer $
---------------------------------------------------------------------------------
+--[[   Morph Definition File
+
+Morph parameters description
+local morphDefs = {		--begining of morphDefs
+	unitname = {		--unit being morphed
+		into = 'newunitname',		--unit in which morphing unit will morph into
+		time = 12,			--time required to complete morph process (in seconds)
+		require = 'requnitname',	--unit requnitname must be present in team for morphing to be enabled
+		metal = 10,			--required metal for morphing process     note: if you ommit M and/or E costs, morph costs the
+		energy = 10,			--required energy for morphing process		difference in costs between unitname and newunitname
+		xp = 0.07,			--required experience for morphing process (will be deduced from unit xp after morph, default=0)
+		rank = 1,			--required unit rank for morphing to be enabled, if ommited, morph doesn't require rank
+		tech = 2,			--required tech level of a team for morphing to be enabled (1,2,3), if ommited, morph doesn't require tech
+		cmdname = 'Ascend',		--if ommited will default to "Upgrade"
+		texture = 'MyIcon.dds',		--if ommited will default to [newunitname] buildpic, textures should be in "LuaRules/Images/Morph"
+		text = 'Description',		--if ommited will default to "Upgrade into a [newunitname]", else it's "Description"
+						--you may use "$$unitname" and "$$into" in 'text', both will be replaced with human readable unit names
+		animationonly = 1,    --if 1, will not replace the original model, it'll run a 'MorphUp' methods in the unit's LUS script
+		                      --if animationonly > 1, it will run a "MorphUp#" (eg: 'MorphUp2') method in the unit's LUS script (for sequential morphs)
+		                --TODO: And enable 'advanced' buttons
+	},
+}				--end of morphDefs
+--]]
 --------------------------------------------------------------------------------
 
-include("LuaRules/Configs/customcmds.h.lua")
+-- TODO: Cleanup
+
+local devolution = (-1 > 0)
+
+local metalCost_ecommander = 100
+local timeToBuild_ecommander = metalCost_ecommander * 0.25
+
+local metalCost_ecommandercloak = 100
+local timeToBuild_ecommandercloak = metalCost_ecommandercloak * 0.25
+
+local metalCost_ecommandershield = 100
+local timeToBuild_ecommandershield = metalCost_ecommandershield * 0.25
+
+local metalCost_ecommanderbuild = 100
+local timeToBuild_ecommanderbuild = metalCost_ecommanderbuild * 0.25
+
+local metalCost_ecommanderfactory = 100
+local timeToBuild_ecommanderfactory = metalCost_ecommanderfactory * 0.25
+
+local metalCost_ecommanderbattle = 100
+local timeToBuild_ecommanderbattle = metalCost_ecommanderbattle * 0.25
+
+local metalCost_factory_up1 = 240
+local timeToBuild_factory_up1 = metalCost_factory_up1 * 0.25
+
+local metalCost_etech2 = 200
+local timeToBuild_etech2 = metalCost_etech2 * 0.25
+
+local metalCost_etech3 = 300
+local timeToBuild_etech3 = metalCost_etech3 * 0.25
+
 
 local morphDefs = {
+	----------------------------------------------------------
+	---- Commanders
+	----------------------------------------------------------
 
-	chicken_drone = {
-		[1] = {
-			into = 'chickend',
-			energy = 15,
-			time = 20,
-		},
-		[2] = {
-			into = 'chickenspire',
-			energy = 600,
-			time = 90,
-		},
-	},
+	--	ecommander = 	{
+	--		{
+	--			into = 'ecommandercloak',
+	--			time = timeToBuild_ecommandercloak,
+	--			cmdname = [[Cloaking Overseer]],
+	--			metal = metalCost_ecommandercloak,
+	--			text = 'Morph to Cloaking Overseer: Gains a large cloaking field which also cloaks the Overseer.',
+	--		},
+	--	},
+
+	----------------------------------------------------------
+	---- Resources
+	----------------------------------------------------------
+
+	--	armmex = 	{
+	--		{
+	--			into = 'armmoho',
+	--			--time = timeToBuild_ecommandercloak,
+	--			cmdname = [[Moho Mine]],
+	--			--metal = metalCost_ecommandercloak,
+	--			text = 'Morph to Moho Mine: Superior metal extraction speed.',
+	--		},
+	--	},
+
+	--------------------------------------------------------------
+	---- Kbots
+	--------------------------------------------------------------
+
+	--    armpw = 	{
+	--        {
+	--            into = 'armwar',
+	--            --time = 600,
+	--            cmdname = [[Warrior]],
+	--            require = 'armtech',
+	--            --metal = 250, --temp
+	--            --energy = 2000,
+	--            text = 'Morph to Warrior: Stalwart armor class.',
+	--        },
+	--    },
+
+	--------------------------------------------------------------
+	---- Tech Structures
+	--------------------------------------------------------------
+
+	--    armtech = {
+	--        {
+	--            into = 'armtech2',
+	--            time = 20,
+	--            cmdname = [[Level 2]],
+	--            metal = 100, --temp
+	--            energy = 100, --temp
+	--            text = 'Upgrade to Tech Center Level 2',
+	--        },
+	--    },
+	--
+	--    armtech2 = {
+	--        {
+	--            into = 'armtech3',
+	--            time = 20,
+	--            cmdname = [[Level 3]],
+	--            metal = 100, --temp
+	--            energy = 100, --temp
+	--            text = 'Upgrade to Tech Center Level 3',
+	--        },
+	--    },
+	--
+	--    armtech3 = {
+	--        {
+	--            into = 'armtech4',
+	--            time = 20,
+	--            cmdname = [[Level 4]],
+	--            metal = 100, --temp
+	--            energy = 100, --temp
+	--            text = 'Upgrade to Tech Center Level 4',
+	--        },
+	--    },
+
+	--    armoutpost = {
+	--        {
+	--            into = 'armoutpost2',
+	--            time = 10,
+	--            cmdname = [[Level 2]],
+	--            metal = 100, --temp
+	--            energy = 100, --temp
+	--            text = 'Upgrade to Outpost Level 2',
+	--        },
+	--    },
+	--
+	--    armoutpost2 = {
+	--        {
+	--            into = 'armoutpost3',
+	--            time = 10,
+	--            cmdname = [[Level 3]],
+	--            metal = 100, --temp
+	--            energy = 100, --temp
+	--            text = 'Upgrade to Outpost Level 3',
+	--        },
+	--    },
+	--
+	--    armoutpost3 = {
+	--        {
+	--            into = 'armoutpost4',
+	--            time = 10,
+	--            cmdname = [[Level 4]],
+	--            metal = 100, --temp
+	--            energy = 100, --temp
+	--            text = 'Upgrade to Outpost Level 4',
+	--        },
+	--    },
+
+	----------------------------------------------------------
+	---- Factories
+	----------------------------------------------------------
+	--	ebasefactory = 	{
+	--		{
+	--			into = 'ebasefactory_up1',
+	--			time = timeToBuild_factory_up1,
+	--			cmdname = [[Upgrade]],
+	--			metal = metalCost_factory_up1,
+	--			text = [[+20% damage/hp buff, +15% faster reload, -5% speed]],
+	--		},
+	--	},
+	--	ebasefactory_up1 = 	{
+	--		{
+	--			into = 'ebasefactory_up2',
+	--			time = timeToBuild_factory_up1,
+	--			cmdname = [[Upgrade]],
+	--			metal = metalCost_factory_up1,
+	--			text = [[+15% damage/hp buff, +15% faster reload, -5% speed]],
+	--		},
+	--	},
+
+	----------------------------------------------------------
+	---- Kbots
+	----------------------------------------------------------
+
+	--	ehbotpeewee = 	{
+	--		{
+	--			into = 'ehbotpeewee_turret',
+	--			time = 12.5,
+	--			cmdname = [[Deploy]],
+	--			metal = 50,
+	--			text = 'Morph into a stationary turret that gains 4x health.',
+	--		},
+	--	},
+	--
+	--	ehbotpeewee_up1 = 	{
+	--		{
+	--			into = 'ehbotpeewee_turret_up1',
+	--			time = 12.5,
+	--			cmdname = [[Deploy]],
+	--			metal = 50,
+	--			text = 'Morph into a stationary turret that gains 4x health.',
+	--		},
+	--	},
+
+	----------------------------------------------------------
+	---- Tech Facility
+	----------------------------------------------------------
+
+	--	etech1 = 	{
+	--		{
+	--			into = 'etech2',
+	--			time = timeToBuild_etech2,
+	--			cmdname = [[Tech 2
+	--Upgrade]],
+	--			metal = metalCost_etech2,
+	--			text = 'Morph into a Tech Level 2 Facility.',
+	--		},
+	--	},
+
+	----------------------------------------------------------
+	---- End of Data
+	----------------------------------------------------------
 }
 
-local baseComMorph = {
-	[0] = {time = 10, cost = 0},
-	[1] = {time = 25, cost = 250},
-	[2] = {time = 30, cost = 300},
-	[3] = {time = 40, cost = 400},
-	[4] = {time = 50, cost = 500},
-}
+--
+-- Here's an example of why active configuration
+-- scripts are better then static TDF files...
+--
 
---------------------------------------------------------------------------------
--- customparams
---------------------------------------------------------------------------------
-
-for i = 1,#UnitDefs do
-	local ud = UnitDefs[i]
-	local cp = ud.customParams
-	local name = ud.name
-
-	local morphList = (cp.morphto_1 and true) or false
-	local index = 1
-	local append = (morphList and ("_" .. index)) or ""
-
-	while true do
-		local morphTo = cp["morphto" .. append]
-		if not morphTo then
-			break
-		end
-		
-		local targetDef = UnitDefNames[morphTo]
-		morphDefs[name] = morphDefs[name] or {}
-		morphDefs[name][#morphDefs[name] + 1] = {
-			into = morphTo,
-			time = cp["morphtime" .. append] or (cp["level" .. append] and math.floor((targetDef.metalCost - ud.metalCost) / (6 * (cp["level" .. append] + 1)))),	-- or 30,
-			metal = tonumber(cp["morphcost" .. append]),
-			energy = tonumber(cp["morphcost" .. append]),
-			combatMorph = (cp["combatmorph" .. append] == "1"),
-		}
-		
-		if morphList then
-			index = index + 1
-			append = ("_" .. index)
-		else
-			break
-		end
+--
+-- devolution, babe  (useful for testing)
+--
+if (devolution) then
+	local devoDefs = {}
+	for src,data in pairs(morphDefs) do
+		devoDefs[data.into] = { into = src, time = 10, metal = 1, energy = 1 }
 	end
-end
-
---------------------------------------------------------------------------------
--- basic (non-modular) commander handling
---------------------------------------------------------------------------------
-local comms = {"armcom", "corcom", "commrecon", "commsupport", "benzcom", "cremcom"}
-
-for i = 1, #comms do
-	for j = 0,4 do
-		local source = comms[i] .. j
-		local destination = comms[i] .. (j+1)
-		morphDefs[source] = {
-			into = destination,
-			time = baseComMorph[j].time,
-			metal = baseComMorph[j].cost,
-			energy = baseComMorph[j].cost,
-			combatMorph = true,
-		}
+	for src,data in pairs(devoDefs) do
+		morphDefs[src] = data
 	end
 end
 
 
---------------------------------------------------------------------------------
--- modular commander handling
---------------------------------------------------------------------------------
-local comMorph = {	-- not needed
-	[1] = {time = 20,},
-	[2] = {time = 25,},
-	[3] = {time = 30,},
-	[4] = {time = 35,},
-	[5] = {time = 40,},
-}
-
-local customComms = {}
-
-local function InitUnsafe()
-	if not Spring.GetPlayerList then
-		return
-	end
-	for name, id in pairs(Spring.GetPlayerList()) do	-- pairs(playerIDsByName) do
-		-- copied from PlanetWars
-		local commData, success
-		local customKeys = select(10, Spring.GetPlayerInfo(id))
-		local commDataRaw = customKeys and customKeys.commanders
-		if not (commDataRaw and type(commDataRaw) == 'string') then
-			if commDataRaw then
-				err = "Comm data entry for player "..id.." is in invalid format"
-			end
-			commData = {}
-		else
-			commDataRaw = string.gsub(commDataRaw, '_', '=')
-			commDataRaw = Spring.Utilities.Base64Decode(commDataRaw)
-			--Spring.Echo(commDataRaw)
-			local commDataFunc, err = loadstring("return "..commDataRaw)
-			if commDataFunc then
-				success, commData = pcall(commDataFunc)
-				if not success then
-					err = commData
-					commData = {}
-				end
-			end
-		end
-		if err then
-			Spring.Log(gadget:GetInfo().name, LOG.WARNING, 'Comm Morph warning: ' .. err)
-		end
-
-		for series, subdata in pairs(commData) do
-			customComms[id] = customComms[id] or {}
-			customComms[id][series] = subdata
-		end
-	end
-end
-
-local function CheckForExistingMorph(morphee, target)
-	local array = morphDefs[morphee]
-	if not array then
-		return false
-	end
-	if array.into then
-		return (array.into == target)
-	end
-	for index,morphOpts in pairs(array) do
-		if morphOpts.into and morphOpts.into == target then
-			return true
-		end
-	end
-	return false
-end
-
-InitUnsafe()
-for id, playerData in pairs(customComms) do
-	Spring.Echo("Setting morph for custom comms for player: "..id)
-	for chassisName, array in pairs(playerData) do
-		for i=1,#array do
-			--Spring.Echo(array[i], array[i+1])
-			local targetDef = array[i+1] and UnitDefNames[array[i+1]]
-			local originDef = UnitDefNames[array[i]] or UnitDefNames[array[i]]
-			if targetDef and originDef then
-				--Spring.Echo("Configuring comm morph: "..(array[i]) , array[i+1])
-				local sourceName, targetName = originDef.name, targetDef.name
-				local morphCost
-				local morphOption = comMorph[i] and Spring.Utilities.CopyTable(comMorph[i], true) or {}
-				
-				morphOption.into = array[i+1]
-				-- set time
-				morphOption.time = math.floor( (targetDef.metalCost - originDef.metalCost) / (5 * (i+1)) ) or morphOption.time
-				--morphOption.time = math.floor((targetDef.metalCost - originDef.metalCost)/10) or morphOption.time
-				--morphOption.time = math.floor(15 + i*5) or morphOption.time
-				morphOption.combatMorph = true
-				-- copy, checking that this morph isn't already defined
-				morphDefs[sourceName] = morphDefs[sourceName]  or {}
-				if not CheckForExistingMorph(sourceName, targetName) then
-					morphDefs[sourceName][#(morphDefs[sourceName]) + 1] = morphOption
-				else
-					Spring.Echo("Duplicate morph, exiting")
-				end
-			end
-		end
-	end
-end
-
---check that the morphs were actually inserted
---[[
-for i,v in pairs(morphDefs) do
-	Spring.Echo(i)
-	if v.into then Spring.Echo("\t"..v.into)
-	else
-		for a,b in pairs(v) do Spring.Echo("\t"..b.into) end
-	end
-end
-]]--
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-local MAX_MORPH = 0
-local UPGRADING_BUILD_SPEED = 250
-
-local function DefCost(paramName, udSrc, udDst)
-	local pSrc = udSrc[paramName]
-	local pDst = udDst[paramName]
-	if (not pSrc) or (not pDst) then
-		return 0
-	end
-	local cost = (pDst - pSrc)
-	if (cost < 0) then
-		cost = 0
-	end
-	return math.floor(cost)
-end
-
-local function BuildMorphDef(udSrc, morphData)
-	local udDst = UnitDefNames[morphData.into]
-	if (not udDst) then
-		Spring.Log(gadget:GetInfo().name, LOG.WARNING, 'Morph gadget: Bad morph dst type: ' .. morphData.into)
-		return
-	else
-		if (CMD_MORPH + MAX_MORPH >= CMD_MORPH_STOP ) then --reached next custom command ID in the list (see: customcmds.h.lua)
-			Spring.Log(gadget:GetInfo().name, LOG.WARNING, 'Morph CMD_ID is overflowing/overlapping with other command.')
-		end
-		if (CMD_MORPH_STOP + MAX_MORPH >= 2*CMD_MORPH_STOP-CMD_MORPH ) then --reached next custom command ID in the list (see: customcmds.h.lua)
-			Spring.Log(gadget:GetInfo().name, LOG.WARNING, 'Morph Stop CMD_ID is overflowing/overlapping with other command.')
-		end
-		local unitDef = udDst
-		local newData = {}
-		newData.into = udDst.id
-		newData.time = morphData.time or math.floor(unitDef.buildTime*7/UPGRADING_BUILD_SPEED)
-		newData.increment = (1 / (30 * newData.time))
-		newData.metal = morphData.metal or DefCost('metalCost', udSrc, udDst)
-		newData.energy = morphData.energy or DefCost('energyCost', udSrc, udDst)
-		newData.combatMorph = morphData.combatMorph or false
-		newData.resTable = {
-			m = (newData.increment * newData.metal),
-			e = (newData.increment * newData.energy)
-		}
-		newData.facing = morphData.facing
-		newData.tooltip = 'Morph ' .. newData.into .. ' ' .. newData.time .. ' ' .. newData.metal
-
-		MAX_MORPH = MAX_MORPH + 1 -- CMD_MORPH is the "generic" morph command. "Specific" morph command start at CMD_MORPH+1
-		newData.cmd = CMD_MORPH + MAX_MORPH
-		newData.stopCmd = CMD_MORPH_STOP + MAX_MORPH
-
-		if (type(GG.MorphInfo)~="table") then
-			GG.MorphInfo = {["CMD_MORPH_BASE_ID"]=CMD_MORPH,["CMD_MORPH_STOP_BASE_ID"]=CMD_MORPH_STOP}
-		end
-		if (type(GG.MorphInfo[udSrc.id])~="table") then
-			GG.MorphInfo[udSrc.id]={}
-		end
-		GG.MorphInfo[udSrc.id][udDst.id]=newData.cmd
-		GG.MorphInfo["MAX_MORPH"] = MAX_MORPH
-
-		newData.texture = morphData.texture
-		return newData
-	end
-end
-
-local function ValidateMorphDefs(mds)
-	local newDefs = {}
-	for src, morphData in pairs(mds) do
-		local udSrc = UnitDefNames[src]
-		if (not udSrc) then
-			Spring.Log("Morph", LOG.WARNING, 'Morph gadget: Bad morph src type: ' .. src)
-		else
-			newDefs[udSrc.id] = {}
-			if (morphData.into) then
-				local morphDef = BuildMorphDef(udSrc, morphData)
-				if (morphDef) then
-					newDefs[udSrc.id][morphDef.cmd] = morphDef
-				end
-			else
-				for _, morphData in pairs(morphData) do
-					local morphDef = BuildMorphDef(udSrc, morphData)
-					if (morphDef) then
-						newDefs[udSrc.id][morphDef.cmd] = morphDef
-					end
-				end
-			end
-		end
-	end
-	return newDefs
-end
-
-return ValidateMorphDefs(morphDefs), MAX_MORPH
+return morphDefs
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
