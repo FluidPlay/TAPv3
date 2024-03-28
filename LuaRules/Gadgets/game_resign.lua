@@ -5,7 +5,7 @@ function gadget:GetInfo() return {
 	date    = "2012.5.1",
 	license = "Public domain",
 	layer   = 0,
-	enabled = true,
+	enabled = false --TODO:Test
 } end
 
 if (not gadgetHandler:IsSyncedCode()) then return end

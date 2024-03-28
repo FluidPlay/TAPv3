@@ -6,7 +6,7 @@ function gadget:GetInfo()
 		date	 = "6-23-2016",
 		license	 = "PD",
 		layer	 = 10, -- after lagmonitor
-		enabled	 = true,
+		enabled	 = false --TODO:Test
 	}
 end
 

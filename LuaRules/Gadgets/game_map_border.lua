@@ -14,7 +14,7 @@ function gadget:GetInfo()
 		date      = "5 June 2021",
 		license   = "GNU GPL, v2 or later",
 		layer     = 100,
-		enabled   = true  --  loaded by default?
+		enabled   = false --TODO:Test
 	}
 end
 

@@ -14,7 +14,7 @@ function gadget:GetInfo()
     date      = "11/5/2012", --6/11/2013
     license   = "Public domain",
     layer     = 0,
-    enabled   = true  --  loaded by default?
+    enabled   = false --TODO:Test
   }
 end
 --------------------------------------------------------------------------------
